@@ -1,0 +1,18 @@
+// ALL CSS IS in loader.scss in assets to be shared with the first loader of the app
+
+.container.loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+.container {
+  background-color: rgba(250, 250, 250, 0.6);
+  max-width: none;
+}
+
+h1 {
+  position: absolute;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-top: 10px;
+}

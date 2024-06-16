@@ -1,0 +1,23 @@
+bases:
+  - ../base
+
+resources:
+  - ingress.yaml
+
+nameSuffix: -acp
+
+namespace: repind-acp
+
+commonLabels:
+  app.kubernetes.io/name: manage-doctor-attributes
+  app.kubernetes.io/instance: manage-doctor-attributes-acp
+
+images:
+  - name: harbor-vlb.af-klm.com/cdm/manage-doctor-attributes
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+patchesStrategicMerge:
+  - replica-extra-options.yaml
+  - deploy-profile.yaml

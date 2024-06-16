@@ -1,0 +1,10 @@
+com\afklm\batch\subscriptiondata\BatchCollectSharepointSubscriptionData.class
+com\afklm\batch\subscriptiondata\config\CollectSharepointSubscriptionDataProperties.class
+com\afklm\batch\subscriptiondata\model\SharePointItemsFields.class
+com\afklm\batch\subscriptiondata\model\SharePointGetItemstItem.class
+com\afklm\batch\subscriptiondata\SharepointClient.class
+com\afklm\batch\subscriptiondata\model\SharePointGetItemsResponse.class
+com\afklm\batch\subscriptiondata\model\SharePointList.class
+com\afklm\batch\subscriptiondata\model\Individual.class
+com\afklm\batch\subscriptiondata\model\SharePointGetListResponse.class
+com\afklm\batch\subscriptiondata\config\BatchCollectSharepointSubscriptionDataConfig.class

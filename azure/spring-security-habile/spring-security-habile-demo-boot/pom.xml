@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- IF YOU COPY/PASTE THIS FILE PLEASE READ THE TODO SECTIONS INSIDE IT -->
+
+  <!-- TODO: replace this parent with a global af/kl parent pom -->
+  <parent>
+    <groupId>com.afklm.springboot.habile</groupId>
+    <artifactId>spring-security-habile-parent</artifactId>
+    <version>5.0.1-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>spring-security-habile-demo-boot</artifactId>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-websocket</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-messaging</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.afklm.springboot.habile</groupId>
+      <artifactId>spring-security-habile</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <!-- SOA framework -->
+    <dependency>
+      <groupId>com.afklm.soa.jaxws</groupId>
+      <artifactId>sdfw-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.afklm.soa.jaxws</groupId>
+      <artifactId>sdfw-consumer-deps</artifactId>
+      <type>pom</type>
+      <!-- ============== START EXCLUDING CONFLICTING DEPENDENCY ============= -->
+      <!-- The purpose of the following exclusion is to discard the transitive -->
+      <!-- dependency upon org.glassfish.metro:webservices-api artifact which  -->
+      <!-- is pulled from org.glassfish.metro:webservices-rt artifact, itself  -->
+      <!-- pulled from this com.afklm.soa.jaxws:jaxws-consumer-deps artifact.  -->
+      <!-- The issue with org.glassfish.metro:webservices-api artifact is      -->
+      <!-- that, beyond defining legitimate dependencies on various Jakarta    -->
+      <!-- APIs, it is built with direct inclusion of the classes of these     -->
+      <!-- dependencies. Then, these classes appear to be duplicates of the    -->
+      <!-- classes from the official Jakarta APIs artifacts pulled from other  -->
+      <!-- dependencies. This leads to mess in the classpath and potential     -->
+      <!-- conflicting issues.                                                 -->
+      <exclusions>
+        <exclusion>
+          <groupId>com.afklm.soa.jaxws</groupId>
+          <artifactId>jaxws-consumer-deps</artifactId>
+        </exclusion>
+      </exclusions>
+      <!-- =============== END EXCLUDING CONFLICTING DEPENDENCY ============== -->
+    </dependency>
+    <!-- Application will choose either V1 or V2 for SOA stub -->
+    <dependency>
+      <groupId>com.afklm.soa.stubs</groupId>
+      <artifactId>w000479-v01-jakarta</artifactId>
+    </dependency>
+    <!-- SOA security - IF NEEDED -->
+    <!-- TODO: uncomment jaxws-sec import -->
+    <!-- Not used to call the simulated local Habile WS, required (along 
+      with corresponding XXXXXX-ws-security) to call a real Habile WS -->
+    <!-- <dependency> -->
+    <!-- <groupId>com.afklm.soa.jaxws.wss</groupId> -->
+    <!-- <artifactId>jaxws-sec</artifactId> -->
+    <!-- </dependency> -->
+    <!-- SOA security - IF NEEDED -->
+    <!-- TODO: use correct artifactId and version and uncomment (from soarepo) -->
+    <!-- contact TASC through JSD if you need support -->
+    <!-- <dependency> -->
+    <!-- <groupId>com.airfrance.soa.security</groupId> -->
+    <!-- <artifactId>YOUR_APP-ws-security</artifactId> -->
+    <!-- <version>YOUR_VERSION</version> -->
+    <!-- </dependency> -->
+ 
+    <!-- ############################ -->
+    <!--       Test dependencies      -->
+    <!-- ############################ -->
+   <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>${spring-boot.version}</version>
+        <configuration>
+          <profiles>
+            <profile>local</profile>
+          </profiles>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

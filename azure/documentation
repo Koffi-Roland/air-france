@@ -1,0 +1,18 @@
+1-- Dossier _K8S
+2-- Variable d'environment
+3-- Workflow
+
+  1-- build-deploy-ri-provide-last-activity.yml
+  2-Sysdig-depedenbot,code scan
+  
+4-- Workflow
+  1-- appgw-provide-last-activity.yml
+  2--
+
+
+
+4-- Utilisation de git action 
+
+5-- portail azure
+
+6-- log azure

@@ -1,0 +1,12 @@
+<div class="header">
+  <div>
+    <span class="mat-display-1" *ngIf="individualsFoundCount > 0">{{ individualsFoundCount }} </span>
+    <span class="mat-display-1" *ngIf="individualsFoundCount === 0">{{ 'NO-INDIVIDUALS-FOUND' | translate }}</span>
+    <span class="mat-headline"
+      *ngIf="individualsFoundCount > 1">{{ 'INDIVIDUALS-FOUND' | translate | lowercase }}</span>
+    <span class="mat-headline"
+      *ngIf="individualsFoundCount === 1">{{ 'INDIVIDUAL-FOUND' | translate | lowercase }}</span>
+  </div>
+  <app-results-view-picker></app-results-view-picker>
+</div>
+<mat-divider></mat-divider>

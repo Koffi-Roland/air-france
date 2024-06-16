@@ -1,0 +1,20 @@
+spring:
+  config:
+    activate:
+      on-profile: AE,qal
+  datasource:
+    tns_admin_env: TEST_ACCEPTANCE
+    url: jdbc:oracle:thin:@OSMN305.WORLD
+    maxPoolSize: 2
+
+vault:
+  uri: https://vault-tls-cae.airfranceklm.com
+  namespace: repind
+  env: dev
+  credentials:
+    role_id: ${vault_role_id}
+    secret_id: ${vault_secret_id}
+
+server:
+  servlet:
+    context-path: /api-mgr

@@ -1,0 +1,37 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: neo4j-toolbox-pvc
+  labels:
+    app: neo4j-toolbox-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 7Gi
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: neo4j-toolbox
+  labels:
+    app: neo4j-toolbox
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: neo4j-toolbox
+    spec:
+      serviceAccountName: neo4j-toolbox-sa
+      containers:
+        - name: neo4j-toolbox
+          image: nexusoss-docker.airfrance.fr/repind/neo4j-toolbox:latest
+          volumeMounts:
+          - name: neo4j-toolbox-pvc
+            mountPath: /data
+      volumes:
+        - name: neo4j-toolbox-pvc
+          persistentVolumeClaim:
+           claimName: neo4j-toolbox-pvc

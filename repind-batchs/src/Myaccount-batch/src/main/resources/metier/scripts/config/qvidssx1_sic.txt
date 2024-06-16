@@ -1,0 +1,63 @@
+# diese = commentaire
+# format : cle 	= "valeur"            # valeur simple
+#          cle_	= "valeur1,valeur2"   # tableau de valeurs (underscore final)
+#
+# rep_config    = "/app/<APPLI>/prod/config" pour toutes les versions
+#
+# par d�faut CO_config va chercher dans rep_config le fichier : <host>_<user>.txt
+# Ex : dev8ts_bocage.txt - aqa8ts_TIGRE5.txt - sun8tp_TIGRE5ci.txt
+#
+	env					= "test"
+	version				= "v1_0"
+
+# PARTIE SERVEUR METIER
+	rep_libOracle		= "/exploit/ORACLE/product/9.2.0/jdbc/lib"
+	rep_jdk				= "/usr/java/bin/java"
+	rep_tdf				= "/exploit/xfb/gwqvi1.sh";	
+
+# repertoires G�n�raux
+	rep_racine			= "/app/SIC"
+	rep_prod			= "/app/SIC/prod"
+	rep_bin				= "/app/SIC/prod/bin"
+	rep_java			= "/app/SIC/prod/bin/java"
+
+# pour le traitement des logs
+	rep_log_perl		= "/app/SIC/prod/logs/perl"    
+	rep_log_java		= "/app/SIC/prod/logs/batch"
+	nb_jour_purge 		= "30"
+		
+# PARTIE ORACLE
+	v_ORACLE_HOME		= "/exploit/ORACLE/server/8.1.7"
+	v_bd_nom			= "SIC11_DEV"
+	v_bd_user			= "SIC2"
+	v_bd_pwd			= "SIC2"
+
+# Partie BATCH
+# Nom de la librairie Java
+	lib_batch	= "sicBatch" 
+# Lancement : ON - OFF   valeur ON par d�faut
+	run_batch	= "ON" 
+	run_ogc 	= "ON"
+# Repertoire de travail
+	rep_desabonnement	= "/app/SIC/data/EDATIS"
+	rep_publication		= "/app/SIC/data/EDATIS"
+	rep_retrociblage	= "/app/SIC/data/OGC"
+	rep_modification	= "/app/SIC/data/OGC"
+	rep_ogc				= "/app/SIC/data/OGC"
+	rep_offre_client	= "/app/SIC/prod/data/OGC"
+	rep_batch			= " "	
+	rep_ciblage			= "/app/SIC/data/"
+# TDF - en MAJUSCULE
+	tdf_desabonnement	= "TXUED1" # flux Edatis IN
+	tdf_publication		= "TXUED2" # flux Edatis IN
+	tdf_retrociblage	= "TUUOI1" # flux OGC IN
+	tdf_modification	= "TUUOI2" # flux OGC IN (etats des offres)
+	tdf_offres			= "TUUIO1" # flux SIC OUT
+	tdf_clients			= "TUUIO2" # flux SIC OUT
+	tdf_batch			= " "
+	tdf_ciblage			= " "
+# Jeu de caract�res
+    charset             = "8859_1"
+
+	 
+

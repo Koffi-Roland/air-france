@@ -1,0 +1,36 @@
+meta {
+  name: ProvidePaymentPreferences - PING
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{provide-payment-preferences-url}}
+  body: xml
+  auth: none
+}
+
+headers {
+  SOAPAction: "http://www.af-klm.com/services/passenger/ProvidePaymentPreferences-v2/providePaymentPreferences"
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.af-klm.com/services/passenger/ProvideDecryptedPaymentPreferencesSchema-v2/xsd">
+     <soapenv:Body>
+        <xsd:ProvidePaymentPreferencesRequestElement>
+           <gin>00000000043</gin>
+           <!--Optional:-->
+           <requestMode>P</requestMode>
+        </xsd:ProvidePaymentPreferencesRequestElement>
+     </soapenv:Body>
+  </soapenv:Envelope>
+}
+
+vars:pre-request {
+  USER: w04776476
+  PASSWORD: pswpsw123
+}
+
+assert {
+  res.body: contains NOT FOUND
+}

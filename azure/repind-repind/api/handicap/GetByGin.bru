@@ -1,0 +1,27 @@
+meta {
+  name: GetByGin
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{handicap-url}}/?gin={{gin}}
+  body: none
+  auth: none
+}
+
+query {
+  gin: {{gin}}
+}
+
+vars:pre-request {
+  MS: handicap
+}
+
+vars:post-response {
+  handicap-id: res.body.handicaps[0].handicapId
+}
+
+assert {
+  res.status: eq 200
+}

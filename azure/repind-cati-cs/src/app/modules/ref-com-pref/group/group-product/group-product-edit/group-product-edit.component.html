@@ -1,0 +1,49 @@
+<h1 mat-dialog-title translate>EDIT-GROUP-PRODUCT</h1>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="groupProductForm">
+    <div fxLayout="row" fxLayoutGap="30px">
+      <div fxLayout="column" fxLayoutGap="15px" fxFlex="40">
+          <div fxLayout="row" fxLayoutGap="15px">
+            <mat-form-field class="field-width">
+              <mat-select placeholder="{{'PRODUCTS' | translate}}" formControlName="productId" (selectionChange)="onProductChange()" required>
+                <mat-option value="" disabled>{{'SELECT-PRODUCT' | translate}}</mat-option>
+                <mat-option *ngFor="let product of listProducts" [value]="product.productId">
+                  {{product.productName}} ({{product.productType}}) {{ product.subProductType ? "(" +
+                  product.subProductType + ")" : "" }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row" fxLayoutGap="15px">
+              <mat-form-field fxFlex="80">
+                <mat-select placeholder="{{'GROUPS' | translate}}" formControlName="selectedGroup" required>
+                  <mat-option value="" disabled>{{'SELECT-GROUP' | translate}}</mat-option>
+                  <mat-option *ngFor="let group of listGroupsToSelect" [value]="group">
+                    ({{group.id}}) {{group.code}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <button fxFlex mat-raised-button color="primary" class="button-add-group" (click)="addGroup()" [disabled]="(!product || !groupProductForm.get('selectedGroup').value)">
+                <mat-icon matTooltip="{{ 'ADD' | translate }}" matTooltipPosition="above">add</mat-icon>
+              </button>
+          </div>
+      </div>
+      <div fxFlex="40">
+        <div class="list-group">
+          <mat-list *ngFor="let group of listSelectedGroup; let i = index" class="list-group-selected">
+            <mat-list-item>
+              <span>({{group.id}}) {{group.code}}</span><mat-icon *ngIf="!group.cantBeRemoved" class="cursor remove-group" (click)="removeGroup(group)" matTooltip="{{ 'REMOVE' | translate }}"
+                matTooltipPosition="above">delete</mat-icon>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+          </mat-list>
+        </div>
+      </div>
+    </div>
+</form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+  <button mat-button mat-dialog-close translate>CANCEL</button>
+  <button mat-button [mat-dialog-close]="true" (click)="submit()" [disabled]="!product" translate>SAVE</button>
+</mat-dialog-actions>

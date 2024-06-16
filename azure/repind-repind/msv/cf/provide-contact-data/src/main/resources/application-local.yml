@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    tns_admin_env: TEST_ACCEPTANCE
+    url: jdbc:oracle:thin:@REPIND_ITE.WORLD
+    maxPoolSize: 1
+
+vault:
+  uri: https://vault-tls-cae.airfranceklm.com
+  namespace: repind
+  env: dev
+  credentials:
+    role_id: ${vault_role_id}
+    secret_id: ${vault_secret_id}
+
+apim.jwt.validation:
+  environment: NPR
+  securityId: w04776476
+  serviceIds:
+    - R000347
+  whitelist: /actuator/health
+  errorEnabled: false

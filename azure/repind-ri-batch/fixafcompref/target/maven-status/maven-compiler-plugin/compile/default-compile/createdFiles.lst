@@ -1,0 +1,17 @@
+com\afklm\batch\fixafcompref\config\FixAfComPrefConfig.class
+com\afklm\batch\fixafcompref\enums\ComPrefFieldEnum$1.class
+com\afklm\batch\fixafcompref\writer\IndividuItemWriter.class
+com\afklm\batch\fixafcompref\BatchFixAfComPref.class
+com\afklm\batch\fixafcompref\mapper\FixAfComPrefLineMapper.class
+com\afklm\batch\fixafcompref\helper\ValidationHelper.class
+com\afklm\batch\fixafcompref\logger\FixAfComPrefLogger.class
+com\afklm\batch\fixafcompref\enums\BatchFixAfComPrefArgsEnum.class
+com\afklm\batch\fixafcompref\enums\FileNameEnum.class
+com\afklm\batch\fixafcompref\processor\FixAfComPreftemProcessor.class
+com\afklm\batch\fixafcompref\enums\MarketLanguageFieldEnum$1.class
+com\afklm\batch\fixafcompref\mapper\FixAfComPrefMapper.class
+com\afklm\batch\fixafcompref\service\FixAfComPrefCounterService.class
+com\afklm\batch\fixafcompref\enums\ComPrefFieldEnum.class
+com\afklm\batch\fixafcompref\service\FixAfComPrefService.class
+com\afklm\batch\fixafcompref\BatchFixAfComPref$1.class
+com\afklm\batch\fixafcompref\enums\MarketLanguageFieldEnum.class

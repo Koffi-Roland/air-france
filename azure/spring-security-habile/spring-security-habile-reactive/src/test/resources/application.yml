@@ -1,0 +1,24 @@
+afklm:
+  security:
+    urls-http-verbs-authorities:
+      - urls: /test/**
+        http-verbs-authorities:
+          - verbs: GET
+            roles: P_TEST
+    actuators-role: P_ADMIN
+    anonymous-roles:
+      - P_TEST_EMPTY
+      - P_TEST
+    roles:
+      P_TEST:
+        - ADMIN
+      P_TEST_EMPTY:
+      P_TEST_2:
+        - USER
+      P_ADMIN:
+
+logging:
+  level:
+    root: INFO
+    org.springframework.security: DEBUG
+    com.afklm.spring.security.habile: TRACE

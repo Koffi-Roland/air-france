@@ -1,0 +1,19 @@
+<form [formGroup]="formGroup">
+  <div class="form-fields">
+    <app-preference-type-form-field *ngIf="preferenceValueConfiguration"
+      [preferenceValueConfig]="preferenceValueConfiguration" [valueCtrl]="valueCtrl" [keyCtrlLabel]="keyCtrlLabel"
+      [isValueSaved]="isValueSaved">
+    </app-preference-type-form-field>
+  </div>
+  <div class="form-action-buttons">
+    <button mat-icon-button (click)="saveValueContent()" [disabled]="isValueSaved || valueCtrl.invalid">
+      <mat-icon>save</mat-icon>
+    </button>
+    <button mat-icon-button (click)="editValueContent()" [disabled]="!isValueSaved">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button (click)="clearValueContent()" [disabled]="!isValueSaved || valueCtrl.value === ''">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+</form>

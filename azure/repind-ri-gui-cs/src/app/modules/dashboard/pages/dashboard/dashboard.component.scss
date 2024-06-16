@@ -1,0 +1,91 @@
+.individual-profile-and-more {
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+}
+
+.section-cards-column {
+  display: flex;
+  flex-direction: column;
+  width: 65%;
+}
+
+.section-cards-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.dashboard-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 3vh;
+}
+
+app-individual-profile,
+app-individual-card,
+app-section-card {
+  margin: 10px;
+}
+
+button {
+  margin: 2px 10px;
+}
+
+app-section-card {
+  width: 33%;
+}
+
+.section-cards-row:nth-child(2)>app-section-card {
+  width: 50%;
+}
+
+/** CSS for small computer screen and tablets **/
+@media (min-width: 950px) and (max-width: 1275px) {
+
+  .dashboard-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .individual-profile-and-more,
+  .section-cards-column {
+    width: 100%;
+  }
+
+}
+
+/** CSS for small tablets and smartphone **/
+@media (max-width: 950px) {
+
+  .section-cards-column,
+  .section-cards-row,
+  .dashboard-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .individual-profile-and-more,
+  .section-cards-column {
+    width: 100%;
+  }
+
+  .dashboard-container {
+    margin-right: 20px;
+  }
+
+  app-section-card,
+  .section-cards-row:nth-child(2)>app-section-card, app-individual-card,
+  app-individual-profile, button.see-more-info {
+    width: 100%;
+  }
+
+}
+
+button.mat-icon-button {
+  position: absolute;
+}
+
+h1.mat-display-1 {
+  text-align: center;
+  margin-bottom: 0;
+}

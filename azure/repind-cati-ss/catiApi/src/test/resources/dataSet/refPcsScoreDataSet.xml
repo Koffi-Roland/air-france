@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="dataset.xsd">
+	<REF_PCS_SCORE  SCODE ="FP" SCODE_FACTOR ="C" SLIBELLE ="FLYING BLUE" SSCORE ="80" />
+	<REF_PCS_SCORE  SCODE ="MA" SCODE_FACTOR ="C" SLIBELLE ="MY ACCOUNT" SSCORE ="60" />
+	<REF_PCS_SCORE  SCODE ="FN" SCODE_FACTOR ="NC" SLIBELLE ="FIRST NAME" SSCORE ="15" />
+	<REF_PCS_SCORE  SCODE ="LN" SCODE_FACTOR ="NC" SLIBELLE ="LAST NAME" SSCORE ="15" />
+</dataset>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
+>
+
+	
+	<bean id="jndiTemplateEventInd" class="org.springframework.jndi.JndiTemplate">
+	    <property name="environment">
+	      <props>
+	        <prop key="java.naming.factory.initial">com.sun.jndi.fscontext.RefFSContextFactory</prop>
+			<prop key="java.naming.provider.url">
+				<!-- ENV-MQ-REPIND -->
+				${ENV-MQ-REPIND}
+			</prop>
+	      </props>
+	    </property>
+  	</bean>
+  
+  	<bean id="jndiTemplateEventSec" class="org.springframework.jndi.JndiTemplate">
+    	<property name="environment">
+      		<props>
+        		<prop key="java.naming.factory.initial">com.sun.jndi.fscontext.RefFSContextFactory</prop>
+				<prop key="java.naming.provider.url">
+					<!-- ENV-MQ-REPIND-SECURITY -->
+					${ENV-MQ-REPIND-SECURITY}
+				</prop>
+      		</props>
+   		</property>
+  	</bean>
+  
+  	<!--  NotifyEventIndividual Web Service Consumer(EVENT ADHOC) v2 : REPIND-795 -->				  
+	<bean id="notifyAdhocEventIndividual-v1" class="com.afklm.soa.spring.consumer.WebServiceConsumer"> 		
+		<property name="service" value="com.afklm.soa.stubs.w001992.v1.NotifyAdhocEventIndividualServiceV1" />
+		<!-- ENV-WSDL-HANDLECOM-W001992-V01 -->	
+		<property name="endpointAddress" value="${ENV-WSDL-HANDLECOM-W001992-V01}" />
+		<property name="wsdlLocation">
+			<value>classpath:META-INF/wsdl/w001992-v01/w001992-v01.wsdl</value>
+		</property>
+  		<property name="features">
+			<list>
+				<!--	Web Service Consumer configuration through Web Service Features-->	
+				<bean class="com.afklm.soa.jms.spring.ConsumerJmsFeature">
+					<property name="jndiTemplate" ref="jndiTemplateEventInd" />
+				</bean>
+				<!-- Enable validation for event -->
+	            <bean class="com.sun.xml.ws.developer.SchemaValidationFeature" />
+	            <!-- Disable EventHeader -->
+	            <bean class="com.afklm.soa.eventheader.EventHeaderFeature">
+	                <property name="publisher">
+	                    <null />
+	                </property>
+	            </bean>
+			</list>
+		</property>
+	</bean>
+
+	<!--  NotifyEventIndividual Web Service Consumer(EVENT ADHOC) v2 : REPIND-795 -->
+	<bean id="notifyAdhocEventIndividual-v1.0.1" class="com.afklm.soa.spring.consumer.WebServiceConsumer">
+		<property name="service" value="com.afklm.soa.stubs.w001992.v1_0_1.NotifyAdhocEventIndividualServiceV1" />
+		<!-- ENV-WSDL-HANDLECOM-W001992-V01 -->
+		<property name="endpointAddress" value="${ENV-WSDL-HANDLECOM-W001992-V01}" />
+		<property name="wsdlLocation">
+			<value>classpath:META-INF/wsdl/w001992-v010001/w001992-v010001.wsdl</value>
+		</property>
+		<property name="features">
+			<list>
+				<!--	Web Service Consumer configuration through Web Service Features-->
+				<bean class="com.afklm.soa.jms.spring.ConsumerJmsFeature">
+					<property name="jndiTemplate" ref="jndiTemplateEventInd" />
+				</bean>
+				<!-- Enable validation for event -->
+				<bean class="com.sun.xml.ws.developer.SchemaValidationFeature" />
+				<!-- Disable EventHeader -->
+				<bean class="com.afklm.soa.eventheader.EventHeaderFeature">
+					<property name="publisher">
+						<null />
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!--  NotifySecurityEvent Web Service Consumer(EVENT) v1 -->				  
+	<bean id="notifySecurityEventForIndividual-v1"
+		class="com.afklm.soa.spring.consumer.WebServiceConsumer"> 		
+		<property name="service"
+			value="com.afklm.soa.stubs.w001690.v1.NotifySecurityEventForIndividualServiceV1" />
+		<!--<property name="endpointAddress" value="xjms:jndi:C1.REPIND.SOAEDA.NSEI_QVI.001.QA?jndiConnectionFactoryName=C1QTCYVAREPINDQCF" />-->	
+		<property name="endpointAddress" value="${ENV-WSDL-HANDLECOM-W001690-V01}" />
+		<property name="wsdlLocation">
+			<value>classpath:META-INF/wsdl/w001690-v01/w001690-v01.wsdl</value>
+			<!-- value>classpath:META-INF/wsdl/notifysecurityeventforindividual/V1/passenger_NotifySecurityEventForIndividual-v1.wsdl</value -->
+		</property>
+  		<property name="features">
+			<list>
+				<!--	Web Service Consumer configuration through Web Service Features-->	
+				<bean class="com.afklm.soa.jms.spring.ConsumerJmsFeature">
+					<property name="jndiTemplate" ref="jndiTemplateEventSec" />
+				</bean>
+				<!-- Enable validation for event -->
+	            <bean class="com.sun.xml.ws.developer.SchemaValidationFeature" />
+	            <!-- Disable EventHeader -->
+	            <bean class="com.afklm.soa.eventheader.EventHeaderFeature">
+	                <property name="publisher">
+	                    <null />
+	                </property>
+	            </bean>
+			</list>
+		</property>
+	</bean>
+</beans>

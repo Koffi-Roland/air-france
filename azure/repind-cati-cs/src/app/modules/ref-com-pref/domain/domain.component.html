@@ -1,0 +1,190 @@
+<!-- <div class="mat-elevation-z8">
+  <mat-table matSort [dataSource]="dataSource">
+
+    <ng-container matColumnDef="codeDomain">
+      <mat-header-cell *matHeaderCellDef [ngClass]="displayColumn.codeDomain === false ? 'hide' : ''">
+        <div class="mat-table-header-custom">
+          <span mat-sort-header="codeDomain">
+            {{'CODE' | translate}}
+          </span>
+        </div>
+      </mat-header-cell>
+      <mat-footer-cell [ngClass]="displayColumn.codeDomain === false ? 'hide' : ''" *matFooterCellDef>
+
+        <search-by-column [(columnName)]="search.codeDomain" (columnNameChange)="applyFilter({columnName: 'codeDomain', filterValue: search.codeDomain})"></search-by-column>
+      </mat-footer-cell>
+      <mat-cell *matCellDef="let domain" [ngClass]="displayColumn.codeDomain === false ? 'hide' : ''"> {{ domain.codeDomain }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="libelleDomainEN">
+      <mat-header-cell *matHeaderCellDef [ngClass]="displayColumn.libelleDomainEN === false ? 'hide' : ''">
+        <div class="mat-table-header-custom">
+          <span mat-sort-header="libelleDomainEN">
+            {{'NAME' | translate}}
+          </span>
+        </div>
+      </mat-header-cell>
+      <mat-footer-cell [ngClass]="displayColumn.libelleDomainEN === false ? 'hide' : ''" *matFooterCellDef>
+
+        <search-by-column [(columnName)]="search.libelleDomainEN" (columnNameChange)="applyFilter({columnName: 'libelleDomainEN', filterValue: search.libelleDomainEN})"></search-by-column>
+      </mat-footer-cell>
+      <mat-cell *matCellDef="let domain" [ngClass]="displayColumn.libelleDomainEN === false ? 'hide' : ''"> {{ domain.libelleDomainEN }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="libelleDomain">
+      <mat-header-cell *matHeaderCellDef [ngClass]="displayColumn.libelleDomain === false ? 'hide' : ''">
+        <div class="mat-table-header-custom">
+          <span mat-sort-header="libelleDomain">
+            {{'NAME_FR' | translate}}
+          </span>
+        </div>
+      </mat-header-cell>
+      <mat-footer-cell [ngClass]="displayColumn.libelleDomain === false ? 'hide' : ''" *matFooterCellDef>
+
+        <search-by-column [(columnName)]="search.libelleDomain" (columnNameChange)="applyFilter({columnName: 'libelleDomain', filterValue: search.libelleDomain})"></search-by-column>
+      </mat-footer-cell>
+      <mat-cell *matCellDef="let domain" [ngClass]="displayColumn.libelleDomain === false ? 'hide' : ''"> {{ domain.libelleDomain }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="dateCreation">
+      <mat-header-cell *matHeaderCellDef [ngClass]="displayColumn.dateCreation === false ? 'hide' : ''">
+        <div class="mat-table-header-custom">
+          <span mat-sort-header="dateCreation">
+            {{'CREATION_DATE' | translate}}
+          </span>
+        </div>
+      </mat-header-cell>
+      <mat-footer-cell [ngClass]="displayColumn.dateCreation === false ? 'hide' : ''" *matFooterCellDef>
+        <search-by-column [(columnName)]="search.dateCreation" (columnNameChange)="applyFilter({columnName: 'dateCreation', filterValue: search.dateCreation})"></search-by-column>
+      </mat-footer-cell>
+      <mat-cell *matCellDef="let domain" [ngClass]="displayColumn.dateCreation === false ? 'hide' : ''">
+        <span *ngIf="!isDateGreaterThan(domain.dateCreation)">{{domain.dateCreation | amUtc | amLocal | amTimeAgo}}</span>
+        <span *ngIf="isDateGreaterThan(domain.dateCreation)">{{domain.dateCreation | amUtc | amLocal | amDateFormat:'MM-DD-YYYY HH:mm'}}</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="dateModification">
+      <mat-header-cell *matHeaderCellDef [ngClass]="displayColumn.dateModification === false ? 'hide' : ''">
+        <div class="mat-table-header-custom">
+          <span mat-sort-header="dateModification">
+            {{'MODIFICATION_DATE' | translate}}
+          </span>
+        </div>
+      </mat-header-cell>
+      <mat-footer-cell [ngClass]="displayColumn.dateModification === false ? 'hide' : ''" *matFooterCellDef>
+        <search-by-column [(columnName)]="search.dateModification" (columnNameChange)="applyFilter({columnName: 'dateModification', filterValue: search.dateModification})"></search-by-column>
+      </mat-footer-cell>
+      <mat-cell *matCellDef="let domain" [ngClass]="displayColumn.dateModification === false ? 'hide' : ''">
+          <span *ngIf="!isDateGreaterThan(domain.dateModification)">{{domain.dateModification | amUtc | amLocal | amTimeAgo}}</span>
+          <span *ngIf="isDateGreaterThan(domain.dateModification)">{{domain.dateModification | amUtc | amLocal | amDateFormat:'MM-DD-YYYY HH:mm'}}</span></mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="signatureCreation">
+      <mat-header-cell *matHeaderCellDef [ngClass]="displayColumn.signatureCreation === false ? 'hide' : ''">
+        <div class="mat-table-header-custom">
+          <span mat-sort-header="signatureCreation">
+            {{'CREATION_SIGNATURE' | translate}}
+          </span>
+        </div>
+      </mat-header-cell>
+      <mat-footer-cell [ngClass]="displayColumn.signatureCreation === false ? 'hide' : ''" *matFooterCellDef>
+        <search-by-column [(columnName)]="search.signatureCreation" (columnNameChange)="applyFilter({columnName: 'signatureCreation', filterValue: search.signatureCreation})"></search-by-column>
+      </mat-footer-cell>
+      <mat-cell *matCellDef="let domain" [ngClass]="displayColumn.signatureCreation === false ? 'hide' : ''"> {{ domain.signatureCreation }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="signatureModification">
+      <mat-header-cell mat-header-cell *matHeaderCellDef [ngClass]="displayColumn.signatureModification === false ? 'hide' : ''">
+        <div class="mat-table-header-custom">
+          <span mat-sort-header="signatureModification">
+            {{'MODIFICATION_SIGNATURE' | translate}}
+          </span>
+        </div>
+      </mat-header-cell>
+      <mat-footer-cell [ngClass]="displayColumn.signatureModification === false ? 'hide' : ''" *matFooterCellDef>
+        <search-by-column [(columnName)]="search.signatureModification" (columnNameChange)="applyFilter({columnName: 'signatureModification', filterValue: search.signatureModification})"></search-by-column>
+      </mat-footer-cell>
+      <mat-cell mat-cell *matCellDef="let domain" [ngClass]="displayColumn.signatureModification === false ? 'hide' : ''"> {{ domain.signatureModification }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="siteCreation">
+      <mat-header-cell [ngClass]="displayColumn.siteCreation === false ? 'hide' : ''" *matHeaderCellDef>
+        <div class="mat-table-header-custom">
+          <span mat-sort-header="siteCreation">
+            {{'CREATION_SITE' | translate}}
+          </span>
+        </div>
+      </mat-header-cell>
+      <mat-footer-cell [ngClass]="displayColumn.siteCreation === false ? 'hide' : ''" *matFooterCellDef>
+        <search-by-column [(columnName)]="search.siteCreation" (columnNameChange)="applyFilter({columnName: 'siteCreation', filterValue: search.siteCreation})"></search-by-column>
+      </mat-footer-cell>
+      <mat-cell *matCellDef="let domain" [ngClass]="displayColumn.siteCreation === false ? 'hide' : ''"> {{ domain.siteCreation }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="siteModification">
+      <mat-header-cell *matHeaderCellDef [ngClass]="displayColumn.siteModification === false ? 'hide' : ''">
+        <div class="mat-table-header-custom">
+          <span mat-sort-header="siteModification">
+            {{'MODIFICATION_SITE' | translate}}
+          </span>
+        </div>
+      </mat-header-cell>
+      <mat-footer-cell [ngClass]="displayColumn.siteModification === false ? 'hide' : ''" *matFooterCellDef>
+        <search-by-column [(columnName)]="search.siteModification" (columnNameChange)="applyFilter({columnName: 'siteModification', filterValue: search.siteModification})"></search-by-column>
+      </mat-footer-cell>
+      <mat-cell *matCellDef="let domain" [ngClass]="displayColumn.siteModification === false ? 'hide' : ''"> {{ domain.siteModification }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef [translate]="'ACTIONS'"></mat-header-cell>
+      <mat-cell *matCellDef="let domain">
+        <mat-icon class="cursor" (click)="openModal(domain.codeDomain)" matTooltip="{{ 'UPDATE' | translate }}" matTooltipPosition="above">edit</mat-icon>
+        <mat-icon class="cursor" (click)="deleteModal(domain.codeDomain)" matTooltip="{{ 'REMOVE' | translate }}" matTooltipPosition="above">clear</mat-icon>
+      </mat-cell>
+      <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+  </mat-paginator>
+
+</div>
+
+<div class="action-table" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
+  <button mat-mini-fab color="primary" (click)="openModal()">
+    <mat-icon>add</mat-icon>
+  </button>
+  <button mat-mini-fab color="primary" (click)="displayOptions = !displayOptions" [matMenuTriggerFor]="tableMenu" hide-options-menu="hideOptionsMenu()">
+    <mat-icon matTooltip="{{'DISPLAY_MENU' | translate}}" matTooltipPosition="above">list</mat-icon>
+  </button>
+  <export-excel [exportList]="list"></export-excel>
+</div>
+
+<mat-menu #tableMenu="matMenu">
+  <h3 mat-subheader (click)="$event.stopPropagation();"> {{ 'SELECT_COLUMN' | translate }} </h3>
+  <mat-selection-list (click)="$event.stopPropagation();">
+    <mat-list-option [selected]="displayColumn.codeDomain" (click)="displayColumn.codeDomain = !displayColumn.codeDomain" color="primary">
+    {{ 'CODE' | translate }} </mat-list-option>
+    <mat-list-option [selected]="displayColumn.libelleDomainEN" (click)="displayColumn.libelleDomainEN = !displayColumn.libelleDomainEN">
+    {{ 'NAME' | translate }} </mat-list-option>
+    <mat-list-option [selected]="displayColumn.libelleDomain" (click)="displayColumn.libelleDomain = !displayColumn.libelleDomain">
+    {{ 'NAME_FR' | translate }} </mat-list-option>
+    <mat-list-option [selected]="displayColumn.dateCreation" (click)="displayColumn.dateCreation = !displayColumn.dateCreation">
+    {{ 'CREATION_DATE' | translate }} </mat-list-option>
+    <mat-list-option [selected]="displayColumn.dateModification" (click)="displayColumn.dateModification = !displayColumn.dateModification">
+    {{ 'MODIFICATION_DATE' | translate }} </mat-list-option>
+    <mat-list-option [selected]="displayColumn.signatureCreation" (click)="displayColumn.signatureCreation = !displayColumn.signatureCreation">
+    {{ 'CREATION_SIGNATURE' | translate }} </mat-list-option>
+    <mat-list-option [selected]="displayColumn.signatureModification" (click)="displayColumn.signatureModification = !displayColumn.signatureModification">
+    {{ 'MODIFICATION_SIGNATURE' | translate }} </mat-list-option>
+    <mat-list-option [selected]="displayColumn.siteCreation" (click)="displayColumn.siteCreation = !displayColumn.siteCreation">
+    {{ 'CREATION_SITE' | translate }} </mat-list-option>
+    <mat-list-option [selected]="displayColumn.siteModification" (click)="displayColumn.siteModification = !displayColumn.siteModification">
+    {{ 'MODIFICATION_SITE' | translate }} </mat-list-option>
+  </mat-selection-list>
+</mat-menu> -->
+<app-array-display-ref-table [data]="list" [option]="option"></app-array-display-ref-table>

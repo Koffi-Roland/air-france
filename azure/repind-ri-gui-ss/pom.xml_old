@@ -1,0 +1,228 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	
+	
+			
+
+	<!-- !!! DO NOT REMOVE/CHANGE THE <parent>[...]</parent> SECTION !!! Please
+		contact DI.NB through http://fds.airfrance.fr if needed. -->
+	<parent>
+		<groupId>com.afklm.maven.pom</groupId>
+		<artifactId>af-projects-pom</artifactId>
+		<version>4.0.1</version>
+	</parent>
+
+	<groupId>com.afklm.sic2</groupId>
+	<artifactId>sic2-ss</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>sic2Commons</module>
+		<module>sic2Api</module>
+	</modules>
+
+	<scm>
+		<connection>scm:git:${afkl.git.url}/scm/${project.artifactId}/${project.artifactId}.git</connection>
+		<developerConnection>scm:git:${afkl.git.url}/scm/${project.artifactId}/${project.artifactId}.git</developerConnection>
+		<url>${afkl.git.url}/projects/${project.artifactId}/repos/${project.artifactId}/browse</url>
+	</scm>
+
+	<properties>
+		<jersey2.version>2.0-m11</jersey2.version>
+		<jersey1.version>1.16</jersey1.version>
+		<c3p0.version>0.9.1.2</c3p0.version>
+		<hibernate.version>5.2.10.Final</hibernate.version>
+		<slf4j.version>1.7.5</slf4j.version>
+		<logback.version>1.1.3</logback.version>
+		<jackson.version>2.8.5</jackson.version>
+		<spring.version>4.3.6.RELEASE</spring.version>
+		<org.springframework.security.version>4.2.1.RELEASE</org.springframework.security.version>
+		<jdbc.postgresql.version>9.3-1101-jdbc41</jdbc.postgresql.version>
+	</properties>
+
+	<!-- Permet de définir pour les pom fils des préférences sur les portées
+		et les versions. Il faut quand même explicitement déclarer les dépendances
+		dans les pom fils -->
+
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- Dependency on commons module -->
+			<dependency>
+				<groupId>com.afklm.sic2</groupId>
+				<artifactId>sic2Commons</artifactId>
+				<version>${project.version}</version>
+				<scope>compile</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.struts</groupId>
+				<artifactId>struts-core</artifactId>
+				<version>${struts.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>log4j-over-slf4j</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-core</artifactId>
+				<version>${logback.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>${logback.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>c3p0</groupId>
+				<artifactId>c3p0</artifactId>
+				<version>${c3p0.version}</version>
+			</dependency>
+
+			<!-- ==== Hibernate ==== -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-ehcache</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-entitymanager</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-c3p0</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate.jakarta.persistence</groupId>
+				<artifactId>hibernate-jpa-2.1-api</artifactId>
+				<version>1.0.0.Final</version>
+			</dependency>
+			
+			<!-- Jackson -->
+			<dependency>
+ 				<groupId>com.fasterxml.jackson.core</groupId>
+  				<artifactId>jackson-annotations</artifactId>
+    			<version>${jackson.version}</version>
+			</dependency>
+			<dependency>
+    			<groupId>com.fasterxml.jackson.core</groupId>
+    			<artifactId>jackson-databind</artifactId>
+    			<version>${jackson.version}</version>
+			</dependency>
+			
+			<!-- ==== Spring ==== -->
+			<!-- cf http://www.javacodegeeks.com/2013/05/spring-security-with-maven.html -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-orm</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
+			<dependency>
+    			<groupId>org.springframework</groupId>
+    			<artifactId>spring-expression</artifactId>
+    			<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+    			<groupId>org.springframework</groupId>
+    			<artifactId>spring-web</artifactId>
+    			<version>${spring.version}</version>
+			</dependency>
+			<!-- ==== Spring data ==== -->
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-jpa</artifactId>
+				<version>1.11.1.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-rest-webmvc</artifactId>
+				<version>2.6.0.RELEASE</version>
+			</dependency>
+			
+			<!-- DB connector -->
+			<dependency>
+			  	<groupId>org.postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+			  	<version>${jdbc.postgresql.version}</version>
+			</dependency>
+			
+			<!-- Test scope -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${spring.version}</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+</project>

@@ -1,0 +1,23 @@
+bases:
+  - ../base
+
+resources:
+  - ingress.yaml
+
+nameSuffix: -cae
+
+namespace: repind-cae
+
+commonLabels:
+  app.kubernetes.io/name: search-gin-by-phone
+  app.kubernetes.io/instance: search-gin-by-phone-cae
+
+images:
+  - name: harbor-vlb.af-klm.com/cdm/search-gin-by-phone
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+patchesStrategicMerge:
+  - replica-extra-options.yaml
+  - deploy-profile.yaml

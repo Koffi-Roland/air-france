@@ -1,0 +1,25 @@
+.step-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 16px 12px;
+}
+
+.mat-dialog-content {
+  height: 75%;
+  overflow: auto;
+  margin: 0;
+}
+
+app-individual-update-form,
+app-individual-profile-update-form {
+  width: 75%;
+}
+
+app-stepper-controller {
+  width: 100%;
+}
+
+.confirmation-button {
+  margin: 4vh 0;
+}

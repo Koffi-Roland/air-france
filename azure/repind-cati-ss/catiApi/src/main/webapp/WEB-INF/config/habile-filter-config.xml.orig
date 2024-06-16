@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE HabileFilterConfiguration PUBLIC "-//Air France KLM//DTD Habile Configuration 2.3//EN" "habile-filter-config_2_3.dtd">
+<HabileFilterConfiguration>
+	<!--AIR FRANCE - DI.NB.TA -->
+	<!--configuration des de la connexion LDAP -->
+	<!--ENV-LDAP-->
+	<!-- SimulationSection allowAnonymousUsers="false" enabled="true" enabledRemoteUser="true" enabledSMUser="true" enabledSSO="true" loginInfoScreen="false" searchProfilesInLdapDictionnary="false" -->
+<<<<<<< HEAD
+	<SimulationSection allowAnonymousUsers="true" enabled="true" enabledRemoteUser="true" enabledSMUser="true" enabledSSO="false" loginInfoScreen="false" searchProfilesInLdapDictionnary="false" loginInfoScreenDelay="2">
+=======
+	<SimulationSection allowAnonymousUsers="true" enabled="false" enabledRemoteUser="true" enabledSMUser="true" enabledSSO="false" loginInfoScreen="true" searchProfilesInLdapDictionnary="false" loginInfoScreenDelay="2">
+>>>>>>> develop
+		<User login="user">
+			<Profile name="P_USER"/>
+		</User>
+		<User login="admin">
+			<Profile name="P_ADMIN"/>
+			<Profile name="P_CATI_ADMIN"/>
+			<Profile name="P_CATI_ADMIN_COMMPREF"/>
+		</User>
+		<User login="test">
+			<Profile name="P_ADMIN"/>
+			<Profile name="P_USER"/>
+		</User>
+	</SimulationSection>
+
+	<EngineSection connectorClass="com.airfrance.habile.filter.ws000479.WS000479Manager">
+		<MetaRefresh>
+		</MetaRefresh>
+	</EngineSection>
+
+	<ProfileSection checkUserHasOneProfile="true">
+		<Profile name="P_CATI_ADMIN"/>
+		<Profile name="P_CATI_ADMIN_COMMPREF"/>
+		<Profile name="P_USER"/>
+		<Profile name="P_ADMIN"/>
+	</ProfileSection>
+
+	<TemplateSection tmplLogoutSimule="com/afklm/cati/cati/habile/logoutsimule.tmpl"/>
+	<PathSection defaultType="prive" defaultAuthenticationType="BASIC">
+		<PathPublic path="(?i).*css.*" />
+		<!-- <PathPublic path="(?i).*resources.*" /> -->
+	</PathSection>
+</HabileFilterConfiguration>

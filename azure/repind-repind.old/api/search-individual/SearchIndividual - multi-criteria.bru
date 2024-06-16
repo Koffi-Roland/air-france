@@ -1,0 +1,26 @@
+meta {
+  name: SearchIndividual - multi-criteria
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{search-individual-url}}/v2/search-individual?firstname=ORACLE&lastname=NINETEEN&cin=1234&email=toto@gmail.com
+  body: none
+  auth: none
+}
+
+query {
+  firstname: ORACLE
+  lastname: NINETEEN
+  cin: 1234
+  email: toto@gmail.com
+}
+
+vars:pre-request {
+  MS: search-individual
+}
+
+assert {
+  res.status: eq 200
+}

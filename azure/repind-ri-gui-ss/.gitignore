@@ -1,0 +1,29 @@
+target/
+.cordova/
+.tmp/
+node_modules/
+jspm_packages/
+coverage/
+node/
+dist/
+apache.log
+.springBeans
+.iml
+*.log
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/

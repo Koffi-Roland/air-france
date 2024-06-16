@@ -1,0 +1,27 @@
+.not-found {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 25vh;
+}
+
+.big-text {
+  text-align: center;
+  font-size: 2em;
+}
+
+.error {
+  font-size: 5em;
+}
+
+.not-found-message {
+  font-size: 1.5em;
+}
+
+.home {
+  margin-top: 30px;
+  font-size: 5em;
+  height: auto;
+  width: auto;
+}

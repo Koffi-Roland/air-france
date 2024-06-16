@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<!-- !!! DO NOT REMOVE/CHANGE THE <parent>[...]</parent> SECTION !!! Please 
+	contact DI.NB through http://fds.airfrance.fr if needed. -->
+	<parent>
+		<groupId>com.afklm.repind</groupId>
+		<artifactId>repind-root</artifactId>
+		<version>0.1.0-SNAPSHOT</version>
+		<relativePath>../../../pom.xml</relativePath>
+	</parent>
+
+	<!-- Description -->	
+	<groupId>com.afklm.repind.commons</groupId>
+	<artifactId>repind-entities</artifactId>
+	<packaging>jar</packaging>
+	  	
+ 	<dependencies>
+ 	<!-- Compatibility library declare on top to avoid conflict with overriden method signature -->
+ 	<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+ 	
+          <dependency>
+ 		  <!-- Other solution way more performant than dozer now exist. If you have some time, replace dozer by something else -->
+		  <groupId>net.sf.dozer</groupId>
+		  <artifactId>dozer</artifactId>
+		  <version>5.5.1</version>
+			<exclusions>
+            	<exclusion>
+	                <groupId>org.slf4j</groupId>
+                	<artifactId>jcl-over-slf4j</artifactId>
+            	</exclusion>
+            	<exclusion>
+	                <groupId>org.slf4j</groupId>
+                	<artifactId>slf4j-api</artifactId>
+            	</exclusion>
+
+        	</exclusions>
+        	<scope>compile</scope>
+		</dependency>	
+
+		<dependency>
+        	<groupId>commons-codec</groupId>
+        	<artifactId>commons-codec</artifactId>
+        </dependency>
+    
+		<dependency>
+    		<groupId>org.slf4j</groupId>
+    		<artifactId>jcl-over-slf4j</artifactId>
+    		<version>1.7.28</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.sun.xml.bind</groupId>
+		    <artifactId>jaxb-core</artifactId>
+		    <version>4.0.2</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.sun.xml.bind</groupId>
+		    <artifactId>jaxb-impl</artifactId>
+		    <version>4.0.2</version>
+		</dependency>
+		 
+		<dependency>
+		    <groupId>javax.activation</groupId>
+		    <artifactId>activation</artifactId>
+		    <version>1.1.1</version>
+		</dependency>
+
+		<!-- Utilities -->	
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.5</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.google.guava</groupId>
+		    <artifactId>guava</artifactId>
+		    <version>32.0.0-jre</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-validator</artifactId>
+		    <version>5.4.3.Final</version>
+		</dependency> 
+		 <!-- End Adhesion -->
+		 		
+		 <!-- Library with some doubt on their utility but required to compile. -->
+		<dependency>
+		    <groupId>commons-beanutils</groupId>
+		    <artifactId>commons-beanutils</artifactId>
+		    <version>1.9.4</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>dk.brics.automaton</groupId>
+			<artifactId>automaton</artifactId>
+			<version>1.11-8</version>			
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.afklm.repind.commons</groupId>
+			<artifactId>ref-commons</artifactId>
+			<version>${project.version}</version>		
+		</dependency>
+
+
+
+		<!-- lib specifique TU -->
+		  <dependency>
+		    <groupId>com.github.stephenc.jcip</groupId>
+		    <artifactId>jcip-annotations</artifactId>
+		    <version>1.0-1</version>
+		    <scope>test</scope>
+		  </dependency>
+		
+
+        <!-- ===== LIBS for R/R consumer ==== -->
+
+        <!-- SOA framework for R/R consumer -->
+        <dependency>
+            <groupId>com.afklm.soa.jaxws</groupId>
+            <artifactId>sdfw-consumer-deps</artifactId>
+            <version>${afws.version}</version>
+            <type>pom</type>
+        </dependency>
+        
+		<dependency>
+		  <groupId>com.afklm.soa.jaxws</groupId>
+		  <artifactId>sdfw-provider-deps</artifactId>
+          <version>${afws.version}</version>
+		  <type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>com.afklm.soa.jaxws</groupId>
+  			<artifactId>jaxws-jms</artifactId>
+  			<version>${afws.version}</version>
+  		</dependency>
+        <dependency>
+            <groupId>com.afklm.soa.jaxws</groupId>
+            <artifactId>sdfw-async-deps</artifactId>
+            <version>${afws.version}</version>
+            <type>pom</type>
+        </dependency>
+
+        <!-- SOA framework security -->
+        <dependency>
+            <groupId>com.afklm.soa.jaxws.wss</groupId>
+            <artifactId>jaxws-sec</artifactId>
+            <version>${afws.version}</version>
+        </dependency>
+        
+        <!-- FILE MQ -->
+		<dependency>
+		  <groupId>com.ibm.mq</groupId>
+		  <artifactId>com.ibm.mqjms</artifactId>
+		  <version>${mq.version}</version>
+		<!-- REPIND-1643 -->	
+	  		<scope>provided</scope> 
+		</dependency>
+		
+		<dependency>
+		  <groupId>com.afklm.mq</groupId>
+		  <artifactId>mq-runtime</artifactId>
+		  <version>${mq.version}</version>
+		  <type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<!-- <execution>
+                      <id>Jar Package</id>
+                      <phase>package</phase>
+                      <goals>
+                        <goal>jar</goal>
+                      </goals>
+                    </execution> -->
+					<execution>
+						<id>Jar Tests Package</id>
+						<phase>package</phase>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

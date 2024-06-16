@@ -1,0 +1,3 @@
+com\afklm\batch\propagate\email\validation\ProcessorValidationTest.class
+com\afklm\batch\propagate\email\utils\GenerateData.class
+com\afklm\batch\propagate\email\config\PropagateEmailConfigTest.class

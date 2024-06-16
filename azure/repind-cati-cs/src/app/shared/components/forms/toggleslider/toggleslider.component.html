@@ -1,0 +1,6 @@
+<div class="mat-form-field-wrapper" [formGroup]="group" [hidden]="field.isHidden">
+    <label>{{field.label | translate}} ?</label>
+    <mat-slide-toggle color="primary" class="with-margin" [checked]="formControl.value === field.options[0].trueValue"
+        (change)="setValue($event)">
+    </mat-slide-toggle>
+</div>

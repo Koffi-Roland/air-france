@@ -1,0 +1,77 @@
+spring:
+  datasource:
+    tns_admin_env: TEST_ACCEPTANCE
+    url: jdbc:oracle:thin:@REPIND_ITE.WORLD
+    maxPoolSize: 1
+  kafka:
+    properties:
+      security:
+        protocol: SASL_PLAINTEXT
+      sasl.kerberos.service.name: kafka
+
+kafka:
+  topic: test-topic
+  group-id: test-group-id
+
+az-vault:
+  namespace: kv-ri-np-73c0
+  secrets:
+    file_path: /tmp
+    jaas:
+      file_name: client_jaas_repind.conf
+      secretName: ri-ite-client-jaas-config
+    keytab:
+      file_name: repind_DTA.FRANCE.AIRFRANCE.FR.keytab
+      secretName: ri-ite-keytab
+    clientId:
+      secretName: ${SFMC_CLIENT_ID}
+    secretId:
+      secretName: ${SFMC_SECRET_ID}
+
+vault:
+  uri: https://vault-tls-cae.airfranceklm.com
+  namespace: repind
+  env: dev
+  credentials:
+    role_id: ${vault_role_id}
+    secret_id: ${vault_secret_id}
+
+services:
+  request:
+    token:
+      url: https://mc-7vmlnqc8hsgnywdv6j7fhrxj4.auth.marketingcloudapis.com/v2/token
+      grant-type: "client_credentials"
+      private-key: |-
+        -----BEGIN PRIVATE KEY-----
+        MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCant9WLzTHr+P4
+        opMPCgQsKxUxy8Ai+DcAjK30fRkFcpUWOdRTkmDkyVfRyJUut38UEfnlmJkzzO/i
+        OeWQ3Sjkoesq2jM66ILk0Ca3LmKZwuXK9uA09cCZPzlY7egKQBB6y9OXQy+a3npj
+        dlDHYGi1kePy4xi3JFsB6+XQ2ulSJJVy5uXDgU2XuCsheFZJXrdW56Ezgcc77zGT
+        aDQBtvwnx1u4UknhxvdWaMws0L/yQ1jkuZDJBVr7HSFXE1/p6MVrX1TUHb4tswUr
+        jqKg0637vQdNjfnxXkORPpXRQWjEdDbnGvWEZ/Lr0G1WrRxDHAO3OhRccYDBg0r7
+        Z5Fvpm5TAgMBAAECggEBAJO+Ry21AbvlJ/KGdfqi2YXSzPe99yPzBatywS2i82uv
+        JyILtAT/E7LJaS69eT8gez8URjLK82j55CXIqMEZcl+1EF7sDJO3ZIt7EeNrYTAH
+        eUfNSkOQp65HKWb+PQC+YoDTjqU0v6I9/7hWb61zQ9prQuLteMpW5NcbL4e4BcZE
+        TonufcTPv8ZIhecMRgHNM9qJ4gSMCrYgCLNVc70xByv6fGipz8TCbJE5jY/pn71l
+        zi+18OjF70k0PBivQ8BZDMCPiYOKDKvpEDP7+YgJbcmRBym5u0CFKrSxRDgF3uel
+        f1C8A0I6sxBWQcipBYG+faxxHw5Pka94+6G9ZHEYflECgYEAx1DkBksZmgi1f1rl
+        lOnGHiR9yHFtm0kTde5T1t5fTkl46cigbieW3u+OwrgNdSaTesVtPIL11saecmfW
+        HON+GPwTTdlnq2QXgxkF/qKgpea4HZMPMtmnWbwCXVKh6Q+j2MNZucw7wdbhfWsL
+        lAmuVktsaDSfTCH9C40lc1rf7EUCgYEAxpf0Xq8nYMrdsrw4v8uORgPT1JhCEzL4
+        x3IJMOL+ccMfW4/czA9Gb10Smo74a+eJU9fGDTJJmUlSOZJnKYikMhknLXOODQHZ
+        /Sqk6DrrOvUhGduWkvxW45Qv0Fv7FUOwR/DWUb6j2djsioaONApqjGLW1wItEvdf
+        i8q9z+RFdbcCgYEApK0FqNl1rplRc4ajNpSrVo4pymlE+M64oHAnntidf64ek3Fq
+        c3iMI2dj2Sd+HvOfWAk0BpHhEfGKSdXWxomCzpu+S0y7ZZTOBEexdz/gYRGtvumY
+        3heMOAypG3fBRDDi254TTPobyTyDkz7VExuoia3JRJNtpdZTHq8gaR2E8s0CgYAz
+        WPy9Mop681kJKrN9m7MIlVrDAC8taaN7ZhfMRRTG8017TiInvNdYWfdCcS74L2CJ
+        hiPWK6dt89BHxHvZ+FOEBI7lqJgU8uKbG9iRlxJVJyZM2kL/dDE/HISUWgP8hojg
+        wPuZHTKeVAEs/AdumzbbX37vDsf6vG0+5sfXJc1z1wKBgEskIweNshSLsPZ+b0zp
+        2Cki/TI26/Wwz3DaqkkdGtl0QQUSz429vGuoyx98Pi3NC30+9YdOSUayRsF9teMU
+        RJ0pAej33l2H+zYSAldrDTWEmbGep5hpsTOi6hLpSyKA4GOp6aY0bS37Bm81ZR+t
+        bBZvW5fm6MgiFvSWEFaWG8hS
+        -----END PRIVATE KEY-----
+      username: mail.sic.it
+      request-fixed-delay: 3600000
+    upsert:
+      individus:
+        url: https://mc-7vmlnqc8hsgnywdv6j7fhrxj4.rest.marketingcloudapis.com/hub/v1/dataevents/key:RI_APIFeed_Staging/rowset

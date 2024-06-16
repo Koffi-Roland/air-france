@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="dataset.xsd">
+	<REF_PCS_FACTOR  SCODE ="C" SLIBELLE ="CONTRACT" SFACTOR ="100" />
+	<REF_PCS_FACTOR  SCODE ="NC" SLIBELLE ="NON CONTRACT" SFACTOR ="20" />
+</dataset>

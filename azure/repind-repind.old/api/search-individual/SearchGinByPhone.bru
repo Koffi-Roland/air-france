@@ -1,0 +1,23 @@
+meta {
+  name: SearchGinByPhone
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{search-individual-url}}/v2/search-individual?internationalPhoneNumber=phone
+  body: none
+  auth: none
+}
+
+query {
+  internationalPhoneNumber: phone
+}
+
+vars:pre-request {
+  MS: search-individual
+}
+
+assert {
+  res.status: eq 200
+}

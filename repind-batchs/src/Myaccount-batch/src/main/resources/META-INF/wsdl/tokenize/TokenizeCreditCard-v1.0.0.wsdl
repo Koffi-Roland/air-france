@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Uploaded in SOA repository on 2014-06-27 09:33:34.898--><!--SOA repository reference: W001165-v1.0.0--><!--
+Template for "AS IS" WSDL generation based on amadeus 1A interface definition
+
+Replaced shall be done case sensitive:
+ 
+PAYTokenizeCreditCard : 1A service name ( ex: DCSLST_GetPassengerList)
+passenger : afklm domain (ex: passenger )
+--><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.af-klm.com/services/passenger/PAYTokenizeCreditCard-v1/wsdl" xmlns:rsp="http://www.af-klm.com/services/passenger/PAYTokenizeCreditCard-v1/PAYTokenizeCreditCardResponse/xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sft="http://www.af-klm.com/services/common/SystemFault-v1/xsd" xmlns:req="http://www.af-klm.com/services/passenger/PAYTokenizeCreditCard-v1/PAYTokenizeCreditCardRequest/xsd" name="PAYTokenizeCreditCard-v1" targetNamespace="http://www.af-klm.com/services/passenger/PAYTokenizeCreditCard-v1/wsdl">
+  <wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="UNTWSPortBindingPolicy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+            <!-- If not omitted then the client side expects a timestamp in the answer <sp:IncludeTimestamp /> -->
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+              <wsp:Policy>
+                <sp:WssUsernameToken10 />
+              </wsp:Policy>
+            </sp:UsernameToken>
+          </wsp:Policy>
+        </sp:SignedSupportingTokens>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <types>
+    <xsd:schema>
+      <!--previous value passenger_PAYTokenizeCreditCard-v1_Request.xsd updated--><xsd:import namespace="http://www.af-klm.com/services/passenger/PAYTokenizeCreditCard-v1/PAYTokenizeCreditCardRequest/xsd" schemaLocation="http://soarepo.airfrance.fr/repository/jcr/view/schema/ServiceSchemaContent-1136361"/>
+      <!--previous value passenger_PAYTokenizeCreditCard-v1_Response.xsd updated--><xsd:import namespace="http://www.af-klm.com/services/passenger/PAYTokenizeCreditCard-v1/PAYTokenizeCreditCardResponse/xsd" schemaLocation="http://soarepo.airfrance.fr/repository/jcr/view/schema/ServiceSchemaContent-1136357"/>
+      <!--previous value SystemFault-v1.xsd updated--><xsd:import namespace="http://www.af-klm.com/services/common/SystemFault-v1/xsd" schemaLocation="http://soarepo.airfrance.fr/repository/jcr/view/schema/ServiceSchemaContent-1136360"/>
+    </xsd:schema>
+  </types>
+  <message name="msgPAYTokenizeCreditCardRequest">
+    <part element="req:PAYTokenizeCreditCardRequest" name="body"/>
+  </message>
+  <message name="msgPAYTokenizeCreditCardResponse">
+    <part element="rsp:PAYTokenizeCreditCardResponse" name="body"/>
+  </message>
+  <message name="msgPAYTokenizeCreditCardSystemFault">
+    <part element="sft:SystemFault" name="body"/>
+  </message>
+  <portType name="PAYTokenizeCreditCard-v1_0">
+    <operation name="PAYTokenizeCreditCard">
+      <input message="tns:msgPAYTokenizeCreditCardRequest" name="PAYTokenizeCreditCardRequest"/>
+      <output message="tns:msgPAYTokenizeCreditCardResponse" name="PAYTokenizeCreditCardResponse"/>
+      <fault message="tns:msgPAYTokenizeCreditCardSystemFault" name="PAYTokenizeCreditCardSystemFault"/>
+    </operation>
+  </portType>
+  <binding name="PAYTokenizeCreditCard-v1_0-soap11http" type="tns:PAYTokenizeCreditCard-v1_0">
+  <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#UNTWSPortBindingPolicy" />
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" required="true"/>
+    <operation name="PAYTokenizeCreditCard">
+      <wsdlsoap:operation soapAction="http://www.af-klm.com/services/passenger/PAYTokenizeCreditCard-v1_0/PAYTokenizeCreditCard" style="document"/>
+      <input name="PAYTokenizeCreditCardRequest">
+        <wsdlsoap:body use="literal"/>
+      </input>
+      <output name="PAYTokenizeCreditCardResponse">
+        <wsdlsoap:body use="literal"/>
+      </output>
+      <fault name="PAYTokenizeCreditCardSystemFault">
+        <wsdlsoap:fault name="PAYTokenizeCreditCardSystemFault" use="literal"/>
+      </fault>
+    </operation>
+  </binding>
+  <service name="PAYTokenizeCreditCard-v1_0">
+    <port binding="tns:PAYTokenizeCreditCard-v1_0-soap11http" name="PAYTokenizeCreditCard-v1_0-soap11http">
+      <documentation>
+        <wsi:Claim xmlns:wsi="http://ws-i.org/schemas/conformanceClaim/" conformsTo="http://ws-i.org/profiles/basic/1.1"/>
+      </documentation>
+      <!-- ENV-WS-W001165-LOCATION -->
+      <wsdlsoap:address location="${ENV-WS-W001165-LOCATION}"/>
+    </port>
+  </service>
+</definitions>

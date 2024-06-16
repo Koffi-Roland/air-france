@@ -1,0 +1,129 @@
+meta {
+  name: Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{create-or-update-individual-v8-url}}
+  body: xml
+  auth: none
+}
+
+headers {
+  SOAPAction: "http://www.af-klm.com/services/passenger/CreateUpdateIndividualService-v8/createIndividual"
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+      <soapenv:Body>
+          <ns6:CreateUpdateIndividualRequestElement xmlns:ns6="http://www.af-klm.com/services/passenger/data-v8/xsd"
+              xmlns:ns5="http://www.af-klm.com/services/passenger/response-v8/xsd"
+              xmlns:ns8="http://www.af-klm.com/services/passenger/SicIndividuType-v3/xsd"
+              xmlns:ns7="http://www.af-klm.com/services/passenger/request-v8/xsd"
+              xmlns:ns2="http://www.af-klm.com/services/passenger/SicOsirisType-v1/xsd"
+              xmlns:ns4="http://www.af-klm.com/services/passenger/SoftComputingType-v1/xsd"
+              xmlns:ns3="http://www.af-klm.com/services/passenger/SicCommonType-v1/xsd">
+              <process>W</process>
+              <requestor>
+                  <channel>MOB</channel>
+                  <matricule>REGRESSION</matricule>
+                  <managingCompany>AF</managingCompany>
+                  <context>B2C_HOME_PAGE</context>
+                  <ipAddress>10.100.73.80</ipAddress>
+                  <applicationCode>B2C</applicationCode>
+                  <site>QVI</site>
+                  <signature>REGRESSION_TEST</signature>
+              </requestor>
+              <emailRequest>
+                  <email>
+                      <mediumStatus>V</mediumStatus>
+                      <mediumCode>D</mediumCode>
+                      <email>janis{{randomString}}@joplin.fr</email>
+                  </email>
+              </emailRequest>
+              <individualRequest>
+                  <individualInformations>
+                      <gender>M</gender>
+                      <birthDate>1995-08-28T13:37:34Z</birthDate>
+                      <status>V</status>
+                      <civility>MS</civility>
+                      <lastNameSC>JOPLIN</lastNameSC>
+                      <firstNameSC>JANIS</firstNameSC>
+                  </individualInformations>
+              </individualRequest>
+              <comunicationPreferencesRequest>
+                  <communicationPreferences>
+                      <domain>S</domain>
+                      <communicationGroupeType>N</communicationGroupeType>
+                      <communicationType>AF</communicationType>
+                      <optIn>Y</optIn>
+                      <dateOfConsent>2020-07-07T12:00:00Z</dateOfConsent>
+                      <subscriptionChannel>B2C Home Page</subscriptionChannel>
+                      <media>
+                          <media1>E</media1>
+                      </media>
+                      <marketLanguage>
+                          <market>FR</market>
+                          <language>FR</language>
+                          <optIn>Y</optIn>
+                          <dateOfConsent>2020-07-07T12:00:00Z</dateOfConsent>
+                          <media>
+                              <media1>E</media1>
+                          </media>
+                      </marketLanguage>
+                      <marketLanguage>
+                          <market>NL</market>
+                          <language>NL</language>
+                          <optIn>Y</optIn>
+                          <dateOfConsent>2020-07-07T13:48:26Z</dateOfConsent>
+                          <media>
+                              <media1>E</media1>
+                          </media>
+                      </marketLanguage>
+                      <marketLanguage>
+                          <market>ES</market>
+                          <language>ES</language>
+                          <optIn>Y</optIn>
+                          <dateOfConsent>2020-07-07T13:49:01Z</dateOfConsent>
+                          <media>
+                              <media1>E</media1>
+                          </media>
+                      </marketLanguage>
+                      <marketLanguage>
+                          <market>AE</market>
+                          <language>EN</language>
+                          <optIn>Y</optIn>
+                          <dateOfConsent>2020-07-07T13:49:46Z</dateOfConsent>
+                          <media>
+                              <media1>E</media1>
+                          </media>
+                      </marketLanguage>
+                      <marketLanguage>
+                          <market>BJ</market>
+                          <language>FR</language>
+                          <optIn>Y</optIn>
+                          <dateOfConsent>2020-07-07T13:50:49Z</dateOfConsent>
+                          <media>
+                              <media1>E</media1>
+                          </media>
+                      </marketLanguage>
+                  </communicationPreferences>
+              </comunicationPreferencesRequest>
+          </ns6:CreateUpdateIndividualRequestElement>
+      </soapenv:Body>
+  </soapenv:Envelope>
+}
+
+vars:pre-request {
+  USER: W90000442
+  PASSWORD: pswpsw123
+}
+
+vars:post-response {
+  gin_create: res.body.substring(res.body.indexOf('<gin>') + 5, res.body.indexOf('<gin>') + 5 + 12)
+}
+
+assert {
+  res.status: eq 200
+}

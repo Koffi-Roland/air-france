@@ -1,0 +1,82 @@
+meta {
+  name: CreateOrUpdate
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{create-or-update-individual-v8-url}}
+  body: xml
+  auth: none
+}
+
+headers {
+  SOAPAction: "http://www.af-klm.com/services/passenger/CreateUpdateIndividualService-v8/createIndividual"
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+     <soapenv:Body>
+        <ns5:CreateUpdateIndividualRequestElement xmlns:ns6="http://www.af-klm.com/services/passenger/SicOsirisType-v1/xsd"
+              xmlns:ns5="http://www.af-klm.com/services/passenger/data-v8/xsd"
+              xmlns:ns8="http://www.af-klm.com/services/passenger/request-v8/xsd"
+              xmlns:ns7="http://www.af-klm.com/services/passenger/SicCommonType-v1/xsd"
+              xmlns:ns2="http://www.af-klm.com/services/passenger/response-v8/xsd"
+              xmlns:ns4="http://www.af-klm.com/services/passenger/SoftComputingType-v1/xsd"
+              xmlns:ns3="http://www.af-klm.com/services/passenger/SicIndividuType-v3/xsd">
+           <process>I</process>
+           <requestor>
+              <channel>B2C</channel>
+              <applicationCode>ISI</applicationCode>
+              <site>QVI</site>
+              <signature>REPIND-3232</signature>
+           </requestor>
+           <individualRequest>                                                
+              <individualInformations>                                                            
+                 <identifier>400508465441</identifier> 
+              </individualInformations>                                       
+           </individualRequest>   
+           <preferenceRequest>
+              <preference>
+                 <type>TCC</type>
+                 <preferenceDatas>
+                    <preferenceData>
+                       <key>civility</key>
+                       <value>MR</value>
+                    </preferenceData>
+                    <preferenceData>
+                       <key>email</key>
+                       <value>POI@REP.COM</value>
+                    </preferenceData>
+  			   <preferenceData>
+                       <key>lastname</key>
+                       <value>POIROT</value>
+                    </preferenceData>
+                    <preferenceData>
+                       <key>firstName</key>
+                       <value>VALOU</value>
+                    </preferenceData>
+                    <preferenceData>
+                       <key>FFPNumber</key>
+                       <value>001070184011</value>
+                    </preferenceData>
+                    <preferenceData>
+                       <key>dateOfBirth</key>
+                       <value>01/01/1964</value>
+                    </preferenceData>
+                 </preferenceDatas>
+              </preference>
+           </preferenceRequest>     
+        </ns5:CreateUpdateIndividualRequestElement>
+     </soapenv:Body>
+  </soapenv:Envelope>
+}
+
+vars:pre-request {
+  USER: W90000442
+  PASSWORD: pswpsw123
+}
+
+assert {
+  res.status: eq 200
+}

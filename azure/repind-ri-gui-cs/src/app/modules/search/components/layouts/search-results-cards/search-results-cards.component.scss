@@ -1,0 +1,22 @@
+.content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+app-basic-individual-card {
+  width: 32%;
+  margin: 5px;
+}
+
+@media screen and (max-width: 1450px) {
+  app-basic-individual-card {
+    width: 48%;
+  }
+
+@media screen and (max-width: 948px) {
+  app-basic-individual-card {
+    width: 100%;
+  }
+}
+}

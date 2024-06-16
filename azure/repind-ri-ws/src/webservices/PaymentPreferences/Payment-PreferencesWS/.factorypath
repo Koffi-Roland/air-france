@@ -1,0 +1,3 @@
+<factorypath>
+    <factorypathentry kind="PLUGIN" id="com.ibm.ws.ast.wsfp.annotations.processor" enabled="false" runInBatchMode="false"/>
+</factorypath>

@@ -1,0 +1,31 @@
+{
+  "extra_vars": {
+    "operation": "add",
+    "inputs": {
+      "security_id": "w04776476",
+      "env": "NPR",
+      "identifier": "R000621",
+      "api_version": "v01",
+      "content_format": "openapi",
+      "content_value": "r000621/r000621-v01.yaml",
+      "backend_urls": [
+        {
+          "env": "ITE",
+          "instance": "main",
+          "url": "https://retrieve-payment-preference-rs-ite.azure.airfranceklm.com/api-mgr/mapping/"
+        },
+        {
+          "env": "ACP",
+          "instance": "main",
+          "url": "https://retrieve-payment-preference-rs-acp.azure.airfranceklm.com/api-mgr/mapping/"
+        },
+        {
+          "env": "CAE",
+          "instance": "main",
+          "url": "https://retrieve-payment-preference-rs-cae.azure.airfranceklm.com/api-mgr/mapping/"
+        }
+      ],
+      "policies": {}
+    }
+  }
+}

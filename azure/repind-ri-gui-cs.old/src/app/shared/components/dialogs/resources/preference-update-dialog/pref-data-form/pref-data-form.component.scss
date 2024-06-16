@@ -1,0 +1,21 @@
+form {
+  display: flex;
+}
+
+.form-action-buttons {
+  width: 30%;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 8px 0;
+}
+
+.form-fields {
+  width: 70%;
+}
+
+mat-form-field {
+  width: 100%;
+}

@@ -1,0 +1,112 @@
+//iPad, smartphone
+$break-small: 768px;
+
+mat-tab-group {
+    display: grid;
+    place-content: start;
+    margin-right: 5%;
+    margin-left: 5%;
+    height: 100%;
+    width: 60%;
+}
+
+mat-icon {
+    margin: 1em;
+}
+
+#marketLanguageOptin {
+    text-align: center;
+}
+
+.wrapper {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.icon-big-screen {
+    display: flex;
+    align-items: center;
+}
+
+.tab-content-item {
+    margin: 15%;
+}
+
+.global-optin {
+    margin: 5%;
+}
+
+.let-space {
+    width: 30%;
+}
+
+.separator {
+    height: 100%;
+}
+
+.tooltip-message {
+    display: none;
+    width: 20%; 
+    margin-bottom: 2em;
+}
+
+// Responsive layout for tablets
+@media (max-width: 1275px) {
+   .let-space {
+       width: 50%;
+   }
+
+   .tooltip-message {
+        display: none;
+    }
+}
+
+// Responsive layout for smartphones
+@media (max-width: 950px) { 
+    .let-space {
+        width: 100%;
+    }
+
+    .global-optin {
+        display: unset;
+        height: 5em;
+    }
+
+    mat-divider {
+        display: none;
+    }
+
+    .wrapper {
+        flex-direction: column;
+    }
+
+    mat-tab-group {
+        height: 80%;
+        width: 100%;
+    }
+
+    .icon-big-screen {
+        display: none;
+    }
+
+    .tooltip-message {
+        display: unset;
+    }
+
+    .resize-global-optin-phone {
+        width: 80%;
+    }
+
+ }
+ 
+ .smartphone-with-tooltip {
+    display: flex; 
+    justify-content: center;
+ }
+ 
+.center-wrap {
+    margin-right: 15%;
+}

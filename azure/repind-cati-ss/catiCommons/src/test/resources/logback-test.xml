@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder 
+			by default -->
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- les loggers "héritent" par additivité ("true" par défaut) de l'appender du root logger -->	
+	<logger name="com.afklm" level="warn">
+	</logger>	
+	<logger name="org.hibernate" level="warn">
+	</logger>
+	
+	<!-- ici, pour un même résultat: additivity à false et affectation appender -->	
+	<logger name="org.springframework" level="warn" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>	
+	<logger name="net.sf.ehcache" level="warn">
+	</logger>
+
+	<root level="warn">
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>

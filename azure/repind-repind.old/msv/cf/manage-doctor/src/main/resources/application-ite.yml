@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    tns_admin_env: TEST_ACCEPTANCE
+    url: jdbc:oracle:thin:@REPIND_ITE.WORLD
+
+vault:
+  uri: https://vault-tls-cae.airfranceklm.com
+  namespace: repind
+  env: dev
+  credentials:
+    role_id: ${vault_role_id}
+    secret_id: ${vault_secret_id}
+
+services:
+  MANAGE_DOCTOR_ATTRIBUTES:
+    url: http://manage-doctor-attributes-ite:8080/
+

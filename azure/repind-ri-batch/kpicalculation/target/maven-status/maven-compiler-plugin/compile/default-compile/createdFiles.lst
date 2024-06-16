@@ -1,0 +1,8 @@
+com\afklm\batch\kpicalculation\writer\KPICalculationWriter.class
+com\afklm\batch\kpicalculation\BatchKPICalculation.class
+com\afklm\batch\kpicalculation\service\KPICalculationService.class
+com\afklm\batch\kpicalculation\processor\KPICalculationProcessor.class
+com\afklm\batch\kpicalculation\model\KPIStatModel.class
+com\afklm\batch\kpicalculation\processor\OldDataProcessor.class
+com\afklm\batch\kpicalculation\writer\OldDataWriter.class
+com\afklm\batch\kpicalculation\config\KPICalculationConfig.class

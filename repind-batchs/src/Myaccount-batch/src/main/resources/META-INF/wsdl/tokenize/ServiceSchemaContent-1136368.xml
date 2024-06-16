@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Uploaded in SOA repository on 2014-06-27 09:44:36.291--><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://xml.amadeus.com/MTKNGQ_13_2_1A" elementFormDefault="qualified" targetNamespace="http://xml.amadeus.com/MTKNGQ_13_2_1A">
+  <xs:element name="PAY_DetokenizeToken">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Get Credit Card Number From Token</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="99" name="ccTokenCVVToken">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="requestId" type="ItemNumberType"/>
+              <xs:element maxOccurs="2" name="token" type="ItemReferencesAndVersionsType">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en">Conveys the credit card token</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ItemNumberIdentificationType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Goods identification for a specified source</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="number" type="AlphaNumericString_Length1To35"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ItemNumberType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">To specify an item number</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element maxOccurs="99" name="itemNumberDetails" type="ItemNumberIdentificationType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ItemReferencesAndVersionsType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Exchange and link unique identifiers</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="uniqueReference" type="AlphaNumericString_Length1To35">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">the unique ID of the credit card stored in Fort Knox.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="AlphaNumericString_Length1To35">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: an..35</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="35"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema><!-- SchemaRules="2010/01"--><!--Created with SchemaBuilder 5.0.0 by Amadeus S.A.S.--><!--"Amadeus Proprietary and Confidential Information: unauthorized use and disclosure strictly forbidden. 2010 - Amadeus s.a.s - All Rights Reserved."--><!--Build Key:
+1F8B08000000000000009593516FD33010C7DFFD29ACBDF0809A266508A9921FB2B52B08DA952E7B40AA5479F1B5B5E6D8C1E74C0BD3BE3BE724654342025E12FB6CDFD9BFFFFF16F3D57C9317F3D9EE7A252669763E4A27A32CE34503A864CBB3F369F67E9A4EF86259BC4DD3699AB27C9987B606BCD206ACAC40506077215197450C278FA8D89D4458D11AD6B204710CA19E8EC78F9549642515349894AE1AB3BBC62A0333EDC51821046D0F3856BA44561EA1BCBFA16F2545F00DB0D229A02D28ACB3715655606936AC55B5B46D2C276C630C05EAD6EBC33188B3BC2FC7D7DED55E4390BEE5D22A7EE9EC5E2BCAA1A5E19FECDEF94A06EDEC94375636E1E8BCFE018A3708DD76A5B1340E1B0F1C83D765302DA733775A518E8413B7948FF8A9182632C13837866FE23D906FE8F6FE015472C614EC6563C2C2D71197127B69109872CD9D811BF8DE802D612D43791C56C05EFC134CB02F7B9EA240CFBBA707F048AFA2910703948646F24015DA67B627F9368D21662E2AD9CD3B39BBC371F49704C695D20CC88D3B28927136DD7E9CE7B3ED5CE9BD2C43E19CC1EDBCD8CD340669C3252945FA9172DBA5F4F71015EFF760A7356EBFB803E5B287EE225A5D5BD3B20AFC010618DDF84A835178E37CF8858F1E8E74AF1C23D3DF6333525D9BC139F6BF10D54EDBB082D0CBD199CD3B175E11EAE6D1C009EB9F1089626CA4749C66430CAF9CCF8DA6DC8363A3177409382327516D32654F112BE943CC7B6B75A9433B3C247869D174FE243E8258E378C85CE4CBF19302A3E919920CF49CD02A8BD753AFDB87CC7279EA993E27453A545D276B5BB24734E1BA097513AE9C51E0450C30361A2D7B8C6F90EB973E198D580F4964397B555FE4EB7CB7CEBFEDB2F38C3C5D496D45F179C5E0B126B9761277B3F942149BDBF9491E2E3D4802F6E114104B3AB0F8CA6A6A088D4792B807DFAB2326347AD0513291F564640751C4AAA4B5BB074BBD5BC43F3BE9F4C7C5417991BD633F016CD7D72506050000
+-->

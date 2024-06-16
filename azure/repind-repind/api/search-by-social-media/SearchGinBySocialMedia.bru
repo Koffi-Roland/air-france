@@ -1,0 +1,17 @@
+meta {
+  name: SearchGinBySocialMedia
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{search-by-social-media-url}}/?externalIdentifierId=gtyilktuyPPP&externalIdentifierType=FB
+  body: none
+  auth: none
+}
+
+query {
+  externalIdentifierId: gtyilktuyPPP
+  externalIdentifierType: FB
+  ~merge: true
+}

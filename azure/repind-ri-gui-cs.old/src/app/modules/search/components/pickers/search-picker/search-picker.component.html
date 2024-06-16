@@ -1,0 +1,6 @@
+<mat-button-toggle-group>
+  <mat-button-toggle [routerLink]="['gin']" [checked]="search === 'gin'">{{ 'NUMERIC-SEARCH' | translate }}</mat-button-toggle>
+  <mat-button-toggle [routerLink]="['telecom']" [checked]="search === 'telecom'">{{ 'TELECOM-SEARCH' | translate }}</mat-button-toggle>
+  <mat-button-toggle [routerLink]="['email']" [checked]="search === 'email'">{{ 'EMAIL-SEARCH' | translate }}</mat-button-toggle>
+  <mat-button-toggle [routerLink]="['multicriteria']" [checked]="search === 'multicriteria'">{{ 'MULTI-CRITERIA-SEARCH' | translate }}</mat-button-toggle>
+</mat-button-toggle-group>

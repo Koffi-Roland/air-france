@@ -1,0 +1,22 @@
+mat-card {
+  padding: 0;
+}
+
+.card-header {
+  padding: 16px;
+}
+
+.mat-subheading-2 {
+  margin: 0;
+}
+
+.card-actions {
+  margin-top: 16px;
+  padding: 5px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.reset-btn-label {
+  font-weight: bold;
+}

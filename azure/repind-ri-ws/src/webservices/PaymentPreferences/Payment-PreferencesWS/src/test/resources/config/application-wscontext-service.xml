@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans     http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+  <!-- CREATE OR REPLACE V1 -->
+  <bean id="passenger_CreateOrReplacePaymentPreferences-v1Bean" class="com.airfrance.paymentpreferenceswsv2.CreateOrReaplacePaymentPreferencesImpl">
+    <property name="paymentPreferencesDS">
+      <ref bean="paymentPreferencesDS" />
+    </property>
+  </bean>
+  <!-- FIN CREATE OR REPLACE V1 -->
+  <!-- CREATE OR REPLACE V2 -->
+  <bean id="passenger_CreateOrReplacePaymentPreferences-v2Bean" class="com.airfrance.paymentpreferenceswsv2.v2.CreateOrReplacePaymentPreferencesV2Impl">
+    <property name="paymentPreferencesDS">
+      <ref bean="paymentPreferencesDS" />
+    </property>
+  </bean>
+  <!-- FIN CREATE OR REPLACE V2 -->
+  <!-- DELETE V1 -->
+  <bean id="passenger_DeletePaymentPreferences-v1Bean" class="com.airfrance.paymentpreferenceswsv2.DeletePaymentPreferencesImpl">
+      <property name="paymentPreferencesDS">
+      <ref bean="paymentPreferencesDS" />
+    </property>
+  </bean>
+  <!-- FIN DELETE V1 -->
+  <!-- DELETE V2 -->
+  <bean id="passenger_DeletePaymentPreferences-v2Bean" class="com.airfrance.paymentpreferenceswsv2.v2.DeletePaymentPreferencesV2Impl">
+      <property name="paymentPreferencesDS">
+      <ref bean="paymentPreferencesDS" />
+    </property>
+  </bean>  
+  <!-- FIN DELETE V2 -->
+  <!-- PROVIDE V1 -->
+  <bean id="passenger_ProvidePaymentPreferences-v1Bean" class="com.airfrance.paymentpreferenceswsv2.ProvidePaymentPreferencesImpl">
+    <property name="paymentPreferencesDS">
+      <ref bean="paymentPreferencesDS" />
+    </property>
+    <property name="variablesPPDS">
+      <ref bean="variablesPPDS" />
+    </property>
+  </bean>
+  <!-- FIN PROVIDE V1 -->
+  <!-- PROVIDE V2 -->
+  <bean id="passenger_ProvidePaymentPreferences-v2Bean" class="com.airfrance.paymentpreferenceswsv2.v2.ProvidePaymentPreferencesV2Impl">
+    <property name="paymentPreferencesDS">
+      <ref bean="paymentPreferencesDS" />
+    </property>
+    <property name="variablesPPDS">
+      <ref bean="variablesPPDS" />
+    </property>
+  </bean>  
+  <!-- FIN PROVIDE V2 -->
+	
+</beans>
+
+

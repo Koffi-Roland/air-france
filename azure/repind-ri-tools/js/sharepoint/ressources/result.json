@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "emailAddress": "test@demo.com",
+    "gin": null,
+    "cin": null,
+    "firstname": "NEW",
+    "surname": "NEW",
+    "civility": "MX",
+    "birthdate": "03-12-1996",
+    "countryCode": "ES",
+    "languageCode": "ES",
+    "subscriptionType": "KL_PART",
+    "domain": "S",
+    "groupType": "N",
+    "status": "Y",
+    "source": "TEST2JAN",
+    "dateOfConsent": "01-01-2024",
+    "preferredDepartureAirport": "CDG"
+  }
+]

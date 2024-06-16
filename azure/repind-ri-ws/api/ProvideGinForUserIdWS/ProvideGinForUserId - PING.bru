@@ -1,0 +1,40 @@
+meta {
+  name: ProvideGinForUserId - PING
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{provide-gin-for-user-id-url}}
+  body: xml
+  auth: none
+}
+
+headers {
+  SOAPAction: "http://www.af-klm.com/services/passenger/ProvideGinForUserIdService-v1/provideGinForUserId"
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                    xmlns:xsd="http://www.af-klm.com/services/passenger/ProvideGinForUserIdType-v1/xsd">
+  <soapenv:Body>
+      <xsd:ProvideGinForUserIdRequestElement
+      >
+          <IdentifierType>FP</IdentifierType>
+          <CustomerIdentifier>2075275321</CustomerIdentifier>
+      </xsd:ProvideGinForUserIdRequestElement>
+  </soapenv:Body>
+  </soapenv:Envelope>
+}
+
+vars:pre-request {
+  USER: w21375138
+  PASSWORD: pswpsw123
+  TRACKER: true
+  USER_TRACKER: w21375138
+  LOCATION: QVI
+}
+
+assert {
+  res.body: contains NOT FOUND
+}

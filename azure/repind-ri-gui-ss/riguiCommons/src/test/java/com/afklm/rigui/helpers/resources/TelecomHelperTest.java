@@ -1,0 +1,122 @@
+package com.afklm.rigui.helpers.resources;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import com.afklm.rigui.model.individual.ModelSignature;
+import com.afklm.rigui.model.individual.ModelTelecom;
+import com.afklm.rigui.services.helper.resources.TelecomHelper;
+import com.afklm.rigui.spring.TestConfiguration;
+
+@ActiveProfiles("test")
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(classes = TestConfiguration.class)
+class TelecomHelperTest {
+
+	private static final String DELETED_STATUS = "X";
+	private static final String VALID_STATUS = "V";
+	private static final String INVALID_STATUS = "I";
+	private static final String UNKNOWN_STATUS = "U";
+
+	private static final int MAXIMUM_NUMBER_OF_DELETED_TELECOMS = 5;
+
+	private final List<ModelTelecom> telecoms = new ArrayList<>();
+
+	@Autowired
+	private TelecomHelper telecomHelper;
+
+	@BeforeEach
+	public void init() {
+
+		addTelecoms(telecoms, DELETED_STATUS, 6);
+		addTelecoms(telecoms, VALID_STATUS, 2);
+		addTelecoms(telecoms, INVALID_STATUS, 1);
+		addTelecoms(telecoms, UNKNOWN_STATUS, 1);
+
+	}
+
+	@Test
+	void test_sortTelecoms() {
+
+		List<ModelTelecom> sortedList = telecomHelper.sort(telecoms);
+
+		// Verify that the rule to only keep at most 5 deleted email is correct
+		Assertions.assertEquals(MAXIMUM_NUMBER_OF_DELETED_TELECOMS, countTelecomsByStatus(sortedList, DELETED_STATUS));
+
+		// Verify that in the list there cannot be an email that has not V, X or I status
+		Assertions.assertEquals(0, countTelecomsByStatus(sortedList, UNKNOWN_STATUS));
+		Assertions.assertEquals(8, sortedList.size());
+
+		// The first email should be valid
+		Assertions.assertEquals(VALID_STATUS, sortedList.get(0).getStatus());
+		// The second email should be valid
+		Assertions.assertEquals(VALID_STATUS, sortedList.get(1).getStatus());
+		// The third email should NOT be valid
+		Assertions.assertNotEquals(VALID_STATUS, sortedList.get(3).getStatus());
+
+		// The first item is the list should be more recent than the second one (modification date)
+		Date modificationDateTelecom1 = sortedList.get(0).getSignature().getModificationDate();
+		Date modificationDateTelecom2 = sortedList.get(1).getSignature().getModificationDate();
+		Assertions.assertTrue(modificationDateTelecom1.before(modificationDateTelecom2));
+
+	}
+
+	/**
+	 * Fill a list with model telecom, the number of models is specified in parameter and also the status.
+	 * @param telecoms
+	 * @param status
+	 * @param count
+	 */
+	private void addTelecoms(List<ModelTelecom> telecoms, String status, int count) {
+
+		do {
+			ModelTelecom modelEmail = new ModelTelecom();
+			modelEmail.setStatus(status);
+			ModelSignature signature = new ModelSignature();
+			// Set the modification date to the current date
+			signature.setModificationDate(new Date());
+			modelEmail.setSignature(signature );
+			telecoms.add(modelEmail);
+			try {
+				// Sleep for 1 ms before creating another email
+				TimeUnit.MILLISECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			count--;
+		} while (count != 0);
+
+	}
+
+	/**
+	 * Count the number of telecom in the list that have the status given in parameter
+	 * @param telecoms
+	 * @param status
+	 * @return
+	 */
+	private int countTelecomsByStatus(List<ModelTelecom> telecoms, String status) {
+
+		int count = 0;
+
+		for (ModelTelecom modelEmail : telecoms) {
+			if (status.equals(modelEmail.getStatus())) {
+				count++;
+			}
+		}
+
+		return count;
+
+	}
+
+}

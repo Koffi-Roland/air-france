@@ -1,0 +1,26 @@
+<ng-container *ngIf="warningModel">
+    <button *ngIf="!isExpanded" mat-fab class="daisy-bg-warn-lighter animate" (click)="expand()">
+        <mat-icon>info_outline</mat-icon>
+    </button>
+
+    <ng-container *ngIf="isExpanded">
+        <div class="snackbar-content daisy-bg-warn-lighter">
+            <p>
+                {{ warningModel.warningMessage | translate }}
+            </p>
+            <span class="fill-remaining-space"></span>
+
+            <!-- CUSTOM ACTION -->
+            <button mat-button class="actionButton" (click)="doAction()">
+                <mat-icon matTooltip="{{ warningModel.actionIconTooltip | translate }}">
+                    {{ warningModel.actionIconName }}
+                </mat-icon>
+            </button>
+
+            <!-- CLOSE SNACKBAR -->
+            <button mat-button class="actionButton">
+                <mat-icon (click)="close()" matTooltip="{{ 'CLOSE' | translate }}">close</mat-icon>
+            </button>
+        </div>
+    </ng-container>
+</ng-container>

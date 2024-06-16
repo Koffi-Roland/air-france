@@ -1,0 +1,14 @@
+ri-search-gin-by-email:
+  url: http://search-gin-by-email-acp:8080/
+ri-search-gin-by-phone:
+  url: http://search-gin-by-phone-acp:8080/
+ri-search-gin-by-contract:
+  url: http://search-gin-by-contract-acp:8080/
+ri-search-gin-by-social-media:
+  url: http://search-gin-by-social-media-acp:8080/
+ri-search-gin-by-lastname-firstname:
+  url: http://search-gin-by-lastname-firstname-acp:8080/
+
+
+springdoc:
+  enable-hateoas: false

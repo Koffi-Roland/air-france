@@ -1,0 +1,9 @@
+resources:
+  - deployment.yaml
+  - service.yaml
+
+commonLabels:
+  app.kubernetes.io/name: forget-me-asked
+  app.kubernetes.io/instance: forget-me-asked
+
+namespace: default

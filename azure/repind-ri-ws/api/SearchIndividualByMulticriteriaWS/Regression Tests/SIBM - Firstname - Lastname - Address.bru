@@ -1,0 +1,104 @@
+meta {
+  name: SIBM - Firstname - Lastname - Address
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{search-individual-by-multicriteria-url}}
+  body: xml
+  auth: none
+}
+
+headers {
+  SOAPAction: "http://www.af-klm.com/services/passenger/SearchIndividualByMulticriteriaService-v2/searchIndividual"
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+      <soapenv:Body>
+          <ns2:SearchIndividualByMulticriteriaRequestElement xmlns:ns6="http://www.af-klm.com/services/passenger/SicCommonType-v1/xsd"
+              xmlns:ns5="http://www.af-klm.com/services/passenger/SoftComputingType-v1/xsd"
+              xmlns:ns7="http://www.af-klm.com/services/passenger/request-v1/xsd"
+              xmlns:ns2="http://www.af-klm.com/services/passenger/data-v1/xsd"
+              xmlns:ns4="http://www.af-klm.com/services/passenger/response-v1/xsd"
+              xmlns:ns3="http://www.af-klm.com/services/passenger/SicIndividuType-v1/xsd">
+              <populationTargeted>A</populationTargeted>
+              <processType>A</processType>
+              <requestor>
+                  <channel>DS</channel>
+                  <applicationCode>CBS</applicationCode>
+                  <site>QVI</site>
+                  <signature>M402925</signature>
+              </requestor>
+              <identity>
+                  <lastName>{{lastname}}</lastName>
+                  <lastNameSearchType>S</lastNameSearchType>
+                  <firstName>{{firstname}}</firstName>
+                  <firstNameSearchType>S</firstNameSearchType>
+                  <birthday>{{dob}}</birthday>
+              </identity>
+              <contact>
+                  <postalAddressBloc>
+                      <postalAddressContent>
+                          <numberAndStreet>{{address}}</numberAndStreet>
+                          <city>{{city}}</city>
+                          <zipCode>{{zipCode}}</zipCode>
+                          <countryCode>FR</countryCode>
+                      </postalAddressContent>
+                  </postalAddressBloc>
+              </contact>
+          </ns2:SearchIndividualByMulticriteriaRequestElement>
+      </soapenv:Body>
+  </soapenv:Envelope>
+}
+
+vars:pre-request {
+  USER: w21375138
+  PASSWORD: pswpsw123
+  ADDRESS_RCT: 78 BD JEAN JAURES
+  LASTNAME_RCT: DANS LE METRO
+  FIRSTNAME_RCT: ZAZIE
+  ADDRESS_DEV: 71 RUE D ALLERAY
+  LASTNAME_DEV: HARACZ
+  FIRSTNAME_DEV: LUCYNA
+  CITY_RCT: CLICHY
+  CITY_DEV: PARIS
+  COUNTRY_CODE_RCT: FR
+  COUTRY_CODE_DEV: FR
+  ZIP_CODE_RCT: 92110
+  ZIP_CODE_DEV: 75015
+  DOB_RCT: 1971-01-01T00:00:00Z
+  DOB_DEV: 1972-05-30T00:00:00Z
+}
+
+assert {
+  res.status: eq 200
+}
+
+script:pre-request {
+  // START CODE
+  if(envs.includes(currentEnv)) {
+    replaceVar('FIRSTNAME', currentEnv, 'firstname');
+    replaceVar('LASTNAME', currentEnv, 'lastname');
+    replaceVar('DOB', currentEnv, 'dob');
+    replaceVar('EMAIL', currentEnv, 'email');
+    replaceVar('TELECOM', currentEnv, 'telecom');
+    replaceVar('ADDRESS', currentEnv, 'address');
+    replaceVar('COUNTRY_CODE', currentEnv, 'countryCode');
+    replaceVar('CITY', currentEnv, 'city');
+    replaceVar('ZIP_CODE', currentEnv, 'zipCode');
+    replaceVar('PNM', currentEnv, 'pnm');
+    replaceVar('SOCIAL', currentEnv, 'social');
+    replaceVar('GIGYA', currentEnv, 'gigya');
+  }
+}
+
+script:post-response {
+  const replace = ['fistname', 'lastname', 'dob', 'email', 'telecom', 'address', 'countryCode', 'pnm', 'social', 'gigya', 'city', 'zipCode'];
+  
+  const vars = ['FIRSTNAME', 'LASTNAME', 'DOB', 'EMAIL', 'TELECOM','ADDRESS', 'COUNTRY_CODE', 'PNM', 'SOCIAL', 'GIGYA', 'CITY', 'ZIP_CODE'];
+  
+  clean(replace, null);
+  clean(vars, envs);
+}

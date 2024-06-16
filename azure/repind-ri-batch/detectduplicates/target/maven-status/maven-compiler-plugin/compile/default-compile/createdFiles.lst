@@ -1,0 +1,12 @@
+com\afklm\batch\detectduplicates\service\DetectDuplicatesService.class
+com\afklm\batch\detectduplicates\enums\BatchDetectDuplicatesEnum.class
+com\afklm\batch\detectduplicates\repository\SameLastnameNameEmailAndTelecomRepository.class
+com\afklm\batch\detectduplicates\entity\SameLastnameNameEmailAndTelecomEntity.class
+com\afklm\batch\detectduplicates\entity\SameLastnameNameEmailOrTelecomEntity.class
+com\afklm\batch\detectduplicates\models\SameLastnameNameEmailAndTelecom.class
+com\afklm\batch\detectduplicates\repository\SameLastnameNameEmailOrTelecomRepository.class
+com\afklm\batch\detectduplicates\entity\SameLastnameNameEmailAndTelecomNoDuplicateEntity.class
+com\afklm\batch\detectduplicates\service\FileService.class
+com\afklm\batch\detectduplicates\config\DetectDuplicatesConfig.class
+com\afklm\batch\detectduplicates\repository\SameLastnameNameEmailAndTelecomNoDuplicateRepository.class
+com\afklm\batch\detectduplicates\BatchDetectDuplicates.class

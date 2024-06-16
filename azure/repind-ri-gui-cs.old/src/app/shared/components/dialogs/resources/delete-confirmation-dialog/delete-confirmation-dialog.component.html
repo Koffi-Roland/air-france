@@ -1,0 +1,13 @@
+<mat-toolbar mat-dialog-title color="warn">
+  <mat-toolbar-row>
+    <mat-icon>warning</mat-icon>
+    <span class="mat-headline">{{ "WARNING" | translate }}</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-dialog-content>
+  <span class="mat-body">{{ 'DELETE-WARN-MSG' | translate }}</span>
+</mat-dialog-content>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="false">{{ 'CANCEL' | translate }}</button>
+  <button mat-flat-button color="warn" [mat-dialog-close]="true" cdkFocusInitial>{{ 'CONFIRM' | translate }}</button>
+</div>

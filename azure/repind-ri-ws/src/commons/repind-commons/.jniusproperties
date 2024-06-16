@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jnius>
+    <jnius-settings>
+        <jnius-file>.jniusgenerator.xml</jnius-file>
+        <template-container>templates</template-container>
+        <source-container>src</source-container>
+        <template-type>VELOCITY</template-type>
+    </jnius-settings>
+    <hibernate-settings>
+        <cfg-file>.default.cfg.xml</cfg-file>
+    </hibernate-settings>
+</jnius>
+

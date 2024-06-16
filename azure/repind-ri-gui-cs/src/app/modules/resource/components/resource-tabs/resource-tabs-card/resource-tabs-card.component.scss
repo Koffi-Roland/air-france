@@ -1,0 +1,70 @@
+mat-card {
+  cursor: pointer;
+  width: 250px;
+  height: 200px;
+  margin: 8px;
+  padding: 0;
+}
+
+mat-icon {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+}
+
+mat-card-header {
+
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+}
+
+mat-card-content {
+  height: auto;
+  margin: 0;
+  padding: 8px;
+}
+
+.mat-h2 {
+  margin: 0 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.main-content {
+  margin: 12px;
+
+  >div:first-child {
+    font-weight: bold;
+  }
+}
+
+.chips {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  margin: 0 8px;
+}
+
+mat-chip {
+  border: solid;
+  border-width: 1px;
+  color: black;
+  background: aliceblue !important;
+}
+
+.not-selected {
+  > mat-card-header {
+    background: white;
+    color: black;
+  }
+}
+
+.content-line {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

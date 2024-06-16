@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Uploaded in SOA repository on 2014-06-27 09:44:36.159--><!-- 
+PAYDetokenizeToken : 1A service name
+13_2_1A : 1A service version
+MTKNGQ : 1A service shortname
+
+v1 : afklm service version
+passenger : afklm domain
+ --><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.af-klm.com/services/passenger/PAYDetokenizeToken-v1/PAYDetokenizeTokenResponse/xsd" xmlns:amrr="http://xml.amadeus.com/MTKNGR_13_2_1A" xmlns:acon="http://www.af-klm.com/services/common/AlteaConversation-v1/xsd" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.af-klm.com/services/passenger/PAYDetokenizeToken-v1/PAYDetokenizeTokenResponse/xsd">
+
+ 	 <!--previous value PAY_DetokenizeTokenReply_13_2_1A.xsd updated--><xsd:import namespace="http://xml.amadeus.com/MTKNGR_13_2_1A" schemaLocation="http://soarepo.airfrance.fr/repository/jcr/view/schema/ServiceSchemaContent-1136366"/>
+     <!--previous value AlteaConversation-v1.xsd updated--><xsd:import namespace="http://www.af-klm.com/services/common/AlteaConversation-v1/xsd" schemaLocation="http://soarepo.airfrance.fr/repository/jcr/view/schema/ServiceSchemaContent-1136365"/>
+
+     <xsd:element name="PAYDetokenizeTokenResponse" type="tns:PAYDetokenizeTokenResponse"/>
+     <xsd:complexType name="PAYDetokenizeTokenResponse">
+            <xsd:sequence>
+                   <xsd:element ref="amrr:PAY_DetokenizeTokenReply"/>
+                   <xsd:element maxOccurs="1" minOccurs="0" ref="acon:Conversation"/>
+             </xsd:sequence>
+      </xsd:complexType>
+
+</xsd:schema>

@@ -1,0 +1,32 @@
+<mat-card (click)="selectResource()" [class.mat-elevation-z8]="isSelectedResource"
+  [class.mat-elevation-z2]="!isSelectedResource" [class.not-selected]="!isSelectedResource">
+  <mat-card-header [style.background]="(isSelectedResource) ? header.backgroundColor : 'white'">
+    <div class="selector"></div>
+    <mat-icon *ngIf="header.icon">{{ header.icon }}</mat-icon>
+    <span class="mat-h2" #scrollableDiv>
+      <span (mouseenter)="scrollDiv(scrollableDiv, -1)" (mouseleave)="stopTimer(scrollableDiv)">
+        {{ (header.title.isTranslatable) ? (header.title.text | translate ) : header.title.text }}
+      </span>
+    </span>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <div class="main-content">
+      <div *ngFor="let label of content.labels">
+        <div class="content-line" #scrollableDiv>
+          <span (mouseenter)="scrollDiv(scrollableDiv, -1)" (mouseleave)="stopTimer(scrollableDiv)">
+              {{(label.isDate) ? (label.text | localizedDate:'mediumDate') :  ((label.isTranslatable) ? (label.text | translate) : label.text)}}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="chips" *ngIf="content.chips.length > 0">
+      <mat-chip-list>
+        <ng-container *ngFor="let label of content.chips">
+          <mat-chip *ngIf="label.text && label.text !== 'null'" disabled>
+            {{ (label.isTranslatable) ? (label.text | translate) : label.text }}</mat-chip>
+        </ng-container>
+      </mat-chip-list>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="dataset.xsd">
+	
+	<ENV_VAR ENVKEY="PROVIDECUSTOMER360_PERIODINDAYS" ENVVALUE="1095"/>
+	<ENV_VAR ENVKEY="FORGOTTEN_PERIODINDAYS" ENVVALUE="1"/>
+	<ENV_VAR ENVKEY="CONSUMER_COMPREF_FB_PROPAGATION" ENVVALUE="W21375138;W06536507"/>
+	<ENV_VAR ENVKEY="REGEX_WARNING" ENVVALUE="BLABLABLA"/>
+	
+</dataset>

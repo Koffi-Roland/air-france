@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+
+<persistence-unit name="myPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence
+		</provider>
+     <class>com.afklm.repindpp.paymentpreference.entity.Fields</class>
+    <class>com.afklm.repindpp.paymentpreference.entity.PaymentDetails</class>
+    <class>com.afklm.repindpp.paymentpreference.entity.VariablesPP</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<!-- ENV-BATCH-DB-SIC-UTF8-CONNECTION-USERNAME -->
+			<property name="hibernate.connection.username" value="${ENV-BATCH-DB-REPIND-PP-CONNECTION-USERNAME}"/>
+			<!-- ENV-BATCH-DB-SIC-UTF8-CONNECTION-PASSWORD -->
+			<property name="hibernate.connection.password" value="${ENV-BATCH-DB-REPIND-PP-CONNECTION-PASSWORD}"/>
+			<!-- ENV-BATCH-DB-SIC-UTF8-CONNECTION-URL -->
+			<property name="hibernate.connection.url" value="${ENV-BATCH-DB-REPIND-PP-CONNECTION-URL}"/>
+
+			 <!-- ENV-HIBERNATE-SHOW-SQL -->
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.cache.use_query_cache" value="false" />
+			<property name="hibernate.cache.use_second_level_cache" value="false" />
+			<property name="hibernate.connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider" />
+			<property name="hibernate.c3p0.min_size" value="5" />
+			<property name="hibernate.c3p0.max_size" value="20" />
+			<property name="hibernate.c3p0.timeout" value="1800" />
+			<property name="hibernate.c3p0.max_statements" value="50" />
+			<property name="statement_cache.size">0</property>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
+			<property name="hibernate.connection.driver_class" value="oracle.jdbc.driver.OracleDriver" />
+			<property name="hibernate.jdbc.batch_size" value="20" />
+		</properties>
+
+	</persistence-unit>
+    
+</persistence>

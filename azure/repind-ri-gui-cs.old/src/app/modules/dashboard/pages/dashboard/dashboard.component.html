@@ -1,0 +1,38 @@
+<div *ngIf="individual">
+  <button mat-icon-button class="back-button" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <h1 class="mat-display-1">{{ 'DASHBOARD' | translate }}</h1>
+  <div class="dashboard-container">
+    <div class="individual-profile-and-more">
+      <app-individual-card (dataReloaded)="onDataReloaded()"></app-individual-card>
+      <button mat-stroked-button (click)="openBottomSheet()"
+        *hasRole="['ROLE_ADMIN', 'ROLE_READ_TRACKING', 'ROLE_READ_INFERED', 'ROLE_READ_HANDICAP']">{{ 'ADMIN-TOOLS' |
+        translate }}</button>
+      <ng-container *hasRole="['ROLE_ADMIN']">
+        <button mat-stroked-button *ngIf="!individual.resume.isResctrictedType" (click)="openResourceSelectorDialog()">
+          {{ 'CREATE-RESOURCE' | translate }}
+        </button>
+      </ng-container>
+    </div>
+    <div class="section-cards-column">
+      <div class="section-cards-row">
+        <app-section-card *ngFor="let resourceType of sectionCards.slice(0, 3)" [individual]="individual"
+          [type]="resourceType"></app-section-card>
+      </div>
+      <div class="section-cards-row">
+        <app-section-card *ngFor="let resourceType of sectionCards.slice(3, 5)" [individual]="individual"
+          [type]="resourceType"></app-section-card>
+      </div>
+      <div class="section-cards-row">
+        <app-section-card *ngFor="let resourceType of sectionCards.slice(5, 8)" [individual]="individual"
+          [type]="resourceType"></app-section-card>
+      </div>
+      <div class="section-cards-row">
+        <app-section-card *ngFor="let resourceType of sectionCards.slice(8, 11)" [individual]="individual"
+          [type]="resourceType"></app-section-card>
+      </div>
+    </div>
+  </div>
+
+</div>

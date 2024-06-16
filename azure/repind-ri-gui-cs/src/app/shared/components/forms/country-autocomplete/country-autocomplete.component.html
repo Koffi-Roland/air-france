@@ -1,0 +1,17 @@
+<mat-form-field appearance="outline">
+  <mat-label>{{ 'COUNTRY-CODE' | translate }}</mat-label>
+  <input matInput [formControl]="countryCodeFormControl" [matAutocomplete]="auto" [required]="required"
+    placeholder="33, +33, FR...">
+  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <mat-option *ngFor="let ref of filteredCountries | async" [value]="ref.code">
+      <div class="option">
+        <span class="mat-body-1"
+          [innerHTML]="((currentLocal === 'fr') ? ref.labelFR : ref.labelEN) | highlight: toHighLight"></span>
+        <span class="mat-caption" [innerHTML]="('(' + ref.code + ')') | highlight: toHighLight"></span>
+      </div>
+    </mat-option>
+  </mat-autocomplete>
+  <mat-error *ngIf="countryCodeFormControl.hasError('required')">
+    <span>{{ 'FIELD-REQUIRED' | translate }}</span>
+  </mat-error>
+</mat-form-field>

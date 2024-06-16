@@ -1,0 +1,23 @@
+bases:
+  - ../base
+
+resources:
+  - ingress.yaml
+
+nameSuffix: -prd
+
+namespace: repind-prd
+
+commonLabels:
+  app.kubernetes.io/name: manage-individual-identifier
+  app.kubernetes.io/instance: manage-individual-identifier-prd
+
+images:
+  - name: harbor-vlb.af-klm.com/cdm/manage-individual-identifier
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+patchesStrategicMerge:
+  - replica-rollout.yaml
+  - deploy-profile.yaml

@@ -1,0 +1,159 @@
+sdfw:
+  consumer-header:
+    id: w04776476
+    location: QVI
+    party-id: AF
+---
+spring:
+  config:
+    activate:
+      on-profile: default,local
+  datasource:
+    tns_admin_env: TEST_ACCEPTANCE
+    url: jdbc:oracle:thin:@REPIND_ITE.WORLD
+
+apim.jwt.validation:
+  environment: NPR
+  securityId: w04776476
+  serviceIds:
+    - R000042
+  errorEnabled: false
+
+vault:
+  uri: https://vault-tls-cae.airfranceklm.com
+  namespace: repind
+  env: dev
+  credentials:
+    role_id: ${vault_role_id}
+    secret_id: ${vault_secret_id}
+debug: false
+logging:
+  level:
+    root: INFO
+
+sdfw:
+  ws:
+    - id: w000442.v080001
+      url: https://ws-qvi-dev.airfrance.fr/passenger/marketing/000442v08
+
+
+---
+spring:
+  config:
+    activate:
+      on-profile: ITE,dev
+  datasource:
+    tns_admin_env: TEST_ACCEPTANCE
+    url: jdbc:oracle:thin:@REPIND_ITE.WORLD
+
+apim.jwt.validation:
+  environment: NPR
+  securityId: w04776476
+  serviceIds:
+    - R000042
+
+vault:
+  uri: https://vault-tls-cae.airfranceklm.com
+  namespace: repind
+  env: dev
+  credentials:
+    role_id: ${vault_role_id}
+    secret_id: ${vault_secret_id}
+debug: false
+logging:
+  level:
+    root: INFO
+sdfw:
+  ws:
+    - id: w000442.v080001
+      url: https://ws-qvi-dev.airfrance.fr/passenger/marketing/000442v08
+---
+spring:
+  config:
+    activate:
+      on-profile: UTE,rct
+  datasource:
+    tns_admin_env: TEST_ACCEPTANCE
+    url: jdbc:oracle:thin:@REPIND_CAE.WORLD
+
+apim.jwt.validation:
+  environment: NPR
+  securityId: w04776476
+  serviceIds:
+    - R000042
+
+vault:
+  uri: https://vault-tls-cae.airfranceklm.com
+  namespace: repind
+  env: dev
+  credentials:
+    role_id: ${vault_role_id}
+    secret_id: ${vault_secret_id}
+debug: false
+logging:
+  level:
+    root: INFO
+sdfw:
+  ws:
+    - id: w000442.v080001
+      url: https://ws-qvi-dev.airfrance.fr/passenger/marketing/000442v08
+---
+spring:
+  config:
+    activate:
+      on-profile: AE,qal
+  datasource:
+    tns_admin_env: TEST_ACCEPTANCE
+    url: jdbc:oracle:thin:@OSMN305.WORLD
+
+apim.jwt.validation:
+  environment: NPR
+  securityId: w04776476
+  serviceIds:
+    - R000042
+vault:
+  uri: https://vault-tls-cae.airfranceklm.com
+  namespace: repind
+  env: dev
+  credentials:
+    role_id: ${vault_role_id}
+    secret_id: ${vault_secret_id}
+debug: false
+logging:
+  level:
+    root: INFO
+sdfw:
+  ws:
+    - id: w000442.v080001
+      url: https://ws-qvi-dev.airfrance.fr/passenger/marketing/000442v08
+---
+spring:
+  config:
+    activate:
+      on-profile: LE,prd
+  datasource:
+    tns_admin_env: PROD
+    url: jdbc:oracle:thin:@REPIND_PRD.WORLD
+
+apim.jwt.validation:
+  environment: PRD
+  securityId: w04776476
+  serviceIds:
+    - R000042
+
+vault:
+  uri: https://vault-tls.airfranceklm.com
+  namespace: repind
+  env: prod
+  credentials:
+    role_id: ${vault_role_id}
+    secret_id: ${vault_secret_id}
+debug: false
+logging:
+  level:
+    root: INFO
+sdfw:
+  ws:
+    - id: w000442.v080001
+      url: https://ws-qvi-dev.airfrance.fr/passenger/marketing/000442v08
+---

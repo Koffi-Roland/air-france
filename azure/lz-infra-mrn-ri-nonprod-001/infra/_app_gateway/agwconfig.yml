@@ -1,0 +1,44 @@
+# -------------------------------------------------------------------------------------
+# Documentation : https://github.com/afkl-airspace/actions-appgw-config/tree/main/docs
+# -------------------------------------------------------------------------------------
+apiVersion: appgwconfig.afkl.com/v1
+kind: ApplicationGatewayConfig
+spec:
+  rules:
+    # ---------------------------------------------------------------------------------
+    # AKS CONFIG : RI-CATI
+    # ---------------------------------------------------------------------------------
+    - name: ri-cati-dev
+      domain-name: cati-az-dev.airfrance.fr
+      priority: 120
+      default-backend:
+        - aks-instance: '02'
+
+    - name: ri-cati-cae
+      domain-name: cati-az-rct.airfrance.fr
+      priority: 121
+      default-backend:
+        - aks-instance: '02'
+
+
+    # ---------------------------------------------------------------------------------
+    # AKS CONFIG : RI-MS-DOCTOR
+    # ---------------------------------------------------------------------------------
+    - name: ri-ms-doctor-dev
+      domain-name: manage-doctor-rs-ite.azure.airfranceklm.com
+      priority: 141
+      default-backend:
+        - aks-instance: '02'
+
+    - name: ri-ms-doctor-cae
+      domain-name: manage-doctor-rs-cae.azure.airfranceklm.com
+      priority: 142
+      default-backend:
+        - aks-instance: '02'
+
+    - name: ri-ms-doctor-acp
+      domain-name: manage-doctor-rs-acp.azure.airfranceklm.com
+      priority: 143
+      default-backend:
+        - aks-instance: '02'
+    

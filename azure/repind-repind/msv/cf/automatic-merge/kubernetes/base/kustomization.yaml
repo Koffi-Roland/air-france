@@ -1,0 +1,9 @@
+resources:
+  - deployment.yaml
+  - service.yaml
+
+commonLabels:
+  app.kubernetes.io/name: automatic-merge
+  app.kubernetes.io/instance: automatic-merge
+
+namespace: default

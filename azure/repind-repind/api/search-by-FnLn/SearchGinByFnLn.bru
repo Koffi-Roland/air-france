@@ -1,0 +1,16 @@
+meta {
+  name: SearchGinByFnLn
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{search-by-fnln-url}}?firstname=John&lastname=Smith
+  body: none
+  auth: none
+}
+
+query {
+  firstname: John
+  lastname: Smith
+}

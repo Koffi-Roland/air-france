@@ -1,0 +1,146 @@
+.mat-toolbar {
+  background: white;
+  position: fixed;
+  z-index: 999;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  padding: 2px;
+}
+
+.main-container {
+  padding: 125px 40px 0 40px;
+  flex: 1 0 auto;
+}
+
+h2 {
+  margin-right: 10px;
+}
+
+//Hide on smartphone and iPad
+@media screen and (max-width: 768px) {
+  .main-container {
+    padding: 110px 10px 0 10px;
+  }
+}
+
+footer {
+  box-shadow: 0px 3px 50px -1px rgba(0, 0, 0, 0.2),
+    0px 5px 8px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 14px 0px rgba(0, 0, 0, 0.12);
+  padding-top: 20px;
+  width: 100%;
+  bottom: 0;
+  position: absolute;
+  z-index: 992;
+}
+
+.logo-footer {
+  width: 220px;
+}
+
+.copyright {
+  display: block;
+  font-size: 0.8em;
+}
+
+.all-wrap {
+  min-height: 100vh;
+}
+
+.page-wrap {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+}
+
+/*
+ * Make the Component injected by Router Outlet full height:
+ */
+main {
+  display: flex;
+  flex-direction: column;
+
+  >*:not(router-outlet) {
+    flex: 1;
+    display: block;
+  }
+}
+
+.home {
+  font-size: 16px;
+}
+
+.mat-expansion-panel-header {
+  padding: 0px 16px;
+  font-size: 16px;
+  border-bottom-color: rgba(0, 0, 0, 0.12);
+}
+
+.menu-simple {
+  background: white;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+  padding-top: 0px;
+}
+
+.flag-icon {
+  background-size: cover;
+  background-position: 50%;
+  background-repeat: no-repeat;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+  /* make scrollbar transparent */
+}
+
+.mat-button {
+  margin: 0 1vw;
+}
+
+.mat-button:hover {
+  background: white;
+}
+
+.navigation-button-content {
+  margin-top: 5px;
+  padding: 9px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.version-and-flags {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: absolute;
+  right: 0;
+}
+
+.logo-and-app-name {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.shortcut-menu {
+    display: none;
+  }
+
+.navigation-buttons {
+  display: block;
+  margin-left: 5vw;
+}
+
+@media screen and (max-width: 949px) {
+  .shortcut-menu {
+    display: block;
+  }
+
+  .navigation-buttons {
+    display: none;
+  }
+}

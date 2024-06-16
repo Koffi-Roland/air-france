@@ -1,0 +1,100 @@
+replicaCount: 2
+
+# Describes the pdb.Value for this is half of replica count
+podDisruptionBudget:
+  minAvailable: 1
+
+# claim the user node pool for deployment
+nodeSelector:
+  kubernetes.azure.com/mode: user
+
+image: 
+  repository: acrriprd09999808.azurecr.io/cati-cs
+  pullPolicy: "Always"
+  tag: latest
+
+
+serviceAccount:
+  # Specifies whether a service account should be created or not 
+  create: true
+
+rbac:
+  enabled: true
+  roles:
+    - apiGroups: [""]
+      resources: ["pods", "nodes", "configmaps", "endpoints", "namespaces", "services", "events"]
+      verbs: ["get", "list", "watch" ]
+    - apiGroups: ["networking.k8s.io"]
+      resources: ["ingresses"]
+      verbs: ["get", "list", "watch"]
+    - apiGroups: [""]
+      resources: ["endpoints"]
+      verbs: [ "create", "update"]
+    - apiGroups: [""]
+      resources: ["events"]
+      verbs: ["create", "patch"]
+
+isTmpVolumeRequired: true
+
+#key vault related configuration
+secretProvider:
+  keyVaultName: 'kv-ri-pr-8366'
+  keyVaultRG: 'rg-ri-spoke-prod-frc-001'
+  subscriptionId: '9451007c-eb98-4383-a8e9-3a86406810ee'
+  keyVaultTenantId: '9b802d8b-33fa-40fb-acb7-9ffdbd1919eb'
+  
+# Describes the Azure Managed AAD Pod Identity
+azureIdentity: 
+  name: "repind-cati-cs-prd-azureidentity"
+  type: 0
+  configmap:
+    name: aks-kv-sp-identity
+    namespace: prd
+    clientid: aks-kv-sp-client-id
+    resourceid: aks-kv-sp-resource-id
+
+# Describes the identity binding relationship between an AzureIdentity and a pod with a specific selector as part of its label
+azureIdentityBinding:
+  name: "repind-cati-cs-prd-azureidentitybinding"
+  selector: "repind-cati-cs-prd-selector"
+
+# Specifies whether autoscaling should be enabled or not
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 4
+  targetAverageUtilization: 80
+  targetAverageValue: 40Mi 
+
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: haproxy
+  private: 
+    enabled: 'true'
+    annotations:
+      kubernetes.io/ingress.class: haproxy
+    hosts:
+      - host: cati-az.airfrance.fr
+        paths:
+          - /
+  tls:
+    - hosts:
+      - cati-az.airfrance.fr
+      secretName: defaultcert
+
+# resource management for pods
+resources:
+  limits:
+    cpu: 900m
+    memory: 732Mi
+  requests:
+    cpu: 300m
+    memory: 336Mi
+
+deployment:
+  containerPort: 8080
+
+service:
+  type: ClusterIP
+  port: 8080
+

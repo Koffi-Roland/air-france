@@ -1,0 +1,20 @@
+<button mat-icon-button class="back-button" [routerLink]="['/individuals/individual/dashboard']">
+  <mat-icon>arrow_back</mat-icon>
+</button>
+<h1 class="mat-display-1">{{ title | translate }}</h1>
+<div class="main-content">
+  <div class="left-container" [class.full-screen]="!selectedResource">
+    <app-individual-card></app-individual-card>
+    <button mat-stroked-button *ngIf="selectedResource" (click)="displayOrHideTabs()">{{ displayOrHideTabsBtnLabel |
+      translate }}</button>
+    <app-resource-tabs [class.not-displayed]="!isTabsDisplayed" [resourceType]="type" [resourceList]="resources">
+    </app-resource-tabs>
+  </div>
+  <div #targetDiv class="right-container" [class.not-displayed]="!selectedResource">
+    <app-resource-details-card *ngIf="selectedResource" [resource]="selectedResource" [resourceType]="type">
+    </app-resource-details-card>
+  </div>
+</div>
+<button mat-fab color="primary" *ngIf="isAddBtnVisible" (click)="openCreateDialog()" [disabled]="isCreateBtnDisabled">
+  <mat-icon>add</mat-icon>
+</button>

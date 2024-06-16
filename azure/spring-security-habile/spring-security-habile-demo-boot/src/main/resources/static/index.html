@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SS4H - simple Websocket app using Stomp</title>
+</head>
+<body>
+<div id="wrapper">
+    <div id="menu">
+        <p class="welcome">Welcome,</p>
+        <p>This page connects to <b>/api/websocket</b> (if the application runs on <b>/api</b> you should update the
+        <b>brokerURL</b> parameter to <b>/api/api/websocket</b>) and subscribes to <b>/topic/topicFromServer</b>. The messages are published
+        on <b>/app/topicToServerWithViewAuth</b> topic.
+        
+        <p>As a reminder, any message published on the topic <b>/app/topicToServerWithViewAuth</b> is published back in the topic 
+        <b>/topic/topicFromServer</b> with an additional prefix <b>BROADCAST VIEW:</b>.
+        
+        </p>
+    </div>
+
+    <div id="chatbox"></div>
+
+    <input name="usermsg" type="text" id="usermsg" size="63" title="usermsg"/>
+    <button name="submitmsg" id="submitmsg">Send</button>
+</div>
+
+<!-- It is used for DOM manipulation, not mandatory to use stompjs -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+
+<!-- Include from CDN for better performance, alternatively you can locally copy as well -->
+<script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@5.0.0/bundles/stomp.umd.min.js"></script>
+
+<script type="application/javascript">
+    $(function () {
+        const cookies = document.cookie.split(';');
+
+        var csrf = undefined
+        for (let i = 0; i < cookies.length; i++) {
+            let c = cookies[i].trim().split('=');
+            if (c[0] === "XSRF-TOKEN") {
+                csrf = c[1];
+            }
+        }
+        if(csrf==undefined) {
+            alert("csrf cookie is missing");
+            return;
+        }
+
+        let stompClient;
+        const stompConfig = {
+            connectHeaders: {
+                "X-XSRF-TOKEN": csrf
+            },
+            // Broker URL, should start with ws:// or wss:// - adjust for your broker setup
+            brokerURL: "ws://localhost:8001/api/websocket",
+
+            // Keep it off for production, it can be quit verbose
+            // Skip this key to disable
+            debug: function (str) {
+                console.log('STOMP: ' + str);
+            },
+
+            // If disconnected, we will not retry
+            reconnectDelay: 0,
+
+            // Subscriptions should be done inside onConnect as those need to reinstated when the broker reconnects
+            onConnect: function (frame) {
+                // The return object has a method called `unsubscribe`
+                const subscription = stompClient.subscribe('/topic/topicFromServer', function (message) {
+                    //const payload = JSON.parse(message.body);
+                    const payload = message.body;
+                    displayIncomingMessage(payload);
+                });
+            }
+        };
+
+        // Create an instance
+        stompClient = new StompJs.Client(stompConfig);
+
+        // You can set additional configuration here
+
+        // Attempt to connect
+        stompClient.activate();
+
+
+        // Set the DOM event handlers must not be inside onConnect - other for each reconnect it will keep getting added
+        $("#submitmsg").click(function () {
+            if (publishMessage($("#usermsg").val())) {
+                clearMessageInput();
+            }
+        });
+
+        function clearMessageInput() {
+            $("#usermsg").val("");
+        }
+
+        function publishMessage(message) {
+            // trying to publish a message when the broker is not connected will throw an exception
+            if (!stompClient.connected) {
+                alert("Broker disconnected, can't send message.");
+                return false;
+            }
+            if (message.length > 0) {
+                // You can additionally pass headers
+                stompClient.publish({destination: '/app/topicToServerWithViewAuth', body: message});
+            }
+            return true;
+        }
+
+        function displayIncomingMessage(message) {
+            const msgDiv = $("<div>").addClass("msgln");
+            msgDiv.html('<span class="message">' + message + '</span>');
+            $("#chatbox").append(msgDiv);
+        }
+    })
+</script>
+</body>
+</html>

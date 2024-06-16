@@ -1,0 +1,197 @@
+mat-card {
+  height: 100%;
+  padding: 0;
+}
+
+mat-card-header {
+  height: 12vh;
+  position: relative;
+}
+
+mat-card-content {
+  padding-left: 10px;
+  padding-top: 15px;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-card-actions {
+  margin-right: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+h2 {
+  font-size: 28px;
+}
+
+h3 {
+  font-size: 21px;
+  margin-bottom: 2px;
+}
+
+.mat-icon-button {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.vertical-align-middle {
+  vertical-align: middle;
+  font-size: 20px;
+  margin-left: 8px;
+}
+
+.padding-bottom-3 {
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+/* The top left content of the card's header */
+div.top-left-content {
+  height: 25px;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* The bottom content of the card's header */
+div.bottom-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  color: white;
+  padding: 5px 0;
+}
+
+button.mat-mini-fab {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: white;
+  background-color: green;
+  cursor: default;
+}
+
+div.button-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  span {
+    margin-left: 8px;
+  }
+}
+
+mat-chip-list {
+  display: inline-block;
+}
+
+mat-chip {
+  min-height: 0;
+  height: 20px;
+  font-size: 13px;
+  padding: 8px;
+  background-color: aliceblue !important;
+  border: solid 1px;
+  border-radius: 8px;
+}
+
+.mat-card>.mat-card-actions:last-child {
+  margin-bottom: 8px;
+  padding-bottom: 0;
+}
+
+span.label-key {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 18px;
+  width: 30%;
+}
+
+span.label-value {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-left: 8px;
+  font-size: 15px;
+  width: 60%;
+}
+
+div.main-content {
+  width: 100%;
+  margin-bottom: 35px;
+}
+
+div.main-content-data {
+  margin: 5px;
+}
+
+div.signature {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 12px;
+}
+
+div.creation {
+  margin-right: 12px;
+}
+
+div.modification {
+  margin-left: 12px;
+}
+
+button.mat-stroked-button:not(:last-child) {
+  margin-right: 8px;
+}
+
+div.key-val {
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+  background: white;
+}
+
+div.key-val:hover {
+  transition: background 300ms ease;
+  background: rgba(0, 0, 0, 0.02);
+}
+
+div.action-buttons {
+display: block;
+overflow: hidden;
+margin-bottom: 0.5em;
+}
+
+div.more-button {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-right: 10px;
+  margin-top: 8px;
+}
+
+mat-icon.copy {
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 18px;
+  width: 5%;
+}
+
+.date {
+  font-style: italic;
+}

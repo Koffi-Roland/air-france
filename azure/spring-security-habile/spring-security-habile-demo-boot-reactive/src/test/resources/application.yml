@@ -1,0 +1,26 @@
+logging:
+  level:
+    root: INFO
+    com.afklm.spring.security.habile: TRACE
+
+afklm:
+  security:
+    roles:
+      P_TEST_ADMIN:
+        - ADMIN
+      P_TEST_USER:
+        - USER
+      P_TEST_UBER_ADMIN:
+        - USER
+        - ADMIN
+
+sdfw:
+  consumer-header:
+    id: w07507558
+    location: QVI
+    type: A
+    party-id: AF
+  ws:
+    - id: w000479.v1
+#      url: https://ws-qvi-rct.airfrance.fr/it/IT_IC/000479v01
+      url: http://localhost:${server.http.port.simul:8001}/mock/ws/w000479v01

@@ -1,0 +1,32 @@
+{
+  "accessKeyConfiguration": [
+    {
+      "profile": "P_CATI_ADMIN",
+      "accessKeyLst": [
+        {
+          "accessKey": "ROLE_ADMIN",
+          "idProfil": "P_CATI_ADMIN",
+          "type": "NONE/READ/WRITE",
+          "value": "READWRITE"
+        },
+        {
+          "accessKey": "ROLE_ADMIN_COMMPREF",
+          "idProfil": "P_CATI_ADMIN_COMMPREF",
+          "type": "NONE/READ/WRITE",
+          "value": "READWRITE"
+        }
+      ]
+    },
+    {
+      "profile": "P_CATI_ADMIN_COMMPREF",
+      "accessKeyLst": [
+        {
+          "accessKey": "ROLE_ADMIN_COMMPREF",
+          "idProfil": "P_CATI_ADMIN_COMMPREF",
+          "type": "NONE/READ/WRITE",
+          "value": "READWRITE"
+        }
+      ]
+    }
+  ]
+}

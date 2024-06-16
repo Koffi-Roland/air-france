@@ -1,0 +1,1688 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "DQE Address API",
+    "description" : "Endpoints documentation",
+    "contact" : {
+      "email" : "support_dqe@dqe-software.com"
+    },
+    "version" : "3.2.0"
+  },
+  "servers" : [ {
+    "url" : "https://prod2.dqe-software.com/",
+    "description" : "Serveur de production"
+  } ],
+  "tags" : [ {
+    "name" : "Single",
+    "description" : "Get a full address in a single form"
+  }, {
+    "name" : "Type-down",
+    "description" : "Get a full address in a type-down form"
+  }, {
+    "name" : "RNVP",
+    "description" : "Check an address without data entry help"
+  } ],
+  "paths" : {
+    "/CP/" : {
+      "get" : {
+        "tags" : [ "Type-down" ],
+        "summary" : "Get a list of cities",
+        "description" : "By passing in the appropriate options, you can get a list of cities by starting with the ZIP code first or city first\n",
+        "operationId" : "CP_GET",
+        "parameters" : [ {
+          "name" : "Licence",
+          "in" : "query",
+          "description" : "Pass the license given by DQE",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "CodePostal",
+          "in" : "query",
+          "description" : "Pass a postal code or a city",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Pays",
+          "in" : "query",
+          "description" : "Pass a country code (ISO 3 letters)",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "FRA"
+          }
+        }, {
+          "name" : "Etendue",
+          "in" : "query",
+          "description" : "Pass an optional value to authorize the search by atleast 2 digits in CodePostal",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Instance",
+          "in" : "query",
+          "description" : "Pass an optional instance",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Version",
+          "in" : "query",
+          "description" : "Pass an optional value \"1.1\" to disable the fill of \"Lieu-dit\" in the \"Localite\" field",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Get a list of cities",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CP"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad input parameter"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Type-down" ],
+        "summary" : "Get a list of cities",
+        "description" : "By passing in the appropriate options, you can get a list of cities by starting with the ZIP code first or city first\n",
+        "operationId" : "CP_POST",
+        "requestBody" : {
+          "content" : {
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Get a list of cities",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CP"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad input parameter"
+          }
+        }
+      }
+    },
+    "/ADR/" : {
+      "get" : {
+        "tags" : [ "Type-down" ],
+        "summary" : "Get a list of streets",
+        "description" : "By passing in the appropriate options, you can get a list of postal addresses\n",
+        "operationId" : "ADR_GET",
+        "parameters" : [ {
+          "name" : "Licence",
+          "in" : "query",
+          "description" : "Pass the license given by DQE",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Adresse",
+          "in" : "query",
+          "description" : "Pass the part of the address",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "IDLocalite",
+          "in" : "query",
+          "description" : "Pass the unique code of the city",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Pays",
+          "in" : "query",
+          "description" : "Pass a country code (ISO 3 letters)",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "FRA"
+          }
+        }, {
+          "name" : "Taille",
+          "in" : "query",
+          "description" : "Pass an integer value to reduce the number of characters in the response",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "Instance",
+          "in" : "query",
+          "description" : "Pass an optional instance",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Get a list of streets",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ADR"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad input parameter"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Type-down" ],
+        "summary" : "Get a list of streets",
+        "description" : "By passing in the appropriate options, you can get a list of postal addresses\n",
+        "operationId" : "ADR_POST",
+        "requestBody" : {
+          "content" : {
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body_1"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Get a list of streets",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ADR"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad input parameter"
+          }
+        }
+      }
+    },
+    "/NUM/" : {
+      "get" : {
+        "tags" : [ "Type-down" ],
+        "summary" : "Get a list of a street's numbers",
+        "description" : "By passing in the appropriate options, you can get a list of a street's numbers\n",
+        "operationId" : "NUM_GET",
+        "parameters" : [ {
+          "name" : "Licence",
+          "in" : "query",
+          "description" : "Pass the license given by DQE",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Pays",
+          "in" : "query",
+          "description" : "Pass a country code (ISO 3 letters)",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "FRA"
+          }
+        }, {
+          "name" : "IDLocalite",
+          "in" : "query",
+          "description" : "Pass the unique code of the city",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "CodePostal",
+          "in" : "query",
+          "description" : "Pass postal code of the city",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "IDVoie",
+          "in" : "query",
+          "description" : "Pass the unique code of the street",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Get a list of streets",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NUM"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad input parameter"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Type-down" ],
+        "summary" : "Get a list of a street's numbers",
+        "description" : "By passing in the appropriate options, you can get a list of a street's numbers\n",
+        "operationId" : "NUM_POST",
+        "requestBody" : {
+          "content" : {
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body_2"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Get a list of streets",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NUM"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad input parameter"
+          }
+        }
+      }
+    },
+    "/COMPL/" : {
+      "get" : {
+        "tags" : [ "Type-down" ],
+        "summary" : "Get a list of additional address informations",
+        "description" : "By passing in the appropriate options, you can get a list of address additional informations\n",
+        "operationId" : "COMPL_GET",
+        "parameters" : [ {
+          "name" : "Licence",
+          "in" : "query",
+          "description" : "Pass the license given by DQE",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Pays",
+          "in" : "query",
+          "description" : "Pass a country code (ISO 3 letters)",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "FRA"
+          }
+        }, {
+          "name" : "IDVoie",
+          "in" : "query",
+          "description" : "Pass the unique code of the street",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "IDNum",
+          "in" : "query",
+          "description" : "Pass the number of the street inwhich the additional information search will be done",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Taille",
+          "in" : "query",
+          "description" : "Pass an integer value to reduce the number of characters in the response",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Get a list of additional address informations",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/COMPL"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad input parameter"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Type-down" ],
+        "summary" : "Get a list of additional address informations",
+        "description" : "By passing in the appropriate options, you can get a list of address additional informations\n",
+        "operationId" : "COMPL_POST",
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/COMPL_POST"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Get a list of additional address informations",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/COMPL"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad input parameter"
+          }
+        }
+      }
+    },
+    "/SINGLEV2/" : {
+      "get" : {
+        "tags" : [ "Single" ],
+        "summary" : "Get an address from a single line address form",
+        "description" : "By passing in the appropriate options, you can get a valid address from a part of an address\n",
+        "operationId" : "SINGLE_GET",
+        "parameters" : [ {
+          "name" : "Licence",
+          "in" : "query",
+          "description" : "Pass the license given by DQE",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Pays",
+          "in" : "query",
+          "description" : "Pass the country code (ISO 3 letters)",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Adresse",
+          "in" : "query",
+          "description" : "Pass the part of the address",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Taille",
+          "in" : "query",
+          "description" : "Pass an integer value to limit the number of caracters in the response",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "38"
+          }
+        }, {
+          "name" : "NbMax",
+          "in" : "query",
+          "description" : "Pass an interver value to limit the number of suggestion in the response",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "30"
+          }
+        }, {
+          "name" : "Version",
+          "in" : "query",
+          "description" : "Pass the value \"1\" to fill the type of street in the response",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "2"
+          }
+        }, {
+          "name" : "Instance",
+          "in" : "query",
+          "description" : "Pass an optional instance",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Get a list of addresses",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SINGLEV2"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad input parameter"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Single" ],
+        "summary" : "Get an address from a single line address form",
+        "description" : "By passing in the appropriate options, you can get a valid address from a part of an address\n",
+        "operationId" : "SINGLE_POST",
+        "requestBody" : {
+          "content" : {
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body_3"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Get a list of addresses",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SINGLEV2"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad input parameter"
+          }
+        }
+      }
+    },
+    "/COMPLV2/" : {
+      "get" : {
+        "tags" : [ "Single" ],
+        "summary" : "Get a list of additional address informations",
+        "description" : "By passing in the appropriate options, you can get a list of a street's numbers\n",
+        "operationId" : "COMPLV2_GET",
+        "parameters" : [ {
+          "name" : "Licence",
+          "in" : "query",
+          "description" : "Pass the license given by DQE",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Pays",
+          "in" : "query",
+          "description" : "Pass a country code (ISO 3 letters)",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "FRA"
+          }
+        }, {
+          "name" : "IDVoie",
+          "in" : "query",
+          "description" : "Pass the unique code of the street",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "IDNum",
+          "in" : "query",
+          "description" : "Pass the number of the street inwhich the additional information search will be done",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Taille",
+          "in" : "query",
+          "description" : "Pass an integer value to reduce the number of characters in the response",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Get a list of additional address informations",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/COMPLV2"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad input parameter"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Single" ],
+        "summary" : "Get a list of additional address informations",
+        "description" : "By passing in the appropriate options, you can get a list of a street's numbers\n",
+        "operationId" : "COMPLV2_POST",
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/COMPL_POST"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Get a list of additional address informations",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/COMPLV2"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad input parameter"
+          }
+        }
+      }
+    },
+    "/RNVP/" : {
+      "get" : {
+        "tags" : [ "RNVP" ],
+        "summary" : "Check an address without data entry help",
+        "description" : "By passing in the appropriate options, you can validate an address\n",
+        "operationId" : "RNVP_GET",
+        "parameters" : [ {
+          "name" : "Licence",
+          "in" : "query",
+          "description" : "Pass the license given by DQE",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Pays",
+          "in" : "query",
+          "description" : "Pass a country code (ISO 3 letters)",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "FRA"
+          }
+        }, {
+          "name" : "Adresse",
+          "in" : "query",
+          "description" : "Pass the full address to be checked \"Addtional|Address|Place called|Postal code|City\"",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Taille",
+          "in" : "query",
+          "description" : "Pass an integer value to reduce the number of characters in the response",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "Instance",
+          "in" : "query",
+          "description" : "Pass an optional instance",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Proposition",
+          "in" : "query",
+          "description" : "Pass a value to allow suggestions (\"O\")",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Get the result of the check",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/RNVP"
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad input parameter"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "RNVP" ],
+        "summary" : "Check an address without data entry help",
+        "description" : "By passing in the appropriate options, you can validate an address\n",
+        "operationId" : "RNVP_POST",
+        "requestBody" : {
+          "content" : {
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body_4"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Get the result of the check",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/RNVP"
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad input parameter"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "CP" : {
+        "required" : [ "1" ],
+        "type" : "object",
+        "properties" : {
+          "1" : {
+            "$ref" : "#/components/schemas/CP_1"
+          }
+        }
+      },
+      "ADR" : {
+        "required" : [ "1" ],
+        "type" : "object",
+        "properties" : {
+          "1" : {
+            "$ref" : "#/components/schemas/ADR_1"
+          }
+        }
+      },
+      "NUM" : {
+        "required" : [ "1" ],
+        "type" : "object",
+        "properties" : {
+          "1" : {
+            "$ref" : "#/components/schemas/NUM_1"
+          }
+        }
+      },
+      "COMPL" : {
+        "type" : "object",
+        "properties" : {
+          "1" : {
+            "$ref" : "#/components/schemas/COMPL_1"
+          }
+        }
+      },
+      "SINGLEV2" : {
+        "required" : [ "1" ],
+        "type" : "object",
+        "properties" : {
+          "1" : {
+            "$ref" : "#/components/schemas/SINGLEV2_1"
+          }
+        }
+      },
+      "COMPLV2" : {
+        "required" : [ "1" ],
+        "type" : "object",
+        "properties" : {
+          "1" : {
+            "$ref" : "#/components/schemas/COMPL_1"
+          },
+          "Latitude" : {
+            "type" : "string",
+            "description" : "Latitude of the address if subscribed",
+            "example" : "48.876605"
+          },
+          "Longitude" : {
+            "type" : "string",
+            "description" : "Longitude of the address if subscribed",
+            "example" : "2.343462"
+          },
+          "Status_IrisIlot" : {
+            "type" : "string",
+            "description" : "Source of the Iris or Ilot information (if subscribed)",
+            "example" : "INSEE"
+          },
+          "iris" : {
+            "type" : "integer",
+            "description" : "Iris code of the address (if subscribed)",
+            "example" : 5101
+          },
+          "ilot" : {
+            "type" : "integer",
+            "description" : "Ilot code but it is not used anymore (if subscribed)",
+            "example" : 1330015
+          }
+        }
+      },
+      "RNVP" : {
+        "required" : [ "1" ],
+        "type" : "object",
+        "properties" : {
+          "1" : {
+            "$ref" : "#/components/schemas/RNVP_1"
+          }
+        }
+      },
+      "body" : {
+        "required" : [ "CodePostal", "Licence", "Pays" ],
+        "type" : "object",
+        "properties" : {
+          "Licence" : {
+            "type" : "string",
+            "description" : "Pass the license given by DQE"
+          },
+          "CodePostal" : {
+            "type" : "string",
+            "description" : "Pass a postal code or a city"
+          },
+          "Pays" : {
+            "type" : "string",
+            "description" : "Pass a country code (ISO 3 letters)",
+            "default" : "FRA"
+          },
+          "Etendue" : {
+            "type" : "string",
+            "description" : "Pass an optional value to authorize the search by atleast 2 digits in CodePostal"
+          },
+          "Instance" : {
+            "type" : "string",
+            "description" : "Pass an optional instance"
+          },
+          "Version" : {
+            "type" : "string",
+            "description" : "Pass an optional value \"1.1\" to disable the fill of \"Lieu-dit\" in the \"Localite\" field"
+          }
+        }
+      },
+      "body_1" : {
+        "required" : [ "Adresse", "IDLocalite", "Licence", "Pays" ],
+        "type" : "object",
+        "properties" : {
+          "Licence" : {
+            "type" : "string",
+            "description" : "Pass the license given by DQE"
+          },
+          "Adresse" : {
+            "type" : "string",
+            "description" : "Pass the part of the address"
+          },
+          "IDLocalite" : {
+            "type" : "string",
+            "description" : "Pass the unique code of the city"
+          },
+          "Pays" : {
+            "type" : "string",
+            "description" : "Pass a country code (ISO 3 letters)",
+            "default" : "FRA"
+          },
+          "Taille" : {
+            "type" : "integer",
+            "description" : "Pass an integer value to reduce the number of characters in the response"
+          },
+          "Instance" : {
+            "type" : "string",
+            "description" : "Pass an optional instance"
+          }
+        }
+      },
+      "body_2" : {
+        "required" : [ "CodePostal", "IDLocalite", "IDVoie", "Licence", "Pays" ],
+        "type" : "object",
+        "properties" : {
+          "Licence" : {
+            "type" : "string",
+            "description" : "Pass the license given by DQE"
+          },
+          "Pays" : {
+            "type" : "string",
+            "description" : "Pass a country code (ISO 3 letters)",
+            "default" : "FRA"
+          },
+          "IDLocalite" : {
+            "type" : "string",
+            "description" : "Pass the unique code of the city"
+          },
+          "CodePostal" : {
+            "type" : "string",
+            "description" : "Pass postal code of the city"
+          },
+          "IDVoie" : {
+            "type" : "string",
+            "description" : "Pass the unique code of the street"
+          }
+        }
+      },
+      "body_3" : {
+        "required" : [ "Adresse", "Licence", "Pays" ],
+        "type" : "object",
+        "properties" : {
+          "Licence" : {
+            "type" : "string",
+            "description" : "Pass the license given by DQE"
+          },
+          "Pays" : {
+            "type" : "string",
+            "description" : "Pass the country code (ISO 3 letters)"
+          },
+          "Adresse" : {
+            "type" : "string",
+            "description" : "Pass the part of the address"
+          },
+          "Taille" : {
+            "type" : "string",
+            "description" : "Pass an integer value to limit the number of caracters in the response",
+            "default" : "38"
+          },
+          "NbMax" : {
+            "type" : "string",
+            "description" : "Pass an interver value to limit the number of suggestion in the response"
+          },
+          "Version" : {
+            "type" : "string",
+            "description" : "Pass the value \"1\" to fill the type of street in the response"
+          },
+          "Instance" : {
+            "type" : "string",
+            "description" : "Pass an optional instance"
+          }
+        }
+      },
+      "body_4" : {
+        "required" : [ "Adresse", "Licence", "Pays" ],
+        "type" : "object",
+        "properties" : {
+          "Licence" : {
+            "type" : "string",
+            "description" : "Pass the license given by DQE"
+          },
+          "Pays" : {
+            "type" : "string",
+            "description" : "Pass a country code (ISO 3 letters)",
+            "default" : "FRA"
+          },
+          "Adresse" : {
+            "type" : "string",
+            "description" : "Pass the full address to be checked \"Addtional|Address|Place called|Postal code|City\""
+          },
+          "Taille" : {
+            "type" : "integer",
+            "description" : "Pass an integer value to reduce the number of characters in the response"
+          },
+          "Instance" : {
+            "type" : "string",
+            "description" : "Pass an optional instance"
+          },
+          "Proposition" : {
+            "type" : "string",
+            "description" : "Pass a value to allow suggestions (\"O\")"
+          }
+        }
+      },
+      "CP_1" : {
+        "required" : [ "Cedex", "CodePostal", "Complement", "Entreprise", "IDLocalite", "IDVoie", "Instance", "Latitude", "LieuDit", "ListeNumero", "Localite", "Longitude", "NbNumero", "Nbnumero", "Numero", "Pays", "Province", "SousLocalite", "TypeVoie" ],
+        "type" : "object",
+        "properties" : {
+          "Province" : {
+            "type" : "string",
+            "description" : "Not used for France (* for France)",
+            "example" : "*"
+          },
+          "IDLocalite" : {
+            "type" : "string",
+            "description" : "City's unique code (Insee code for France)",
+            "example" : "92044"
+          },
+          "Voie" : {
+            "type" : "string",
+            "description" : "Street",
+            "example" : "AVENUE MARCELLIN BERTHELOT"
+          },
+          "NbNumero" : {
+            "type" : "integer",
+            "description" : "Total of a street's number",
+            "example" : 132
+          },
+          "Pays" : {
+            "type" : "string",
+            "description" : "ISO 3 letters of the country",
+            "example" : "FRA"
+          },
+          "IDVoie" : {
+            "type" : "string",
+            "description" : "Street's unique code",
+            "example" : "1750163"
+          },
+          "Latitude" : {
+            "type" : "string",
+            "description" : "Latitude of the center of the city",
+            "example" : "48.8037275796"
+          },
+          "Cedex" : {
+            "type" : "integer",
+            "description" : "Indicates if the city is a CEDEX",
+            "example" : 0
+          },
+          "Numero" : {
+            "type" : "string",
+            "description" : "Number of street identfied in the request",
+            "example" : 5
+          },
+          "TypeVoie" : {
+            "type" : "string",
+            "description" : "Type of street",
+            "example" : "RUE"
+          },
+          "Instance" : {
+            "type" : "integer",
+            "description" : "Instance from request",
+            "example" : 0
+          },
+          "ListeNumero" : {
+            "type" : "string",
+            "description" : "List of street numbers",
+            "example" : "1B;2;3;4B;6;8;9;10;14;30;32"
+          },
+          "CodePostal" : {
+            "type" : "string",
+            "description" : "Postal code",
+            "example" : "92300"
+          },
+          "SousLocalite" : {
+            "type" : "string",
+            "description" : "Not used for France"
+          },
+          "LieuDit" : {
+            "type" : "string",
+            "description" : "A place called",
+            "example" : "MEUDON LA FORET"
+          },
+          "Nbnumero" : {
+            "type" : "integer",
+            "description" : "Total of a street's number",
+            "example" : 132
+          },
+          "Localite" : {
+            "type" : "string",
+            "description" : "City name",
+            "example" : "MEUDON"
+          },
+          "Longitude" : {
+            "type" : "string",
+            "description" : "Longitude of the center of the city",
+            "example" : "2.22696287829"
+          },
+          "Complement" : {
+            "type" : "string",
+            "description" : "Additional address information",
+            "example" : "TOUR DQE-SOFTWARE"
+          },
+          "Entreprise" : {
+            "type" : "string",
+            "description" : "Name of the enterprise",
+            "example" : "DQE-SOFTWARE"
+          }
+        }
+      },
+      "ADR_1" : {
+        "required" : [ "Cedex", "CodePostal", "CodeVoie", "Complement", "Entreprise", "IDLocalite", "IDVoie", "Instance", "LieuDit", "ListeNumero", "Localite", "NbNumero", "Nbnumero", "Num", "Numero", "Pays", "Saisie", "TypeVoie", "Voie" ],
+        "type" : "object",
+        "properties" : {
+          "Province" : {
+            "type" : "string",
+            "description" : "Not used for France (* for France)",
+            "example" : "REGION BRUXELLES-CAPITALE"
+          },
+          "Saisie" : {
+            "type" : "string",
+            "description" : "Part of the address sent in the request",
+            "example" : "110 victor hugo 92"
+          },
+          "IDLocalite" : {
+            "type" : "string",
+            "description" : "City's unique code (Insee code for France)",
+            "example" : "92044"
+          },
+          "Voie" : {
+            "type" : "string",
+            "description" : "Street",
+            "example" : "AVENUE MARCELLIN BERTHELOT"
+          },
+          "NbNumero" : {
+            "type" : "integer",
+            "description" : "Total of a street's number",
+            "example" : 132
+          },
+          "Pays" : {
+            "type" : "string",
+            "description" : "ISO 3 letters of the country",
+            "example" : "FRA"
+          },
+          "IDVoie" : {
+            "type" : "string",
+            "description" : "Street's unique code",
+            "example" : "1750163"
+          },
+          "Num" : {
+            "type" : "string",
+            "description" : "Number of street identfied in the request",
+            "example" : "110"
+          },
+          "Cedex" : {
+            "type" : "integer",
+            "description" : "Indicates if the city is a CEDEX",
+            "example" : 0
+          },
+          "Numero" : {
+            "type" : "integer",
+            "description" : "Number of street identfied in the request",
+            "example" : 110
+          },
+          "TypeVoie" : {
+            "type" : "string",
+            "description" : "Type of street",
+            "example" : "RUE"
+          },
+          "Instance" : {
+            "type" : "integer",
+            "description" : "Instance from request",
+            "example" : 0
+          },
+          "ListeNumero" : {
+            "type" : "string",
+            "description" : "List of street's numbers",
+            "example" : "1B;2;3;4B;6;8;9;10;14;30;32"
+          },
+          "CodePostal" : {
+            "type" : "string",
+            "description" : "Postal code",
+            "example" : "92300"
+          },
+          "CodeVoie" : {
+            "type" : "string",
+            "description" : "Street's unique code",
+            "example" : "1750163"
+          },
+          "LieuDit" : {
+            "type" : "string",
+            "description" : "A place called",
+            "example" : "MEUDON LA FORET"
+          },
+          "Nbnumero" : {
+            "type" : "integer",
+            "description" : "Total of a street's number",
+            "example" : 132
+          },
+          "Localite" : {
+            "type" : "string",
+            "description" : "City name",
+            "example" : "MEUDON"
+          },
+          "Complement" : {
+            "type" : "string",
+            "description" : "Additional address information",
+            "example" : "TOUR DQE-SOFTWARE"
+          },
+          "Entreprise" : {
+            "type" : "string",
+            "description" : "Name of the enterprise",
+            "example" : "DQE-SOFTWARE"
+          },
+          "Roudis" : {
+            "type" : "integer",
+            "description" : "Roudis code for France only",
+            "example" : 3321
+          },
+          "Souslocalite" : {
+            "type" : "string",
+            "description" : "Not used for France"
+          }
+        }
+      },
+      "NUM_1" : {
+        "required" : [ "Cedex", "CodePostal", "IDLocalite", "IDVoie", "ListeNumero", "Localite", "NbNumero", "Nbnumero", "Province", "SousLocalite" ],
+        "type" : "object",
+        "properties" : {
+          "Province" : {
+            "type" : "string",
+            "description" : "Not used for France (* for France)",
+            "example" : "REGION BRUXELLES-CAPITALE"
+          },
+          "IDLocalite" : {
+            "type" : "string",
+            "description" : "City's unique code (Insee code for France)",
+            "example" : "92044"
+          },
+          "Cedex" : {
+            "type" : "string",
+            "description" : "Indicate if the address is a CEDEX or not",
+            "example" : "0"
+          },
+          "NbNumero" : {
+            "type" : "integer",
+            "description" : "Total of a street's number",
+            "example" : 132
+          },
+          "Nbnumero" : {
+            "type" : "integer",
+            "description" : "Total of a street's number",
+            "example" : 132
+          },
+          "IDVoie" : {
+            "type" : "string",
+            "description" : "Street's unique code",
+            "example" : "1750163"
+          },
+          "ListeNumero" : {
+            "type" : "string",
+            "description" : "List of street's numbers",
+            "example" : "1B;2;3;4B;6;8;9;10;14;30;32"
+          },
+          "CodePostal" : {
+            "type" : "string",
+            "description" : "Postal code",
+            "example" : "92300"
+          },
+          "Localite" : {
+            "type" : "string",
+            "description" : "City name (empty value)"
+          },
+          "Souslocalite" : {
+            "type" : "string",
+            "description" : "Not used for France"
+          }
+        }
+      },
+      "COMPL_1" : {
+        "type" : "object",
+        "properties" : {
+          "Batiment" : {
+            "type" : "string",
+            "description" : "Additional address information",
+            "example" : "TOUR RAVENNE"
+          }
+        }
+      },
+      "SINGLEV2_1" : {
+        "required" : [ "CodePostal", "CodeVoie", "Complement", "Entreprise", "IDLocalite", "IDVoie", "Instance", "Label", "Latitude", "LieuDit", "ListeNumero", "Localite", "Longitude", "NbNumero", "Nbnumero", "Num", "NumSeul", "Numero", "Pays", "Province", "Saisie", "TypeVoie", "Voie", "valid_num" ],
+        "type" : "object",
+        "properties" : {
+          "Instance" : {
+            "type" : "integer",
+            "description" : "Instance from request",
+            "example" : 0
+          },
+          "Province" : {
+            "type" : "string",
+            "description" : "Not used for France (* for France)",
+            "example" : "REGION BRUXELLES-CAPITALE"
+          },
+          "IDLocalite" : {
+            "type" : "string",
+            "description" : "City's unique code (Insee code for France)",
+            "example" : "92044"
+          },
+          "CodePostal" : {
+            "type" : "string",
+            "description" : "Postal code",
+            "example" : "92300"
+          },
+          "Localite" : {
+            "type" : "string",
+            "description" : "City name",
+            "example" : "MEUDON"
+          },
+          "Pays" : {
+            "type" : "string",
+            "description" : "ISO 3 letters of the country",
+            "example" : "FRA"
+          },
+          "LieuDit" : {
+            "type" : "string",
+            "description" : "A place called",
+            "example" : "MEUDON LA FORET"
+          },
+          "Latitude" : {
+            "type" : "string",
+            "description" : "Latitude of the address if subscribed",
+            "example" : "48.8037275796"
+          },
+          "Longitude" : {
+            "type" : "string",
+            "description" : "Longitude of the address if subscribed",
+            "example" : "2.22696287829"
+          },
+          "IDVoie" : {
+            "type" : "string",
+            "description" : "Street's unique code",
+            "example" : "1750163"
+          },
+          "CodeVoie" : {
+            "type" : "string",
+            "description" : "Street's unique code",
+            "example" : "1750163"
+          },
+          "Label" : {
+            "type" : "string",
+            "description" : "Informations displayed on front",
+            "example" : "RUE DES PYRENEES|75020 PARIS"
+          },
+          "Region1" : {
+            "type" : "string",
+            "description" : "Official regions for forein country only (not sent for France)",
+            "example" : "England"
+          },
+          "Region2" : {
+            "type" : "string",
+            "description" : "County for forein country only (not sent for France)",
+            "example" : "Greater London"
+          },
+          "Region3" : {
+            "type" : "string",
+            "description" : "County for forein country only (not sent for France)",
+            "example" : "County"
+          },
+          "Region4" : {
+            "type" : "string",
+            "description" : "County for forein country only (not sent for France)",
+            "example" : "Southwark"
+          },
+          "Numero" : {
+            "type" : "string",
+            "description" : "Number of street identfied in the request",
+            "example" : 110
+          },
+          "Num" : {
+            "type" : "integer",
+            "description" : "Number of street identfied in the request"
+          },
+          "NbNumero" : {
+            "type" : "integer",
+            "description" : "Total of a street's number",
+            "example" : 132
+          },
+          "Nbnumero" : {
+            "type" : "integer",
+            "description" : "Total of a street's number",
+            "example" : 132
+          },
+          "valid_num" : {
+            "type" : "integer",
+            "description" : "Indicate if the number input is included or not in the list",
+            "example" : 1
+          },
+          "NumSeul" : {
+            "type" : "integer",
+            "description" : "Number on street without the additional information",
+            "example" : 110
+          },
+          "ListeNumero" : {
+            "type" : "string",
+            "description" : "List of street's numbers",
+            "example" : "1B;2;3;4B;6;8;9;10;14;30;32"
+          },
+          "TypeVoie" : {
+            "type" : "string",
+            "description" : "Type of street",
+            "example" : "RUE"
+          },
+          "Voie" : {
+            "type" : "string",
+            "description" : "Street",
+            "example" : "AVENUE MARCELLIN BERTHELOT"
+          },
+          "Suburb" : {
+            "type" : "string",
+            "description" : "Suburb",
+            "example" : "Suburb"
+          },
+          "Complement" : {
+            "type" : "string",
+            "description" : "Not used anymore but we keep it historically"
+          },
+          "Saisie" : {
+            "type" : "string",
+            "description" : "Part of the address input",
+            "example" : "110 VICTOR"
+          },
+          "Entreprise" : {
+            "type" : "string",
+            "description" : "Name of the enterprise",
+            "example" : "DQE-SOFTWARE"
+          }
+        }
+      },
+      "RNVP_1" : {
+        "required" : [ "Adresse", "Cedex", "CodePostal", "CompNum", "Complement", "DQECodeDetail", "DQECodeErreur", "DQECompte", "DQELibErreur", "DQEPourcentErreur", "IDCle", "IDHexaposte", "IDLocalite", "IDVoie", "Instance", "Latitude", "LieuDit", "Ligne2", "ListeNumero", "Localite", "Longitude", "NbNumero", "NumSeul", "Numero", "Pays", "Province", "Roudis", "Status_IrisIlot", "TypeVoie", "Voie", "ilot", "iris" ],
+        "type" : "object",
+        "properties" : {
+          "Roudis" : {
+            "type" : "integer",
+            "description" : "Roudis code",
+            "example" : 1651
+          },
+          "DQECompte" : {
+            "type" : "string",
+            "description" : "Not used anymore (always empty)"
+          },
+          "Instance" : {
+            "type" : "integer",
+            "description" : "Instance from request",
+            "example" : 0
+          },
+          "CodePostal" : {
+            "type" : "string",
+            "description" : "Postal code of the city",
+            "example" : "92300"
+          },
+          "Status_IrisIlot" : {
+            "type" : "string",
+            "description" : "Source of IRIS and/or ILOT",
+            "example" : "INSEE"
+          },
+          "Latitude" : {
+            "type" : "string",
+            "description" : "Latitude of the center of the city",
+            "example" : "48.819987"
+          },
+          "Localite" : {
+            "type" : "string",
+            "description" : "City name",
+            "example" : "PARIS"
+          },
+          "Province" : {
+            "type" : "string",
+            "description" : "Not used for France (\"*\" for France)",
+            "example" : "*"
+          },
+          "NbNumero" : {
+            "type" : "integer",
+            "description" : "Used only if Proposition=O",
+            "example" : 0
+          },
+          "Complement" : {
+            "type" : "string",
+            "description" : "Additional information of the address",
+            "example" : "TOUR RAVENNE"
+          },
+          "Voie" : {
+            "type" : "string",
+            "description" : "Street name only",
+            "example" : "VICTOR HUGO"
+          },
+          "Adresse" : {
+            "type" : "string",
+            "description" : "Number and street",
+            "example" : "110 RUE VICTOR HUGO"
+          },
+          "Cedex" : {
+            "type" : "string",
+            "description" : "Indicate if it is a cedex",
+            "example" : "C"
+          },
+          "Numero" : {
+            "type" : "string",
+            "description" : "Number of the street identified in the request",
+            "example" : 110
+          },
+          "ListeNumero" : {
+            "type" : "string",
+            "description" : "List of street numbers (Filled only when Proposition=O)",
+            "example" : "2;3;4;5"
+          },
+          "IDHexaposte" : {
+            "type" : "string",
+            "description" : "Unique ID from the base HEXAPOSTE",
+            "example" : "32469"
+          },
+          "IDCle" : {
+            "type" : "string",
+            "description" : "Unique ID from the base HEXACLE",
+            "example" : "7511322A6A"
+          },
+          "LieuDit" : {
+            "type" : "string",
+            "description" : "Place called",
+            "example" : "AVORIAZ"
+          },
+          "ilot" : {
+            "type" : "string",
+            "description" : "ILOT code",
+            "example" : "1330012"
+          },
+          "TypeVoie" : {
+            "type" : "string",
+            "description" : "Type of street",
+            "example" : "RUE"
+          },
+          "DQECodeDetail" : {
+            "type" : "integer",
+            "description" : "Error code",
+            "example" : 10
+          },
+          "DQELibErreur" : {
+            "type" : "string",
+            "description" : "OK or KO",
+            "example" : "OK"
+          },
+          "Longitude" : {
+            "type" : "string",
+            "description" : "Longitude of the center of the city",
+            "example" : "2.363771"
+          },
+          "CompNum" : {
+            "type" : "string",
+            "description" : "Additional information about the number of the street",
+            "example" : "B"
+          },
+          "iris" : {
+            "type" : "string",
+            "description" : "Iris code",
+            "example" : "5102"
+          },
+          "IDLocalite" : {
+            "type" : "string",
+            "description" : "City's unique code (Insee code for France)",
+            "example" : "75113"
+          },
+          "DQECodeErreur" : {
+            "type" : "string",
+            "description" : "Not used anymore (always empty)"
+          },
+          "Pays" : {
+            "type" : "string",
+            "description" : "ISO 3 letters of the country",
+            "example" : "FRA"
+          },
+          "IDVoie" : {
+            "type" : "string",
+            "description" : "Street's unique code"
+          },
+          "NumSeul" : {
+            "type" : "integer",
+            "description" : "Number on street without the additional information",
+            "example" : 110
+          },
+          "Ligne2" : {
+            "type" : "string",
+            "description" : "Second addtional information about the adress",
+            "example" : "FLOOR 2"
+          },
+          "DQEPourcentErreur" : {
+            "type" : "string",
+            "description" : "Not used anymore (always empty)"
+          },
+          "Code_Modification" : {
+            "type" : "string",
+            "description" : "Code to know which field has been corrected"
+          }
+        }
+      }
+    },
+    "requestBodies" : {
+      "COMPL_POST" : {
+        "content" : {
+          "application/x-www-form-urlencoded" : {
+            "schema" : {
+              "required" : [ "IDNum", "IDVoie", "Licence", "Pays" ],
+              "type" : "object",
+              "properties" : {
+                "Licence" : {
+                  "type" : "string",
+                  "description" : "Pass the license given by DQE"
+                },
+                "Pays" : {
+                  "type" : "string",
+                  "description" : "Pass a country code (ISO 3 letters)",
+                  "default" : "FRA"
+                },
+                "IDVoie" : {
+                  "type" : "string",
+                  "description" : "Pass the unique code of the street"
+                },
+                "IDNum" : {
+                  "type" : "string",
+                  "description" : "Pass the number of the street inwhich the additional information search will be done"
+                },
+                "Taille" : {
+                  "type" : "integer",
+                  "description" : "Pass an integer value to reduce the number of characters in the response"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

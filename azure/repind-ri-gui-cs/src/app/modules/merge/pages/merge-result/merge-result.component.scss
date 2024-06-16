@@ -1,0 +1,49 @@
+/* ---- NOT FOUND DATA ---- */
+.not-found {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 15vh;
+  }
+  
+.big-text {
+    text-align: center;
+    font-size: 2em;
+  }
+  
+.error {
+    font-size: 5em;
+  }
+  
+.not-found-message {
+    font-size: 1.5em;
+  }
+  /*--------------------*/
+
+.back-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+  }
+  
+.result-title {
+    display: flex;
+    justify-content: center;
+  }
+
+.result-title-text {
+    margin-top: 5px;
+  }
+
+.mat-icon-title {
+    font-size: 40px;
+    margin-left: 5px;
+  }
+
+button {
+    width: auto;
+    min-width: 200px;
+    margin-right: 12px;
+    margin-left: 12px;
+  }

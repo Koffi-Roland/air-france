@@ -1,0 +1,3 @@
+com\afklm\batch\cleanContactData\config\BatchCleanContactDataConf.class
+com\afklm\batch\cleanContactData\config\CleanContactDataConfProperties.class
+com\afklm\batch\cleanContactData\BatchCleanContactData.class

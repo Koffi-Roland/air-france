@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <!-- !!! DO NOT REMOVE/CHANGE THE <parent>[...]</parent> SECTION !!! Please
+        contact DI.NB through http://fds.airfrance.fr if needed. -->
+    <parent>
+        <groupId>com.afklm.maven.pom</groupId>
+        <artifactId>af-projects-pom</artifactId>
+        <version>5.2.1</version>
+    </parent>
+
+    <groupId>com.afklm.repind</groupId>
+    <artifactId>repind-root-cf</artifactId>
+    <version>1.0.23-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <repind.version>1.0.22-SNAPSHOT</repind.version>
+        <!-- JaCoCo Properties -->
+        <jacoco.version>0.8.6</jacoco.version>
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+        <sonar.language>java</sonar.language>
+        <sonar.coverage.exclusions>
+            **/config/**/*,
+            **/exception/**/*,
+            **/exceptions/**/*,
+            **/error/**/*,
+            **/advice/**/*,
+            **/handler/**/*,
+            **/mashery/**/*,
+            **/filter/**/*,
+            **/Application.java,
+            **/Exception.java,
+            **/*dto.java,
+            **/sequence/**/*,
+            **/*Constant.java
+        </sonar.coverage.exclusions>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${sonar.jacoco.version}</version>
+                <executions>
+                    <execution>
+                        <id>merge</id>
+                        <goals>
+                            <goal>merge</goal>
+                        </goals>
+                        <configuration>
+                            <fileSets>
+                                <fileSet implementation="org.apache.maven.shared.model.fileset.FileSet">
+                                    <directory>${project.basedir}</directory>
+                                    <includes>
+                                        <include>**/*.exec</include>
+                                    </includes>
+                                </fileSet>
+                            </fileSets>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <modules>
+        <module>common</module>
+        <module>automatic-merge</module>
+        <module>delete-my-account</module>
+        <module>forget-me-asked</module>
+        <module>inferred-data</module>
+        <module>manage-consent</module>
+        <module>manage-doctor</module>
+        <module>manage-doctor-attributes</module>
+        <module>manage-tribes</module>
+        <module>mapping</module>
+        <module>handicap</module>
+        <module>search-gin-by-contract</module>
+        <module>search-gin-by-email</module>
+        <module>search-gin-by-phone</module>
+        <module>search-gin-by-social-media</module>
+        <module>search-gin-by-lastname-firstname</module>
+		<module>search-individual</module>
+        <module>ultimate-preferences</module>
+        <module>manage-individual-identifier</module>
+    </modules>
+
+    <dependencies>
+        <!-- Jacoco for Sonar -->
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>${sonar.jacoco.version}</version>
+        </dependency>
+    </dependencies>
+</project>

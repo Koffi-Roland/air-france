@@ -1,0 +1,15 @@
+Juste pour que vous soyez au courant voilà comment c'est implémenté. J'ai utilisé pour cela la méthode
+de modélisation synergétique avec des références cognitives sur les acteurs virtuels, voire parfois
+agrégationnés (je trouve que ça marche mieux que les acteurs entropiques tout simplement parce
+qu'ils encapsulent la rémanence polymorphique).
+
+- Les handlers de signaux n'envoient plus de mails. Ils ne font qu'ajouter le chemin du fichier de trace
+à un fichier "coredTraces" situé dans le répertoire traces/ courant. Par exemple en livraison ce sera :
+ADH -> /FRET/FYIELD/LIV/ADHESION/proc/traces/coredTraces
+EDI -> /FRET/FYIELD/LIV/MSGPEL/edi/bin/traces/coredTraces
+C'est tout. Ensuite le process génère son fichier core avant de mourir paisiblement...
+
+- A chaque lancement de process ou à chaque fork() de tcpserv le fichier coredTraces est examiné et les mails
+correspondants sont envoyés. Ensuite il est supprimé.
+Ce qui veux dire que si on voit un fichier coredTraces qui traine dans le répertoire traces/ il ne faut pas
+y toucher. Il sera supprimé automatiquement lors du prochain lancement.

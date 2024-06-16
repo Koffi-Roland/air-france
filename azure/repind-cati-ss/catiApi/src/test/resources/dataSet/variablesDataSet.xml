@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="dataset.xsd">
+	
+	<ENV_VAR ENVKEY="TEST_1_1" ENVVALUE="1095"/>
+	<ENV_VAR ENVKEY="TEST_2_2" ENVVALUE="1"/>
+	<ENV_VAR ENVKEY="TEST_3_3" ENVVALUE="W21375138;W06536507"/>
+	
+</dataset>

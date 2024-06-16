@@ -1,0 +1,6 @@
+app_name: ri
+az_region: France Central (FCE)
+env: PRD
+ritm: RITM9999808
+subscription_id: 9451007c-eb98-4383-a8e9-3a86406810ee
+sub_name: mrn-ri-prod-001

@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: automatic-merge
+  labels:
+    app.kubernetes.io/name: automatic-merge
+    app.kubernetes.io/instance: automatic-merge-prd
+### Set annotation to configure session affinity based on cookie if necessary
+### session-cookie-name only needs to be set if you are running on a shared domain like www.klm.com. If you are running on your own domain it is not needed.
+#  annotations:
+#    ingress.kubernetes.io/affinity: cookie
+spec:
+  rules:
+    ## Examples of wildcard DNS, enabling direct access for non-le environments. Use ${INSTANCE} to make your app unique across bamboo deployment environments.
+    #- host: <NAME>-${INSTANCE}-<TEAM>.ite-intra-ams.af-klm.com
+    #- host: <NAME>-${INSTANCE}.ite-intra-ams.af-klm.com
+    #- host: <NAME>-${INSTANCE}.ute-intra-ams.af-klm.com
+    #- host: <NAME>-${INSTANCE}.ae-intra-ams.af-klm.com
+    ## Example static dns that would need to be requested through proper channnels
+    #- host: helloworld-ite.klm.com
+    - host: automatic-merge-cdm-00012-pks.rs-vlb-prd.providers.airfranceklm.com
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: automatic-merge-prd                # Must match the name used in the service resource
+              port:
+                number: 8080                               # Must match the port used in the service resource
+

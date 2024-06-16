@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<generator>
+    <application-information>
+        <name>Your application</name>
+        <short-name>application</short-name>
+        <version>1.0</version>
+        <author>Air France</author>
+        <company>Air France</company>
+    </application-information>
+    <build-information>
+        <struts-version>IOC</struts-version>
+        <package>com.airfrance.application</package>
+    </build-information>
+    <serviceaccess>
+        <name/>
+    </serviceaccess>
+</generator>
+

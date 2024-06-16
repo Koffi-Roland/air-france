@@ -1,0 +1,5 @@
+<form class="dynamic-form" [formGroup]="form">
+  <ng-container *ngFor="let field of fields" >
+    <ng-container *ngIf="isDisplayed(field)" appDynamicField [field]="field" [group]="form"></ng-container>
+  </ng-container>
+</form>

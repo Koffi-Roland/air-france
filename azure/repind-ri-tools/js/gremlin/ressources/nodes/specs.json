@@ -1,0 +1,27 @@
+[
+    {
+        "id": "10",
+        "value": "CARD",
+        "type": "SPECIALITY"
+    },
+    {
+        "id": "11",
+        "value": "NEUR",
+        "type": "SPECIALITY"
+    },
+    {
+        "id": "12",
+        "value": "SURG",
+        "type": "SPECIALITY"
+    },
+    {
+        "id": "13",
+        "value": "ANES",
+        "type": "SPECIALITY"
+    },
+    {
+        "id": "14",
+        "value": "DOFA",
+        "type": "SPECIALITY"
+    }
+]

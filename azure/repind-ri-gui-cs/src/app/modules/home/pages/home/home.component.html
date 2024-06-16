@@ -1,0 +1,33 @@
+<div class="content">
+  <div class="column">
+  <h1 class="mat-display-2">{{ 'INDIVIDUALS-REFERENTIAL' | translate }}</h1>
+  <h2 class="mat-title">{{ 'HOME-SUBTITLE' | translate }}</h2>
+  <div class="btn-group">
+    <button mat-flat-button color="primary" [routerLink]="['/individuals/search/gin']">
+      <div class="btn-content">
+        <span class="btn-label">{{ 'SEARCH-INDIVIDUALS-BUTTON-LABEL' | translate }}</span>
+        <mat-icon>chevron_right</mat-icon>
+      </div>
+    </button>
+    <button mat-flat-button color="primary" [routerLink]="['/individuals/merge']">
+      <div class="btn-content">
+        <span class="btn-label">{{ 'MERGE-INDIVIDUALS-BUTTON-LABEL' | translate }}</span>
+        <mat-icon>chevron_right</mat-icon>
+      </div>
+    </button>
+  </div>
+</div>
+  <div class="column">
+    <mat-card>
+        <mat-card-header>
+            <div mat-card-avatar class="gdpr-image"></div>
+            <mat-card-title>{{ 'GDPR-TITLE' | translate }}</mat-card-title>
+            <mat-card-subtitle>{{ 'GDPR-SUBTITLE' | translate }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+              <p>{{ 'GDPR-TEXT' | translate }}</p>
+              <p>{{ 'GDPR-LINK' | translate }}</p>
+            </mat-card-content>
+          </mat-card>
+  </div>
+</div>

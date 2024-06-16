@@ -1,0 +1,15 @@
+<bindings 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://java.sun.com/xml/ns/jaxb"
+    version="1.0">
+    <bindings scd="x-schema::tns" xmlns:tns="http://www.af-klm.com/services/common/SystemFault-v1/xsd">
+        <schemaBindings>
+            <package name="com.afklm.soa.common.faults"/>
+            
+            <!--PROTECTED REGION ID(common_SystemFault-v1_jaxb) ENABLED START-->
+			<!-- include your own bindings here -->
+  			<!--PROTECTED REGION END-->
+        </schemaBindings>
+    </bindings>
+</bindings>

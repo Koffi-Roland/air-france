@@ -1,0 +1,12 @@
+C:\Users\t294797\workspace\azure\repind-ri-batch\detectduplicates\src\main\java\com\afklm\batch\detectduplicates\repository\SameLastnameNameEmailAndTelecomNoDuplicateRepository.java
+C:\Users\t294797\workspace\azure\repind-ri-batch\detectduplicates\src\main\java\com\afklm\batch\detectduplicates\config\DetectDuplicatesConfig.java
+C:\Users\t294797\workspace\azure\repind-ri-batch\detectduplicates\src\main\java\com\afklm\batch\detectduplicates\enums\BatchDetectDuplicatesEnum.java
+C:\Users\t294797\workspace\azure\repind-ri-batch\detectduplicates\src\main\java\com\afklm\batch\detectduplicates\repository\SameLastnameNameEmailAndTelecomRepository.java
+C:\Users\t294797\workspace\azure\repind-ri-batch\detectduplicates\src\main\java\com\afklm\batch\detectduplicates\repository\SameLastnameNameEmailOrTelecomRepository.java
+C:\Users\t294797\workspace\azure\repind-ri-batch\detectduplicates\src\main\java\com\afklm\batch\detectduplicates\BatchDetectDuplicates.java
+C:\Users\t294797\workspace\azure\repind-ri-batch\detectduplicates\src\main\java\com\afklm\batch\detectduplicates\entity\SameLastnameNameEmailAndTelecomNoDuplicateEntity.java
+C:\Users\t294797\workspace\azure\repind-ri-batch\detectduplicates\src\main\java\com\afklm\batch\detectduplicates\models\SameLastnameNameEmailAndTelecom.java
+C:\Users\t294797\workspace\azure\repind-ri-batch\detectduplicates\src\main\java\com\afklm\batch\detectduplicates\entity\SameLastnameNameEmailOrTelecomEntity.java
+C:\Users\t294797\workspace\azure\repind-ri-batch\detectduplicates\src\main\java\com\afklm\batch\detectduplicates\service\FileService.java
+C:\Users\t294797\workspace\azure\repind-ri-batch\detectduplicates\src\main\java\com\afklm\batch\detectduplicates\entity\SameLastnameNameEmailAndTelecomEntity.java
+C:\Users\t294797\workspace\azure\repind-ri-batch\detectduplicates\src\main\java\com\afklm\batch\detectduplicates\service\DetectDuplicatesService.java

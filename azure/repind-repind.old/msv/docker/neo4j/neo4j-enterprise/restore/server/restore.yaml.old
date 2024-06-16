@@ -1,0 +1,36 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: neo4j-restore
+  labels:
+    app: neo4j-restore
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: neo4j-restore
+    spec:
+      serviceAccountName: neo4j-restore-sa
+      containers:
+        - name: neo4j-restore
+          image: nexusoss-docker.airfrance.fr/repind/neo4j-restore:latest
+          volumeMounts:
+          - name: backupdir-neo4j
+            mountPath: /backupdir
+          - name: kubectl
+            subPath: kubectl
+            mountPath: /usr/local/bin/kubectl
+      volumes:
+        - name: backupdir-neo4j
+          persistentVolumeClaim:
+           claimName: backupdir-neo4j
+        - name: kubectl
+          emptyDir: {}
+      initContainers:
+        - name: install-kubectl
+          image: allanlei/kubectl
+          volumeMounts:
+          - name: kubectl
+            mountPath: /data
+          command: ["cp", "/usr/local/bin/kubectl", "/data/kubectl"]

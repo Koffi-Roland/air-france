@@ -1,0 +1,9 @@
+resources:
+  - deployment.yaml
+  - service.yaml
+
+commonLabels:
+  app.kubernetes.io/name: manage-doctor-attributes
+  app.kubernetes.io/instance: manage-doctor-attributes
+
+namespace: default

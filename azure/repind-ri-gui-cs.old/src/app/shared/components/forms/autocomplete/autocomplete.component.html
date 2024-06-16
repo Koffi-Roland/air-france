@@ -1,0 +1,18 @@
+<mat-form-field [formGroup]="group" appearance="outline">
+  <mat-label>{{ field.label | translate }}</mat-label>
+  <input matInput #input [formControlName]="field.name" placeholder="{{ field.placeholder | translate }}"
+    [matAutocomplete]="auto" [required]="isRequired" appAutoFocus [autoFocus]="field.autofocus">
+  <mat-hint align="end" *ngIf="isMaxLength">{{input.value?.length || 0}} / {{maxLength}}</mat-hint>
+  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <mat-option *ngFor="let option of filteredOptions | async" [value]="option.value">
+      <div class="option">
+        <span class="mat-body-1" [innerHTML]="option.mainText | highlight: toHighLight | translate"></span>
+        <span class="mat-caption" [innerHTML]="('(' + option.secondaryText + ')') | highlight: toHighLight"></span>
+      </div>
+    </mat-option>
+  </mat-autocomplete>
+  <ng-container *ngFor="let validation of field.validations;" ngProjectAs="mat-error">
+    <mat-error *ngIf="group.get(field.name).hasError(validation.name)">{{ validation.message | translate }}
+    </mat-error>
+  </ng-container>
+</mat-form-field>

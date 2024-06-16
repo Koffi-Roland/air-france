@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.afklm.repind</groupId>
+		<artifactId>repind-root</artifactId>
+		<version>0.1.0-SNAPSHOT</version>
+		<relativePath>../../../../pom.xml</relativePath>
+	</parent>
+
+	<groupId>com.afklm.repind.individu</groupId>
+	<artifactId>ProvideIndividualDataWS</artifactId>
+	<packaging>war</packaging>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.apache.kafka</groupId>
+				<artifactId>kafka-clients</artifactId>
+				<version>1.0.0</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>		
+		<dependency>
+			<groupId>com.afklm.repind.commons</groupId>
+			<artifactId>repind-commons</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>com.afklm.mq</groupId>
+					<artifactId>mq-runtime</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.afklm.repind.commons</groupId>
+			<artifactId>repind-payment-preferences-commons</artifactId>
+			<version>${project.version}</version>			
+		</dependency>	
+		<dependency>
+			<groupId>com.afklm.repind.commons</groupId>
+			<artifactId>repind-commons</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>		
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.afklm.repind.commons</groupId>
+			<artifactId>repindutf8-commons</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>		
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.afklm.repind.commons</groupId>
+			<artifactId>repind-payment-preferences-commons</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>		
+			<scope>test</scope>
+		</dependency>
+
+	
+		<!-- ProvideIndividualData -->
+		<dependency>
+  			<groupId>com.afklm.soa.stubs</groupId>
+ 			<artifactId>w000418-v01</artifactId>
+ 			<version>0</version>
+		</dependency>
+		<dependency>
+  			<groupId>com.afklm.soa.stubs</groupId>
+  			<artifactId>w000418-v04</artifactId>
+  			<version>7</version>
+		</dependency>
+		<dependency>
+  			<groupId>com.afklm.soa.stubs</groupId>
+  			<artifactId>w000418-v05</artifactId>
+  			<version>5</version>
+		</dependency>
+		<dependency>
+  			<groupId>com.afklm.soa.stubs</groupId>
+  			<artifactId>w000418-v06</artifactId>
+  			<version>10</version>
+		</dependency>
+		<dependency>
+  			<groupId>com.afklm.soa.stubs</groupId>
+  			<artifactId>w000418-v07</artifactId>
+  			<version>6</version>
+		</dependency>
+
+		<!-- ProvideIndividualReferenceTable -->
+		<dependency>
+			  <groupId>com.afklm.soa.stubs</groupId>
+			  <artifactId>w001588-v01</artifactId>
+			  <version>6</version>
+		</dependency>
+		<dependency>
+			  <groupId>com.afklm.soa.stubs</groupId>
+			  <artifactId>w001588-v02</artifactId>
+			  <version>2</version>
+		</dependency>
+		<!-- OTHER CONSUMER -->				
+
+
+		<!-- slf4j -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.26</version>
+		</dependency>
+
+		<!-- Log -->
+		<dependency>
+			<groupId>com.afklm.tecc</groupId>
+			<artifactId>como-logback-appender</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+			    <groupId>org.codehaus.mojo</groupId>
+			    <artifactId>build-helper-maven-plugin</artifactId>
+			    <executions>
+			        <execution>
+			            <phase>generate-sources</phase>
+			            <goals><goal>add-source</goal></goals>
+			            <configuration>
+			                <sources>
+			                    <source>${basedir}/src/main/java-generated</source>
+			                </sources>
+			            </configuration>
+			        </execution>
+			    </executions>
+			</plugin>
+		</plugins>
+
+		<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+	</build>		
+</project>

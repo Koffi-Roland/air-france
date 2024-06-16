@@ -1,0 +1,63 @@
+<mat-card>
+  <mat-card-content>
+    <div class="card-header bg-primary-500 text-white">
+      <mat-chip-list class="status-chip-list">
+        <mat-chip class="status-chip daisy-bg-on-warn-lighter" disabled>
+          <span>{{ common.getTransformEnumType(common.referenceDataType.INDIVIDUAL_STATUS) + individual.status |
+            translate }}</span>
+        </mat-chip>
+      </mat-chip-list>
+      <mat-icon class="profile-icon">account_circle</mat-icon>
+      <span class="mat-title">{{ individual.civility | translate }} <b>{{ individual.lastname }}</b>
+        {{ individual.firstname }}</span>
+      <span class="mat-subheading-2" *ngIf="individual.birthdate">
+        {{ 'BORN-ON' | translate }}
+        {{ individual.birthdate | localizedDate : 'mediumDate' }}
+      </span>
+      <mat-chip-list class="additional-info-chip-list">
+        <div class="add-info-chip-list-content">
+          <mat-chip class="additional-info-chip" *ngIf="individual.resume.isResctrictedType">
+            <mat-icon>lock</mat-icon><span> {{ individual.type + '-INDIVIDUAL-TYPE' | translate }}</span>
+          </mat-chip>
+          <mat-chip class="additional-info-chip" *ngIf="individual.resume.hasFlyingBlueContract">
+            <mat-icon>credit_card</mat-icon><span> {{ 'PRODUCT-TYPE-FP' | translate }}</span>
+          </mat-chip>
+          <mat-chip class="additional-info-chip" *ngIf="individual.resume.hasMyAccountContract">
+            <mat-icon>person</mat-icon><span> {{ 'PRODUCT-TYPE-MA' | translate }} </span>
+          </mat-chip>
+          <mat-chip class="additional-info-chip" *ngIf="individual.resume.isDoctor">
+            <mat-icon>local_hospital</mat-icon><span> {{ 'PRODUCT-TYPE-D' | translate }} </span>
+          </mat-chip>
+        </div>
+      </mat-chip-list>
+      <div class="action-buttons">
+        <button mat-icon-button matTooltip="{{ 'RELOAD-INDIVIDUAL-DATA' | translate }}" (click)="reloadData()">
+          <mat-icon>refresh</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="{{ 'SEE-DETAILS' | translate }}" (click)="openIndividualDetailsModal()">
+          <mat-icon>person</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="{{ 'MODIFY-ACTION' | translate }}" (click)="openIndividualUpdateModal()"
+          *hasRole="['ROLE_ADMIN','ROLE_UPDATE', 'ROLE_UPDATE_INDIVIDUAL']">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="card-content">
+      <div class="card-content-item">
+        <span class="mat-small">{{ 'GIN' | translate }}</span>
+        <span class="mat-title copy-able-content daisy-text-primary--hover" ngxClipboard [cbContent]="individual.gin"
+          (cbOnSuccess)="common.copyToClipboard()" matTooltip="{{ 'COPY-CLIPBOARD' | translate }}">{{ individual.gin
+          }}</span>
+      </div>
+      <div class="card-content-item" *ngIf="individual.resume.flyingBlueContractNumber">
+        <span class="mat-small">{{ 'FB-CONTRACT-NUMBER' | translate }} </span>
+        <span class="mat-title copy-able-content daisy-text-primary--hover" ngxClipboard
+          [cbContent]="individual.resume.flyingBlueContractNumber" (cbOnSuccess)="common.copyToClipboard()"
+          matTooltip="{{ 'COPY-CLIPBOARD' | translate }}">{{
+          individual.resume.flyingBlueContractNumber }}</span>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

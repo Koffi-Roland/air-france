@@ -1,0 +1,19 @@
+meta {
+  name: GET Lastactivity
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{provide-last-activity-url}}/{{gin}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  MS: provide-last-activity
+}
+
+assert {
+  res.status: eq 200
+}

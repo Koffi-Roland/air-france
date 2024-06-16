@@ -1,0 +1,39 @@
+spring:
+  graphql:
+    graphiql:
+      enabled: true
+      path: /graphiql
+  datasource:
+    tns_admin_env: TEST_ACCEPTANCE
+    url: jdbc:oracle:thin:@REPIND_ITE.WORLD
+
+vault:
+  uri: https://vault-tls-cae.airfranceklm.com
+  namespace: repind
+  env: dev
+  credentials:
+    role_id: ${vault_role_id}
+    secret_id: ${vault_secret_id}
+logging:
+  level:
+    org:
+      springframework:
+        test:
+          context:
+            cache: debug
+
+server:
+  servlet:
+    context-path: /api-mgr
+
+mashery:
+  key:
+    provide-last-activity: 6du63ghv8456deambve7kqkq
+    provide-contact-data: mchucm68ahqd9mr9hsnys9s6
+  secret:
+    provide-last-activity: 1h1zU5zA2Q
+    provide-contact-data: ghUmDIaM7u
+url:
+  location:
+    provide-last-activity: https://apiams-ite1.airfranceklm.com/passenger/R000563/V01/
+    provide-contact-data: https://apiams-ite1.airfranceklm.com/passenger/R000347/V01/

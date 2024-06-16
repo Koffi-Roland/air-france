@@ -1,0 +1,31 @@
+
+type Query {
+  getEmailsByGin(gin: String): [EmailResponse]
+  getLastActivityByGin(gin: String): LastActivity
+}
+
+type EmailResponse {
+  email: Email
+  signature: [Signature]
+}
+type LastActivity {
+  gin: String
+  dateModification: String
+  sourceModification: String
+  signatureModification: String
+  siteModification: String
+}
+
+type Email {
+  version: Int
+  mediumStatus: String
+  mediumCode: String
+  email: String
+  emailOptin: String
+}
+type Signature {
+  signatureType: String
+  signatureSite: String
+  signature: String
+  date: String
+}

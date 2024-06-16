@@ -1,0 +1,28 @@
+meta {
+  name: Delete
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{handicap-url}}/?application=REPIND&id={{handicap-id}}
+  body: json
+  auth: none
+}
+
+query {
+  application: REPIND
+  id: {{handicap-id}}
+}
+
+vars:pre-request {
+  MS: handicap
+}
+
+vars:post-response {
+  handicap-id: null
+}
+
+assert {
+  res.status: eq 200
+}

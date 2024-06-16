@@ -1,0 +1,15 @@
+<mat-nav-list (click)="openLink()">
+  <mat-list-item *hasRole="['ROLE_ADMIN', 'ROLE_READ_TRACKING']" routerLink="/individuals/tracking">
+    {{ 'TRACKING' | translate }}</mat-list-item>
+  <!-- <mat-list-item *hasRole="['ROLE_ADMIN', 'ROLE_READ_INFERED']" (click)="goToInferred()">{{ 'INFERRED' | translate }}</mat-list-item> -->
+  <mat-list-item *hasRole="['ROLE_ADMIN', 'ROLE_READ_HANDICAP']" (click)="goToHandicap()">{{ 'HANDICAP' | translate }}
+  </mat-list-item>
+  <mat-list-item *hasRole="['ROLE_ADMIN', 'ROLE_READ_CONSENT']" (click)="goToConsent()">{{ 'CONSENT' | translate }}
+</mat-list-item>
+  <div *hasRole="['ROLE_ADMIN']">
+    <mat-list-item (click)="unmergeIndividual()" *ngIf="this.individualService.getIndividual().status == 'T'">
+      {{ 'UNMERGE-INDIVIDUAL' | translate }}</mat-list-item>
+      <mat-list-item (click)="reactivateAccountIndividual()" *ngIf="this.individualService.getIndividual().resume.hasAccountDataDeleted">
+        {{ 'REACTIVATE-ACCOUNT' | translate }}</mat-list-item>
+  </div>
+</mat-nav-list>

@@ -1,0 +1,15 @@
+com\afklm\batch\prospect\reader\ProspectLineMapperCustom.class
+com\afklm\batch\prospect\service\AlimentationProspectService.class
+com\afklm\batch\prospect\helper\BeanWrapperFieldSetMapperCustom.class
+com\afklm\batch\prospect\helper\AlimentationProspectConstant.class
+com\afklm\batch\prospect\helper\AlimentationProspectLogger.class
+com\afklm\batch\prospect\helper\BeanWrapperFieldSetMapperCustom$1.class
+com\afklm\batch\prospect\listener\AlimentationProspectListener.class
+com\afklm\batch\prospect\bean\AlimentationProspectItem.class
+com\afklm\batch\prospect\bean\ProspectInputRecord.class
+com\afklm\batch\prospect\property\AlimentationProspectProperty.class
+com\afklm\batch\prospect\processor\AlimentationProspectItemProcessor.class
+com\afklm\batch\prospect\config\AlimentationProspectConfig.class
+com\afklm\batch\prospect\tasklet\AlimentationProspectOutputTasklet.class
+com\afklm\batch\prospect\writer\AlimentationProspectItemWriter.class
+com\afklm\batch\prospect\BatchAlimentationProspect.class

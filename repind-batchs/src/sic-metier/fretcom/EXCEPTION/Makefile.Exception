@@ -1,0 +1,26 @@
+# ------------------------------------------------------------------ #
+# SEPT 2002 Anouilh :
+#      migration Solaris 8 entrainant utilisation compilo Forte V6.1 et 
+#      par la meme occasion passage de l appli aux normes préconisées par
+#      DINB à savoir création de fichier template de 
+#      makefile avec appel au noyau DINB
+#   
+# ------------------------------------------------------------------ #
+
+# ------------------------------------------------------------------ #
+#	Include commun makefile declaration :
+
+include $(ROOT_MAKEFILE_APPLI)
+
+USE_IO=1
+SANS_EXE=1
+
+APPL=EXCEPTION
+
+# DDEBUG ne compile pas 
+APP_CFLAGS +=-DDEBUG -D__EXCEPTION_DEBUG__ -D__USE_MEMMGR__
+APP_INCLUDE +=-I$(DBGDIR)/$(INCDIR) -I$(MEMDIR)/$(INCDIR)
+
+#OBJS=	$(OBJDIR)/BasicException.o 
+
+include $(ROOT_MAKEFILE_NOYAU)/Makefile.noyau

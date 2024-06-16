@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xml.amadeus.com/MTKNCQ_13_2_1A" xmlns="http://xml.amadeus.com/MTKNCQ_13_2_1A" elementFormDefault="qualified">
+  <xs:element name="PAY_TokenizeCreditCard">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Create Credit Card Token</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ccRequestGroup" maxOccurs="99">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="requestId" type="ItemNumberType" />
+              <xs:element name="creditCardData" type="CreditCardDataType" />
+              <xs:element name="statusInformation" minOccurs="0" type="StatusType" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="CreditCardDataType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">specify credit card data for credit card authorization - USED IN CCVRQT</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ccInfo" minOccurs="0" type="CreditCardInformationType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CreditCardInformationType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">credit card info</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="cardNumber" type="AlphaNumericString_Length1To25">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Card number  Card number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="securityId" minOccurs="0" type="AlphaNumericString_Length1To4">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Conveys the security ID of the Credit Card (CVV,CVV2), 3-4 digits stored on the back of the card</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="expiryDate" minOccurs="0" type="AlphaNumericString_Length4To4">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Expiry date :  format    MMYY</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="startDate" minOccurs="0" type="AlphaNumericString_Length4To4">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">This field indicates the date the Credit Card was issued. This data is present in case of (UK) maestro cards.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ccHolderName" minOccurs="0" type="AlphaNumericString_Length1To99">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Conveys Credit card holder's name, as written on the card</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ItemNumberIdentificationType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Goods identification for a specified source</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="number" minOccurs="0" type="AlphaNumericString_Length1To35" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ItemNumberType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">To specify an item number</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="itemNumberDetails" maxOccurs="99" type="ItemNumberIdentificationType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StatusDetailsType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">To specify a status, the action to be taken, and an additional qualification of the status.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="type" minOccurs="0" type="AlphaNumericString_Length1To3" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StatusType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">To advise the requester system the status of the reply</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="statusInformation" maxOccurs="99" type="StatusDetailsType">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">STATUS DETAILS</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="AlphaNumericString_Length1To35">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: an..35</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="35" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AlphaNumericString_Length1To25">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: an..25</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="25" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AlphaNumericString_Length1To4">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: an..4</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="4" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AlphaNumericString_Length4To4">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: an4</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="4" />
+      <xs:maxLength value="4" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AlphaNumericString_Length1To99">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: an..99</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="99" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AlphaNumericString_Length1To3">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: an..3</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="3" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+<!-- SchemaRules="2010/01"-->
+<!--Created with SchemaBuilder 5.0.0 by Amadeus S.A.S.-->
+<!--"Amadeus Proprietary and Confidential Information: unauthorized use and disclosure strictly forbidden. 2010 - Amadeus s.a.s - All Rights Reserved."-->
+<!--Build Key:
+1F8B08000000000000009593C16EDB300C86EF7A0AA1971D863876976140001DDC24CD862D6997BA87010102D56212A1B2E4897251AFE8BB8FB29DB53B0CDB2E8644C924F5FD3F978BF56293178BF9EE6A2DCED36C324ACF4759C68B0650C996679369F67E9A4EF87255BC4DD3699AB27C9587B606BCD406ACAC40506077215197450C278FA8D89D4458D319D6B204710CA19E8EC78F9549642515349894AE1AB3BBC62A0373EDC51821046D0F3856BA44561EA1BCBFA16F2545F00DB0D229A02B28ACB37157556069379C55B5B46D2C276C630C05EAD6EBC33188B3BC2FC7AFBDABBD86207DCBA5557CE6EC5E2BCAA1A5E19FECDEF94A06EDEC94375636E1E8BCFE018A3708DD75A5B1340E1B0F1C83D765302DA77FEEB4A21C09276E291FF153314C6482716F0CDFC43E906FA87BFF002A39630AF6B23161E9EB884B89BD34084CB9E6CEC00D7C6FC096702D43791C4EC05EFC134CB02F779EA240CFBBA707F048AFA2950703948656F24015DA67B627F9368D21662E2AD9ED3B39BB9FE3EA2F098C2BA519901B775024E37CBAFDB8C8E7DB85D27B5986C23983DB45B19B6B0CD286192945FA9172DB95F4F71015EFEF60A7356EBFB803E5B287AE11ADAEAC695905FE00038C6E7DA9C128BC713EFCC2470F47EA2BC7C8F4F7D89C54D766708EFD2F44B5D336AC21F4727466F3CE855784BA7D3470C2FA2744A21807291DA7D910C34BE773A329F7E0D8E8055D02CEC949549B4CD953C44AFA10F3DE5A5DEAD00E0F095E5A349D3F898F20D6381E3217F96AFCA4C0687A8624033D2774CA627BEAF5F8905966A799E97352A443D54DB2B6257B4413AE9A5037E1D219055EC40063A3D1AAC7F806B97E9993D188F5904496B357F5457E9DEFAEF36FBB6C9291A72BA9AD283EAF193CD624D74EE26EBE588A6273BB38C9C3A50749C03E9C0262453FCCBEB29A0642E39124EEC1F7EA88735A3DE82899C87A32B2832862D5C2DD83A5C99D79503ACCA457EC24D59FCE07FD45F68EFD04B9AA327E0C050000
+-->
+

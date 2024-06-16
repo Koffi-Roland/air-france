@@ -1,0 +1,110 @@
+div.main-content {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-top: 3vh;
+  width: 90%;
+  margin-left: 4vw;
+}
+
+.left-container {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+
+.full-screen {
+  animation-duration: 1s;
+  animation-name: extends;
+  width: 100%;
+}
+
+@keyframes extends {
+  from {
+    width: 60%;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+div.right-container {
+  width: 40%;
+  margin-left: 15px;
+}
+
+app-individual-card {
+  margin-bottom: 5px;
+}
+
+app-resource-tabs {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+button.mat-icon-button {
+  position: absolute;
+}
+
+h1.mat-display-1 {
+  text-align: center;
+  margin-bottom: 0;
+}
+
+div.button-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  span {
+    margin-left: 8px;
+  }
+}
+
+.not-displayed {
+  display: none;
+}
+
+.mat-stroked-button {
+  display: none;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+@media (max-width: 1275px) {
+
+  /* start of large tablet styles */
+  div.left-container {
+    width: 100%;
+  }
+
+  div.right-container {
+    width: 60%;
+    margin-left: 0;
+    margin-top: 5px;
+  }
+
+  div.main-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mat-stroked-button {
+    display: block;
+  }
+}
+
+/** CSS for small tablets and smartphone **/
+@media (max-width: 950px) {
+  div.right-container {
+    width: 100%;
+  }
+}
+
+.mat-fab {
+  position: fixed;
+  bottom: 3vh;
+  right: 2vw;
+  z-index: 1;
+}

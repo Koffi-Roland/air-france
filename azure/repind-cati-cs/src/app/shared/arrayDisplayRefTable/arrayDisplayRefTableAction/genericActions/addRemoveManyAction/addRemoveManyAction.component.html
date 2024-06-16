@@ -1,0 +1,15 @@
+<h1 *ngIf="config.tableLinkedName && type && idForUpdate" mat-dialog-title translate
+    [translateParams]="{association: config.tableLinkedName | translate, type: type | translate, id: idForUpdate}">
+    UPDATE_ASSOCIATION_TITLE
+</h1>
+<mat-dialog-content class="mat-typography">
+    <app-select-table *ngIf="config && idsAssociatedToRowId " #associatedTable [listToFillRow]="config.tableLinkedData"
+        [idName]="config.tableLinkedIdName" [selectedIds]="idsAssociatedToRowId"
+        [dataColumnNames]="config.tableLinkedColumnName">
+    </app-select-table>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+    <button mat-button mat-dialog-close translate>CANCEL</button>
+    <button mat-button [mat-dialog-close]="true" (click)="submit()" translate>UPDATE</button>
+</mat-dialog-actions>

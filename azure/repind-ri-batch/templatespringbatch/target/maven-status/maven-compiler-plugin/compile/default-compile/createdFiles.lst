@@ -1,0 +1,8 @@
+com\afklm\batch\templatespringbatch\BatchTemplateSpringB.class
+com\afklm\batch\templatespringbatch\model\InputModel.class
+com\afklm\batch\templatespringbatch\reader\TemplateSpringBatchReader.class
+com\afklm\batch\templatespringbatch\config\TemplateSpringBatchConfig.class
+com\afklm\batch\templatespringbatch\model\OutputModel.class
+com\afklm\batch\templatespringbatch\processor\TemplateSpringBatchProcessor.class
+com\afklm\batch\templatespringbatch\writer\TemplateSpringBatchWriter.class
+com\afklm\batch\templatespringbatch\service\TemplateSpringBatchService.class

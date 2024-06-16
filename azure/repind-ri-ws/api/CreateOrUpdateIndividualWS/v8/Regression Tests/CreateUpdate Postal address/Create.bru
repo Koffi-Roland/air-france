@@ -1,0 +1,98 @@
+meta {
+  name: Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{create-or-update-individual-v8-url}}
+  body: xml
+  auth: none
+}
+
+headers {
+  SOAPAction: "http://www.af-klm.com/services/passenger/CreateUpdateIndividualService-v8/createIndividual"
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   
+      <soapenv:Body>
+          <ns3:CreateUpdateIndividualRequestElement xmlns:ns6="http://www.af-klm.com/services/passenger/SicCommonType-v1/xsd"
+              xmlns:ns5="http://www.af-klm.com/services/passenger/SoftComputingType-v1/xsd"
+              xmlns:ns8="http://www.af-klm.com/services/passenger/SicIndividuType-v3/xsd"
+              xmlns:ns7="http://www.af-klm.com/services/passenger/request-v8/xsd"
+              xmlns:ns2="http://www.af-klm.com/services/passenger/response-v8/xsd"
+              xmlns:ns4="http://www.af-klm.com/services/passenger/SicOsirisType-v1/xsd"
+              xmlns:ns3="http://www.af-klm.com/services/passenger/data-v8/xsd">
+              <requestor>
+                  <channel>B2C</channel>
+                  <site>QVI</site>
+                  <signature>t639</signature>
+              </requestor>
+              <emailRequest>
+                  <email>
+                      <mediumStatus>V</mediumStatus>
+                      <mediumCode>D</mediumCode>
+                      <email>LADY{{randomString}}@GAGA.COM</email>
+                  </email>
+              </emailRequest>
+              <emailRequest>
+                  <email>
+                      <mediumStatus>V</mediumStatus>
+                      <mediumCode>P</mediumCode>
+                      <email>GAGA{{randomString}}@LADY.COM</email>
+                  </email>
+              </emailRequest>
+              <postalAddressRequest>
+                  <postalAddressProperties>
+                      <mediumCode>D</mediumCode>
+                      <mediumStatus>V</mediumStatus>
+                  </postalAddressProperties>
+                  <postalAddressContent>
+                      <numberAndStreet>20 rue barbanègre</numberAndStreet>
+                      <city>PARIS</city>
+                      <zipCode>75019</zipCode>
+                      <countryCode>FR</countryCode>
+                  </postalAddressContent>
+              </postalAddressRequest>
+              <postalAddressRequest>
+                  <postalAddressProperties>
+                      <mediumCode>P</mediumCode>
+                      <mediumStatus>V</mediumStatus>
+                  </postalAddressProperties>
+                  <postalAddressContent>
+                      <corporateName>GAGA{{randomString}}</corporateName>
+                      <numberAndStreet>78 BD JEAN JAURES</numberAndStreet>
+                      <city>CLICHY</city>
+                      <zipCode>92110</zipCode>
+                      <countryCode>FR</countryCode>
+                  </postalAddressContent>
+              </postalAddressRequest>
+              <individualRequest>
+                  <individualInformations>
+                      <gender>F</gender>
+                      <birthDate>1971-01-01T00:00:00Z</birthDate>
+                      <status>V</status>
+                      <civility>MS</civility>
+                      <lastNameSC>GAGA{{randomString}}</lastNameSC>
+                      <firstNameSC>LADY{{randomString}}</firstNameSC>
+                  </individualInformations>
+              </individualRequest>
+          </ns3:CreateUpdateIndividualRequestElement>
+      </soapenv:Body>
+  </soapenv:Envelope>
+}
+
+vars:pre-request {
+  USER: W90000442
+  PASSWORD: pswpsw123
+}
+
+vars:post-response {
+  gin_create: res.body.substring(res.body.indexOf('<gin>') + 5, res.body.indexOf('<gin>') + 5 + 12)
+}
+
+assert {
+  res.status: eq 200
+}

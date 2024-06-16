@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: search-individual
+  labels:
+    app.kubernetes.io/name: search-individual
+    app.kubernetes.io/instance: search-individual-cae 
+spec:
+  rules:
+  - host: search-individual-cdm-00035-pks.rs-vlb-cae.providers.airfranceklm.com
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: search-individual-cae               # Must match the name used in the service resource
+              port:
+                number: 8080                               # Must match the port used in the service resource
+

@@ -1,0 +1,26 @@
+azure:
+  cosmos:
+    uri: https://cosmos-ri-ite-58k6ugs5.documents.azure.com:443/
+    database: cosmos-ri-ite-58k6ugs5
+    queryMetricsEnabled: true
+    maxDegreeOfParallelism: -1
+    maxBufferedItemCount: -1
+    responseContinuationTokenLimitInKb: -1
+    diagnosticsThresholds:
+      pointOperationLatencyThresholdInMS: -1
+      nonPointOperationLatencyThresholdInMS: -1
+      requestChargeThresholdInRU: -1
+      payloadSizeThresholdInBytes: -1
+
+
+
+az-vault:
+  namespace: kv-ri-np-73c0
+  secrets:
+    cosmosDbKey:
+      secretName: cosmos-ri-ite-58k6ugs5-primary-key
+    cosmosDbSecondaryKey:
+      secretName: cosmos-ri-ite-58k6ugs5-secondary-key
+
+ri-manage-doctor-attributes:
+  url: http://manage-doctor-attributes-ite:8080/

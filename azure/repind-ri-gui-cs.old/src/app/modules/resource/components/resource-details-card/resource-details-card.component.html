@@ -1,0 +1,78 @@
+<mat-card>
+  <mat-card-header [style.background]="header.backgroundColor">
+    <div class="top-left-content">
+      <mat-icon class="vertical-align-middle" *ngIf="header.icon">{{ header.icon }}</mat-icon>
+      <span class="inline-block padding-bottom-3">{{ header.labelTopLeft | translate }}</span>
+    </div>
+    <button *ngIf="header.buttonIcon" mat-mini-fab matTooltip="{{ header.buttonTooltipMsg | translate }}"
+      matTooltipPosition="before" [ngStyle]="{'background': btnBackgroundColor}">
+      <mat-icon>{{ header.buttonIcon }}</mat-icon>
+    </button>
+    <div class="bottom-content" *ngIf="header.labelBottom">
+      <span class="inline-block padding-bottom-3">{{ header.labelBottom | translate }}: </span>
+      <mat-chip-list *ngIf="header.isChip" disabled>
+        <mat-chip *ngFor="let info of header.additionalInformation">{{ info | translate }}</mat-chip>
+      </mat-chip-list>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="main-content">
+      <h2>{{ content.title | translate }}</h2>
+      <div class="main-content-data">
+        <div class="key-val" *ngFor="let data of content.data">
+          <span class="label-key" #scrollKey (mouseenter)="scrollDiv(scrollKey, -1)"
+            (mouseleave)="stopTimer(scrollKey)">{{ data.key | translate }} </span>
+          <span class="label-value" *ngIf="data.isDate">{{ (data.val | localizedDate) }}</span>
+          <span class="label-value" *ngIf="!data.isDate" #scrollableDiv (mouseenter)="scrollDiv(scrollableDiv, -1)"
+            (mouseleave)="stopTimer(scrollableDiv)">{{ (data.forceNotTranslate) ? (data.val) : (data.val | translate)
+            }}</span>
+          <mat-icon *ngIf="data.val" class="copy" ngxClipboard [cbContent]="data.val"
+            (cbOnSuccess)="common.copyToClipboard()" matTooltip="{{ 'COPY-CLIPBOARD' | translate }}">filter_none
+          </mat-icon>
+        </div>
+      </div>
+      <div class="more-button" *ngIf="content.buttonLabel">
+        <button mat-raised-button color="primary" (click)="openDialog()">{{ content.buttonLabel | translate }}</button>
+      </div>
+    </div>
+    <h2 *ngIf="content.signatureCreation || content.signatureModification">{{ 'SIGNATURE' | translate }}</h2>
+    <div class="signature">
+      <div class="creation" *ngIf="content.signatureCreation">
+        <h3>{{ 'CREATION' | translate }}</h3>
+        <span [matTooltip]="'CREATION-SITE' | translate">{{ content.signatureCreation.site }}</span><br />
+        <span [matTooltip]="'CREATION-SIGNATURE' | translate">{{ content.signatureCreation.signature }}</span><br />
+        <span class="date" [matTooltip]="'CREATION-DATE' | translate">{{ content.signatureCreation.date | localizedDate:
+          'long' }}</span>
+      </div>
+      <mat-divider [vertical]="true"></mat-divider>
+      <div class="modification" *ngIf="content.signatureModification">
+        <h3>{{ 'MODIFICATION' | translate }}</h3>
+        <span [matTooltip]="'MODIFICATION-SITE' | translate">{{ content.signatureModification.site }}</span><br />
+        <span [matTooltip]="'MODIFICATION-SIGNATURE' | translate">{{ content.signatureModification.signature
+          }}</span><br />
+        <span class="date" [matTooltip]="'MODIFICATION-DATE' | translate">{{ content.signatureModification.date |
+          localizedDate: 'long' }}</span>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-divider *ngIf="(isBtnUpdateVisible || isBtnDeleteVisible) && (content.isDeletable || content.isUpdatable)">
+  </mat-divider>
+  <mat-card-actions *ngIf="(isBtnUpdateVisible || isBtnDeleteVisible) && (content.isDeletable || content.isUpdatable)">
+    <div class="action-buttons">
+      <button mat-stroked-button *ngIf="isBtnUpdateVisible" (click)="openEditDialog()"
+        [disabled]="!content.isUpdatable">
+        <div class="button-content">
+          <mat-icon>edit</mat-icon>
+          <span>{{ 'EDIT' | translate }}</span>
+        </div>
+      </button>
+      <button mat-stroked-button *ngIf="isBtnDeleteVisible" (click)="deleteResource()"
+        [disabled]="!content.isDeletable">
+        <div class="button-content">
+          <mat-icon>delete_outline</mat-icon>
+          <span>{{ 'DELETE' | translate }}</span>
+        </div>
+      </button>
+    </div>
+  </mat-card-actions>
+</mat-card>

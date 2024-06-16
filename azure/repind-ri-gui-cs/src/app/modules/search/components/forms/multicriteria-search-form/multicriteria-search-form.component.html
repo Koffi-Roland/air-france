@@ -1,0 +1,12 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ 'MULTI-CRITERIA-SEARCH' | translate }}</mat-card-title>
+    <mat-card-subtitle>{{ 'MULTI-CRITERIA-SEARCH-DESCRIPTION' | translate }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <app-dynamic-form #form [fields]="regConfig"></app-dynamic-form>
+  </mat-card-content>
+  <mat-card-actions>
+    <app-search-button (click)="submitMulticriteriaSearchForm()" [disabled]="!form.valid"></app-search-button>
+  </mat-card-actions>
+</mat-card>

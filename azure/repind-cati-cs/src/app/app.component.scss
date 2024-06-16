@@ -1,0 +1,69 @@
+.mat-toolbar {
+  background: #fff;
+  position: fixed;
+  z-index: 999;
+}
+
+.logo {
+  margin-left: 20px;
+  width: 120px;
+}
+
+.main-container {
+  padding: 100px 50px 0 50px;
+  flex: 1 0 auto;
+}
+
+//Hide on smartphone and iPad
+@media screen and (max-width : 768px) {
+  .main-container {
+    padding: 80px 10px 0 10px;
+  }
+}
+
+.all-wrap {
+  min-height: 100vh;
+}
+
+.page-wrap {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+}
+
+/*
+   * Make the Component injected by Router Outlet full height:
+   */
+
+main {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  >*:not(router-outlet) {
+    flex: 1;
+    display: block;
+  }
+}
+
+.first-link {
+  margin-left: 35px;
+}
+
+.home {
+  font-size: 16px;
+}
+
+.gb-flag {
+  margin-left: 10px;
+  margin-right: 20px;
+}
+
+mat-progress-spinner {
+  text-align: center;
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(0, -50%);
+  margin-left: -35px;
+}

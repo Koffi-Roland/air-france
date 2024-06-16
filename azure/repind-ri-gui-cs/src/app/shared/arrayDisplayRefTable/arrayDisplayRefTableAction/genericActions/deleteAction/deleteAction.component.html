@@ -1,0 +1,16 @@
+<div *ngIf="data">
+  <h1  mat-dialog-title translate [translateParams]="{type: type | translate}">REMOVE-DATA-TITLE</h1>
+  <mat-dialog-content class="mat-typography" >
+    <p translate [translateParams]="{type: type | translate}">REMOVE-DATA-MESSAGE</p>
+    <mat-card>
+      <span *ngFor="let column of dataToDisplay"><b>{{ column.label | translate}}</b> : {{data.element[column.field]}}<span *ngIf="dataToDisplay.indexOf(column.field) < dataToDisplay.length -1">,</span> </span>
+    </mat-card>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+    <button mat-button mat-dialog-close translate>CANCEL</button>
+    <button mat-button [mat-dialog-close]="true" (click)="submit()" translate>REMOVE</button>
+  </mat-dialog-actions>
+  
+</div>
+

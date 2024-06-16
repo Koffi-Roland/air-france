@@ -1,0 +1,165 @@
+<h2 mat-dialog-title translate [translateParams]="{type: 'COMBINATION' | translate | lowercase}">{{title}}</h2>
+
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="communicationPreferencesForm">
+    <div fxLayout="row wrap" fxLayoutGap="20px">
+
+      <div fxFlex="60" fxLayout="column" class="merge-title-search" fxLayoutAlign="center">
+        <div fxLayout="row wrap" fxLayoutGap="20px">
+          <div fxFlex="30" fxLayoutAlign="center">
+
+            <mat-form-field>
+              <mat-select placeholder="{{'TYPE' | translate}}" formControlName="comType" required>
+                <mat-option *ngFor="let comType of listType" [value]="comType.mainText">
+                  {{comType.mainText}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="30" fxLayoutAlign="center">
+            <mat-form-field>
+              <mat-select placeholder="{{'DOMAIN' | translate}}" formControlName="domain" required>
+                <mat-option *ngFor="let domain of listDomain" [value]="domain.mainText">
+                  {{domain.mainText}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="30" fxLayoutAlign="center">
+            <mat-form-field>
+              <mat-select placeholder="{{'GROUP_TYPE' | translate}}" formControlName="comGroupeType" required>
+                <mat-option *ngFor="let comGroupeType of listGType" [value]="comGroupeType.mainText">
+                  {{comGroupeType.mainText}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="20px">
+          <div fxFlex="30" fxLayoutAlign="center">
+            <mat-form-field>
+              <mat-select placeholder="{{'MEDIA' | translate}}" formControlName="media">
+                <mat-option value="">{{'NONE' | translate}}</mat-option>
+                <mat-option *ngFor="let media of listMedia" [value]="media.mainText">
+                  {{media.mainText}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="60" fxLayoutGap="0px">
+            <mat-form-field fxFlex="50">
+              <input matInput placeholder="{{'MARKET' | translate}}" formControlName="market"
+                [errorStateMatcher]="matcher" [matAutocomplete]="auto"
+                (input)="communicationPreferencesForm.patchValue({market: $event.target.value.toUpperCase()})">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let country of filteredCountryMarket | async" [value]="country.mainText">
+                  <span class="flag-icon flag-icon-{{country.mainText | lowercase}}"></span>
+                  <span class="flag-market-name">{{country.mainText}}</span>
+                </mat-option>
+              </mat-autocomplete>
+
+            </mat-form-field>
+            <div fxFlex="50" fxLayoutAlign="center" fxLayoutGap="0px">
+              <mat-error *ngIf="communicationPreferencesForm.hasError('minChar')" translate>MARKET_MIN_TWO</mat-error>
+              <mat-error *ngIf="communicationPreferencesForm.hasError('maxlength')" translate>MARKET_MAX_THREE
+              </mat-error>
+              <mat-error *ngIf="communicationPreferencesForm.hasError('checkDomain')" translate>ASTERIX_ALLOWED_F_P_U
+              </mat-error>
+              <mat-error *ngIf="communicationPreferencesForm.hasError('checkTypeFBESS')" translate>
+                ASTERIX_ALLOWED_NOT_FBESS</mat-error>
+              <mat-error *ngIf="communicationPreferencesForm.hasError('checkIfDoesntExist')" translate>
+                MARKET_DOESNT_EXIST</mat-error>
+              <mat-error *ngIf="communicationPreferencesForm.hasError('marketRequired')" translate>MARKET_REQUIRED
+              </mat-error>
+              <mat-error *ngIf="communicationPreferencesForm.hasError('checkKeyAlreadyExist')" translate>
+                COMBINATION_ALREADY_EXISTS_MARKET</mat-error>
+            </div>
+          </div>
+        </div>
+
+        <div fxFlex="1 1" fxLayoutAlign="center">
+
+          <mat-slide-toggle labelPosition="before" color="accent"
+            [checked]="communicationPreferences.mandatoryOptin === 'Y'" (change)="setValue($event, 'mandatoryOptin')">
+            {{'MANDATORY_OPTIN' | translate}}
+          </mat-slide-toggle>
+        </div>
+        <div fxFlex="1 1" fxLayoutAlign="center" class="nat-optin">
+          <mat-slide-toggle labelPosition="before" color="accent" [checked]="communicationPreferences.fieldN === 'Y'"
+            (change)="setValue($event, 'fieldN')">
+            N
+          </mat-slide-toggle>
+          <mat-slide-toggle labelPosition="before" color="accent" [checked]="communicationPreferences.fieldA === 'Y'"
+            (change)="setValue($event, 'fieldA')">
+            A
+          </mat-slide-toggle>
+          <mat-slide-toggle labelPosition="before" color="accent" [checked]="communicationPreferences.fieldT === 'Y'"
+            (change)="setValue($event, 'fieldT')">
+            T
+          </mat-slide-toggle>
+        </div>
+
+      </div>
+
+      <div fxFlex="30" fxLayoutAlign="center" fxLayoutGap="0px">
+        <div fxLayout="column" fxLayout.lt-md="row" fxLayoutAlign="center">
+          <div fxFlex="1 1 auto" class="default-languages-edit-bloc default-languages-display"
+            [ngClass]="{'border-error': communicationPreferencesForm.hasError('isDefaultLanguagesValid')}" fxLayoutWrap
+            fxLayoutAlign="center" fxLayoutGap="0px">
+            <span class="default-languages-edit-text">{{'DEFAULT_LANGS' | translate}}</span>
+            <div class="list-default-languages" cdkDropList (cdkDropListDropped)="drop($event)">
+              <div *ngFor="let language of communicationPreferencesForm.value.defaultLanguages; let i = index"
+                class="edit-default-languages-list" cdkDrag>
+                <span>{{ i + 1 }}.</span><span>{{language}}</span>
+                <mat-icon class="cursor remove-default-languages" (click)="removeLanguage(language)"
+                  matTooltip="{{ 'REMOVE' | translate }}" matTooltipPosition="above">delete</mat-icon>
+                <div class="languages-custom-placeholder" *cdkDragPlaceholder></div>
+              </div>
+              <div *ngIf="communicationPreferencesForm.value.defaultLanguages.length === 0"
+                class="edit-default-languages-list">
+                <span>{{'NONE' | translate}}</span>
+              </div>
+            </div>
+            <mat-form-field class="input-add-language">
+              <input matInput placeholder="{{'LANGUAGE' | translate}}" formControlName="languageToAdd"
+                [errorStateMatcher]="matcher"
+                (input)="communicationPreferencesForm.patchValue({languageToAdd: $event.target.value.toUpperCase()})">
+            </mat-form-field>
+            <a mat-button (click)="addLanguage()" [disabled]="checkIfLanguageDisabled()">
+              <mat-icon matTooltip="{{ 'ADD' | translate }}" matTooltipPosition="above">add</mat-icon>
+            </a>
+            <mat-error class="mat-error-edit-dgt"
+              *ngIf="communicationPreferencesForm.get('languageToAdd').hasError('isUnique')" translate>
+              LANGUAGE_ALREADY_DEFAULT</mat-error>
+            <mat-error class="mat-error-edit-dgt"
+              *ngIf="communicationPreferencesForm.get('languageToAdd').hasError('maxLength')" translate>LANGUAGE_MAX_TWO
+            </mat-error>
+            <mat-error class="mat-error-edit-dgt"
+              *ngIf="communicationPreferencesForm.get('languageToAdd').hasError('minLength')" translate>LANGUAGE_MIN_TWO
+            </mat-error>
+          </div>
+          <div fxFlex="1 1 auto" fxLayoutWrap fxLayoutAlign="center" fxLayoutGap="0px" class="error-languages-message">
+            <mat-error *ngIf="communicationPreferencesForm.hasError('isDefaultLanguagesValid')" translate>
+              AT_LEAST_DEFAULT</mat-error>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayout.lt-md="column" class="merge-title-search" fxLayoutAlign="center"
+      [hidden]="!communicationPreferencesForm.hasError('isCombinationUnique')">
+      <mat-error class="mat-error-edit-dgt" *ngIf="communicationPreferencesForm.hasError('isCombinationUnique')"
+        translate>CODE_UNIQUE</mat-error>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions *ngIf="!editLanguage" align="end">
+  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+  <button mat-button mat-dialog-close translate>CANCEL</button>
+  <button (click)="submit()" [disabled]="communicationPreferencesForm.invalid" mat-button translate>SAVE</button>
+</mat-dialog-actions>

@@ -1,0 +1,30 @@
+# ------------------------------------------------------------------ #
+# SEPT 2002 Anouilh :
+#      migration Solaris 8 / compilo Forte V6.1 / utilisation des template 
+#      de makefile mis en place par DINB /    Lib RW SourceProCore /
+#      suppression du superflu ...
+#      A LIRE:
+#      doc DINB sur template de makefile site intranet DINB 
+# ------------------------------------------------------------------ #
+
+include $(ROOT_MAKEFILE_APPLI)
+
+USE_IO=1
+SANS_EXE=1
+
+APPL=MEMORY
+
+APP_CFLAGS += -D__USE_MEMMGR__ -DDEBUG 
+ifeq ($(MEM),Soft)
+APP_CFLAGS += -D__MEMMGR_SOFT__
+endif
+ifeq ($(MEM),Stub)
+APP_CFLAGS += -D__MEMMGR_STUB__
+endif
+
+APP_INCLUDE +=-I$(DBGDIR)/$(INCDIR) -I$(EXCDIR)/$(INCDIR) 
+
+OBJS=$(OBJDIR)/MemoryMgr.o $(OBJDIR)/Timer.o
+
+include $(ROOT_MAKEFILE_NOYAU)/Makefile.noyau
+

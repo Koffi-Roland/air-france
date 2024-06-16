@@ -1,0 +1,43 @@
+#!/bin/sh
+
+hostName=`hostname`
+
+if [ "$hostName" = "qvirnbusin06" ]
+then
+	if [ "$FS_DIR" = "REPIND" ]
+	then
+		hostType=rct
+	fi
+elif [ "$hostName" = "qvirbbualt20" ]
+then
+    hostType=rc2
+elif [ "$hostName" = "qvidnbusin07" ]
+then
+    hostType=dev
+elif [ "$hostName" = "tlsqnbusin01" ] || [ "$hostName" = "tlsqnbusin02" ]
+then
+    hostType=qal
+elif [ "$hostName" = "qvipcbusin01" ] || [ "$hostName" = "qvipcbusin02" ]
+then
+    hostType=prd
+fi
+
+echo $hostType
+
+if [ "$hostType" = "prd" ]
+then
+    result=1
+elif [ "$hostType" = "rct" ] || [ "$hostName" = "rc2" ]
+then
+    result=2
+elif [ "$hostType" = "dev" ]
+then
+    result=3
+elif [ "$hostType" = "qal" ]
+then
+    result=4
+else
+    result=0
+fi
+
+exit $result

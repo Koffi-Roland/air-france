@@ -1,0 +1,692 @@
+#!/exploit/oracle/1020/perl/bin/perl -w
+
+use strict;
+use DBI;
+
+use Getopt::Long;
+
+# configuration values (define like)
+my $workDirectory = "/app/SIC/travail/manageSicWorkDirectory";
+my $processesDirectory = "$workDirectory/processes/$$";
+my $nbSecondsBeforeTimeout = 300;
+my $maxOccurences = 24;
+my $ConfigFile = "/app/SIC/prod/bin/scripts/CONFS/manageSic.conf";
+my $ConfigWebFile = "/app/SIC/prod/bin/scripts/CONFS/manageSicWeb.conf";
+
+my $programName = $0;
+$programName =~ s/^(.*\/)?([^\/]*)$/$2/;
+
+my $adhesionServer;
+my $port;
+my $trace;
+my $adhesionServerWeb;
+my $portWeb;
+my $traceWeb;
+
+my $host = `hostname`;
+$host =~ s/[\r\n]*$//;
+if ($host eq "qvidssx1")
+{
+    $adhesionServer = "unqvi-adhtmdw";
+    $port = "3002";
+    $trace = "file";
+    $adhesionServerWeb = "unqvi-adhtmdw";
+    $portWeb = "3002";
+    $traceWeb = "file";
+}
+elsif (($host eq "qvirmet1") || ($host eq "qvirmet2"))
+{
+    $adhesionServer = "unqvi-adhrcet";
+    $port = "3092";
+    $trace = "file";
+    $adhesionServerWeb = "unqvi-adhrcet";
+    $portWeb = "3092";
+    $traceWeb = "file";
+}
+elsif ($host eq "tlsqbdd1")
+{
+    $adhesionServer = "tlsqwas3";
+    $port = "3002";
+    $trace = "file";
+    $adhesionServerWeb = "tlsqwas3";
+    $portWeb = "3002";
+    $traceWeb = "file";    
+}
+elsif (($host eq "qvirmet4") || ($host eq "qvirmet3"))
+{
+    $adhesionServer = "unqvi-adhrmdw";
+    $port = "3002";
+    $trace = "none";
+    $adhesionServerWeb = "unqvi-adhrmdw";
+    $portWeb = "3002";
+    $traceWeb = "none";
+}
+elsif ($host eq "qvirmal4")
+{
+    $adhesionServer = "unqvi-adhralteavst";
+    $port = "3152";
+    $trace = "none";
+    $adhesionServerWeb = "unqvi-adhralteavst";
+    $portWeb = "3152";
+    $traceWeb = "none";
+}
+elsif (($host eq "qvipstw5") || ($host eq "qvipstw6"))
+{
+    $adhesionServer = "unqvi-adhpwebvst";
+    $port = "3152";
+    $trace = "none";
+    $adhesionServerWeb = "unqvi-adhpwebvst";
+    $portWeb = "3152";
+    $traceWeb = "none";
+}
+elsif (($host eq "sfol1tp") || ($host eq "sfol2tp") || ($host eq "qvipstc1") || ($host eq "qvipstc2"))
+{
+    $adhesionServer = "unqvi-adhprod";
+    $port = "3002";
+    $trace = "none";
+    $adhesionServerWeb = "unqvi-adhprod";
+    $portWeb = "3002";
+    $traceWeb = "none";
+}
+elsif (($host eq "qvipmtc1") || ($host eq "qvipmtc2"))
+  {
+    $adhesionServer = "unqvi-adhpvst";
+    $port = "3092";
+    $trace = "none";
+    $adhesionServerWeb = "unqvi-adhpvst";
+    $portWeb = "3092";
+    $traceWeb = "none";
+  }
+elsif (($host eq "tlsqmtx1") || ($host eq "tlsqmtx2"))
+  {
+    $adhesionServer = "untls-adhqmdw";
+    $port = "3002";
+    $trace = "none";
+    $adhesionServerWeb = "untls-adhqmdw";
+    $portWeb = "3002";
+    $traceWeb = "none";
+  }
+elsif ($host eq "qvirbrisic01")
+  {
+    $adhesionServer = "unqvi-adhraltearc3";
+    $port = "3162";
+    $trace = "none";
+    $adhesionServerWeb = "unqvi-adhraltearc3";
+    $portWeb = "3161";
+    $traceWeb = "none";
+  }
+elsif ($host eq "qvirbrisic02")
+  {
+    $adhesionServer = "unqvi-adhrmdw";
+    $port = "3192";
+    $trace = "none";
+    $adhesionServerWeb = "unqvi-adhrmdw";
+    $portWeb = "3192";
+    $traceWeb = "none";
+  }
+else
+{
+    print("error: unknown host '$host'\n");
+    exit 1;
+}
+
+my $user = $ENV{LOGNAME};
+$user =~ s/[\n\r]*$//;
+
+if ($user ne "sic")
+{
+    print("error: only sic is allowed to launch $programName\n");
+    exit(1);
+}
+
+sub displayHelp()
+{
+    print("usage: $programName [option]*\n");
+    print("where option can be:\n");
+    print("    -help : displays this help\n");
+    print("    -stop <serviceNumber> : stops the corresponding service\n");
+    print("    -stopAll : stops all services\n");
+    print("    -start <serviceNumber> : starts the corresponding service\n");
+    print("    -startAll : starts all services\n");
+    print("    -occurences <numberOfOccurences>: force the number of occurences for all started services\n");
+    print("    -adhesionServer <adhesionServer>: specifies the adhesion server for all started services\n");
+    print("    -port <port>: specifies the port for all started services\n");
+    print("    -trace <trace>: specifies the trace method for all started services (can be 'screen', 'file' or 'none')\n");
+}
+
+my $help;
+my @stop;
+my $stopAll;
+my @start;
+my $startAll;
+my $forcedOccurences;
+if (!GetOptions (
+    "help" => \$help,
+    "stop=s" => \@stop,
+    "stopAll" => \$stopAll,
+    "start=s" => \@start,
+    "startAll" => \$startAll,
+    "occurences=s" => \$forcedOccurences,
+    "adhesionServer=s" => \$adhesionServer,
+    "port=s" => \$port,
+    "trace=s" => \$trace))
+{
+    displayHelp();
+    exit(1);
+}
+$traceWeb = $trace;
+
+# make a clean if the file system is full
+my $capacityFileSystem =`df -k . | grep "%"`;
+{
+  my @tabcapacity = split(" ", $capacityFileSystem);
+  my $capacity = $tabcapacity[4];
+  chop($capacity); # suppress last character
+  print("File system capacity: " . $capacity . "%\n");
+
+  if ($capacity gt "94")
+    {
+      print("The file system is almost full: clean all core dump and traces\n");
+      system("/app/SIC/prod/bin/scripts/tools/coreCleaning");
+      system("/app/SIC/prod/bin/scripts/EXE/EXPLOIT/clearTraces");
+    }
+}
+
+# Forbid the execution of a secondary manageSic
+my $oneProcessManageSic = `/usr/ucb/ps -auwwwx |grep -w "manageSic" | grep -v grep | grep -v jobmanrc | grep -v AXC_D_036CKUNIX_LA2 | grep "All" | grep -v "sh -c" |wc -l`;
+{
+    if ($oneProcessManageSic > 1)
+    {
+      print("\n-- manageSic is already processing! -- \n");
+      my $displayProcessManageSic = `/usr/ucb/ps -auwwwx |grep -w "manageSic" | grep -v grep | grep -v jobmanrc | grep -v AXC_D_036CKUNIX_LA2 | grep "All" | grep -v "sh -c"`;
+      print ($displayProcessManageSic);
+      exit(1);
+    }
+}
+
+# Test the connection to the database, and quit if it is a problem
+if ($startAll || defined($start[0])) {
+  my $dbConnexion;
+  if (!(`secureSIC \$SECURE_DATABASE_ACCESS_FILE_SIC READSIC` =~ /^([^\/]*)\/([^@]*)@(.*)$/))
+    {
+      print ("ERROR: unable to get database connexion parameters\n");
+      exit(1);
+    }
+  print ("Test connecting to DB : $3 as $1\n");
+  $dbConnexion = DBI->connect("dbi:Oracle:$3", $1, $2, { RaiseError => 1, AutoCommit => 0 });
+  if (!$dbConnexion)
+    {
+      print ("ERROR: unable to connect to database\n");
+      exit(1);
+    }
+  print ("Connect & disconnect to database successful!\n");
+  $dbConnexion->disconnect();
+}
+
+# Verify number of occurences
+if (defined($forcedOccurences) && $forcedOccurences >= $maxOccurences)
+  {
+    print("error: occurences can't exceed ".($maxOccurences-1)." occurences\n");
+    displayHelp();
+    exit(1);
+}
+
+# we read the config file to get the occurences number for each process
+# default value for all services: 1
+my %processesOccurences;
+if (open(CONFIG_FILE, "<$ConfigFile"))
+{
+    my $defaultItoOccurences = 1;
+    while (my $line = <CONFIG_FILE>)
+    {
+        if ($line =~ /^\s*NBMin\s*=\s*(\d+)[\s\n\r]*$/)
+        {
+            $defaultItoOccurences = $1;
+        }
+        elsif ($line =~ s/^\s*Y\s*:\s*([^:\s\r\n]+)\s*(:|([\n\r]*$))//)
+        {
+            my $id = $1;
+            $id =~ s/^S(\d{5})main$/$1/;
+            my $occurences = $defaultItoOccurences;
+            while ($line =~ s/^\s*([^:\s\r\n]+)\s*(:|([\n\r]*$))//)
+            {
+                if ($1 =~ /^NBMin=(\d+)/)
+                {
+                    $occurences = $1;
+                }
+            }
+            $processesOccurences{$id} = $occurences;
+        }
+    }
+    close(CONFIG_FILE);
+}
+elsif (!defined($forcedOccurences))
+{
+    print("WARNING: no config file found or forced command line occurences number. Services will be started with 1 occurence\n");
+}
+
+my %processesWebOccurences;
+if (open(CONFIG_FILE, "<$ConfigWebFile"))
+{
+    my $defaultItoOccurences = 1;
+    while (my $line = <CONFIG_FILE>)
+    {
+        if ($line =~ /^\s*NBMin\s*=\s*(\d+)[\s\n\r]*$/)
+        {
+            $defaultItoOccurences = $1;
+        }
+        elsif ($line =~ s/^\s*Y\s*:\s*([^:\s\r\n]+)\s*(:|([\n\r]*$))//)
+        {
+            my $id = $1;
+            $id =~ s/^S(\d{5})main$/$1/;
+            my $occurences = $defaultItoOccurences;
+            while ($line =~ s/^\s*([^:\s\r\n]+)\s*(:|([\n\r]*$))//)
+            {
+                if ($1 =~ /^NBMin=(\d+)/)
+                {
+                    $occurences = $1;
+                }
+            }
+            $processesWebOccurences{$id} = $occurences;
+        }
+    }
+    close(CONFIG_FILE);
+}
+elsif (!defined($forcedOccurences))
+{
+    print("WARNING (SERVICES FOR WEB): no config file found or forced command line occurences number. Services for web will be started with 1 occurence\n");
+}
+
+my %servicesToStop;
+
+sub getOccurences($)
+{
+    my $service = $_[0];
+    if (exists($servicesToStop{$service}))
+    {
+        return 0;
+    }
+    elsif (defined($forcedOccurences))
+    {
+        return $forcedOccurences;
+    }
+    elsif (exists($processesOccurences{$service}))
+    {
+        return $processesOccurences{$service};
+    }
+    elsif (exists($processesWebOccurences{$service}))
+    {
+        return $processesWebOccurences{$service};
+    }
+    else
+    {
+        return 1;
+    }
+}
+
+sub isWebService($)
+{
+    my $service = $_[0];
+    return exists($processesWebOccurences{$service});
+}
+
+sub getExecutableName($)
+{
+    my $service = $_[0];
+    if ($service =~ /^\d{5}$/)
+    {
+        return "S".$service."main";
+    }
+    else
+    {
+        return $service;
+    }
+}
+
+sub getLaunchCommand($$$$$$)
+{
+    my $service = $_[0];
+    my $adhesionServer = $_[1];
+    my $port = $_[2];
+    my $trace = $_[3];
+    my $processesDirectory = $_[4];
+    my $occurence = $_[5];
+    my $launchCommand = "nohup /app/SIC/prod/bin/cpp/".getExecutableName($service);
+    if ($service =~ /^\d{5}$/)
+    {
+        $launchCommand .= " $adhesionServer $port $trace $processesDirectory/$service"."_$occurence";
+    }
+    else
+    {
+        $launchCommand .= " -t $trace -r $processesDirectory/$service"."_$occurence";
+    }
+    return $launchCommand;
+}
+
+
+if ($help || @ARGV)
+{
+    displayHelp();
+    exit(1);
+}
+
+my $psGenericCommand = "ps -o pid,comm";
+my $commandLineExecutableFormat = "\\/app\\/SIC\\/prod\\/bin\\/cpp\\/(S(\\d{5})main)";
+my $processLineFormat = "^\\s*([\\d]+)\\s+$commandLineExecutableFormat\\s*\$";
+
+my %alreadyStartedServices; # service -> process id = 1
+foreach my $oneProcessLine (split(/\n/, `$psGenericCommand -u $user`))
+{
+    if ($oneProcessLine =~ /$processLineFormat/)
+    {
+        if (defined($3))
+        {
+            $alreadyStartedServices{$3}->{$1} = 1;
+        }
+    }
+}
+
+my %availableServices;
+foreach my $oneLine (split(/ /, `echo /app/SIC/prod/bin/cpp/*`))
+{
+    if ($oneLine =~ /^$commandLineExecutableFormat\n?$/)
+    {
+        if (defined($2))
+        {
+            $availableServices{$2} = 1;
+        }
+    }
+}
+
+my %services;
+foreach my $oneService (@stop)
+{
+    if (exists($availableServices{$oneService}))
+    {
+        $services{$oneService} = 1;
+        $servicesToStop{$oneService} = 1;
+    }
+    else
+    {
+        print("warning: service $oneService is not available\n");
+    }
+}
+if ($stopAll)
+{
+    foreach my $oneService (keys(%alreadyStartedServices))
+    {
+        $services{$oneService} = 1;
+        $servicesToStop{$oneService} = 1;
+    }
+}
+foreach my $oneService (@start)
+{
+    if (exists($availableServices{$oneService}))
+    {
+        $services{$oneService} = 1;
+    }
+    else
+    {
+        print("warning: service $oneService is not available\n");
+    }
+}
+if ($startAll)
+{
+    foreach my $oneService (keys(%availableServices))
+    {
+        $services{$oneService} = 1;
+    }
+}
+
+print("Starting/stopping services\n");
+
+foreach my $oneService (sort(keys(%services)))
+{
+    my %localServiceHash;
+    if (exists($alreadyStartedServices{$oneService}))
+    {
+        my $i = 1;
+        foreach my $oneProcessId (keys(%{$alreadyStartedServices{$oneService}}))
+        {
+            $localServiceHash{"toStop"}->{$i}->{"pid"} = $oneProcessId;
+            $localServiceHash{"toStop"}->{$i}->{"status"} = "running";
+            ++$i;
+        }
+    }
+    else
+    {
+        my %dummy;
+        $localServiceHash{"toStop"} = \%dummy;
+    }
+    my $occurences = getOccurences($oneService);
+    if ($occurences > 0)
+    {
+        my $currentDate=`date '+%Y_%m_%d'`;
+        $currentDate =~ s/[\n\r]*$//;
+        system("mkdir -p /app/SIC/prod/logs/traces_".getExecutableName($oneService));
+        for (my $i = 1; $i<=$occurences; ++$i)
+        {
+	    if( isWebService($oneService) )
+	    {
+                $localServiceHash{"toStart"}->{$i}->{"launchCommand"} = "cd /app/SIC/prod/logs/traces_".getExecutableName($oneService)." ; ".
+                    getLaunchCommand($oneService, $adhesionServerWeb, $portWeb, $traceWeb, $processesDirectory, $i)." >> TRACES.$i.$currentDate &";
+	    }
+	    else
+	    {
+                $localServiceHash{"toStart"}->{$i}->{"launchCommand"} = "cd /app/SIC/prod/logs/traces_".getExecutableName($oneService)." ; ".
+                    getLaunchCommand($oneService, $adhesionServer, $port, $trace, $processesDirectory, $i)." >> TRACES.$i.$currentDate &";
+            }
+            $localServiceHash{"toStart"}->{$i}->{"status"} = "pending";
+        }
+    }
+    else
+    {
+        my %dummy;
+        $localServiceHash{"toStart"} = \%dummy;
+    }
+    $services{$oneService} = \%localServiceHash;
+}
+
+system("mkdir -p $processesDirectory ; \\rm -Rf $processesDirectory/*");
+
+my $nbLoops = 0;
+while (keys(%services) && ((++$nbLoops) <= $nbSecondsBeforeTimeout))
+{
+  my $iteration = 0;
+    foreach my $oneService (keys(%services))
+    {
+      # ce bloc force le script a faire des kill regulier
+      # sinon le nombre maximum de process connecte a ORACLe est atteint
+      # changer la valeur suivant le rapport vitesse / nb connexions
+
+      if ($iteration == 30 && $startAll)
+	{
+	  last;
+	}
+
+        my $numberOfOldRunning = 0;
+        my $numberOfOldStopping = 0;
+        my $numberOfNewRunning = 0;
+        my $numberOfNewStarting = 0;
+        foreach my $index (keys(%{$services{$oneService}->{"toStop"}}))
+        {
+            if ($services{$oneService}->{"toStop"}->{$index}->{"status"} eq "running")
+            {
+                ++$numberOfOldRunning;
+            }
+            elsif ($services{$oneService}->{"toStop"}->{$index}->{"status"} eq "stopping")
+            {
+                ++$numberOfOldStopping;
+            }
+        }
+        foreach my $index (keys(%{$services{$oneService}->{"toStart"}}))
+        {
+            if ($services{$oneService}->{"toStart"}->{$index}->{"status"} eq "running")
+            {
+                ++$numberOfNewRunning;
+            }
+            elsif ($services{$oneService}->{"toStart"}->{$index}->{"status"} eq "starting")
+            {
+                ++$numberOfNewStarting;
+            }
+        }
+        my $wantedOccurences = getOccurences($oneService);
+        my $numberAllowedToStop = $numberOfOldRunning + $numberOfNewRunning - $wantedOccurences;
+        my $numberAllowedToStart = $wantedOccurences - $numberOfNewRunning - $numberOfNewStarting;
+        if ($numberAllowedToStart + $numberOfNewRunning + $numberOfNewStarting + $numberOfOldRunning + $numberOfOldStopping > $maxOccurences)
+        {
+            $numberAllowedToStart = $maxOccurences - $numberOfNewRunning - $numberOfNewStarting - $numberOfOldRunning - $numberOfOldStopping;
+        }
+        my $numberStopped = 0;
+        foreach my $index (keys(%{$services{$oneService}->{"toStop"}}))
+        {
+            if ($numberStopped >= $numberAllowedToStop)
+            {
+                last;
+            }
+            if ($services{$oneService}->{"toStop"}->{$index}->{"status"} eq "running")
+            {
+                print("killing previous occurence $index of ".getExecutableName($oneService)."\n");
+                system("kill -16 ".$services{$oneService}->{"toStop"}->{$index}->{"pid"});
+                $services{$oneService}->{"toStop"}->{$index}->{"status"} = "stopping";
+                ++$numberStopped;
+            }
+        }
+        my $numberStarted = 0;
+        foreach my $index (keys(%{$services{$oneService}->{"toStart"}}))
+        {
+            if ($numberStarted >= $numberAllowedToStart)
+            {
+                last;
+            }
+            if ($services{$oneService}->{"toStart"}->{$index}->{"status"} eq "pending")
+            {
+                print("starting new occurence $index of ".getExecutableName($oneService)."\n");
+                system($services{$oneService}->{"toStart"}->{$index}->{"launchCommand"});
+                $services{$oneService}->{"toStart"}->{$index}->{"status"} = "starting";
+                ++$numberStarted;
+            }
+        }
+
+	++$iteration;
+    }
+
+# DMT
+    
+    # wait for a second
+    sleep(1);
+    
+    # we get new processes that are connected
+    my %readyProcesses;
+    my $filesToRemoveString = "";
+    my $listProcess = `ls $processesDirectory`;
+    if ($listProcess)
+    {
+      foreach my $oneFile (split(/[\r\n]/, $listProcess))
+	{
+	  if ($oneFile =~ /^((.+)_([^_\r\n]+))[\r\n]*$/)
+	    {
+	      $readyProcesses{$2}->{$3} = 1;
+	      $filesToRemoveString .= " $1";
+	    }
+	}
+      if ($filesToRemoveString ne "")
+	{
+	  system("\\rm -f$filesToRemoveString");
+	}
+    }
+    
+    # we get old processes pids asked to stop that are still running
+    my $allPidsToInspect = "";
+    foreach my $oneService (keys(%services))
+    {
+        foreach my $index (keys(%{$services{$oneService}->{"toStop"}}))
+        {
+            if ($services{$oneService}->{"toStop"}->{$index}->{"status"} eq "stopping")
+            {
+                $allPidsToInspect .= ",".$services{$oneService}->{"toStop"}->{$index}->{"pid"};
+            }
+        }
+    }
+    my %runningPids;
+    if ($allPidsToInspect ne "")
+    {
+      my $listallpidsToInspect = `$psGenericCommand -p$allPidsToInspect`;
+      if ($listallpidsToInspect)
+      {
+        for my $oneProcessLine (split(/\n/, $listallpidsToInspect))
+        {
+            if ($oneProcessLine =~ /$processLineFormat/)
+            {
+                $runningPids{$1} = 1;
+            }
+        }
+      }
+    }
+    
+    # we update our datas
+    foreach my $oneService (keys(%services))
+    {
+        my $theEndForService = 1;
+        foreach my $index (keys(%{$services{$oneService}->{"toStop"}}))
+        {
+            if (($services{$oneService}->{"toStop"}->{$index}->{"status"} eq "stopping") &&
+                (!exists($runningPids{$services{$oneService}->{"toStop"}->{$index}->{"pid"}})))
+            {
+                delete $services{$oneService}->{"toStop"}->{$index};
+                print("previous occurence $index of ".getExecutableName($oneService)." stopped\n");
+            }
+            else
+            {
+                $theEndForService = 0;
+            }
+        }
+        foreach my $index (keys(%{$services{$oneService}->{"toStart"}}))
+        {
+            if (($services{$oneService}->{"toStart"}->{$index}->{"status"} eq "starting") &&
+                (exists($readyProcesses{$oneService}->{$index})))
+            {
+                $services{$oneService}->{"toStart"}->{$index}->{"status"} = "running";
+                print("new occurence $index of ".getExecutableName($oneService)." started\n");
+            }
+            elsif ($services{$oneService}->{"toStart"}->{$index}->{"status"} ne "running")
+            {
+                $theEndForService = 0;
+            }
+        }
+        if ($theEndForService)
+        {
+            delete $services{$oneService};
+        }
+    }
+}
+
+my $result = 0;
+
+my $reKillPids = "";
+foreach my $oneService (keys(%services))
+{
+    foreach my $index (keys(%{$services{$oneService}->{"toStop"}}))
+    {
+        $reKillPids .= " ".$services{$oneService}->{"toStop"}->{$index}->{"pid"};
+        print("ERROR: previous occurence $index of ".getExecutableName($oneService)." did not end properly\n");
+        $result = 1;
+    }
+    foreach my $index (keys(%{$services{$oneService}->{"toStart"}}))
+    {
+        if ($services{$oneService}->{"toStart"}->{$index}->{"status"} ne "running")
+        {
+            print("ERROR: new occurence $index of ".getExecutableName($oneService)." did not start properly\n");
+            $result = 1;
+        }
+    }
+}
+if ($reKillPids ne "")
+{
+    print("stopping unhalted services (kill -9)\n");
+    system("kill -9$reKillPids");
+}
+
+#exit($result);
+# modification temporaire pour eviter les alertes sur le pupitre
+exit(0);

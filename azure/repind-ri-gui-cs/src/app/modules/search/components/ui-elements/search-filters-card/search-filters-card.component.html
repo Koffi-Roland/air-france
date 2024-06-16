@@ -1,0 +1,15 @@
+<mat-card>
+  <div class="card-header">
+    <span class="mat-title">{{ 'REFINE-SEARCH' | translate }}</span>
+  </div>
+  <div class="card-content">
+    <mat-accordion multi>
+      <app-filter-expansion-panel *ngFor="let f of filters" [filterGroup]="f"></app-filter-expansion-panel>
+    </mat-accordion>
+  </div>
+  <div class="card-actions">
+    <button mat-button color="warn" (click)="resetFilters()">
+      <span class="reset-btn-label">{{ 'RESET-FILTERS' | translate | uppercase }}</span>
+    </button>
+  </div>
+</mat-card>

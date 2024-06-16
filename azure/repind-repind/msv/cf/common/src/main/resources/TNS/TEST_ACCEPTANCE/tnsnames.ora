@@ -1,0 +1,18 @@
+# -------------    Bases de donnees SIC et REPIND Non Prod   ---------------------------------------------------------
+##--SIC Qal--
+OSMN305.WORLD=(description=(address_list=(address=(protocol=tcp)(host=tlsqnbdor027.france.airfrance.fr)(port=1521))
+                           (address=(protocol=tcp)(host=tlsqnbdor028.france.airfrance.fr)(port=1521))
+                           (address=(protocol=tcp)(host=tlsqnbdor029.france.airfrance.fr)(port=1521))
+              )
+              (failover=on)
+              (load_balance=off)
+              (connect_data=(global_name=OSMN305.WORLD)
+              (service_name=OSMN305.WORLD)
+              (failover_mode=(type=select)(method=preconnect)(retries=1)(delay=1)(backup=tlsqnbdor029.france.airfrance.fr))))
+OSMN305_PP.WORLD=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(Host=dataguard-tlsqnbdor027_028_029)(Port=1521))(CONNECT_DATA=(SID=OSMN306)))
+##--SIC Dev--
+REPIND_ITE.WORLD=(description=(address=(protocol=tcp)(host=lh-dsic02-db.france.airfrance.fr)(port=1523))(connect_data=(service_name=REPIND_ITE.WORLD)(instance_name=ODMN305)(UR=A)))
+REPIND_PP_ITE.WORLD=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(Host=lh-drepind02-db.france.airfrance.fr)(Port=1522))(CONNECT_DATA=(SID=ODMN306)))
+##--SIC RCT--
+REPIND_CAE.WORLD=(description=(address=(protocol=tcp)(host=lh-csic02-db.france.airfrance.fr)(port=1523))(connect_data=(service_name=REPIND_CAE.WORLD)(instance_name=OCMN309)(UR=A)))
+REPIND_PP_CAE.WORLD=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(Host=lh-crepind02-db.france.airfrance.fr)(Port=1522))(CONNECT_DATA=(SID=OCMN308)))

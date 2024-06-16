@@ -1,0 +1,19 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "gremlin": "3.7.0",
+    "lodash": "^4.17.21",
+    "read-excel-file": "^5.7.1"
+  },
+  "scripts": {
+    "gremlin": "node gremlin/gremlin.js",
+    "excel": "node excel/excel.js",
+    "doctor": "node doctor/doctor.js",
+    "sharepoint": "node sharepoint/sharepoint.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

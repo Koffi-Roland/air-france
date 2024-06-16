@@ -1,0 +1,46 @@
+<div fxLayout="column" fxLayoutGap="20px" *ngIf="result">
+  <div fxLayout.lt-md="column" fxLayoutAlign="center" class="merge-title-search">
+      <h1 class="merge-title"><b>{{ 'MERGE' | translate}}</b></h1>
+      <span (click)="onSwitchIndividuals()" fxShow fxShow.gt-sm="false"><i class="material-icons">swap_horiz</i></span>
+  </div>
+  <div fxLayout.lt-md="column" class="merge-title-search" fxLayoutAlign="center">
+    <div fxFlex="1 1 49%" fxLayoutWrap fxLayoutAlign="start">
+      <span fxHide fxHide.gt-sm="false" class="title-individual-source">{{ 'SOURCE' | translate}}</span>
+      </div>
+
+    <div fxFlex="1 1 2%" fxLayoutWrap fxLayoutAlign="center" matTooltip="{{'SWITCH-GIN' | translate}}">
+      <span class="cursor" (click)="onSwitchIndividuals()" fxHide fxHide.gt-sm="false"><i class="material-icons">swap_horiz</i></span>
+      </div>
+
+    <div fxFlex="1 1 49%" fxLayoutWrap fxLayoutAlign="end">
+      <span fxHide fxHide.gt-sm="false" class="title-individual-target">{{'TARGET' | translate}}</span>
+      </div>
+  </div>
+
+  <div fxLayout.lt-md="column" fxLayoutGap="20px">
+    <div fxLayout="column" fxFlex="1 1 50%" fxFlex.lt-md="1 1 auto" fxLayoutWrap fxLayoutAlign="start" fxLayoutGap="10px">
+      <span fxShow fxShow.gt-sm="false" class="title-individual-source">{{ 'SOURCE' | translate}}</span>
+      <app-individual-merge-details-individual [sourceOrTarget]="'source'" [individual]="individualSource.identification.individual"></app-individual-merge-details-individual>
+    </div>
+
+    <div fxLayout="column" fxFlex="1 1 50%" fxFlex.lt-md="1 1 auto" fxLayoutWrap fxLayoutAlign="start" fxLayoutGap="10px">
+      <span fxShow fxShow.gt-sm="false" class="title-individual-target">{{ 'TARGET' | translate}}</span>
+      <app-individual-merge-details-individual [sourceOrTarget]="'target'" [individual]="individualTarget.identification.individual"></app-individual-merge-details-individual>
+    </div>
+  </div>
+
+  <app-merge-group-data [mergeGroupDataConfig]="params.blocsAccountData" [sourceData]="individualSource.accounts" [targetData]="individualTarget.accounts"></app-merge-group-data>
+  <app-merge-group-data [mergeGroupDataConfig]="params.blocsTelecom" [sourceData]="individualSource.telecoms" [targetData]="individualTarget.telecoms"></app-merge-group-data>
+  <app-merge-group-data [mergeGroupDataConfig]="params.blocsEmail" [sourceData]="individualSource.emails" [targetData]="individualTarget.emails"></app-merge-group-data>
+  <app-merge-group-data [mergeGroupDataConfig]="params.blocsAddress" [sourceData]="individualSource.addresses" [targetData]="individualTarget.addresses"></app-merge-group-data>
+  <app-merge-group-data [mergeGroupDataConfig]="params.blocsNotMergeableAddress" [sourceData]="individualSource.addressesNotMergeable" [targetData]="individualTarget.addressesNotMergeable"></app-merge-group-data>
+  <app-merge-group-data [mergeGroupDataConfig]="params.blocsContract" [sourceData]="individualSource.contracts" [targetData]="individualTarget.contracts"></app-merge-group-data>
+  <div fxLayout.lt-md="column" fxLayoutAlign="center" class="mergeButton">
+      <button mat-raised-button color="primary" type="submit" (click)="onSubmitMerge()">{{ 'MERGE' | translate }}</button>
+  </div>
+</div>
+
+<div class="back-button">
+  <button mat-fab color="primary" routerLink="/individuals/merge" [matTooltip]="'BACK-TO-MERGE' | translate" matTooltipPosition='right'>
+    <mat-icon>arrow_back</mat-icon>
+  </button>

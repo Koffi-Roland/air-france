@@ -1,0 +1,23 @@
+bases:
+  - ../base
+
+resources:
+  - ingress.yaml
+
+nameSuffix: -acp
+
+namespace: repind-acp
+
+commonLabels:
+  app.kubernetes.io/name: provide-individual-score
+  app.kubernetes.io/instance: provide-individual-score-acp
+
+images:
+  - name: harbor-vlb.af-klm.com/cdm/provide-individual-score
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+patchesStrategicMerge:
+  - replica-extra-options.yaml
+  - deploy-profile.yaml

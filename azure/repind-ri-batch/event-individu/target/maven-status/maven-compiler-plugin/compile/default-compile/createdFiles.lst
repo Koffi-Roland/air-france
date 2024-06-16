@@ -1,0 +1,6 @@
+com\afklm\batch\event\individu\BatchIndividualUpdateNotification$1.class
+com\afklm\batch\event\individu\BatchIndividualUpdateNotification.class
+com\afklm\batch\event\individu\PrepareNotifyEventIndividualTask.class
+com\afklm\batch\event\individu\UpdateStatusTask.class
+com\afklm\batch\event\individu\SendNotifyEventIndividualTask.class
+com\afklm\batch\event\individu\SendNotifySecurityEventTask.class

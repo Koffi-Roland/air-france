@@ -1,0 +1,116 @@
+meta {
+  name: Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{create-or-update-individual-v8-url}}
+  body: xml
+  auth: none
+}
+
+headers {
+  SOAPAction: "http://www.af-klm.com/services/passenger/CreateUpdateIndividualService-v8/createIndividual"
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+      <soapenv:Body>
+          <ns6:CreateUpdateIndividualRequestElement xmlns:ns6="http://www.af-klm.com/services/passenger/data-v8/xsd"
+              xmlns:ns5="http://www.af-klm.com/services/passenger/response-v8/xsd"
+              xmlns:ns8="http://www.af-klm.com/services/passenger/SicIndividuType-v3/xsd"
+              xmlns:ns7="http://www.af-klm.com/services/passenger/request-v8/xsd"
+              xmlns:ns2="http://www.af-klm.com/services/passenger/SicOsirisType-v1/xsd"
+              xmlns:ns4="http://www.af-klm.com/services/passenger/SoftComputingType-v1/xsd"
+              xmlns:ns3="http://www.af-klm.com/services/passenger/SicCommonType-v1/xsd">
+              <requestor>
+                  <channel>B2C</channel>
+                  <site>QVI</site>
+                  <signature>REGRESSION</signature>
+              </requestor>
+              <telecomRequest>
+                  <telecom>
+                      <mediumCode>D</mediumCode>
+                      <mediumStatus>V</mediumStatus>
+                      <terminalType>M</terminalType>
+                      <countryCode>FR</countryCode>
+                      <phoneNumber>0662556699</phoneNumber>
+                  </telecom>
+              </telecomRequest>
+              <telecomRequest>
+                  <telecom>
+                      <mediumCode>D</mediumCode>
+                      <mediumStatus>V</mediumStatus>
+                      <terminalType>T</terminalType>
+                      <countryCode>FR</countryCode>
+                      <phoneNumber>0148752233</phoneNumber>
+                  </telecom>
+              </telecomRequest>
+              <telecomRequest>
+                  <telecom>
+                      <mediumCode>D</mediumCode>
+                      <mediumStatus>V</mediumStatus>
+                      <terminalType>F</terminalType>
+                      <countryCode>FR</countryCode>
+                      <phoneNumber>0148756622</phoneNumber>
+                  </telecom>
+              </telecomRequest>
+              <telecomRequest>
+                  <telecom>
+                      <mediumCode>P</mediumCode>
+                      <mediumStatus>V</mediumStatus>
+                      <terminalType>M</terminalType>
+                      <countryCode>FR</countryCode>
+                      <phoneNumber>0662554455</phoneNumber>
+                  </telecom>
+              </telecomRequest>
+              <telecomRequest>
+                  <telecom>
+                      <mediumCode>P</mediumCode>
+                      <mediumStatus>V</mediumStatus>
+                      <terminalType>T</terminalType>
+                      <countryCode>FR</countryCode>
+                      <phoneNumber>0148754455</phoneNumber>
+                  </telecom>
+              </telecomRequest>
+              <telecomRequest>
+                  <telecom>
+                      <mediumCode>P</mediumCode>
+                      <mediumStatus>V</mediumStatus>
+                      <terminalType>F</terminalType>
+                      <countryCode>FR</countryCode>
+                      <phoneNumber>0148754422</phoneNumber>
+                  </telecom>
+              </telecomRequest>
+              <individualRequest>
+                  <individualInformations>
+                      <gender>F</gender>
+                      <birthDate>1971-01-01T00:00:00Z</birthDate>
+                      <nationality>US</nationality>
+                      <status>V</status>
+                      <civility>MS</civility>
+                      <lastNamePseudonym>GAGA{{randomString}}</lastNamePseudonym>
+                      <firstNamePseudonym>LADY{{randomString}}</firstNamePseudonym>
+                      <lastNameSC>Germanotta{{randomString}}</lastNameSC>
+                      <firstNameSC>StefanI{{randomString}}</firstNameSC>
+                      <languageCode>EN</languageCode>
+                  </individualInformations>
+              </individualRequest>
+          </ns6:CreateUpdateIndividualRequestElement>
+      </soapenv:Body>
+  </soapenv:Envelope>
+}
+
+vars:pre-request {
+  USER: W90000442
+  PASSWORD: pswpsw123
+}
+
+vars:post-response {
+  gin_create: res.body.substring(res.body.indexOf('<gin>') + 5, res.body.indexOf('<gin>') + 5 + 12)
+}
+
+assert {
+  res.status: eq 200
+}

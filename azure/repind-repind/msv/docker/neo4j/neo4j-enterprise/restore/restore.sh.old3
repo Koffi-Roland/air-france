@@ -1,0 +1,29 @@
+#!/bin/bash
+
+mkdir /backupdir
+
+mkdir /backupdir/graph.db-backup
+
+kubectl cp neo4j-restore-6c698dddbb-lfmrp:/backupdir/test /backupdir/graph.db-backup
+
+ls -la /backupdir
+
+rm -rf /data/databases
+
+mkdir /data
+
+mkdir /data/databases
+
+cd /data/databases/
+
+neo4j-admin restore --from=/backupdir/graph.db-backup --database=graph.db --force
+
+cp -R /var/lib/neo4j/data/databases/. /data/databases/
+
+chmod -R 777 /data/databases
+chown -R neo4j /data/databases
+chgrp -R neo4j /data/databases
+
+echo "Restore done"
+	
+exit 0

@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # NAME must be unique per deployment that is part of the instance.
+  name: provide-individual-score
+  labels:
+    app.kubernetes.io/name: provide-individual-score
+    app.kubernetes.io/instance: provide-individual-score
+spec:
+  ## Change this to 1 for ITE/UTE environments to conserve resources
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1                   # allow max 1 new/extra pods at a time when rolling
+      maxUnavailable: 0             # allow max 0 pod to be unavailable while the new one is not yet available
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: provide-individual-score
+      app.kubernetes.io/instance: provide-individual-score
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: provide-individual-score
+        app.kubernetes.io/instance: provide-individual-score
+      ## Enable this if you have prometheus metrics you would like to get scraped automatically.
+      #annotations:
+      #  prometheus.io/scrape: "true"
+      #  prometheus.io/port: "8080"
+      #  prometheus.io/path: "/metrics"
+    spec:
+      # Always include for best effort scheduling of pods spread out over your hosts
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                topologyKey: kubernetes.io/hostname
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: provide-individual-score
+                    app.kubernetes.io/instance: provide-individual-score
+      terminationGracePeriodSeconds: 30    # should be longer than needed to stop the containers
+      containers:
+        - name: provide-individual-score
+          image: harbor-vlb.af-klm.com/cdm/provide-individual-score
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 888
+          env:
+            - name: vault_role_id
+              valueFrom:
+                secretKeyRef:
+                  name: vault-secret
+                  key: role_id
+            - name: vault_secret_id
+              valueFrom:
+                secretKeyRef:
+                  name: vault-secret
+                  key: secret_id
+          ports:
+            - containerPort: 8080
+          # if your application does not exit/crash properly set al livenessProbe
+          # https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/
+          # livenessProbe:
+          #   exec:
+          #     command:
+          #     - cat
+          #     - /tmp/healthy
+          # readinessprobe is necessary for kubernetes to know when to route traffic and stop traffic
+          readinessProbe:
+            httpGet:
+              path: /infra/healthcheck
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          # Example to override the default resource requests (Defaults are CPU:200m Memory:1G per pod)
+          #resources:
+          #  requests:
+          #    cpu: "100m"
+          #    memory: "500Mi"
+          # https://pracucci.com/graceful-shutdown-of-kubernetes-pods.html
+          # Period to wait after SIGTERM is sent. Then send SIGKILL
+          lifecycle:
+            preStop:
+              exec:
+                # Always sleep for 5 seconds to give loadbalancer time to clean.
+                # If you are able to gracefully exit your application run that
+                # after the sleep.
+                # command: ["/bin/sh","-c","sleep 5 && /my/app/gracefullexit.sh"]
+                command: [ "sleep", "5" ]
+          volumeMounts:
+            - name: repind-keytab
+              mountPath: "/etc/kafka"
+              readOnly: true
+      volumes:
+        - name: repind-keytab
+          secret:
+            secretName: repind-keytab

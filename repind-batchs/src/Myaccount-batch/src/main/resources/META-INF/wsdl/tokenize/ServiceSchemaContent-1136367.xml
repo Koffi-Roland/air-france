@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Uploaded in SOA repository on 2014-06-27 09:44:36.287--><!-- 
+PAYDetokenizeToken : 1A service name
+13_2_1A : 1A service version
+MTKNGQ : 1A service shortname
+
+v1 : afklm service version
+passenger : afklm domain
+ --><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:amrq="http://xml.amadeus.com/MTKNGQ_13_2_1A" xmlns:tns="http://www.af-klm.com/services/passenger/PAYDetokenizeToken-v1/PAYDetokenizeTokenRequest/xsd" xmlns:acon="http://www.af-klm.com/services/common/AlteaConversation-v1/xsd" xmlns:aid="http://www.af-klm.com/services/common/AlteaIdentity-v2/xsd" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.af-klm.com/services/passenger/PAYDetokenizeToken-v1/PAYDetokenizeTokenRequest/xsd">
+	<!--previous value PAY_DetokenizeToken_13_2_1A.xsd updated--><xsd:import namespace="http://xml.amadeus.com/MTKNGQ_13_2_1A" schemaLocation="http://soarepo.airfrance.fr/repository/jcr/view/schema/ServiceSchemaContent-1136368"/>
+	<!--previous value AlteaIdentity-v2.xsd updated--><xsd:import namespace="http://www.af-klm.com/services/common/AlteaIdentity-v2/xsd" schemaLocation="http://soarepo.airfrance.fr/repository/jcr/view/schema/ServiceSchemaContent-1136369"/>
+	<!--previous value AlteaConversation-v1.xsd updated--><xsd:import namespace="http://www.af-klm.com/services/common/AlteaConversation-v1/xsd" schemaLocation="http://soarepo.airfrance.fr/repository/jcr/view/schema/ServiceSchemaContent-1136365"/>
+	<xsd:element name="PAYDetokenizeTokenRequest" type="tns:PAYDetokenizeTokenRequest"/>
+	<xsd:complexType name="PAYDetokenizeTokenRequest">
+		<xsd:sequence>
+			<xsd:element ref="amrq:PAY_DetokenizeToken"/>
+			<xsd:element ref="aid:Identity"/>
+			<xsd:element minOccurs="0" ref="acon:Conversation"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

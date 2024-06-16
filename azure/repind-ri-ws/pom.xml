@@ -1,0 +1,255 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<!-- !!! DO NOT REMOVE/CHANGE THE <parent>[...]</parent> SECTION !!! Please 
+		contact DI.NB through http://fds.airfrance.fr if needed. -->
+	<parent>
+		<groupId>com.afklm.maven.pom</groupId>
+		<artifactId>af-projects-pom</artifactId>
+		<version>5.0.1</version>
+	</parent>
+
+	<groupId>com.afklm.repind</groupId>
+	<artifactId>repind-root</artifactId>
+	<version>0.1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<modules>
+	
+		<!-- JAR MIS EN COMMUN  -->
+		<module>src/commons/ref-commons</module>
+		<module>src/commons/repind-commons</module>
+		<module>src/commons/repind-entities</module>
+		<module>src/commons/repindutf8-commons</module>
+		<module>src/commons/repind-payment-preferences-commons</module>
+		
+
+		 
+		<!-- LISTE DE TOUS LES WS INDIVIDU -->
+		<module>src/webservices/Individu/CreateOrUpdateIndividualWS</module>
+		<module>src/webservices/Individu/EnrollMyAccountCustomerWS</module>
+		<module>src/webservices/Individu/IdentifyCustomerCrossReferentialWS</module>
+		<module>src/webservices/Individu/NormalizePhoneNumberWS</module>
+		<module>src/webservices/Individu/ProvideGinForUserIdWS</module>
+		<module>src/webservices/Individu/ProvideIndividualDataWS</module>
+		<module>src/webservices/Individu/SearchIndividualByMulticriteriaWS</module>
+
+		<!-- LISTE DE TOUS LES WS PAYMENT PREFERENCES  -->
+		<module>src/webservices/PaymentPreferences/Payment-PreferencesWS</module>
+
+ 	</modules> 
+	 
+	<properties>
+		<isa_deploy_appli>repind</isa_deploy_appli>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>17</java.version>
+		<jdk.version>17</jdk.version>
+		<afws.version>3.0.4</afws.version>
+		<surefire.version>2.22.1</surefire.version>
+		<springframework.version>5.3.18</springframework.version>
+		<springboot.version>2.7.1</springboot.version>
+		<mq.version>8.0.0.2</mq.version>
+		<junit.version>4.13.2</junit.version>
+		<lombok.version>1.18.26</lombok.version>
+	</properties>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<!-- Import dependency management from Spring Boot -->
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${springboot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+ 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.hibernate.validator</groupId>
+					<artifactId>hibernate-validator</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-tomcat</artifactId>
+		    <scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>commons-lang</groupId>
+		    <artifactId>commons-lang</artifactId>
+		    <version>2.6</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-digester3</artifactId>
+		    <version>3.2</version>
+		</dependency>
+		
+		<dependency>
+    		<groupId>org.apache.commons</groupId>
+    		<artifactId>commons-collections4</artifactId>
+    		<version>4.4</version>
+		</dependency>
+		
+		<dependency>
+			<!-- Mockito is recommanded instead of easymock -->
+		    <groupId>org.easymock</groupId>
+		    <artifactId>easymock</artifactId>
+		    <version>3.6</version>
+		    <scope>test</scope>
+		</dependency>
+		<!-- Utilities -->
+		<dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
+            <version>12.2.0.1</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+
+		<!-- Vault libraries -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>5.7.8</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.vault</groupId>
+			<artifactId>spring-vault-core</artifactId>
+			<version>2.3.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.hk2.external</groupId>
+			<artifactId>jakarta.inject</artifactId>
+			<version>2.6.1</version>
+			<scope>compile</scope>
+		</dependency>
+		
+ 	</dependencies>
+	
+	<scm>
+	    <connection>scm:git:${afkl.git.url}/scm/${project.artifactId}/${project.artifactId}.git</connection>
+    	<developerConnection>scm:git:${afkl.git.url}/scm/${project.artifactId}/${project.artifactId}.git</developerConnection>
+    	<url>${afkl.git.url}/projects/${project.artifactId}/repos/${project.artifactId}/browse</url>    
+	</scm>
+
+	<build>
+		<pluginManagement>
+	    <plugins>
+			  <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>aspectj-maven-plugin</artifactId>
+            <version>1.11</version>
+            
+            <configuration>
+                <complianceLevel>${jdk.version}</complianceLevel>
+                <source>${jdk.version}</source>
+                <target>${jdk.version}</target>
+                 <showWeaveInfo>true</showWeaveInfo>
+		        <verbose>true</verbose>
+		        <Xlint>ignore</Xlint>
+		        <encoding>UTF-8 </encoding>
+		        <xmlConfigured>Aspects.xml</xmlConfigured>
+		        <aspectLibraries>
+            <aspectLibrary>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aspects</artifactId>
+            </aspectLibrary>
+        </aspectLibraries>
+            </configuration>
+            <executions>
+		        <execution>
+		            <goals>
+		                <!-- use this goal to weave all your main classes -->
+		                <goal>compile</goal>
+		                <!-- use this goal to weave all your test classes -->
+		                <goal>test-compile</goal>
+		            </goals>
+        </execution>
+    </executions>
+    
+    <dependencies>
+    
+    	<dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjtools</artifactId>
+            <version>1.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.9.2</version>
+        </dependency>
+       </dependencies>
+			</plugin>
+			</plugins>
+		</pluginManagement>
+	    <plugins>
+	        <!-- FindBugs Static Analysis -->
+	        <plugin>
+	            <groupId>org.codehaus.mojo</groupId>
+	            <artifactId>findbugs-maven-plugin</artifactId>
+	            <version>3.0.5</version>
+	            <configuration>
+	                <effort>Max</effort>
+	                <threshold>Low</threshold>
+	                <failOnError>true</failOnError>
+	                <includeFilterFile>${session.executionRootDirectory}/findbugs-security-include.xml</includeFilterFile>
+	                <excludeFilterFile>${session.executionRootDirectory}/findbugs-security-exclude.xml</excludeFilterFile>
+	                <plugins>
+	                    <plugin>
+	                        <groupId>com.h3xstream.findsecbugs</groupId>
+	                        <artifactId>findsecbugs-plugin</artifactId>
+	                        <version>LATEST</version> <!-- Auto-update to the latest stable -->
+	                    </plugin>
+	                </plugins>
+	            </configuration>
+	        </plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${springboot.version}</version>
+			</plugin>
+	    </plugins>
+	</build>
+	
+</project>

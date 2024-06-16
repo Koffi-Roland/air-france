@@ -1,0 +1,23 @@
+meta {
+  name: ProvideContactData-Phone
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{provide-contact-data-url}}/{{gin}}/telecoms
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  MS: provide-contact-data
+}
+
+assert {
+  res.status: eq 200
+}
+
+script:pre-request {
+  // 
+}

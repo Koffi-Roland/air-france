@@ -1,0 +1,94 @@
+<div class="content" *ngIf="individuals.length > 0">
+  <mat-table #table [dataSource]="dataSource">
+
+    <!-- sgin Column -->
+    <ng-container matColumnDef="gin">
+      <mat-header-cell *matHeaderCellDef>
+        <span class="header-cell">{{ 'GIN' | translate }}</span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let data"> {{ data.gin }} </mat-cell>
+    </ng-container>
+
+    <!-- status Column -->
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef>
+        <span class="header-cell">{{ 'STATUS' | translate }}</span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let data"> {{ (data.status) ?
+        (common.getTransformEnumType(common.referenceDataType.INDIVIDUAL_STATUS) + data.status | translate) : '' }}
+      </mat-cell>
+    </ng-container>
+
+    <!-- lastname Column -->
+    <ng-container matColumnDef="lastname">
+      <mat-header-cell *matHeaderCellDef>
+        <span class="header-cell">{{ 'LAST-NAME' | translate }}</span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let data"> {{ data.lastname }} </mat-cell>
+    </ng-container>
+
+    <!-- firstname Column -->
+    <ng-container matColumnDef="firstname">
+      <mat-header-cell *matHeaderCellDef>
+        <span class="header-cell">{{ 'FIRST-NAME' | translate }}</span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let data"> {{ data.firstname }} </mat-cell>
+    </ng-container>
+
+    <!-- civility Column -->
+    <ng-container matColumnDef="civility">
+      <mat-header-cell *matHeaderCellDef>
+        <span class="header-cell">{{ 'CIVILITY' | translate }}</span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let data"> {{ (data.civility) ?
+        (common.getTransformEnumType(common.referenceDataType.CIVILITY) + data.civility | translate) : '' }}
+      </mat-cell>
+    </ng-container>
+
+    <!-- birthDate Column -->
+    <ng-container matColumnDef="birthDate">
+      <mat-header-cell *matHeaderCellDef>
+        <span class="header-cell">{{ 'BIRTH-DATE' | translate }}</span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let data"> {{ data.birthdate | localizedDate : 'mediumDate' }} </mat-cell>
+    </ng-container>
+
+    <!-- address Column -->
+    <ng-container matColumnDef="address">
+      <mat-header-cell *matHeaderCellDef>
+        <span class="header-cell">{{ 'ADDRESS' | translate }}</span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let data"> {{ data.postalAddress }} </mat-cell>
+    </ng-container>
+
+    <!-- ginMerged Column -->
+    <ng-container matColumnDef="ginMerged">
+      <mat-header-cell *matHeaderCellDef>
+        <span class="header-cell">{{ 'GIN-MERGED' | translate }}</span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let data"> {{ data.ginMerged }} </mat-cell>
+    </ng-container>
+
+    <!-- dateModification Column -->
+    <ng-container matColumnDef="dateModification">
+      <mat-header-cell *matHeaderCellDef>
+        <span class="header-cell">{{ 'MERGED-ON' | translate }}</span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let data"> {{ data.dateModification | localizedDate : 'mediumDate' }} </mat-cell>
+    </ng-container>
+
+    <!-- SignatureModification Column -->
+    <ng-container matColumnDef="signatureModification">
+      <mat-header-cell *matHeaderCellDef>
+        <span class="header-cell">{{ 'MERGED-BY' | translate }}</span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let data"> {{ data.signatureModification }} </mat-cell>
+    </ng-container>
+
+
+    <mat-header-row class="bg-primary-500 text-white
+" *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+    <mat-row class="hover" *matRowDef="let row; columns: displayedColumns;" (click)="search(row)"></mat-row>
+  </mat-table>
+
+</div>

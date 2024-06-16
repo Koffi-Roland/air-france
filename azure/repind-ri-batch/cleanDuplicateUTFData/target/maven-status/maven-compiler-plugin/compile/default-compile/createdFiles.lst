@@ -1,0 +1,3 @@
+com\afklm\batch\cleanDuplicateUTFData\config\BatchCleanDuplicateUTFDataConf.class
+com\afklm\batch\cleanDuplicateUTFData\config\CleanDuplicateUTFDataConfProperties.class
+com\afklm\batch\cleanDuplicateUTFData\BatchCleanDuplicateUTFData.class

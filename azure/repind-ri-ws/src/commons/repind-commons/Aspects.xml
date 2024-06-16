@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<aspectj>
+    <aspects>
+        <!-- Spring Aspects -->
+        <aspect name="org.springframework.beans.factory.aspectj.AbstractInterfaceDrivenDependencyInjectionAspect"/>
+        <aspect name="org.springframework.beans.factory.aspectj.AnnotationBeanConfigurerAspect"/>
+        <aspect name="org.springframework.transaction.aspectj.AnnotationTransactionAspect"/>        
+        <!-- Your Application Aspects -->
+        <aspect name="com.airfrance.repind.util.AspectLogger"/>
+    </aspects>
+</aspectj>

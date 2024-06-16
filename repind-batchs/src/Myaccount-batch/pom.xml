@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.afklm.repind</groupId>
+		<artifactId>repind-root</artifactId>
+		<version>0.1.0-SNAPSHOT</version>
+	</parent>
+
+	<!-- Description -->
+	<groupId>com.afklm.repind.batch</groupId>
+	<artifactId>Myaccount-batch</artifactId>
+	<packaging>jar</packaging>
+
+	<properties>
+		<deploy.env>local</deploy.env>
+		<afklm.metier.FS>/app/SIC/JAVA</afklm.metier.FS>
+		<!-- frameworkSOA.version>2.0.7</frameworkSOA.version-->
+		<frameworkSOA.version>2.0.8</frameworkSOA.version>
+		<!-- hibernate.version>3.6.4.Final</hibernate.version-->
+		<hibernate.version>3.3.2.GA</hibernate.version>
+		<mq.version>8.0.0.6</mq.version>
+		<logback.version>1.0.1</logback.version>
+		<oracle.ojdbc.version>19.21.0.0</oracle.ojdbc.version>
+	</properties>
+	
+	<profiles>
+			<profile>
+			       <id>AllTests</id>
+			       <build>
+			           <plugins>
+			               <plugin>
+			                   <groupId>org.apache.maven.plugins</groupId>
+			                   <artifactId>maven-surefire-plugin</artifactId>
+			                   <version>2.19.1</version>
+			                   <configuration>
+				                    <reuseForks>false</reuseForks>
+	        						<forkCount>1</forkCount>
+			                	</configuration>
+			               </plugin>
+			           </plugins>
+			      	</build>
+			</profile>
+			<profile>
+			    <id>SlowTests</id>
+			    <build>
+			        <plugins>
+			            <plugin>
+			                <groupId>org.apache.maven.plugins</groupId>
+			                <artifactId>maven-surefire-plugin</artifactId>
+			                <version>2.19.1</version>
+			                <configuration>
+			                    <groups>com.airfrance.repind.util.TestCategory$Slow</groups>
+			                </configuration>
+			            </plugin>
+			        </plugins>
+			   	</build>
+			</profile>
+			<profile>
+			    <id>NotSlowTests</id>
+			    <build>
+			        <plugins>
+			            <plugin>
+			                <groupId>org.apache.maven.plugins</groupId>
+			                <artifactId>maven-surefire-plugin</artifactId>
+			                <version>2.19.1</version>
+			                <configuration>
+			                    <excludedGroups>com.airfrance.repind.util.TestCategory$Slow</excludedGroups>
+			                    <reuseForks>false</reuseForks>
+        						<forkCount>1</forkCount>
+			                </configuration>
+			            </plugin>
+			        </plugins>
+			   	</build>
+			</profile>
+		    <profile>
+		        <id>FastTests</id>
+		         <build>
+		            <plugins>
+		                <plugin>
+		                    <groupId>org.apache.maven.plugins</groupId>
+		                    <artifactId>maven-surefire-plugin</artifactId>
+		                    <version>2.19.1</version>
+		                    <configuration> 
+		                        <reuseForks>false</reuseForks>
+	        					<forkCount>1</forkCount>
+		                   		<groups>com.airfrance.repind.util.TestCategory$Fast</groups>
+		                    </configuration>
+		                </plugin>
+		            </plugins>
+	        	</build>
+		    </profile>
+		    <profile>
+				<activation>
+					<property>
+						<name>deploy.env</name>
+						<value>dev</value>
+					</property>
+				</activation>
+				<id>copy-sh-dev</id>
+				<build>
+					<defaultGoal>deploy</defaultGoal>
+					<plugins>
+						<plugin>
+							<artifactId>maven-antrun-plugin</artifactId>
+							<executions>
+								<execution>
+									<goals>
+										<goal>run</goal>
+									</goals>
+									<phase>deploy</phase>
+									<configuration>
+										<target>
+											<echo message="Moving scripts from JAVA folder to PROD folder (DEV Env)"/>
+											<sshexec verbose="true" command="mv /app/SIC/JAVA/livraison/bin/java/lib/* /app/SIC/livraison/bin/java/lib; mv /app/SIC/JAVA/livraison/bin/java/*.jar /app/SIC/livraison/bin/java; mv /app/SIC/JAVA/livraison/bin/scripts/*.sh /app/SIC/livraison/bin/java;mv /app/SIC/JAVA/livraison/bin/scripts/*.ctl /app/SIC/livraison/bin/java; mv /app/SIC/JAVA/livraison/bin/scripts/config/*.txt /app/SIC/livraison/bin/java/config" failonerror="true" host="${afklm.metier.server}" keyfile="${user.home}/.ssh/id_dsa" password="${afklm.metier.pass}" trust="true" username="${afklm.metier.user}" />
+										</target>
+									</configuration>
+								</execution>
+							</executions>
+						</plugin>
+					</plugins>
+				</build>
+			</profile>
+			<profile>
+				<activation>
+					<property>
+						<name>deploy.env</name>
+						<value>rct</value>
+					</property>
+				</activation>
+				<id>copy-sh-rct</id>
+				<build>
+					<defaultGoal>deploy</defaultGoal>
+					<plugins>
+						<plugin>
+							<artifactId>maven-antrun-plugin</artifactId>
+							<executions>
+								<execution>
+									<goals>
+										<goal>run</goal>
+									</goals>
+									<phase>deploy</phase>
+									<configuration>
+										<target>
+											<echo message="Moving scripts from JAVA folder to PROD folder (RCT Env)"/>
+											<sshexec verbose="true" command="mv /app/SIC/JAVA/livraison/bin/java/lib/* /app/SIC/livraison/bin/java/lib; mv /app/SIC/JAVA/livraison/bin/java/*.jar /app/SIC/livraison/bin/java; mv /app/SIC/JAVA/livraison/bin/scripts/*.sh /app/SIC/livraison/bin/java; mv /app/SIC/JAVA/livraison/bin/scripts/*.ctl /app/SIC/livraison/bin/java; mv /app/SIC/JAVA/livraison/bin/scripts/config/*.txt /app/SIC/livraison/bin/java/config" failonerror="true" host="${afklm.metier.server}" keyfile="${user.home}/.ssh/id_dsa" password="${afklm.metier.pass}" trust="true" username="${afklm.metier.user}" />
+										</target>
+									</configuration>
+								</execution>
+							</executions>
+						</plugin>
+					</plugins>
+				</build>
+			</profile>
+			<profile>
+				<activation>
+					<property>
+						<name>deploy.env</name>
+						<value>rc2</value>
+					</property>
+				</activation>
+				<id>copy-sh-rc2</id>
+				<build>
+					<defaultGoal>deploy</defaultGoal>
+					<plugins>
+						<plugin>
+							<artifactId>maven-antrun-plugin</artifactId>
+							<executions>
+								<execution>
+									<goals>
+										<goal>run</goal>
+									</goals>
+									<phase>deploy</phase>
+									<configuration>
+										<target>
+											<echo message="Moving scripts from JAVA folder to PROD folder (RC2 Env)"/>
+											<sshexec verbose="true" command="mv /app/SIC/JAVA/livraison/bin/java/lib/* /app/SIC/livraison/bin/java/lib; mv /app/SIC/JAVA/livraison/bin/java/*.jar /app/SIC/livraison/bin/java; mv /app/SIC/JAVA/livraison/bin/scripts/*.sh /app/SIC/livraison/bin/java; mv /app/SIC/JAVA/livraison/bin/scripts/*.ctl /app/SIC/livraison/bin/java; mv /app/SIC/JAVA/livraison/bin/scripts/config/*.txt /app/SIC/livraison/bin/java/config" failonerror="true" host="${afklm.metier.server}" keyfile="${user.home}/.ssh/id_dsa" password="${afklm.metier.pass}" trust="true" username="${afklm.metier.user}" />
+										</target>
+									</configuration>
+								</execution>
+							</executions>
+						</plugin>
+					</plugins>
+				</build>
+			</profile>
+			<profile>
+				<activation>
+					<property>
+						<name>deploy.env</name>
+						<value>qal</value>
+					</property>
+				</activation>
+				<id>copy-sh-qal</id>
+				<build>
+					<defaultGoal>deploy</defaultGoal>
+					<plugins>
+						<plugin>
+							<artifactId>maven-antrun-plugin</artifactId>
+							<executions>
+								<execution>
+									<goals>
+										<goal>run</goal>
+									</goals>
+									<phase>deploy</phase>
+									<configuration>
+										<target>
+											<echo message="Moving scripts from JAVA folder to PROD folder (QAL Env)"/>
+											<sshexec verbose="true" command="mv /app/SIC/JAVA/livraison/bin/java/lib/* /app/SIC/livraison/bin/java/lib; mv /app/SIC/JAVA/livraison/bin/java/*.jar /app/SIC/livraison/bin/java; mv /app/SIC/JAVA/livraison/bin/scripts/*.sh /app/SIC/livraison/bin/java; mv /app/SIC/JAVA/livraison/bin/scripts/*.ctl /app/SIC/livraison/bin/java; mv /app/SIC/JAVA/livraison/bin/scripts/config/*.txt /app/SIC/livraison/bin/java/config" failonerror="true" host="${afklm.metier.server}" keyfile="${user.home}/.ssh/id_dsa" password="${afklm.metier.pass}" trust="true" username="${afklm.metier.user}" />
+										</target>
+									</configuration>
+								</execution>
+							</executions>
+						</plugin>
+					</plugins>
+				</build>
+			</profile>
+			<profile>
+				<activation>
+					<property>
+						<name>deploy.env</name>
+						<value>prd</value>
+					</property>
+				</activation>
+				<id>copy-sh-prd</id>
+				<build>
+					<defaultGoal>deploy</defaultGoal>
+					<plugins>
+						<plugin>
+							<artifactId>maven-antrun-plugin</artifactId>
+							<executions>
+								<execution>
+									<goals>
+										<goal>run</goal>
+									</goals>
+									<phase>deploy</phase>
+									<configuration>
+										<target>
+											<echo message="Moving scripts from Livraison/Scripts folder to Livraison/Java folder (PRD Env)"/>
+											<sshexec verbose="true" command="mv /app/SIC/livraison/bin/scripts/*.sh /app/SIC/livraison/bin/java; mv /app/SIC/livraison/bin/scripts/*.ctl /app/SIC/livraison/bin/java; mkdir /app/SIC/livraison/bin/java/config; mv /app/SIC/livraison/bin/scripts/config/*.txt /app/SIC/livraison/bin/java/config" failonerror="true" host="${afklm.metier.server}" keyfile="${user.home}/.ssh/id_dsa" password="${afklm.metier.pass}" trust="true" username="${afklm.metier.user}" />
+										</target>
+									</configuration>
+								</execution>
+							</executions>
+						</plugin>
+					</plugins>
+				</build>
+			</profile>
+	</profiles>
+	
+
+	<dependencies>
+		<!-- ************************ Webservices Stub ****************************** -->
+		<dependency>
+			<groupId>com.afklm.repind.commons</groupId>
+			<artifactId>repind-commons</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.afklm.repind.commons</groupId>
+			<artifactId>repind-commons</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>		
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.afklm.repind.commons</groupId>
+			<artifactId>repindutf8-commons</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>		
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.afklm.repind.commons</groupId>
+			<artifactId>repind-payment-preferences-commons</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>		
+			<scope>test</scope>
+		</dependency>
+		<!-- WS de CC vers Token -->
+		<dependency>
+  			<groupId>com.afklm.soa.stubs</groupId>
+  			<artifactId>w001165-v01</artifactId>
+  			<version>1</version>
+		</dependency>
+		
+		<!-- BatchMyAccountLifeCycle -->
+		<dependency>
+  			<groupId>com.afklm.soa.stubs</groupId>
+  			<artifactId>w001391-v01</artifactId>
+  			<version>4</version>
+		</dependency>
+		
+		<!-- Pour notifySecurityEventForIndividual -->
+		<dependency>
+		  <groupId>com.afklm.soa.stubs</groupId>
+		  <artifactId>w001690-v01</artifactId>
+		  <version>2</version>
+		</dependency>
+		
+		<dependency>
+  			<groupId>com.afklm.soa.stubs</groupId>
+  			<artifactId>w001392-v01</artifactId>
+  			<version>6</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>com.afklm.soa.stubs</groupId>
+		  <artifactId>w001992-v01</artifactId>
+		  <!-- version>13</version -->
+		  <version>16</version>
+		</dependency>
+		<dependency>
+			<groupId>com.afklm.soa.stubs</groupId>
+			<artifactId>w001992-v010001</artifactId>
+			<version>3</version>
+		</dependency>
+		<dependency>
+		  <groupId>com.afklm.soa.stubs</groupId>
+		  <artifactId>w001539-v01</artifactId>
+		  <version>4</version>
+		</dependency>
+		<dependency>
+		  <groupId>com.afklm.soa.stubs</groupId>
+		  <artifactId>w000418-v07</artifactId>
+		  <version>8</version>
+		</dependency>
+		<dependency>
+		  <groupId>com.afklm.soa.stubs</groupId>
+		  <artifactId>w000442-v08</artifactId>
+		  <version>6</version>
+		</dependency>
+		<dependency>
+  			<groupId>com.sun.mail</groupId>
+  			<artifactId>imap</artifactId>
+  			<version>1.5.2</version>
+		</dependency>
+		
+		<!-- Pour le batch purge firme -->
+		<dependency>
+			<artifactId>commons-validator</artifactId>
+			<groupId>commons-validator</groupId>
+			<version>1.4.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.neo4j.driver</groupId>
+			<artifactId>neo4j-java-driver</artifactId>
+			<version>4.4.3</version>
+		</dependency>
+
+
+
+
+		<dependency>
+  			<groupId>com.ibm.mq</groupId>
+  			<artifactId>fscontext</artifactId>
+  			<version>${mq.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.afklm.mq</groupId>
+			<artifactId>mq-runtime</artifactId>
+			<version>${mq.version}</version>
+			<type>pom</type>
+		</dependency>
+
+		<!-- lib specifique TU -->
+		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymock</artifactId>
+			<version>3.4</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Create a mock server to mock http call -->
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>4.12.0</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Create a mock server to mock http call -->
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>mockwebserver</artifactId>
+			<version>4.12.0</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Log -->
+		<dependency>
+			<groupId>ch.qos.logback.contrib</groupId>
+			<artifactId>logback-json-classic</artifactId>
+			<version>0.1.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback.contrib</groupId>
+			<artifactId>logback-jackson</artifactId>
+			<version>0.1.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.janino</groupId>
+			<artifactId>janino</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.afklm.tecc</groupId>
+			<artifactId>como-logback-appender</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+
+		<!-- Pool connection -->
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>5.0.1</version>
+		</dependency>
+		
+		<!-- JDBC -->
+		<dependency>
+		    <groupId>com.oracle.database.jdbc</groupId>
+		    <artifactId>ojdbc10</artifactId>
+		    <version>${oracle.ojdbc.version}</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<!-- Allow to filter resource regarding the target environment. -->
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>*.xml</include>
+					<include>*.dtd</include>
+					<include>**/*.properties</include>
+					<include>**/*.wsdl</include>
+					<include>**/*.x*</include>
+					<include>**/*.dtd</include>
+					
+					<include>config/*.xml</include>
+					<include>config/*.dtd</include>
+
+					<include>metier/Avant.sh</include>
+					<include>metier/scripts/*.sh</include>					
+					<include>metier/scripts/*.bat</include>
+					<include>metier/scripts/*.sql</include>
+					<include>metier/scripts/*.ctl</include>
+					<include>metier/scripts/tools/*.sh</include>
+					<include>metier/scripts/tools/hostType</include>
+					<include>metier/scripts/tools/hostType_lnx</include>
+					<include>metier/scripts/tools/core*</include>
+					<include>metier/scripts/config/*.txt</include>
+					
+
+					<include>com/airfrance/batch/common/*.xml</include>
+					<include>com/airfrance/batch/common/*.dtd</include>
+				</includes>
+				<excludes>
+					<exclude>*.jar</exclude>
+				</excludes>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<filters>
+			<filter>${deploy.env}.properties</filter>
+		</filters>
+
+		<plugins>
+			<plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-surefire-plugin</artifactId>
+                 <configuration>
+                   <reuseForks>false</reuseForks>
+    						<forkCount>1</forkCount>
+              	</configuration>
+             </plugin>				
+			<plugin>
+			    <groupId>org.codehaus.mojo</groupId>
+			    <artifactId>build-helper-maven-plugin</artifactId>
+			    <executions>
+			        <execution>
+			            <phase>generate-sources</phase>
+			            <goals><goal>add-source</goal></goals>
+			            <configuration>
+			                <sources>
+			                    <source>${basedir}/src/main/java-generated</source>
+			                    <source>${basedir}/src/main/java</source>
+			                </sources>
+			            </configuration>
+			        </execution>
+			    </executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

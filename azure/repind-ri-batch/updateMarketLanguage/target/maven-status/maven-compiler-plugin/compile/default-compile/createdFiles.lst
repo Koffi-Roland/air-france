@@ -1,0 +1,7 @@
+com\afklm\batch\updateMarketLanguage\BatchUpdateMarketLanguage$1.class
+com\afklm\batch\updateMarketLanguage\enums\BatchUpdateMarketLanguageEnum.class
+com\afklm\batch\updateMarketLanguage\BatchUpdateMarketLanguage.class
+com\afklm\batch\updateMarketLanguage\service\ExecutionService.class
+com\afklm\batch\updateMarketLanguage\service\UpdateMarketLanguageService.class
+com\afklm\batch\updateMarketLanguage\config\UpdateMarketLanguageConfig.class
+com\afklm\batch\updateMarketLanguage\model\InputFileModel.class

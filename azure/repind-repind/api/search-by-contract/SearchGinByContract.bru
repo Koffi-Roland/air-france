@@ -1,0 +1,19 @@
+meta {
+  name: SearchGinByContract
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{search-by-contract-url}}/{{contract}}
+  body: none
+  auth: none
+}
+
+query {
+  ~merge: true
+}
+
+vars:pre-request {
+  CONTRACT_LOCAL: 002069342880
+}

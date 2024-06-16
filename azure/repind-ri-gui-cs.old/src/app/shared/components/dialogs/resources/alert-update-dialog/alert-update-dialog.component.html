@@ -1,0 +1,19 @@
+<mat-toolbar mat-dialog-title color="primary">
+    <app-dialog-toolbar [title]="data.title"></app-dialog-toolbar>
+</mat-toolbar>
+<mat-dialog-content mat-dialog-content>
+    <app-dynamic-form #form [fields]="config" (onFormChange)="handleChange($event)">
+    </app-dynamic-form>
+</mat-dialog-content>
+<mat-dialog-actions mat-dialog-actions>
+    <div class="action-btn">
+        <button mat-stroked-button color="warn" mat-dialog-close>
+            <span>{{ 'CANCEL' | translate }}</span>
+        </button>
+    </div>
+    <div class="action-btn">
+        <button mat-stroked-button color="primary" [disabled]="!isChanged" (click)="updateAlert()">
+            <span>{{ 'CONFIRM' | translate }}</span>
+        </button>
+    </div>
+</mat-dialog-actions>

@@ -1,0 +1,6 @@
+com\afklm\batch\cleanupcreditcards\writer\CleanupCreditCardsWriter.class
+com\afklm\batch\cleanupcreditcards\config\CleanupCreditCardsConfig.class
+com\afklm\batch\cleanupcreditcards\BatchCleanupCreditCards.class
+com\afklm\batch\cleanupcreditcards\processor\CleanupCreditCardsProcessor.class
+com\afklm\batch\cleanupcreditcards\service\CleanupCreditCardsService.class
+com\afklm\batch\cleanupcreditcards\service\CleanupCreditCardsSummaryService.class

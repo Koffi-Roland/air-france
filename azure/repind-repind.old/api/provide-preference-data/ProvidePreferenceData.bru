@@ -1,0 +1,28 @@
+meta {
+  name: ProvidePreferenceData
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{provide-preference-data-url}}/{{gin}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  MS: provide-preference-data
+  GIN_RCT: 400310078360
+  GIN_DEV: 400219522090
+}
+
+assert {
+  res.status: eq 200
+}
+
+script:pre-request {
+  // var utcTime = Math.round(new Date().getTime()/1000);
+  // postman.setGlobalVariable("utcTime", utcTime);
+  // var sig = CryptoJS.SHA256("mchucm68ahqd9mr9hsnys9s6" + "ghUmDIaM7u" + utcTime).toString();
+  // postman.setGlobalVariable("sig", sig);
+}

@@ -1,0 +1,75 @@
+<div class="page-header">
+  <button mat-icon-button (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <h1 class="mat-display-1">{{ 'TRACKING' | translate }}</h1>
+</div>
+<mat-card fxLayout="column" class="search-param">
+  <mat-card-header fxFlex="1 1 100%">
+    <a href="{{export}}" class="export-data" *ngIf="tracking.length > 0">
+      <mat-icon [matTooltip]="'EXPORT-DATA' | translate">import_export</mat-icon>
+    </a>
+    <mat-card-title>
+      <h1>{{'DATA-FILTER' | translate}}</h1>
+    </mat-card-title>
+    <mat-card-subtitle>{{'FILTER-EXPLAINATIONS' | translate}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content fxLayout.lt-md="column" fxFlex="1 1 100%" fxLayoutGap="10px">
+    <mat-form-field fxFlex="1 1 auto" fxFlex.lt-md="1 1 100%">
+      <input matInput [matDatepicker]="picker" placeholder="{{'FILTER-DATE' | translate}}"
+        [(ngModel)]="dataSelected.dateSelected">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker touchUi></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field fxFlex="1 1 auto" fxFlex.lt-md="1 1 100%">
+      <mat-select placeholder="{{'FILTER-ACTION' | translate}}" [(ngModel)]="dataSelected.actionOrTypeSelected">
+        <mat-option>None</mat-option>
+        <mat-optgroup *ngFor="let group of getRefTracking()" [label]="group.code" [disabled]="group.disabled">
+          <mat-option *ngFor="let valueNormalized of group.valuesNormalized | orderBy: 'valueNormalized'"
+            [value]="valueNormalized.valueNormalized">
+            {{'TRACKING.' + valueNormalized.valueNormalized | translate}}
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
+    </mat-form-field>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-button (click)="resetData()">{{'RESET-DATA' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="getFilteredData()">{{'FILTER-DATA' | translate}}</button>
+  </mat-card-actions>
+</mat-card>
+
+<div class="timeline" *ngIf="tracking.length > 0">
+  <div *ngFor="let data of tracking; let i = index">
+    <div class="tracking-container date" [ngClass]="{'left': i%2==0, 'right': i%2==1}">
+      <span>{{data.date | localizedDate : 'fullDate'}}</span>
+    </div>
+    <div class="tracking-container" *ngFor="let event of data.events" [ngClass]="{'left': i%2==0, 'right': i%2==1}">
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-icon class="timeline-icon" [matTooltip]="'TRACKING.' + event.type  | translate"
+            [matTooltipPosition]="i%2==0 ? 'right' : 'left'">{{getIcon(event.type)}}</mat-icon>
+          <mat-panel-title>
+            <span [matTooltip]="event.dateModification | localizedDate : 'HH:mm.ss.SSS'"
+              matTooltipPosition='right'>{{event.dateModification | localizedDate : 'HH:mm' }}</span>
+          </mat-panel-title>
+          <mat-panel-description>{{'TRACKING.' + event.action | translate}}</mat-panel-description>
+        </mat-expansion-panel-header>
+        {{'TRACKING.' + event.type | translate}}
+      </mat-expansion-panel>
+    </div>
+  </div>
+</div>
+
+<button mat-button class="button-next" (click)="getNextTracking()" [disabled]="!trackingIndividualService.isNextPage()"
+  *ngIf='tracking.length !== 0'>
+  <span *ngIf="trackingIndividualService.isNextPage()">{{'GET-MORE' | translate}}</span>
+  <i *ngIf="!trackingIndividualService.isNextPage()">{{'END' | translate}}</i>
+</button>
+
+<div class="not-found" *ngIf="tracking.length === 0">
+  <h1 class="error">{{ 'OH-NO' | translate }}</h1>
+  <br>
+  <h1 class="big-text">{{'NO-DATA-FOR-TYPE' | translate}} {{'TRACKING' | translate }}</h1>
+  <p class="not-found-message">{{ 'HAS-BEEN-FOUND-FOR' | translate }} {{ individualGIN }}</p>
+</div>

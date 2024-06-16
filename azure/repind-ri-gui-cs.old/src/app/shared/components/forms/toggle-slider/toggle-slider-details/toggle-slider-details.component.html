@@ -1,0 +1,18 @@
+<div class="details-container" *ngFor="let mapTitleDetails of details | keyvalue">
+    <div class="details-item">
+        <h2>{{ mapTitleDetails.key | translate }}</h2>
+        <ul>
+            <li *ngFor="let additionalDetail of mapTitleDetails.value | keyvalue ">
+                <div class="details-grid-container">
+                    <div class="text-gray-500" style="font-weight: bold;">
+                        {{ additionalDetail.key | translate }}
+                    </div>
+                    <div class="text-gray-700">
+                        {{ additionalDetail.value | translate }}
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+</div>

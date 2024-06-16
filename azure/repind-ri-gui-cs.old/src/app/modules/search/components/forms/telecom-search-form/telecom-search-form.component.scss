@@ -1,0 +1,27 @@
+.mat-card-content {
+  margin: 0 16px;
+}
+
+.mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.country-code-and-phone-number-grp {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  > app-country-autocomplete {
+    width: 35%;
+  }
+
+  > mat-form-field {
+    width: 60%;
+  }
+
+}
+
+.mat-card>.mat-card-actions:last-child {
+  margin: 0 16px;
+}

@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@lh-dsic01-db.france.airfrance.fr:1521:SIC
+    username: ${ri_repind_oracle_username}
+    password: ${ri_repind_oracle_password}
+
+harbor:
+  url: "https://harbor-vlb.af-klm.com/api/v2.0/"
+  project: ${harbor_project:cdm}
+  account:
+    username: ${harbor_account_username}
+    pass: ${harbor_account_pass}

@@ -1,0 +1,65 @@
+script:pre-request {
+  const cryptoJS = require("crypto-js");
+  const currentEnv = bru.getEnvVar("env");
+  console.log('currentEnv', currentEnv);
+  
+  // Handle SIG MASHERY in DEV/RCT/QAL/PRD
+  if(currentEnv === 'DEV' || currentEnv === 'RCT' || currentEnv == 'PRD' || currentEnv == 'QAL') {
+      var utcTime = Math.round(new Date().getTime()/1000);
+      // use the override header to force a MicroService key
+      // if override is search we stop here cause we don't need to calculate the sig
+      const currentMS = bru.getVar('MS');
+      if(currentMS !== 'skip') {
+         console.log(currentMS);
+      if(!currentMS) {
+          throw new Error("You are in environment " + currentEnv + ". Please put the header 'MS' in your Header tab in order to use your request correctly");
+      }
+      const headers = req.getHeaders();
+      if(!headers['Content-Type']) {
+        headers['Content-Type'] = 'application/json'
+      }
+      req.setHeaders(headers);
+      const apiKeyVar = currentMS + '-key';
+      const apiSecretVar = currentMS + '-secret'
+      const apiKey = bru.getEnvVar(apiKeyVar);
+      const apiSecret = bru.getEnvVar(apiSecretVar);
+      if(!apiKey || !apiSecret) {
+          throw new Error("Could not find a value setted for " + apiKeyVar + " or " + apiSecretVar + ". Please set those 2 values");
+      }
+      console.log('key', apiKey);
+      console.log('secret', apiSecret);
+      const sig = cryptoJS.SHA256(apiKey + apiSecret + utcTime).toString();
+      const newHeaders = req.getHeaders();
+      headers['api_key'] = apiKey;
+      headers['X-signature'] = sig;
+      req.setHeaders(newHeaders);
+      }
+     
+  } else {
+    console.log('We are in local nothing else to do');
+  }
+  
+  const setVar = (envVar, runningVar, finalVar) => {
+    const currentVar = bru.getVar(runningVar + '_' + currentEnv);
+    const defaultVar = bru.getEnvVar(envVar);
+    bru.setVar(finalVar, !!currentVar ? currentVar : defaultVar);
+  }
+  
+  setVar('gin-default', 'GIN', 'gin');
+  setVar('email-default', 'EMAIL', 'email');
+  setVar('contract-default', 'CONTRACT', 'contract');
+  
+  
+}
+
+script:post-response {
+  ['GIN', 'EMAIL', 'CONTRACT'].forEach((item) => {
+    ['LOCAL', 'DEV', 'RCT', 'QAL', 'PRD'].forEach((env) => {
+        bru.setVar(item + '_' + env, null);
+    })
+  });
+  ['gin', 'email', 'contract'].forEach((test) => {
+    bru.setVar(test, null);
+  });
+  
+}

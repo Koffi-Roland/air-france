@@ -1,0 +1,24 @@
+<mat-tab-group>
+  <ng-container *ngFor="let config of configuration">
+    <mat-tab *ngIf="config.labels && config.content.length > 0" #tab>
+      <ng-template mat-tab-label>
+        <span [ngClass]="{'highlighted-title': tab.isActive}" class="mat-subheading-2">{{ config.labels | translate }}
+          ({{ config.content.length }})</span>
+      </ng-template>
+      <ng-template matTabContent>
+        <div class="tab-content">
+          <div class="left-side" (mouseenter)="scrollDiv(scrollingThing, 10)" (mouseleave)="stopTimer()">
+            <mat-icon>chevron_left</mat-icon>
+          </div>
+          <div #scrollingThing class="mini-cards">
+            <app-resource-tabs-card *ngFor="let resource of config.content" [resource]="resource" [type]="resourceType">
+            </app-resource-tabs-card>
+          </div>
+          <div class="right-side" (mouseenter)="scrollDiv(scrollingThing, -10)" (mouseleave)="stopTimer()">
+            <mat-icon>chevron_right</mat-icon>
+          </div>
+        </div>
+      </ng-template>
+    </mat-tab>
+  </ng-container>
+</mat-tab-group>

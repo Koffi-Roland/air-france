@@ -1,0 +1,41 @@
+meta {
+  name: NormalizePhoneNumber - PING
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{normalize-phone-number-url}}
+  body: xml
+  auth: none
+}
+
+headers {
+  SOAPAction: "http://www.af-klm.com/services/passenger/NormalizePhoneNumberService-v1/normalizePhoneNumber"
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.af-klm.com/services/passenger/data-v1/xsd">
+     <soapenv:Body>
+        <xsd:NormalizePhoneNumberRequestElement>
+           <countryCode>GA</countryCode>
+           <phoneNumber>66210444</phoneNumber>
+           <requestor>
+              <channel>DS</channel>
+              <applicationCode>RPD</applicationCode>
+              <site>QVI</site>
+              <signature>REGRESSION</signature>
+           </requestor>
+        </xsd:NormalizePhoneNumberRequestElement>
+     </soapenv:Body>
+  </soapenv:Envelope>
+}
+
+vars:pre-request {
+  USER: w04776476
+  PASSWORD: pswpsw123
+}
+
+assert {
+  res.status: eq 200
+}

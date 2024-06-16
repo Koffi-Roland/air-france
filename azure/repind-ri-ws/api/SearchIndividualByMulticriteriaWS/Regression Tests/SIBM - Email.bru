@@ -1,0 +1,78 @@
+meta {
+  name: SIBM - Email
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{search-individual-by-multicriteria-url}}
+  body: xml
+  auth: none
+}
+
+headers {
+  SOAPAction: "http://www.af-klm.com/services/passenger/SearchIndividualByMulticriteriaService-v2/searchIndividual"
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+      <soapenv:Body>
+          <ns2:SearchIndividualByMulticriteriaRequestElement xmlns:ns6="http://www.af-klm.com/services/passenger/SicCommonType-v1/xsd"
+              xmlns:ns5="http://www.af-klm.com/services/passenger/SoftComputingType-v1/xsd"
+              xmlns:ns7="http://www.af-klm.com/services/passenger/request-v1/xsd"
+              xmlns:ns2="http://www.af-klm.com/services/passenger/data-v1/xsd"
+              xmlns:ns4="http://www.af-klm.com/services/passenger/response-v1/xsd"
+              xmlns:ns3="http://www.af-klm.com/services/passenger/SicIndividuType-v1/xsd">
+              <populationTargeted>A</populationTargeted>
+              <processType>M</processType>
+              <requestor>
+                  <channel>DS</channel>
+                  <matricule>M402925</matricule>
+                  <applicationCode>ISI</applicationCode>
+                  <site>TLS</site>
+                  <signature>HACHIKO</signature>
+              </requestor>
+              <contact>
+                  <email>{{email}}</email>
+              </contact>
+          </ns2:SearchIndividualByMulticriteriaRequestElement>
+      </soapenv:Body>
+  </soapenv:Envelope>
+}
+
+vars:pre-request {
+  USER: w21375138
+  PASSWORD: pswpsw123
+  EMAIL_RCT: chrichri@repind.com
+  EMAIL_DEV: alain-p.lamoureux@orange.fr
+}
+
+assert {
+  res.status: eq 200
+}
+
+script:pre-request {
+  // START CODE
+  console.log(currentEnv);
+  if(envs.includes(currentEnv)) {
+    replaceVar('FIRSTNAME', currentEnv, 'firstname');
+    replaceVar('LASTNAME', currentEnv, 'lastname');
+    replaceVar('DOB', currentEnv, 'dob');
+    replaceVar('EMAIL', currentEnv, 'email');
+    replaceVar('TELECOM', currentEnv, 'telecom');
+    replaceVar('ADDRESS', currentEnv, 'address');
+    replaceVar('COUNTRY_CODE', currentEnv, 'countryCode');
+    replaceVar('PNM', currentEnv, 'pnm');
+    replaceVar('SOCIAL', currentEnv, 'social');
+    replaceVar('GIGYA', currentEnv, 'gigya');
+  }
+}
+
+script:post-response {
+  const replace = ['fistname', 'lastname', 'dob', 'email', 'telecom', 'address', 'countryCode', 'pnm', 'social', 'gigya'];
+  
+  const vars = ['FIRSTNAME', 'LASTNAME', 'DOB', 'EMAIL', 'TELECOM','ADDRESS', 'COUNTRY_CODE', 'PNM', 'SOCIAL', 'GIGYA'];
+  
+  clean(replace, null);
+  clean(vars, envs);
+}

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+
+<persistence-unit name="myPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+	
+	<provider>org.hibernate.ejb.HibernatePersistence
+	</provider>
+    <class>com.airfrance.repind.entity.individu.AccountData</class>
+    <class>com.airfrance.repind.entity.individu.AccountDataRb</class>
+    <class>com.airfrance.repind.entity.reference.Activite</class>
+    <class>com.airfrance.repind.entity.agence.Agence</class>
+    <class>com.airfrance.repind.entity.individu.Alert</class>
+    <class>com.airfrance.repind.entity.individu.AlertData</class>
+    <class>com.airfrance.repind.entity.role.BusinessRole</class>
+    <class>com.airfrance.repind.entity.firme.Chiffre</class>
+    <class>com.airfrance.repind.entity.reference.CodeIndus</class>
+    <class>com.airfrance.repind.entity.individu.CommunicationPreferences</class>
+    <class>com.airfrance.repind.entity.firme.CompagnieAlliee</class>
+    <class>com.airfrance.repind.entity.consent.Consent</class>
+    <class>com.airfrance.repind.entity.consent.ConsentData</class>
+    <class>com.airfrance.repind.entity.role.ContratTcSeq</class>
+    <class>com.airfrance.repind.entity.delegation.DelegationData</class>
+    <class>com.airfrance.repind.entity.delegation.DelegationDataInfo</class>
+    <class>com.airfrance.repind.entity.adresse.Email</class>
+    <class>com.airfrance.repind.entity.firme.Entreprise</class>
+    <class>com.airfrance.repind.entity.reference.Error</class>
+    <class>com.airfrance.repind.entity.firme.Etablissement</class>
+    <class>com.airfrance.repind.entity.external.ExternalIdentifier</class>
+    <class>com.airfrance.repind.entity.external.ExternalIdentifierData</class>
+    <class>com.airfrance.repind.entity.firme.Fonction</class>
+    <class>com.airfrance.repind.entity.adresse.FormalizedAdr</class>
+    <class>com.airfrance.repind.entity.firme.GestionPM</class>
+    <class>com.airfrance.repind.entity.firme.Groupe</class>
+    <class>com.airfrance.repind.entity.individu.Individu</class>
+    <class>com.airfrance.repind.entity.individu.ForgottenIndividual</class>
+    <class>com.airfrance.repind.entity.zone.IntervalleCodesPostaux</class>
+    <class>com.airfrance.repind.entity.agence.LettreCompte</class>
+    <class>com.airfrance.repind.entity.zone.LienIntCpZd</class>
+    <class>com.airfrance.repind.entity.zone.LienZvZc</class>
+    <class>com.airfrance.repind.entity.individu.MarketLanguage</class>
+    <class>com.airfrance.repind.entity.firme.Membre</class>
+    <class>com.airfrance.repind.entity.agence.MembreReseau</class>
+    <class>com.airfrance.repind.entity.firme.NumeroIdent</class>
+    <class>com.airfrance.repind.entity.agence.OfficeID</class>
+    <class>com.airfrance.repind.entity.reference.Pays</class>
+    <class>com.airfrance.repind.entity.firme.PersonneMorale</class>
+    <class>com.airfrance.repind.entity.zone.PmZone</class>
+    <class>com.airfrance.repind.entity.adresse.PostalAddress</class>
+    <class>com.airfrance.repind.entity.adresse.PostalAddressToNormalize</class>
+    <class>com.airfrance.repind.entity.preference.Preference</class>
+    <class>com.airfrance.repind.entity.preference.PreferenceData</class>
+    <class>com.airfrance.repind.entity.individu.PrefilledNumbers</class>
+    <class>com.airfrance.repind.entity.individu.PrefilledNumbersData</class>
+    <class>com.airfrance.repind.entity.profil.ProfilContentieux</class>
+    <class>com.airfrance.repind.entity.profil.ProfilDemarchage</class>
+    <class>com.airfrance.repind.entity.profil.ProfilFirme</class>
+    <class>com.airfrance.repind.entity.profil.ProfilQualitatif</class>
+    <class>com.airfrance.repind.entity.profil.Profil_af</class>
+    <class>com.airfrance.repind.entity.profil.Profil_mere</class>
+    <class>com.airfrance.repind.entity.profil.Profils</class>
+	<class>com.airfrance.repind.entity.reference.RefCodeInvalPhone</class>
+	<class>com.airfrance.repind.entity.reference.RefComPref</class>
+	<class>com.airfrance.repind.entity.reference.RefComPrefCountryMarket</class>
+	<class>com.airfrance.repind.entity.reference.RefComPrefDomain</class>
+	<class>com.airfrance.repind.entity.reference.RefComPrefGType</class>
+	<class>com.airfrance.repind.entity.reference.RefComPrefMedia</class>
+	<class>com.airfrance.repind.entity.reference.RefComPrefType</class>
+	<class>com.airfrance.repind.entity.reference.RefDetailsKey</class>
+	<class>com.airfrance.repind.entity.reference.RefLanguage</class>
+	<class>com.airfrance.repind.entity.reference.RefPreferenceDataKey</class>
+    <class>com.airfrance.repind.entity.reference.RefPreferenceKey</class>
+    <class>com.airfrance.repind.entity.reference.RefPreferenceKeyType</class>
+    <class>com.airfrance.repind.entity.reference.RefPreferenceType</class>
+    <class>com.airfrance.repind.entity.reference.RefDelegationInfoType</class>
+    <class>com.airfrance.repind.entity.reference.RefDelegationInfoKeyType</class>
+	<class>com.airfrance.repind.entity.reference.RefProvince</class>
+	<class>com.airfrance.repind.entity.reference.RefTypeEvent</class>
+	<class>com.airfrance.repind.entity.reference.RefTypExtID</class>
+	<class>com.airfrance.repind.entity.reference.RefVilleIata</class>
+	<class>com.airfrance.repind.entity.reference.RefVillesAnnexes</class>
+	<class>com.airfrance.repind.entity.reference.Reseau</class>
+	<class>com.airfrance.repind.entity.role.RoleAgence</class>
+	<class>com.airfrance.repind.entity.role.RoleContrats</class>
+    <class>com.airfrance.repind.entity.role.RoleFirme</class>
+    <class>com.airfrance.repind.entity.role.RoleGP</class>
+    <class>com.airfrance.repind.entity.role.RoleRcs</class>
+    <class>com.airfrance.repind.entity.role.RoleTravelers</class>
+    <class>com.airfrance.repind.entity.role.RoleUCCR</class>
+    <class>com.airfrance.repind.entity.firme.Segmentation</class>
+    <class>com.airfrance.repind.entity.firme.SelfBookingTool</class>
+    <class>com.airfrance.repind.entity.firme.Service</class>
+    <class>com.airfrance.repind.entity.firme.Synonyme</class>
+    <class>com.airfrance.repind.entity.adresse.Telecoms</class>
+    <class>com.airfrance.repind.entity.tracking.TriggerChange</class>
+    <class>com.airfrance.repind.entity.tracking.TriggerChangeAutMailing</class>
+    <class>com.airfrance.repind.entity.tracking.TriggerChangeIndividus</class>
+    <class>com.airfrance.repind.entity.individu.UsageClients</class>
+    <class>com.airfrance.repind.entity.adresse.Usage_medium</class>
+    <class>com.airfrance.repind.entity.environnement.Variables</class>
+    <class>com.airfrance.repind.entity.zone.ZoneComm</class>
+    <class>com.airfrance.repind.entity.zone.ZoneDecoup</class>
+    <class>com.airfrance.repind.entity.zone.ZoneFinanciere</class>
+    <class>com.airfrance.repind.entity.zone.ZoneVente</class>
+    <class>com.airfrance.repind.entity.agence.BspData</class>
+    <class>com.airfrance.repind.entity.reference.RefComPrefDgt</class>
+	<class>com.airfrance.repind.entity.reference.RefComPrefGroup</class>
+	<class>com.airfrance.repind.entity.reference.RefComPrefGroupId</class>
+	<class>com.airfrance.repind.entity.reference.RefComPrefGroupInfo</class>
+	<class>com.airfrance.repind.entity.reference.RefComPrefMl</class>
+	<class>com.airfrance.repind.entity.reference.RefPermissions</class>
+	<class>com.airfrance.repind.entity.reference.RefPermissionsId</class>
+	<class>com.airfrance.repind.entity.reference.RefPermissionsQuestion</class>
+	<class>com.airfrance.repind.entity.reference.RefProductComPrefGroup</class>
+	<class>com.airfrance.repind.entity.reference.RefProductComPrefGroupId</class>
+	<class>com.airfrance.repind.entity.tracking.TrackingPermissions</class>
+	<class>com.airfrance.repind.entity.reference.RefProduct</class>
+    <class>com.airfrance.repind.entity.reference.RefProductOwner</class>
+    <class>com.airfrance.repind.entity.reference.RefProductOwnerId</class>
+    <class>com.airfrance.repind.entity.reference.RefOwner</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			
+			<!-- ENV-BATCH-DB-CONNECTION-USERNAME -->
+			<property name="hibernate.connection.username" value="${ENV-BATCH-DB-CONNECTION-USERNAME}"/>
+			<!-- ENV-BATCH-DB-CONNECTION-PASSWORD -->
+			<property name="hibernate.connection.password" value="${ENV-BATCH-DB-CONNECTION-PASSWORD}"/>
+			<!-- ENV-BATCH-DB-CONNECTION-URL -->
+			<property name="hibernate.connection.url" value="${ENV-BATCH-DB-CONNECTION-URL}"/>
+										
+			<!-- ENV-HIBERNATE-SHOW-SQL -->
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.cache.use_query_cache" value="false" />
+			<property name="hibernate.cache.use_second_level_cache" value="false" />
+			<property name="hibernate.connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider" />
+			<property name="hibernate.c3p0.min_size" value="5" />
+			<property name="hibernate.c3p0.max_size" value="20" />
+			<property name="hibernate.c3p0.timeout" value="1800" />
+			<property name="hibernate.c3p0.max_statements" value="50" />
+			<property name="statement_cache.size">0</property>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
+			<property name="hibernate.connection.driver_class" value="oracle.jdbc.driver.OracleDriver" />
+			<property name="hibernate.jdbc.batch_size" value="20" />
+        </properties>
+    </persistence-unit>
+    
+    <persistence-unit name="myPersistenceUnit2"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence
+		</provider>
+		<!-- class>com.airfrance.sicutf8.entity.prospect.ProspectCommunicationPreferences</class>
+    <class>com.airfrance.sicutf8.entity.prospect.ProspectMarketLanguage</class>
+    <class>com.airfrance.sicutf8.entity.prospect.Prospect</class>
+    <class>com.airfrance.sicutf8.entity.prospect.ProspectLocalization</class>
+    <class>com.airfrance.sicutf8.entity.prospect.ProspectTelecoms</class -->
+    <class>com.airfrance.sicutf8.entity.reference.RefErreur</class>
+    <class>com.airfrance.sicutf8.entity.reference.RefComPref</class>
+	    <class>com.airfrance.sicutf8.entity.utf.Utf</class>
+	    <class>com.airfrance.sicutf8.entity.utf.UtfData</class>
+    
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<!-- ENV-BATCH-DB-SIC-UTF8-CONNECTION-USERNAME -->
+			<property name="hibernate.connection.username" value="${ENV-BATCH-DB-SIC-UTF8-CONNECTION-USERNAME}"/>
+			<!-- ENV-BATCH-DB-SIC-UTF8-CONNECTION-PASSWORD -->
+			<property name="hibernate.connection.password" value="${ENV-BATCH-DB-SIC-UTF8-CONNECTION-PASSWORD}"/>
+			<!-- ENV-BATCH-DB-SIC-UTF8-CONNECTION-URL -->
+			<property name="hibernate.connection.url" value="${ENV-BATCH-DB-SIC-UTF8-CONNECTION-URL}"/>
+
+			 <!-- ENV-HIBERNATE-SHOW-SQL -->
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.cache.use_query_cache" value="false" />
+			<property name="hibernate.cache.use_second_level_cache" value="false" />
+			<property name="hibernate.connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider" />
+			<property name="hibernate.c3p0.min_size" value="5" />
+			<property name="hibernate.c3p0.max_size" value="20" />
+			<property name="hibernate.c3p0.timeout" value="1800" />
+			<property name="hibernate.c3p0.max_statements" value="50" />
+			<property name="statement_cache.size">0</property>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
+			<property name="hibernate.connection.driver_class" value="oracle.jdbc.driver.OracleDriver" />
+			<property name="hibernate.jdbc.batch_size" value="20" />
+		</properties>
+
+	</persistence-unit>
+	
+		<persistence-unit name="myPersistenceUnit3" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence
+		</provider>
+     <class>com.afklm.repindpp.paymentpreference.entity.Fields</class>
+    <class>com.afklm.repindpp.paymentpreference.entity.PaymentDetails</class>
+    <class>com.afklm.repindpp.paymentpreference.entity.VariablesPP</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<!-- ENV-BATCH-DB-SIC-UTF8-CONNECTION-USERNAME -->
+			<property name="hibernate.connection.username" value="${ENV-BATCH-DB-REPIND-PP-CONNECTION-USERNAME}"/>
+			<!-- ENV-BATCH-DB-SIC-UTF8-CONNECTION-PASSWORD -->
+			<property name="hibernate.connection.password" value="${ENV-BATCH-DB-REPIND-PP-CONNECTION-PASSWORD}"/>
+			<!-- ENV-BATCH-DB-SIC-UTF8-CONNECTION-URL -->
+			<property name="hibernate.connection.url" value="${ENV-BATCH-DB-REPIND-PP-CONNECTION-URL}"/>
+
+			 <!-- ENV-HIBERNATE-SHOW-SQL -->
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.cache.use_query_cache" value="false" />
+			<property name="hibernate.cache.use_second_level_cache" value="false" />
+			<property name="hibernate.connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider" />
+			<property name="hibernate.c3p0.min_size" value="5" />
+			<property name="hibernate.c3p0.max_size" value="20" />
+			<property name="hibernate.c3p0.timeout" value="1800" />
+			<property name="hibernate.c3p0.max_statements" value="50" />
+			<property name="statement_cache.size">0</property>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
+			<property name="hibernate.connection.driver_class" value="oracle.jdbc.driver.OracleDriver" />
+			<property name="hibernate.jdbc.batch_size" value="20" />
+		</properties>
+
+	</persistence-unit>
+    
+</persistence>

@@ -1,0 +1,1 @@
+../../../fretcom_outils_public/include/SharedMemory.h

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-reverse-engineering 
+
+  SYSTEM "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+
+
+<hibernate-reverse-engineering>
+
+
+<schema-selection match-catalog="*" match-schema="JRAF" match-table="MIDDLEGEN_ESCALE" />
+<schema-selection match-catalog="*" match-schema="JRAF" match-table="MIDDLEGEN_VOL" />
+
+	<type-mapping>
+
+		<!-- jdbc-type is name fom java.sql.Types -->
+
+
+		<sql-type jdbc-type="VARCHAR" length='1'
+			hibernate-type="yes_no" />
+
+		<!-- length, scale and precision can be used to specify the mapping precisly -->
+
+		<sql-type jdbc-type="NUMERIC" precision='1'
+			hibernate-type="boolean" />
+
+		<!-- the type-mappings are ordered. This mapping will be consulted last, 
+			
+			thus overriden by the previous one if precision=1 for the column -->
+
+		<sql-type jdbc-type="NUMERIC" hibernate-type="long" />
+
+	</type-mapping>
+
+
+
+	<!-- BIN$ is recycle bin tables in Oracle -->
+
+	<table-filter match-name="BIN$.*" exclude="true" />
+
+
+
+	<!-- Exclude DoNotWantIt from all catalogs/schemas -->
+
+	<table-filter match-name="DoNotWantIt" exclude="true" />
+
+
+
+	<!-- exclude all tables from the schema SCHEMA in catalog BAD. -->
+
+	<table-filter match-catalog="BAD" match-schema="vpresto"
+		match-name=".*" exclude="true" />
+
+</hibernate-reverse-engineering>
+

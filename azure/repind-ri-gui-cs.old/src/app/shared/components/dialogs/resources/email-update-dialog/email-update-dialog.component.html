@@ -1,0 +1,29 @@
+<mat-toolbar mat-dialog-title color="primary">
+  <app-dialog-toolbar [title]="data.title"></app-dialog-toolbar>
+</mat-toolbar>
+<mat-dialog-content mat-dialog-content>
+  <mat-horizontal-stepper #stepper>
+    <mat-step>
+      <ng-template matStepLabel>{{ 'EMAIL-INFORMATION' | translate }}</ng-template>
+      <div class="step-content">
+        <app-email-details-form #emailDetailsForm [email]="email"></app-email-details-form>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>{{ 'GENERAL-INFORMATION' | translate }}</ng-template>
+      <div class="step-content">
+        <app-resource-general-info-form #genInfoForm [resource]="email"></app-resource-general-info-form>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>{{ 'CONFIRMATION' | translate }}</ng-template>
+      <div class="step-content">
+        <app-confirmation-step [isUpdate]="data.isUpdate" label="{{ data.validationBtnLabel | translate }}"
+          (update)="updateEmail()" (create)="createEmail()"></app-confirmation-step>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</mat-dialog-content>
+<mat-dialog-actions mat-dialog-actions>
+  <app-stepper-controller [stepper]="stepper" [steps]="numberOfSteps"></app-stepper-controller>
+</mat-dialog-actions>

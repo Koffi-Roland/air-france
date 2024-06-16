@@ -1,0 +1,26 @@
+meta {
+  name: CIN
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{manage-individual-identifier-url}}/contract/{{contract}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  MS: manage-individual-identifier
+}
+
+assert {
+  res.status: eq 200
+}
+
+script:pre-request {
+  // var utcTime = Math.round(new Date().getTime()/1000);
+  // postman.setGlobalVariable("utcTime", utcTime);
+  // var sig = CryptoJS.SHA256("9u4v6st7pkch4fzj7y92zbvv" + "HjHJHK9A5m" + utcTime).toString();
+  // postman.setGlobalVariable("sig", sig);
+}

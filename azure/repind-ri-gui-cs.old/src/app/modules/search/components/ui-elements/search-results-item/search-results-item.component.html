@@ -1,0 +1,54 @@
+<mat-list-item class="hover:bg-primary-500 hover:text-white
+" [ngClass]="{'selected bg-primary-500 text-white': isSelected}" (click)="search(individual)">
+  <div class="selector"></div>
+  <div class="headline" matLine>
+    <span class="mat-title">{{ individual.civility | translate }} <b>{{ individual.lastname }}</b>
+      {{ individual.firstname }}</span>
+    <span class="mat-subheading-1">({{ 'GIN' | translate }}: {{ individual.gin }})</span>
+  </div>
+  <div class="subtitle" matLine>
+    <span *ngIf="individual.status" class="mat-small">
+      {{ 'STATUS' | translate }}:
+      <span class="important-information">{{ common.getTransformEnumType(common.referenceDataType.INDIVIDUAL_STATUS) +
+        individual.status | translate }}</span>
+    </span>
+    <span *ngIf="individual.birthdate">
+      <span> | </span>
+      <span class="mat-small">
+        {{ 'BORN-ON' | translate }}
+        <span class="important-information">{{ individual.birthdate | localizedDate : 'mediumDate' }}</span>
+      </span>
+    </span>
+
+    <span *ngIf=" individual['ginMerged']">
+      <span> | </span>
+      <span class="mat-small">
+        {{ 'GIN-MERGED' | translate }}:
+        <span class="important-information">{{ individual.ginMerged }}</span>
+      </span>
+    </span>
+    <span *ngIf="individual['dateModification']">
+      <span> | </span>
+      <span class="mat-small">
+        {{ 'MERGED-ON' | translate }}
+        <span class="important-information">{{ individual.dateModification | localizedDate : 'mediumDate' }}</span>
+      </span>
+    </span>
+    <span *ngIf="individual['signatureModification']">
+      <span> | </span>
+      <span class="mat-small">
+        {{ 'MERGED-BY' | translate }}
+        <span class="important-information">{{ individual.signatureModification }}</span>
+      </span>
+    </span>
+
+    <span *ngIf="individual.postalAddress">
+      <span> | </span>
+      <span class="mat-small">
+        {{ 'ADDRESS' | translate }}:
+        <span class="important-information">{{ individual.postalAddress }}</span>
+      </span>
+    </span>
+  </div>
+  <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+</mat-list-item>

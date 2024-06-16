@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %X{processType} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="kafkaAppender" class="com.afklm.tecc.como.logback.KafkaAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp/>
+                <loggerName/>
+                <logLevel/>
+                <threadName/>
+                <mdc/>
+                <pattern>
+                    <pattern>
+                        {
+                        "message": "#tryJson{%message}",
+                        "labels":
+                        {
+                        "shipping_team": "${project.groupId}",
+                        "appVersion": "${project.version}",
+                        "shipping_component": "${project.artifactId}",
+                        "stack_trace": "{%ex}",
+                        "environment": "${REPIND_ACRONYME}"
+                        }
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+        <topic>${REPIND_TOPIC}</topic>
+        <producerConfig>
+            bootstrap.servers=${REPIND_BOOTSTRAP_SERVERS}
+        </producerConfig>
+        <producerConfig>request.timeout.ms=5001</producerConfig>
+        <producerConfig>sasl.jaas.config=com.sun.security.auth.module.Krb5LoginModule required
+            useKeyTab=true
+            keyTab="/mnt/secrets-store/ri-ite-keytab.keytab"
+            storeKey=true
+            useTicketCache=false
+            serviceName="kafka"
+            principal="repind@DTA.FRANCE.AIRFRANCE.FR"
+            debug=true;
+        </producerConfig>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="kafkaAppender"/>
+    </root>
+
+</configuration>

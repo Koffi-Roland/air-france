@@ -1,0 +1,86 @@
+---
+spring:
+  profiles: default,local
+  datasource:
+    tns_admin_env: TEST_ACCEPTANCE
+    url: jdbc:oracle:thin:@REPIND_ITE.WORLD
+vault:
+  uri: https://vault-tls-cae.airfranceklm.com
+  namespace: repind
+  env: dev
+  credentials:
+    role_id: ${vault_role_id}
+    secret_id: ${vault_secret_id}
+debug: false
+logging:
+  level:
+    root: INFO
+---
+spring:
+  profiles: ITE,dev
+  datasource:
+    tns_admin_env: TEST_ACCEPTANCE
+    url: jdbc:oracle:thin:@REPIND_ITE.WORLD
+vault:
+  uri: https://vault-tls-cae.airfranceklm.com
+  namespace: repind
+  env: dev
+  credentials:
+    role_id: ${vault_role_id}
+    secret_id: ${vault_secret_id}
+debug: false
+logging:
+  level:
+    root: INFO
+---
+spring:
+  profiles: UTE,rct
+  datasource:
+    tns_admin_env: TEST_ACCEPTANCE
+    url: jdbc:oracle:thin:@REPIND_CAE.WORLD
+vault:
+  uri: https://vault-tls-cae.airfranceklm.com
+  namespace: repind
+  env: dev
+  credentials:
+    role_id: ${vault_role_id}
+    secret_id: ${vault_secret_id}
+debug: false
+logging:
+  level:
+    root: INFO
+---
+spring:
+  profiles: AE,qal
+  datasource:
+    tns_admin_env: TEST_ACCEPTANCE
+    url: jdbc:oracle:thin:@OSMN305.WORLD
+vault:
+  uri: https://vault-tls-cae.airfranceklm.com
+  namespace: repind
+  env: dev
+  credentials:
+    role_id: ${vault_role_id}
+    secret_id: ${vault_secret_id}
+debug: false
+logging:
+  level:
+    root: INFO
+---
+spring:
+  profiles: LE,prd
+  datasource:
+    tns_admin_env: PROD
+    url: jdbc:oracle:thin:@REPIND_PRD.WORLD
+vault:
+  uri: https://vault-tls.airfranceklm.com
+  namespace: repind
+  env: prod
+  credentials:
+    role_id: ${vault_role_id}
+    secret_id: ${vault_secret_id}
+debug: false
+logging:
+  level:
+    root: INFO
+---

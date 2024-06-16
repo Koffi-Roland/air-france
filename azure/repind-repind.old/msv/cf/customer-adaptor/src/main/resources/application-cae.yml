@@ -1,0 +1,52 @@
+spring:
+  config:
+    activate:
+      on-profile: CAE,rct
+  datasource:
+    tns_admin_env: TEST_ACCEPTANCE
+    url: jdbc:oracle:thin:@REPIND_CAE.WORLD
+  kafka:
+    consumer:
+      bootstrap-servers: qvircappkb01.france.airfrance.fr:6668,qvircappkb02.france.airfrance.fr:6668,qvircappkb03.france.airfrance.fr:6668,qvircappkb04.france.airfrance.fr:6668
+      group-id: C1.REPIND.Analytic.001
+    properties:
+      security:
+        protocol: SASL_PLAINTEXT
+      sasl.kerberos.service.name: kafka
+
+kafka:
+  topic: C1.REPIND_EVENT.TRIGGER_INSERTION
+
+az-vault:
+  namespace: kv-ri-np-73c0
+  secrets:
+    file_path: /tmp
+    jass:
+      file_name: client_jaas_repind.conf
+      secretName: ri-ite-client-jaas-config
+    keytab:
+      file_name: repind_DTA.FRANCE.AIRFRANCE.FR.keytab
+      secretName: ri-ite-keytab
+    clientid:
+      secretName: ${SFMC_CLIENT_ID}
+    secretid:
+      secretName: ${SFMC_SECRET_ID}
+
+vault:
+  uri: https://vault-tls-cae.airfranceklm.com
+  namespace: repind
+  env: dev
+  credentials:
+    role_id: ${vault_role_id}
+    secret_id: ${vault_secret_id}
+
+
+services:
+  request:
+    subdomain: "mc-7vmlnqc8hsgnywdv6j7fhrxj4"
+    token:
+      url: https://mc-7vmlnqc8hsgnywdv6j7fhrxj4.auth.marketingcloudapis.com/v2/token
+      grant-type: "client_credentials"
+    upsert:
+      individus:
+        url: https://mc-7vmlnqc8hsgnywdv6j7fhrxj4.rest.marketingcloudapis.com/hub/v1/dataevents/key:RI_APIFeed_Staging/rowset

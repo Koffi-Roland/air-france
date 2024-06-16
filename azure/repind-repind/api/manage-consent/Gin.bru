@@ -1,0 +1,19 @@
+meta {
+  name: Gin
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{manage-consent-url}}/{{gin}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  MS: manage-consent
+}
+
+assert {
+  res.status: eq 200
+}

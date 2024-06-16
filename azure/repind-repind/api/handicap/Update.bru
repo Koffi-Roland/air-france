@@ -1,0 +1,34 @@
+meta {
+  name: Update
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{handicap-url}}/?gin={{gin}}&application=NEWAPP&id={{handicap-id}}
+  body: json
+  auth: none
+}
+
+query {
+  gin: {{gin}}
+  application: NEWAPP
+  id: {{handicap-id}}
+}
+
+body:json {
+  [
+      {
+          "key": "length",
+          "value": "90"
+      }
+  ]
+}
+
+vars:pre-request {
+  MS: handicap
+}
+
+assert {
+  res.status: eq 200
+}

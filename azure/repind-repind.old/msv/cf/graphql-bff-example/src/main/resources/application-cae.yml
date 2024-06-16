@@ -1,0 +1,32 @@
+spring:
+  config:
+    activate:
+      on-profile: UTE,rct,cae
+  datasource:
+    tns_admin_env: TEST_ACCEPTANCE
+    url: jdbc:oracle:thin:@REPIND_CAE.WORLD
+
+vault:
+  uri: https://vault-tls-cae.airfranceklm.com
+  namespace: repind
+  env: dev
+  credentials:
+    role_id: ${vault_role_id}
+    secret_id: ${vault_secret_id}
+
+server:
+  servlet:
+    context-path: /api-mgr
+
+
+mashery:
+  key:
+    provide-last-activity: uxw2tmjda8es55rsceavy5mt
+    provide-contact-data: xdz9rrzc8hgd2g39btskqqzs
+  secret:
+    provide-last-activity: v94xzKpoBc
+    provide-contact-data: hxesO4t5Af
+url:
+  location:
+    provide-last-activity: https://apiams-ute1.airfranceklm.com/passenger/R000563/V01/
+    provide-contact-data: https://apiams-ute1.airfranceklm.com/passenger/R000347/V01/

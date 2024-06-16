@@ -1,0 +1,5 @@
+# -------------    Bases de donnees SIC Prod   ---------------------------------------------------------
+##-- BDD Prod Oracle 19 pas encore prête--
+
+##-- BDD Oracle 11
+REPIND_PRD.WORLD=(description=(address=(protocol=tcp)(host=lh-psic01-db.france.airfrance.fr)(port=1521))(connect_data=(service_name=REPIND_PRD.WORLD)(instance_name=SIC)(UR=A)))

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.afklm.repind</groupId>
+	<artifactId>neo4j-log</artifactId>
+	<version>${repind.version}</version>
+    <packaging>jar</packaging>
+    <name>neo4j-log</name>
+    <description>App to retrieve and send neo4j logs to COMO</description>
+
+	<parent>
+		<groupId>com.afklm.repind</groupId>
+		<artifactId>repind-root-cf</artifactId>
+		<version>1.0.24-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<docker.image.prefix>springio</docker.image.prefix>
+		<java.version>1.8</java.version>
+		<springfox.version>3.0.0</springfox.version>
+		<opex.version>2.0.0</opex.version>
+		<afws.version>3.5.0</afws.version>
+		<spring.cloud.k8s.version>1.0.0.RELEASE</spring.cloud.k8s.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.apache.kafka</groupId>
+				<artifactId>kafka-clients</artifactId>
+				<version>1.0.0</version>
+			</dependency>
+			<dependency>
+				<!-- Import dependency management from Spring Boot -->
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${springboot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<!-- SnakeYAML v1.30 is used by springboot by default, but Argos vulnerability -->
+				<groupId>org.yaml</groupId>
+				<artifactId>snakeyaml</artifactId>
+				<version>1.33</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${springboot.version}</version>
+				<configuration>
+					<mainClass>com.afklm.repind.msv.neo4j.log.Application</mainClass>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<!-- slf4j -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.12</version>
+		</dependency>
+
+		<!-- Log -->
+		<dependency>
+			<groupId>com.afklm.tecc</groupId>
+			<artifactId>como-logback-appender</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+	</dependencies>
+
+</project>

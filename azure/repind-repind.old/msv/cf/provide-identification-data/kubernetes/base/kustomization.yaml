@@ -1,0 +1,9 @@
+resources:
+  - deployment.yaml
+  - service.yaml
+
+commonLabels:
+  app.kubernetes.io/name: provide-identification-data
+  app.kubernetes.io/instance: provide-identification-data
+
+namespace: default

@@ -1,0 +1,63 @@
+meta {
+  name: Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{create-or-update-individual-v8-url}}
+  body: xml
+  auth: none
+}
+
+headers {
+  SOAPAction: "http://www.af-klm.com/services/passenger/CreateUpdateIndividualService-v8/createIndividual"
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+      <soapenv:Body>
+          <ns6:CreateUpdateIndividualRequestElement xmlns:ns6="http://www.af-klm.com/services/passenger/data-v8/xsd"
+              xmlns:ns5="http://www.af-klm.com/services/passenger/response-v8/xsd"
+              xmlns:ns8="http://www.af-klm.com/services/passenger/SicIndividuType-v3/xsd"
+              xmlns:ns7="http://www.af-klm.com/services/passenger/request-v8/xsd"
+              xmlns:ns2="http://www.af-klm.com/services/passenger/SicOsirisType-v1/xsd"
+              xmlns:ns4="http://www.af-klm.com/services/passenger/SoftComputingType-v1/xsd"
+              xmlns:ns3="http://www.af-klm.com/services/passenger/SicCommonType-v1/xsd">
+              <process>E</process>
+              <requestor>
+                  <channel>B2C</channel>
+                  <site>QVI</site>
+                  <signature>REGRESSION</signature>
+              </requestor>
+              <externalIdentifierRequest>
+                  <externalIdentifier>
+                      <identifier>gtyilktuy</identifier>
+                      <type>FACEBOOK_ID</type>
+                  </externalIdentifier>
+                  <externalIdentifierData>
+                      <key>OPTIN</key>
+                      <value>Y</value>
+                  </externalIdentifierData>
+                  <externalIdentifierData>
+                      <key>USED_BY_AF</key>
+                      <value>Y</value>
+                  </externalIdentifierData>
+              </externalIdentifierRequest>
+          </ns6:CreateUpdateIndividualRequestElement>
+      </soapenv:Body>
+  </soapenv:Envelope>
+}
+
+vars:pre-request {
+  USER: W90000442
+  PASSWORD: pswpsw123
+}
+
+vars:post-response {
+  gin_create: res.body.substring(res.body.indexOf('<gin>') + 5, res.body.indexOf('<gin>') + 5 + 12)
+}
+
+assert {
+  res.status: eq 200
+}

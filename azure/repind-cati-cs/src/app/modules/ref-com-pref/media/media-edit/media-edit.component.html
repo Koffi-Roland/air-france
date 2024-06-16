@@ -1,0 +1,26 @@
+<h2 mat-dialog-title translate [translateParams]="{type: 'MEDIA' | translate | lowercase}">{{title}}</h2>
+<form (ngSubmit)="submit()" [formGroup]="mediaForm" class="example-container">
+<mat-dialog-content>
+        <mat-form-field>
+            <input matInput placeholder="{{'CODE' | translate}}" formControlName="codeMedia" [errorStateMatcher]="matcher" (input)="mediaForm.patchValue({codeMedia: $event.target.value.toUpperCase()})" required>
+            <mat-error *ngIf="mediaForm.get('codeMedia').hasError('isUnique')" translate>CODE_UNIQUE</mat-error>
+            <mat-error *ngIf="mediaForm.get('codeMedia').hasError('required')" translate>CODE_REQUIRED</mat-error>
+            <mat-error *ngIf="mediaForm.get('codeMedia').hasError('maxlength')" translate>CODE_MAX_ONE</mat-error>
+
+          </mat-form-field>
+          <mat-form-field>
+              <input matInput formControlName="libelleMediaEN" placeholder="{{'NAME' | translate}}" [errorStateMatcher]="matcher" required>
+              <mat-error *ngIf="mediaForm.get('libelleMediaEN').hasError('required')" translate>NAME_REQUIRED</mat-error>
+              <mat-error *ngIf="mediaForm.get('libelleMediaEN').hasError('maxlength')" translate [translateParams]="{number: '25'}">NAME_MAX_NUMBER</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput formControlName="libelleMedia" placeholder="{{'NAME_FR' | translate}}" [errorStateMatcher]="matcher">
+              <mat-error *ngIf="mediaForm.get('libelleMedia').hasError('maxlength')" translate [translateParams]="{number: '25'}">NAME_MAX_NUMBER</mat-error>
+            </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+  <button mat-button mat-dialog-close translate>CANCEL</button>
+  <button type="submit" [disabled]="mediaForm.invalid" mat-button translate>SAVE</button>
+</mat-dialog-actions>
+</form>

@@ -1,0 +1,5 @@
+<div class="mat-form-field-wrapper" [formGroup]="group" [hidden]="field.isHidden">
+    <mat-label>{{ field.label | translate }}</mat-label>
+    <app-select-table #selectTable [listToFillRow]="field.options" [idName]="field.tableMultiselectIdName">
+    </app-select-table>
+</div>

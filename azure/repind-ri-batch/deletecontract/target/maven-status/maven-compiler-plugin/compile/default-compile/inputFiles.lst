@@ -1,0 +1,11 @@
+C:\Users\t294797\workspace\azure\repind-ri-batch\deletecontract\src\main\java\com\afklm\batch\deletecontract\processor\DeleteContractsBatchProcessor.java
+C:\Users\t294797\workspace\azure\repind-ri-batch\deletecontract\src\main\java\com\afklm\batch\deletecontract\mapper\RoleContratsMapper.java
+C:\Users\t294797\workspace\azure\repind-ri-batch\deletecontract\src\main\java\com\afklm\batch\deletecontract\model\DeleteContractsOutputModel.java
+C:\Users\t294797\workspace\azure\repind-ri-batch\deletecontract\src\main\java\com\afklm\batch\deletecontract\model\DeleteBusinessRoleUCCROutputModel.java
+C:\Users\t294797\workspace\azure\repind-ri-batch\deletecontract\src\main\java\com\afklm\batch\deletecontract\DeleteContractsBatch.java
+C:\Users\t294797\workspace\azure\repind-ri-batch\deletecontract\src\main\java\com\afklm\batch\deletecontract\service\DeleteContractsBatchService.java
+C:\Users\t294797\workspace\azure\repind-ri-batch\deletecontract\src\main\java\com\afklm\batch\deletecontract\config\DeleteContractsBatchConfig.java
+C:\Users\t294797\workspace\azure\repind-ri-batch\deletecontract\src\main\java\com\afklm\batch\deletecontract\mapper\RoleUCCRMapper.java
+C:\Users\t294797\workspace\azure\repind-ri-batch\deletecontract\src\main\java\com\afklm\batch\deletecontract\processor\DeleteBusinessRoleUCCRProcessor.java
+C:\Users\t294797\workspace\azure\repind-ri-batch\deletecontract\src\main\java\com\afklm\batch\deletecontract\writer\DeleteContractsBatchWriter.java
+C:\Users\t294797\workspace\azure\repind-ri-batch\deletecontract\src\main\java\com\afklm\batch\deletecontract\writer\DeleteBusinessRoleUCCRWriter.java

@@ -1,0 +1,56 @@
+.mat-card-content {
+  margin: 0 16px;
+}
+
+.mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.field-and-radio-btn {
+  display: flex;
+  flex-direction: row;
+
+  >mat-form-field {
+    width: 80%;
+  }
+
+  >mat-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 3px 16px;
+
+    >mat-radio-button {
+      margin: 2px 0;
+    }
+  }
+}
+
+.dob-and-country-code {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  >mat-form-field, app-country-autocomplete {
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .dob-and-country-code {
+    flex-direction: column;
+
+    >mat-form-field, app-country-autocomplete {
+      width: 100%;
+    }
+
+    >span {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.mat-card>.mat-card-actions:last-child {
+  margin: 0 16px;
+}

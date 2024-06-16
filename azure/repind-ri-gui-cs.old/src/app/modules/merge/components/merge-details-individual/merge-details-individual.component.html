@@ -1,0 +1,48 @@
+<mat-card (click)="selectIndividual()"
+  [ngClass]="{'individual-source': sourceOrTarget === 'source', 'merge-selection': isSelected}">
+  <mat-card-content fxLayout="column">
+    <div class="card-header bg-primary-500 text-white" fxFlex="1 1 auto">
+      <mat-chip-list class="status-chip-list">
+        <mat-chip class="status-chip daisy-bg-on-warn-lighter" disabled>
+          <span>{{ common.getTransformEnumType(common.referenceDataType.INDIVIDUAL_STATUS) + individual.status |
+            translate }}</span>
+        </mat-chip>
+      </mat-chip-list>
+      <mat-icon class="profile-icon">account_circle</mat-icon>
+      <span class="mat-title">{{ individual.civility | translate }} <b>{{ individual.lastName }}</b>
+        {{ individual.firstName }}</span>
+      <span class="mat-subheading-2" *ngIf="individual.birthDate">
+        {{ 'BORN-ON' | translate }}
+        {{ individual.birthDate | localizedDate : 'mediumDate' }}
+      </span>
+      <div class="card-content-date">
+        <div class="card-content-item" *ngIf="individual.signature">
+          <div>
+            <b>{{ 'CREATED-BY' | translate }} : </b>
+            <span class="mat-small">{{ individual.signature.creationSignature }}/{{ individual.signature.creationSite
+              }}</span>
+          </div>
+          <span class="mat-small">{{ 'ON' | translate }} {{ individual.signature.creationDate | localizedDate }}</span>
+        </div>
+        <div class="card-content-item" *ngIf="individual.signature.modificationSignature">
+          <div>
+            <b>{{ 'MODIFIED-BY' | translate }} : </b>
+            <span class="mat-small">{{ individual.signature.modificationSignature }}/{{
+              individual.signature.modificationSite }}</span>
+          </div>
+          <span class="mat-small">{{ 'ON' | translate }} {{ individual.signature.modificationDate | localizedDate
+            }}</span>
+        </div>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="card-content" fxFlex="1 1 70px">
+      <div class="card-content-item">
+        <span class="mat-small">{{ 'GIN' | translate }}</span>
+        <span class="mat-title copy-able-content daisy-text-primary--hover" ngxClipboard [cbContent]="individual.gin"
+          (cbOnSuccess)="common.copyToClipboard()" matTooltip="{{ 'COPY-CLIPBOARD' | translate }}">{{ individual.gin
+          }}</span>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

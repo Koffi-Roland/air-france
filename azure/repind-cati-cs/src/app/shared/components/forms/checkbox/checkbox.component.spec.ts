@@ -1,0 +1,26 @@
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+
+import { CheckboxComponent } from './checkbox.component';
+
+describe('CheckboxComponent', () => {
+  let component: CheckboxComponent;
+  let fixture: ComponentFixture<CheckboxComponent>;
+
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [CheckboxComponent]
+    })
+      .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(CheckboxComponent);
+    fixture.componentInstance.field = { type: '', name: '', label: '' };
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

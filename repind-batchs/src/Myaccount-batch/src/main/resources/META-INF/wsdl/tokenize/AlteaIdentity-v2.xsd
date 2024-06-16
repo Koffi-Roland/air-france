@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Uploaded in SOA repository on 2014-05-28 09:54:39.116--><!--SOA repository reference: W001165-v1.0.0--><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.af-klm.com/services/common/AlteaIdentity-v2/xsd" elementFormDefault="qualified" targetNamespace="http://www.af-klm.com/services/common/AlteaIdentity-v2/xsd">
+<!-- 2010-02-24 AKE In this version the element 'Domain' has been renamed to 'Channel' -->
+   <xsd:element name="Identity" type="tns:Identity"/>
+   <xsd:complexType name="Identity">
+      <xsd:sequence>
+         <xsd:element name="UserId" type="xsd:string">
+         		<xsd:annotation>
+         			<xsd:documentation>Id of user behind GUI - will be used to translate to sign</xsd:documentation>
+         		</xsd:annotation>
+         </xsd:element>
+         <xsd:element minOccurs="0" name="OfficeId" type="xsd:string">
+         		<xsd:annotation>
+         			<xsd:documentation>Amadeus Office Identifier - eg "NCEAF0950"</xsd:documentation>
+         		</xsd:annotation>
+         </xsd:element>
+         <xsd:element minOccurs="0" name="DutyCode" type="xsd:string">
+         		<xsd:annotation>
+         			<xsd:documentation>Amadeus Duty Code - eg "SU"</xsd:documentation>
+         		</xsd:annotation>
+         </xsd:element>
+         <xsd:element name="Channel" type="xsd:string">
+         		<xsd:annotation>
+         			<xsd:documentation>Will be used to determine which Amadeus Webservice Access Point is to be used</xsd:documentation>
+         		</xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

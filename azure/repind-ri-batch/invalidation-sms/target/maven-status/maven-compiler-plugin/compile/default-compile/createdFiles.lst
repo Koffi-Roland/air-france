@@ -1,0 +1,4 @@
+com\afklm\batch\invalidation\sms\type\ErrorCodeSMSEnum.class
+com\afklm\batch\invalidation\sms\BatchInvalidationSMS.class
+com\afklm\batch\invalidation\sms\type\ErrorCodeSMSConstante.class
+com\afklm\batch\invalidation\sms\type\GenerateLogInvalidationSMS.class

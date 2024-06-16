@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bindings xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://java.sun.com/xml/ns/jaxb" version="1.0">
+	<bindings scd="x-schema::tns" xmlns:tns="http://www.w3.org/2001/XMLSchema">
+		<globalBindings>
+			<javaType xmlns="http://java.sun.com/xml/ns/jaxb/xjc" name="java.util.Date" xmlType="xsd:date" adapter="com.afklm.soa.xml.adapter.UTCDateAdapter" /><javaType xmlns="http://java.sun.com/xml/ns/jaxb/xjc" name="java.util.Date" xmlType="xsd:dateTime" adapter="com.afklm.soa.xml.adapter.UTCDateTimeAdapter" />
+		</globalBindings>
+	</bindings>
+</bindings>

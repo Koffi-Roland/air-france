@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+    <!-- domain service for all drefs -->
+    <import resource="1-repind_pp-model-V2-ds-dependencies.xml"/>
+    
+    <!-- business service for all drefs -->
+    <import resource="2-repind_pp-model-V2-us-dependencies.xml"/>
+    
+    <!-- daos for all drefs -->
+    <import resource="3-repind_pp-model-V2-daos-dependencies.xml"/>
+        
+    <!--PROTECTED REGION ID(repind_pp-model-V2_ioc_etr) ENABLED START-->
+        <!-- ajout des imports non generes ici -->
+    <!--PROTECTED REGION END-->
+    
+
+
+</beans>
+

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans     http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+  
+<bean name="wsConsumerIdentification" class="com.afklm.soa.jaxws.customheader.configuration.ConsumerConfigurationBean">
+          <property name="userID" value="REPIND" />
+          <property name="partyID" value="AF" />
+          <property name="consumerID" value="W04776476" />
+          <property name="consumerLocation" value="QVI" />
+          <property name="consumerType" value="A" />
+  	</bean>
+  
+	<bean id="createOrUpdateAnIndividualServiceV8" class="com.afklm.soa.spring.consumer.WebServiceConsumer">
+		<property name="service" value="com.afklm.soa.stubs.w000442.v8.CreateUpdateIndividualServiceServiceV8" />
+		<property name="endpointAddress" value="https://ws-qvi-dev.airfrance.fr/passenger/marketing/000442v08" /> 
+		<!-- property name="endpointAddress" value="http://repind-dev.airfrance.fr/CreateOrUpdateIndividualWS/ws/passenger/marketing/000442v08" / -->
+		<property name="wsdlLocation" value="classpath:/META-INF/wsdl/w000442-v08/w000442-v08-policy.wsdl" />
+		<!-- property name="wsdlLocation" value="classpath:/META-INF/wsdl/w000442-v08/w000442-v08.wsdl" / -->
+	    <!-- <property name="portTypeName" value="${ENV-WS-W000442v7-PORTTYPENAME}" /> -->
+		<property name="features">
+		  <list>
+				<bean class="com.afklm.soa.wss.jaxws.ConsumerSecurityFeature">
+					<property name="env" value="dev"/>
+				</bean>
+		  </list>
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,31 @@
+<div class="wrapper">
+    <div class="global-optin" [ngClass]="{'let-space': marketLanguageConfigs.size > 0}">
+        <div class="smartphone-with-tooltip">
+            <mat-icon [matTooltip]="'WARN-GLOBAL' | translate" class="tooltip-message">info</mat-icon>
+            <div class="resize-global-optin-phone">
+                <app-dynamic-form #globalOptin class="tab-content-item" [fields]="comprefOptinConfig">
+                </app-dynamic-form>
+            </div>
+        </div>
+
+        <div class="icon-big-screen">
+            <mat-icon>info</mat-icon>
+            <span>{{ 'WARN-GLOBAL' | translate }}</span>
+        </div>
+    </div>
+
+    <ng-container *ngIf="marketLanguageConfigs.size > 0">
+        <mat-divider [vertical]="true" class="separator"></mat-divider>
+
+        <mat-tab-group mat-stretch-tabs>
+            <mat-tab *ngFor="let item of marketLanguageConfigs | keyvalue"
+                label="{{ common.getTransformEnumType(common.referenceDataType.COUNTRY_CODES) + item.key  | translate}}">
+                <div class="center-wrap">
+                    <app-dynamic-form #marketLanguageOptin class="tab-content-item" [fields]="item.value">
+                    </app-dynamic-form>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </ng-container>
+
+</div>

@@ -1,0 +1,31 @@
+afklm:
+  security:
+    actuators-role: P_MOCK_ACTUATOR
+    anonymous-roles:
+    - P_MOCK_ANONYMOUS_1
+    - P_MOCK_ANONYMOUS_2
+    urls-http-verbs-authorities:
+    - urls: /settings/**, /configuration/**
+      http-verbs-authorities:
+      - verbs: GET
+        roles: P_ADMIN, P_USER
+      - verbs: POST, PUT
+        roles: P_ADMIN
+    - urls: /api/**
+      http-verbs-authorities:
+      - verbs: GET, HEAD
+        permissions: AK_TEST
+      - verbs: POST
+        roles: P_ADMIN
+        permissions: AK_MODIF
+      - verbs: DELETE
+        permissions: AK_MODIF
+    roles:
+      P_TEST:
+        - AK_TEST
+        - AK_MODIF
+      P_TEST_EMPTY:
+      P_TEST2:
+        - AK_TEST
+      P_ADMIN:
+    content-security-policy: upgrade-insecure-requests; frame-ancestors 'self'; font-src 'self' https://fonts.googleapis.com; script-src 'self'; object-src 'self';

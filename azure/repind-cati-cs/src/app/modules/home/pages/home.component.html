@@ -1,0 +1,23 @@
+<div fxLayoutAlign="center center">
+  <h1 class="mat-display-2" [translate]="'QUICK-ACCESS'"></h1>
+</div>
+<div fxLayout="row" fxLayoutAlign="start center" fxLayout.lt-md="column" fxLayoutGap="20px">
+  <mat-card class="card-quick-access pointer home-icons" routerLink="/ref-com-pref/communication-preferences">
+    <mat-card-header class="block">
+      <mat-card-title class="no-margin-bottom" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+        <mat-icon>folder</mat-icon>
+        <h2 [translate]="'MANAGE-CATALOG'"></h2>
+      </mat-card-title>
+    </mat-card-header>
+  </mat-card>
+  <mat-card class="card-quick-access pointer home-icons" (click)="externalLink('https://sic.airfrance.fr')">
+    <a href="assets/docs/CATI_User_Guide_EN.pdf" download="CATI_User_Guide_EN.pdf">
+      <mat-card-header class="block">
+        <mat-card-title class="no-margin-bottom" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+          <mat-icon>info</mat-icon>
+          <h2 [translate]="'USER-GUIDE'"></h2>
+        </mat-card-title>
+      </mat-card-header>
+    </a>
+  </mat-card>
+</div>

@@ -1,0 +1,37 @@
+@use '@angular/material' as mat;
+@import '@angular/material/theming';
+@import '@airfranceklm/daisy-common/_palettes.scss';
+
+$af-rigui-primary-palette: (
+  lighter: $af-space-blue-lighter,
+  default: $af-space-blue-darker,
+  darker: $af-space-blue-default,
+  text: $af-space-blue-darker,
+  lighter-contrast: $af-space-blue-lighter-contrast,
+  default-contrast: $af-space-blue-default-contrast,
+  darker-contrast: $af-space-blue-default-contrast
+);
+
+$af-rigui-accent-palette: $klm-azure-blue-palette;
+
+$af-rigui-warn-palette: (
+  lighter: $af-sandstone-orange-default,
+  default: $af-candy-red-default,
+  darker: $af-candy-red-darker,
+  text: $af-candy-red-default,
+  lighter-contrast: $af-candy-red-lighter-contrast,
+  default-contrast: $af-candy-red-default-contrast,
+  darker-contrast: $af-candy-red-default-contrast
+);
+
+$rigui-theme: mat.define-light-theme(
+  $af-rigui-primary-palette,
+  $af-rigui-accent-palette,
+  $af-rigui-warn-palette
+);
+
+$custom-grey-lighter: #f1f1f1;
+$custom-grey-light: #e5e3e3;
+$custom-grey-medium: #a0a0a0;
+$custom-grey-dark: #888;
+$custom-grey-darker: #555;

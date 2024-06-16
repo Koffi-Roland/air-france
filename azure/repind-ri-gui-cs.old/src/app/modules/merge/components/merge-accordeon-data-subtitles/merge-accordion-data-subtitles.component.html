@@ -1,0 +1,15 @@
+<span *ngFor="let subtitle of subtitles.values">
+  <span *ngIf="isArray(subtitle); else contentView">
+    <mat-chip-list *ngIf="subtitle.template != null && subtitle.template.indexOf('listChips') > -1;else withoutListChips">
+      <mat-chip *ngFor="let chips of subtitle.values" disabled class="small-chip">
+        <span *ngFor="let chip of chips.values">{{ chip.isTranslable ? (chip.value | translate) : chip.value }}<span *ngIf="chips.values.indexOf(chip) < chips.values.length-1">&nbsp;</span></span>
+      </mat-chip>
+    </mat-chip-list>
+    <ng-template #withoutListChips>
+      <app-merge-accordion-data-subtitles [subtitles]="subtitle"></app-merge-accordion-data-subtitles>
+    </ng-template>
+  </span>
+  <ng-template #contentView>
+      {{ subtitle.isTranslable ? (subtitle.value | translate) : subtitle.value }}
+    </ng-template>
+</span>

@@ -1,0 +1,6 @@
+<div class="content">
+  <app-search-picker #searchPicker></app-search-picker>
+  <div class="search-form">
+    <router-outlet (activate)="searchPicker.updateSelectedSearch()"></router-outlet>
+  </div>
+</div>

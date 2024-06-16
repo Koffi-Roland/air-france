@@ -1,0 +1,33 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h1 [translate]="'MERGE'"></h1>
+    </mat-card-title>
+    <mat-card-subtitle [translate]="'INDIVIDUALS-MERGE'"></mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="mat-tab-container">
+      <form [formGroup]="ginSearchForm" (ngSubmit)="onSubmitSearch()" fxLayout="column" fxLayoutAlign="center center"
+        fxLayoutGap="10px" novalidate>
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'GIN-CIN-FIRST' | translate }}</mat-label>
+          <input matInput formControlName="firstGin" type="text" required />
+          <mat-error *ngIf="ginSearchForm.controls.firstGin.hasError('required')">
+            {{ 'FIELD-REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'GIN-CIN-SECOND' | translate }}</mat-label>
+          <input matInput formControlName="secondGin" type="text" required />
+          <mat-error *ngIf="ginSearchForm.controls.secondGin.hasError('required')">
+            {{ 'FIELD-REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+        <div class="action-buttons">
+          <button mat-raised-button color="primary" type="submit"
+            [disabled]="!ginSearchForm.valid">{{ 'MERGE' | translate }}</button>
+        </div>
+      </form>
+    </div>
+  </mat-card-content>
+</mat-card>

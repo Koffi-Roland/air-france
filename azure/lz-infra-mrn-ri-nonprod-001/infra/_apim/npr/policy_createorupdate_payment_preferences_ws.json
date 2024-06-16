@@ -1,0 +1,29 @@
+{
+  "extra_vars": {
+    "operation": "add",
+    "inputs": {
+      "security_id": "w04776476",
+      "env": "NPR",
+      "identifier": "W001567",
+      "api_version": "v01",
+      "content_format": "wsdl",
+      "content_value": "w001567/w001567-v01.wsdl",
+      "backend_urls":
+      [{
+        "env": "ITE",
+        "instance": "main",
+        "url": "https://repind-ws-ite.azure.airfranceklm.com/passenger/marketing/001567v01"
+      }, {
+        "env": "ACP",
+        "instance": "main",
+        "url": "https://repind-ws-acp.azure.airfranceklm.com/passenger/marketing/001567v01"
+      }, {
+        "env": "CAE",
+        "instance": "main",
+        "url": "https://repind-ws-cae.azure.airfranceklm.com/passenger/marketing/001567v01"
+      }
+      ],
+      "policies": {}
+    }
+  }
+}

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	version="1.0">
+
+	<persistence-unit name="myPersistenceUnit3" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence
+		</provider>
+     	<class>entity.com.afklm.repindpp.paymentpreference.Fields</class>
+    	<class>entity.com.afklm.repindpp.paymentpreference.PaymentDetails</class>
+    	<class>com.afklm.repindpp.paymentpreference.entity.VariablesPP</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<!-- ENV-HIBERNATE-DATASOURCE -->
+			<property name="hibernate.connection.datasource" value="java:comp/env/jdbc/repind_pp"/> 
+			
+			<!-- ENV-BATCH-DB-CONNECTION-USERNAME -->
+			<property name="hibernate.connection.username" value="sic2"/>
+			<!-- ENV-BATCH-DB-CONNECTION-PASSWORD -->
+			<property name="hibernate.connection.password" value="sic2"/>
+			<!-- ENV-BATCH-DB-CONNECTION-URL -->
+			<property name="hibernate.connection.url" value="jdbc:oracle:thin:@lh-dsic02-db.france.airfrance.fr:1523:ODMN305"/>
+										
+			<!-- ENV-HIBERNATE-SHOW-SQL -->
+			<property name="hibernate.show_sql" value="false"/>
+			<property name="hibernate.cache.use_query_cache" value="false"/>
+			<property name="hibernate.cache.use_second_level_cache" value="false"/>
+
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
+			<property name="hibernate.connection.driver_class" value="oracle.jdbc.driver.OracleDriver"/>
+		</properties>
+
+	</persistence-unit>
+	
+	<persistence-unit name="myPersistenceUnit2"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence
+		</provider>
+	    <!-- class>com.airfrance.sicutf8.entity.individu.AlertProspect</class>
+	    <class>com.airfrance.sicutf8.entity.individu.AlertDataProspect</class>
+		<class>com.airfrance.sicutf8.entity.prospect.ProspectCommunicationPreferences</class>
+	    <class>com.airfrance.sicutf8.entity.prospect.ProspectMarketLanguage</class>
+	    <class>com.airfrance.sicutf8.entity.prospect.Prospect</class>
+	    <class>com.airfrance.sicutf8.entity.prospect.ProspectLocalization</class>
+	    <class>com.airfrance.sicutf8.entity.prospect.ProspectTelecoms</class -->
+	    
+   	    <class>com.airfrance.sicutf8.entity.utf.Utf</class>
+   	    <class>com.airfrance.sicutf8.entity.utf.UtfData</class>
+	    
+	    
+	    <class>com.airfrance.sicutf8.entity.reference.RefErreur</class>
+		<class>com.airfrance.sicutf8.entity.reference.RefComPref</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+						<!-- ENV-BATCH-DB-CONNECTION-USERNAME -->
+			<property name="hibernate.connection.username" value="sic_utf8"/>
+			<!-- ENV-BATCH-DB-CONNECTION-PASSWORD -->
+			<property name="hibernate.connection.password" value="sic_utf8"/>
+			<!-- ENV-BATCH-DB-CONNECTION-URL -->
+			<property name="hibernate.connection.url" value="jdbc:oracle:thin:@lh-dsicutf802-db.france.airfrance.fr:1521:ODMN303"/>
+										
+			<!-- ENV-HIBERNATE-SHOW-SQL -->
+			<property name="hibernate.show_sql" value="false"/>
+			<property name="hibernate.cache.use_query_cache" value="false"/>
+			<property name="hibernate.cache.use_second_level_cache" value="false"/>
+
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
+			<property name="hibernate.connection.driver_class" value="oracle.jdbc.driver.OracleDriver"/>
+		</properties>
+
+	</persistence-unit>
+	
+	<!-- persistence-unit name="myPersistenceUnit"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence
+		</provider>
+
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			ENV-BATCH-DB-CONNECTION-USERNAME
+			<property name="hibernate.connection.username" value="sic_utf8"/>
+			ENV-BATCH-DB-CONNECTION-PASSWORD
+			<property name="hibernate.connection.password" value="sic_utf8"/>
+			ENV-BATCH-DB-CONNECTION-URL
+			<property name="hibernate.connection.url" value="jdbc:oracle:thin:@lh-dsicutf802-db.france.airfrance.fr:1521:ODMN303"/>
+										
+			ENV-HIBERNATE-SHOW-SQL
+			<property name="hibernate.show_sql" value="false"/>
+			<property name="hibernate.cache.use_query_cache" value="false"/>
+			<property name="hibernate.cache.use_second_level_cache" value="false"/>
+
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
+			<property name="hibernate.connection.driver_class" value="oracle.jdbc.driver.OracleDriver"/>
+		</properties>
+
+	</persistence-unit -->
+</persistence>

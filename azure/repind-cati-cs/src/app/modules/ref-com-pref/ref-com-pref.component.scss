@@ -1,0 +1,431 @@
+/* navbar */
+
+.navbar-af-custom {
+  margin-top: 50px;
+  border-top: 0.1rem solid hsla(0, 0%, 59%, .55) !important;
+  border-bottom: 0.1rem solid hsla(0, 0%, 59%, .55) !important;
+}
+
+.navbar-element {
+  float: left;
+  padding: 15px 15px;
+}
+
+/* LEFT MENU */
+
+.menu-ref {
+  padding-right: 0 !important;
+  margin-bottom: 30px;
+}
+
+.menu-selection-ref {
+  color: #fff !important;
+  background-color: #051039 !important;
+  border-color: #051039 !important;
+  text-decoration: underline;
+}
+
+.menu-selection-ref a {
+  color: #fff !important;
+}
+
+.menu-default-ref {
+  color: #423c48;
+  background-color: #f5f5f5;
+  border-color: #ddd;
+  padding: 10px 15px;
+  border-bottom: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.arrow-right {
+  width: 0;
+  height: 0;
+  border-top: 21px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-left: 14px solid #051039;
+  position: absolute;
+  right: -14px;
+  z-index: 500;
+}
+
+.arrow-comPref {
+  top: 0;
+}
+
+.arrow-permission {
+  top: 41px;
+}
+
+.arrow-group {
+  top: 82px;
+}
+
+.arrow-groupProduct {
+  top: 82px;
+}
+
+.menu-comPref {
+  margin-bottom: 20px;
+}
+
+.arrow-comPrefDgt {
+  top: 143px;
+}
+
+.arrow-domain {
+  top: 184px;
+}
+
+.arrow-groupType {
+  top: 225px;
+}
+
+.arrow-comType {
+  top: 266px;
+}
+
+.arrow-countryMarket {
+  top: 307px;
+}
+
+.arrow-media {
+  top: 348px;
+}
+
+/* CONTENT */
+
+.content-ref {
+  padding-left: 0 !important;
+}
+
+.panel-custom-ref {
+  margin-left: 20px;
+  border: none !important;
+}
+
+.panel-custom-perm {
+  margin-left: 0px;
+}
+
+/* Ref Com pref */
+
+.button-add-ref {
+  padding-left: 0 !important;
+  margin-top: 20px;
+}
+
+.button-group-product {
+  margin-top: 20px;
+  padding-right: 0px !important;
+}
+
+.pagination-ref {
+  padding-right: 0 !important;
+}
+
+.panel-custom-ref .table a {
+  color: white !important;
+}
+
+.panel-custom-ref .table a:hover,
+a:active,
+a:link,
+a:visited {
+  text-decoration: none !important;
+}
+
+.panel-custom-ref .table th {
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+.panel-custom-ref .table>tbody>tr:nth-child(even) td:nth-child(odd) {
+  background-color: #e9e5e6 !important;
+}
+
+.panel-custom-ref .table>tbody>tr:nth-child(odd) td:nth-child(odd) {
+  background-color: #ccc !important;
+}
+
+.input-search-ref {
+  width: 80px;
+}
+
+.input-search-ref .form-control {
+  height: 28px;
+  padding: 6px;
+}
+
+.column-search-used {
+  color: red !important;
+}
+
+.icon-link {
+  cursor: pointer;
+}
+
+.icon-link:hover {
+  color: red;
+}
+
+.panel-options-ref {
+  position: absolute;
+  right: 16px;
+  margin-top: 0;
+  border-left: darkgrey 1px solid;
+  border-bottom: darkgrey 1px solid;
+  border-top: darkgrey 1px solid;
+  box-shadow: 5px 5px 3px #888888;
+  z-index: 5000;
+}
+
+.panel-options-ref-content {
+  height: 200px;
+  width: 190px;
+  overflow-y: scroll;
+  background-color: #d9d9d9;
+  padding: 5px;
+  color: black;
+}
+
+.options-ref {
+  position: absolute;
+  right: 18px;
+  top: -21px;
+}
+
+.checkbox-perm {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+  text-align: center;
+}
+
+/* Modal */
+
+.ngdialog.ngdialog-theme-default.ngdialog-permissions {
+  padding-bottom: 50px;
+  padding-top: 50px;
+}
+
+.ngdialog.ngdialog-theme-default.ngdialog-permissions .ngdialog-content .modal-footer {
+  padding-bottom: 0px;
+  padding-top: 20px;
+}
+
+.ngdialog.ngdialog-theme-default.ngdialog-permissions .ngdialog-content {
+  width: 900px !important;
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-content {
+  background: #fff !important;
+  border-radius: 0 !important;
+  width: 600px !important;
+  -webkit-background-clip: padding-box !important;
+  background-clip: padding-box !important;
+  border: 1px solid #999 !important;
+  border: 1px solid rgba(0, 0, 0, .2) !important;
+  -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5) !important;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, .5) !important;
+}
+
+.btn-radio-active {
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+}
+
+.btn-radio-buttons .btn-radio-yes:active,
+.btn-radio-buttons .btn-radio-yes:focus,
+.btn-radio-buttons .btn-radio-yes:hover {
+  color: #11b3e5 !important;
+}
+
+.btn-radio-buttons .btn-radio-no:active,
+.btn-radio-buttons .btn-radio-no:focus,
+.btn-radio-buttons .btn-radio-no:hover {
+  color: #051039 !important;
+}
+
+.btn-radio-buttons .btn-default:active,
+.btn-radio-buttons .btn-default:focus,
+.btn-radio-buttons .btn-default:hover {
+  background-color: inherit !important;
+  border-color: inherit !important;
+  outline: none !important;
+}
+
+.btn-radio-buttons .btn-primary:active,
+.btn-radio-buttons .btn-primary:focus,
+.btn-radio-buttons .btn-primary:hover {
+  color: white !important;
+  background-color: #051039 !important;
+  border-color: #030922 !important;
+  outline: none !important;
+}
+
+.btn-radio-buttons .btn-info:active,
+.btn-radio-buttons .btn-info:focus,
+.btn-radio-buttons .btn-info:hover {
+  color: white !important;
+  background-color: #11b3e5 !important;
+  border-color: #0fa0cd !important;
+  outline: none !important;
+}
+
+.table-default-languages {
+  margin-bottom: 1px !important;
+}
+
+.table-default-languages tr.info th {
+  padding-top: 6px !important;
+  padding-bottom: 5px !important;
+}
+
+.edit-default-languages {
+  position: absolute;
+  right: 25px;
+  top: 9px;
+}
+
+.edit-default-products {
+  position: absolute;
+  right: 8px;
+  top: 9px;
+}
+
+.back-default-languages {
+  font-size: 20px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+}
+
+.add-language-message-error {
+  margin-top: 32px;
+}
+
+.table-default-languages-error {
+  border: 1px solid red !important;
+  border-collapse: inherit !important;
+}
+
+.type-libelle {
+  margin-top: 34px;
+}
+
+.ngdialog.ngdialog-add-comPref {
+  padding-bottom: 70px !important;
+  padding-top: 70px !important;
+}
+
+@media (max-width: 768px) {
+  .navbar-toggle {
+    background-color: #051039 !important;
+  }
+  .navbar-nav {
+    margin: 26px -15px !important;
+  }
+  .user-display {
+    position: absolute;
+    right: 160px;
+  }
+}
+
+@media (max-width: 992px) {
+  .menu-ref {
+    padding-right: 15px !important;
+  }
+}
+
+@media (max-width: 1299px) {
+  .hidden-mlg {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1300px) {
+  .hidden-llg {
+    display: none !important;
+  }
+}
+
+.message-inform-user {
+  margin-top: 30px;
+}
+
+.hide-tr {
+  display: none;
+}
+
+.export-excel-ref {
+  position: absolute;
+  top: -21px;
+  right: 38px;
+}
+
+.flag-icon {
+  margin-left: -10px;
+  margin-right: 5px;
+}
+
+.as-sortable-item,
+.as-sortable-placeholder {
+  display: table-row !important;
+}
+
+.d-languages-action {
+  text-align: center;
+  padding: 4px !important;
+}
+
+.table-default-languages.table-bordered>tbody>tr>td {
+  border: 0 !important;
+}
+
+.dropdown-menu li {
+  list-style-image: url("data:0");
+}
+
+/************** SideNav **************/
+
+.sidenav {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 250px;
+  background: #fff;
+}
+
+.page-wrap {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+}
+
+/*
+ * Make the Component injected by Router Outlet full height:
+ */
+ main {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  > *:not(router-outlet) {
+    flex: 1;
+    display: block;
+  }
+}
+
+.main-container {
+  padding: 100px 50px 0 50px;
+  margin-bottom: 10em;
+}
+
+.all-wrap {
+  min-height: 100vh;
+}
+
+.sidenav-content {
+  width: 100%;
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Uploaded in SOA repository on 2014-05-28 09:54:39.422--><!--SOA repository reference: W001165-v1.0.0--><!--File generated with the AFKL UML2WSDL-V1.0i generator on 2009-6-10 9:25--><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/" elementFormDefault="qualified" targetNamespace="http://www.af-klm.com/services/common/SystemFault-v1/xsd">
+   <xsd:element name="SystemFault">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="ErrorCode" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="OriginatingError" type="xsd:string"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="ErrorTrace" type="xsd:string"/>
+            <xsd:element name="FaultDescription" type="xsd:string"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+</xsd:schema>

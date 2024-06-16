@@ -1,0 +1,115 @@
+apiVersion: "apps/v1beta2"
+kind: StatefulSet
+metadata:
+  name: neo4j-core
+spec:
+  podManagementPolicy: Parallel
+  serviceName: neo4j-db
+  replicas: 3
+  selector:
+    matchLabels:
+      release: stable
+      app: neo4j
+      component: core
+  template:
+    metadata:
+      labels:
+        release: stable
+        app: neo4j
+        component: core
+    spec:
+      serviceAccountName: neo4j-restore-sa
+      containers:
+      - name: neo4j-db
+        image: graphfoundation/ongdb:latest
+        imagePullPolicy: "IfNotPresent"
+        env:
+          - name: NEO4J_ACCEPT_LICENSE_AGREEMENT
+            value: "yes"
+          - name: NUMBER_OF_CORES
+            value: "3"
+          - name: NEO4J_dbms_mode
+            value: CORE
+          - name: NEO4J_causal__clustering_discovery__type
+            value: DNS
+          - name: NEO4J_causal__clustering_minimum__core__cluster__size__at__formation
+            value: "3"
+          - name: NEO4J_causal__clustering_minimum__core__cluster__size__at__runtime
+            value: "3"
+          - name: NEO4J_causal__clustering_initial__discovery__members
+            value: "neo4j-db:5000"
+          - name: NEO4J_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: neo4j-secrets
+                key: neo4j-username
+          - name: NEO4J_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: neo4j-secrets
+                key: neo4j-password
+        command:
+          - "/bin/bash"
+          - "-c"
+          - |
+            export NEO4J_dbms_connectors_default__advertised__address=$(hostname -f)
+            export NEO4J_causal__clustering_discovery__advertised__address=$(hostname -f):5000
+            export NEO4J_causal__clustering_transaction__advertised__address=$(hostname -f):6000
+            export NEO4J_causal__clustering_raft__advertised__address=$(hostname -f):7000
+            export NEO4J_dbms_connectors_default__listen__address=0.0.0.0
+            export NEO4J_dbms_backup_enabled=true
+            export NEO4J_dbms_backup_address=0.0.0.0:6362
+            export NEO4J_dbms_tx__log_rotation_size=10M
+            export NEO4J_dbms_tx__log_rotation_retention__policy="30 days"
+            export NEO4J_AUTH="${NEO4J_USERNAME}/${NEO4J_PASSWORD}"
+            export NEO4J_dbms_memory_pagecache_size=512M
+            export NEO4J_dbms_memory_heap_initial__size=512M
+            export NEO4J_dbms_memory_heap_max__size=2G
+            exec /docker-entrypoint.sh "neo4j"
+        ports:
+        - containerPort: 5000
+          name: discovery
+        - containerPort: 7000
+          name: raft
+        - containerPort: 6000
+          name: tx
+        - containerPort: 7474
+          name: browserhttp
+        - containerPort: 7473
+          name: browserhttps
+        - containerPort: 7687
+          name: bolt
+        volumeMounts:
+        - name: datadir
+          mountPath: /data
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "512M"
+          limits:
+            cpu: "8"
+            memory: "8Gi"
+      initContainers:
+        - name: neo4j-restore
+          serviceAccountName: neo4j-restore-sa
+          image: nexusoss-docker.airfrance.fr/repind/neo4j-restore:latest
+          env:
+          - name: PURGE_ON_COMPLETE
+            value: "true"
+          - name: FORCE_OVERWRITE
+            value: "true"
+          volumeMounts:
+          - name: datadir
+            mountPath: /data
+      volumes:
+        - name: plugins
+          emptyDir: {}
+  volumeClaimTemplates:
+    - metadata:
+        name: datadir
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: "100Mi"

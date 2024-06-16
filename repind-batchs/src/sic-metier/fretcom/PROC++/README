@@ -1,0 +1,914 @@
+// ---------------------------------------------------------------------- C++ -
+// Author : Christophe Boban
+// ----------------------------------------------------------------------------
+//
+// Interface C++ / Pro*C Oracle s'appuyant sur le Sql Dynamique Methode 4
+// ----------------------------------------------------------------------
+
+Cette interface permet d'executer a partir de C++ tous les ordres Sql 
+sans ecrire de Pro*C.
+
+Le module qui gere les ordres Sql est ecrit en Pro*C dynamique methode 4 et
+s'appelle dynamicsql.o.
+
+L'interface C++ est un module qui s'appelle interfaceOracle.o .
+
+Pour pouvoir se servir de cette interface, il suffit de linker ces 2 modules avec
+l'applicatif C++ .
+
+
+
+Informations sur les niveaux de savepoint predefinis : (non exhaustive)
+------------------------------------------------------
+
+  enum Database::Level {
+    TOTO=-1,
+    LVL0=0,
+    LVL1,
+    LVL2,
+    LVL3,
+    LVL4,
+    LVL5,
+    LVL6,
+    LVL7,
+    LVL8,
+    LVL9
+  };
+
+
+
+Informations sur les types de donnees :
+---------------------------------------
+
+	En C/C++, les types utilises pour stocker des donnees Oracle sont:
+		- int (ou long)
+		- float (ou double)
+		- char[] ( les char* sont a eviter)
+
+
+	Ces types doivent etre convertis pour etre utilises par Oracle
+
+
+	Description des types de stockage:
+
+	C/C++ 		Oracle
+	----------------------
+	int   		INTEGER
+	float		FLOAT 
+	char[]		CHAR(?) ou
+			VARCHAR2(?) ou
+			DATE
+
+	Oracle 		C/C++
+	----------------------
+	INTEGER 	int
+	NUMBER		int
+	NUMBER(?)	int
+	NUMBER(?,?)	float
+	FLOAT		float
+	CHAR(?)		char[]
+	VARCHAR2(?) 	char[]
+	DATE		char[]
+	BOOLEAN		Booleen ou RWBoolean ou Boolean
+
+	
+	Interface permettant la conversion:
+	-----------------------------------		
+	Le type a preciser lors d'un bindHostVar depend du type reel de 
+	la colonne en base
+
+
+	Oracle 		Interface
+	-------------------------
+	INTEGER 	INTEGER
+	NUMBER		NUMBER ou INTEGER
+	NUMBER(?)	NUMBER ou INTEGER
+	NUMBER(?,?)	FLOAT
+	FLOAT		FLOAT
+	CHAR(?)		CHAR , longueur
+	VARCHAR2(?)	VARCHAR2 , longueur
+	DATE		DATE
+	BOOLEAN		BOOLEAN
+
+
+
+	Restriction :
+
+	1 -	Le type interne Oracle CHAR pose un petit probleme sur les 
+		Hosts Variables d'une clause WHERE (comme en PRO*C).
+	
+		Pour vous eviter de rajouter les ' ' en fin de chaine,
+		il faut appeler la methode :
+
+		  char* coerceToCHAR(int numberOfColumn, void* address);
+		ou
+		  char* coerceToCHAR(const char* nameOfColumn, void* address);
+	
+	2 - 	Il ne faut pas utiliser la methode   
+			Booleen setHostVar(int,void* ,IndicatorOracle,
+				TYPE_ORACLE,int=0 );
+		dans une clause WHERE (Pb avec le type CHAR Oracle).
+
+	--> Il est conseille d'utiliser les 2 methodes 
+		bindHostVar et ensuite putHostVar plutot que setHostVar.
+
+	3 -    Utiliser de preference un char[] a un char* 
+		---> Oracle n'aime pas trop les pointeurs
+
+	4 -  	Lors de l'utilisation d'une variable hote ou d'un tableau de 
+		variables hotes d'un type appartenant a la famille caractere
+		(CHAR,VARCHAR2 et aussi DATE car en C la date est stockee 
+		dans une chaine) , il est IMPERATIF de declarer la variable
+		ou le tableau de variable a la longueur definie dans Oracle
+		+ 1 pour le '\0' de fin de chaine
+
+		Si ce n'est pas fait il peut y avoir un probleme lorsque
+		ce que vous voulez traiter fait la taille maximum de la colonne
+
+	5 - 	En Sql dynamique, les codes erreur Oracle ne sont pas tres fiables
+		
+		Ex : si dans une requete vous faites une faute de frappe sur
+		le nom de la colonne ou si cette faute de frappe se retrouve
+		sur l'ordre bindHostVar ou putHostVar, le code erreur Oracle
+		est le suivant :  3115
+		
+		03115, 00000, "unsupported network datatype or representation"
+		// *Cause:
+		// *Action:
+
+		Interessant Non ???????????????		
+		
+
+	6 - 	La recuperation des valeurs peut etre sujette a quelques soucis
+		(comme en Pro*C) a cause de l'indicateur Null d'Oracle
+		Pour eviter ce probleme il faut tester si la valeur est Nulle
+		avant de l'affecter
+
+
+		Ex :
+		----
+
+		char comment[20];
+  		while (rq->getNextTuple()) {
+    		   if (rq->isColumnNotNull("COMMENTAIRE"))
+			strcpy(comment,rq->getStringValue("COMMENTAIRE"));
+ 		   else 
+			// c'est l'applicatif qui gere
+		}
+
+
+		ou
+
+
+  		while (rq->getNextTuple()) {
+    		   int no = rq->isColumnNull("AVIONID") 
+			    ? 0 : rq->getIntegerValue("AVIONID");
+		}
+		
+		
+
+Description de l'interface
+==========================
+
+
+Cette interface regroupe 2 objets permettant de gerer les acces a la BD Oracle,
+plus un objet de gestion des indicateurs et un objet de gestion d'Exception
+
+
+
+Objet Indicator : 
+-----------------
+
+	- permet de gerer les indicateurs Oracle
+
+
+	Constructeur:
+		
+		Indicator(int nbRows=1);  
+	
+		--> instancie un objet indicateur pouvant traiter le nombre 
+		de lignes passe en parametre
+
+ 		
+		short& operator[](int i);
+
+		--> traitement du ieme indicateur du tableau
+
+		
+		int getNumberOfRows() const ;
+
+		--> rend la taille du tableau
+
+
+
+
+class ExceptionOracle : Gestion des erreurs Oracle
+-----------------------
+
+
+class ExceptionSoft : Gestion des erreurs applicatives liees a Oracle
+---------------------
+
+
+
+	Utilisation des Exceptions :
+	----------------------------
+
+	Dans l'applicatif il faut gerer chaque acces Base dans des blocs 
+	'try' et traiter les exceptions dans les blocks 'catch'
+
+	ex:	
+	---
+
+	char t[20] =  "74m";
+	char t1[20] = "74f";
+
+  	char* sel = "select AVIONID from avion \
+			where TYPE = :TYPE OR  TYPE = :TYPE1";
+ 	try {
+    		rq->parse(sel);
+    		rq->bindHostVar("TYPE",CHAR,20);  
+    		rq->putHostVar("TYPE",rq->coerceToCHAR("type",&t));
+    
+    		rq->bindHostVar("TYPE1",CHAR,20);
+    		rq->putHostVar("TYPE1",rq->coerceToCHAR("type1",&t1));
+    
+    		rq->execute();
+  	}
+  	catch(ExceptionOracle& e) {
+    		cout << e.why() << endl;
+  	}
+  	catch(ExceptionSoft& e) {
+    		cout << e.why() << endl;
+  	}
+
+Objet Database : 
+----------------
+
+	- permet de se connecter / deconnecter , de valider les transactions 
+	  ou de faire un RollBack
+
+	- permet d'instancier une requete ( Objet Request )
+
+
+	methodes associees a Database : 
+	-------------------------------
+
+	Constructeur:
+ 
+		Database( char* user , char* passwd , char* dbString=NULL);
+
+		--> permet de se connecter a la base
+
+
+	Accesseurs :
+		
+	  	char* getUser();  // nom du User
+		
+		char* getPasswd(); // passwd de connection
+				
+		char* getDbString(); // nom du TWO_TASK (optionnel)
+
+
+	Methodes :
+
+		
+		Booleen isConnected() const;
+		
+		--> permet de savoir si la connexion s'est bien passee
+	
+
+		Booleen commit() const;
+
+		--> validation des M.A.J
+		
+		
+		Booleen rollback() const;
+		
+		--> Non validation des M.A.J
+
+
+		Booleen savePoint() const;
+		
+		--> creation d'un savepoint
+
+		Booleen rollbackToSavePoint() const;
+		
+		--> rollback au savepoint precedent
+
+
+		Booleen savePoint(Level aLevel) const;
+		
+		--> creation d'un savepoint nomme par un niveau
+
+		Booleen savePoint(const RWCString& aLabel, Level aLevel) const;
+		
+		--> creation d'un savepoint nomme par un label avec eventuellement un niveau
+
+		Booleen rollbackToSavePoint(Level) const;
+		
+		--> rollback au savepoint nomme 
+
+		Booleen rollbackToSavePoint(const RWCString& aLabel, Level aLevel) const;
+		
+		--> rollback au savepoint nomme 
+
+	
+
+		Booleen disconnect() const;
+	
+		--> deconnexion de la BD
+
+
+		Request* newRequest();
+
+		-----> creation d'une requete
+		
+
+	Exemple d'utilisation :
+	-----------------------
+
+	// connexion a la base
+	Database* db = new Database("arpe","arpe_tst");
+	if ( ! db->isConnected() )
+		exit (-1);
+	
+	// creation d'une nouvelle requete
+	Request* rq = db->newRequest();
+
+	...
+
+	// suppression d'une requete
+	delete rq;
+
+
+
+
+Objet Request  : 
+----------------
+
+	- permet d'executer les ordres Sql
+
+
+	methodes associees a Request  : 
+	-------------------------------
+
+	Constructeur Prive:
+ 
+		Request();
+
+		--> creation d'une requete  --> accessible uniquement par une 
+		    instance de Database
+
+
+	Accesseurs :
+
+		int getNumberOfRows();
+		
+		--> nombre total de lignes lues
+
+
+		int getNumberOfColumns();  ou  int getTupleSize();
+
+		--> nombre de colonnes traitees
+	
+		
+		Booleen getNextTuple();
+
+		--> recuperation d'une ligne 
+
+		
+		Booleen resetTuple();
+
+		--> permet de repartir du la 1ere ligne 
+			remet l'indice a zero
+
+
+		Booleen isColumnNotNull(int) const;
+
+		--> teste le no de colonne traite a Null.
+			renvoie True si Not Null
+
+
+		Booleen isColumnNotNull(const char*) ;
+
+		--> idem mais pour un nom de colonne
+
+
+		Booleen isColumnNull(int) const;
+
+		--> teste le no de colonne traite a Null.
+			renvoie True si Null
+
+
+		Booleen isColumnNull(const char*) ;
+
+		--> idem mais pour un nom de colonne
+
+
+		
+	Gestion du type String  :
+	-------------------------
+
+		const char* getStringValue(int) const;
+
+		--> recupere la valeur d'un no de colonne sous forme String
+
+		
+		const char* getStringValue(const char*) ;
+
+		--> idem mais pour un nom de colonne
+
+
+	Gestion du type Integer :
+	-------------------------
+
+		int getIntegerValue(int) const;
+
+		--> recupere la valeur d'un no de colonne sous forme Integer
+
+
+		int getIntegerValue(const char*) ;
+
+		--> idem mais pour un nom de colonne
+
+
+	Gestion du type Booleen :
+	-------------------------
+
+		Booleen getBooleenValue(int) const;
+
+		--> recupere la valeur d'un no de colonne sous forme Booleen
+	
+
+		Booleen getBooleenValue(const char*) ;
+
+		--> idem mais pour un nom de colonne
+
+
+
+	Gestion du type Float   :
+	-------------------------
+	
+		float getFloatValue(int) const;
+
+		--> recupere la valeur d'un no de colonne sous forme Float
+
+
+		float getFloatValue(const char*) ;
+
+		--> idem mais pour un nom de colonne
+
+
+
+	Gestion des Indicateurs :
+	-------------------------
+
+		float getIndicatorValue(int) const;
+
+		--> recupere la valeur de l'indicateur d'un no de colonne 
+
+
+		float getIndicatorValue(const char*) ;
+
+		--> idem mais pour un nom de colonne
+
+
+
+	Conversion d'une chaine de caracteres en type CHAR Oracle:
+	----------------------------------------------------------
+
+	---> a utiliser uniquement sur une variable Hote dans une clause Where
+
+
+		char* coerceToCHAR(int numberOfColumn, void* address);
+
+		--> conversion d'une variable de type char en CHAR Oracle
+
+
+  		char* coerceToCHAR(const char* nameOfColumn, void* address);
+
+		--> idem mais pour un nom de colonne
+
+	Methodes :
+
+		int select(const char*,Booleen=False);
+
+		--> execution d'un ordre select ne comportant pas de Host Variables
+
+		    Si le booleen est positionne a True, lecture ligne a ligne a 
+		    partir d'un curseur
+
+		  	 ---> prevu pour un traitement batch ou pour un select 
+			trop important en donnes qui entrainerait un probleme 
+			d'allocation memoire
+			
+			
+		    Par defaut le booleen est a False ce qui veut dire que toutes
+		    les lignes associees a la requete sont lues en une seule fois
+
+
+		int execute(const char*);
+
+		--> execution d'un ordre Sql sans Host Variables autre que 'SELECT'
+				     	     -------------------
+
+	Traitement avec Host Variables :
+	--------------------------------
+
+		Booleen parse(const char*);
+
+		--> parseur d'un ordre Sql quelconque avec Host Variables
+
+
+		int execute();
+
+		--> execution d'un ordre Sql quelconque avec Host Variables
+		precedemment prepare par la methode 'parse'
+
+
+		Booleen bindHostVar(int,TYPE_ORACLE,int=0);
+
+		--> indique le type et la longueur de la Host Variable pour
+		    un no de variable hote donne
+
+		    parametres :
+				- no de Host Variable dans l'ordre Sql
+				- type Oracle associe en base 
+					(CHAR,VARCHAR2,INTEGER...)
+				- longueur de la zone (uniquement pour les
+			          types de la famille 'caractere')
+
+
+		Booleen bindHostVar(const char*,TYPE_ORACLE,int=0);
+
+		--> idem mais pour un nom de colonne ou de Host Variable
+			c.a.d le nom de la variable hote dans l'ordre Sql
+
+
+		Booleen putHostVar(int , void*, 
+				   IndicatorOracle=INDICATOR_NOT_NULL);
+
+		--> indique l'adresse de la Host Variable  que l'on peut 
+		    eventuellement mettre a null (Indicateur Oracle) pour 
+		    un no de variable hote donne 
+		    Dans le cas d'un tableau de variables hotes toutes les
+		    valeurs sont mises a NULL ou NOT_NULL
+
+		    Pour la mettre a Null , passer l'indicateur 'INDICATOR_NULL'
+
+
+		Booleen putHostVar(const char* ,void* ,
+				   IndicatorOracle=INDICATOR_NOT_NULL);
+
+		--> idem mais pour un nom de colonne ou de Host Variable
+			c.a.d le nom de la variable hote dans l'ordre Sql
+
+
+
+
+  		Booleen putHostVar(int , void*, short* indicatorArray);
+
+		--> idem putHostVar(int , void*,IndicatorOracle=INDICATOR_NOT_NULL)
+		mais dans ce cas on peut gerer certaines lignes a NULL et d'autres
+		a NOT_NULL 
+		Il faut utiliser une instance de la classe Indicator avec comme
+		constructeur : Indicator(int nbRows);
+		
+
+ 		Booleen putHostVar(const char* ,void* , short* indicatorArray);
+
+		--> idem mais pour un nom de colonne ou de Host Variable
+			c.a.d le nom de la variable hote dans l'ordre Sql
+
+
+		Booleen setHostVar(int,void*,IndicatorOracle,TYPE_ORACLE,int=0);
+
+		--> enchaine le bindHostVar et le putHostVar 
+
+
+
+		Booleen setHostVar(const char*,void*,IndicatorOracle,
+				TYPE_ORACLE, int=0 );
+
+		--> idem mais pour un nom de colonne ou de Host Variable
+
+
+
+		Booleen setHostVar(int,void* ,short*,TYPE_ORACLE,int=0 );
+  
+		--> idem avec un tableau d'indicateurs (voir putHostVar)
+	
+
+		Booleen setHostVar(const char*,void*,short*,TYPE_ORACLE,int=0 );
+
+		--> idem mais pour un nom de colonne ou de Host Variable
+
+
+	Warning : Ne pas utiliser setHostVar dans une clause Where
+	=========
+
+	Exemple d'utilisation sans variables hotes :
+	--------------------------------------------
+
+	exemple 1 : cas d'un select tout simple
+	-----------
+	
+	Database* db = new Database("arpe","arpe_tst");
+	Request* rq = db->newRequest();
+	char select[] = "select AVIONID,TYPE,COMMENTAIRE from avion";
+  	rq->select(select);
+  	
+	while (rq->getNextTuple()) {
+    	  if (rq->isColumnNotNull("COMMENTAIRE"))
+     	     cout << rq->getStringValue("COMMENTAIRE") << endl;
+    	  else
+      	     cout << "AvionID " << rq->getIntegerValue("AvionID") 
+		  << " a la zone commentaire a NULL" << endl;      
+  	}
+	
+	delete rq;
+	db->disconnect();
+	delete db;
+
+
+
+	exemple 2 : cas d'un create et insert 
+	-----------
+	
+	Database* db = new Database("arpe","arpe_tst");
+	Request* rq = db->newRequest();
+	rq->execute("create table TEST(F1 int , F2 char(20))");
+	rq->execute("insert into TEST values (40,'test')");
+	
+	...
+	
+	rq->execute("drop table TEST");
+
+	
+	NB : dans ce cas les donnees sont figees , c'est pourquoi l'API
+	     permet l'utilisation des variables hotes 
+
+
+
+	Exemple d'utilisation avec variables hotes :
+	--------------------------------------------
+
+
+	exemple 1 : cas d'un select 
+	-----------
+
+
+	char t[20]  = "74f";
+	char t1[20] = "74m";
+
+	// les variables hotes sont prefixees par ':'
+  	char sel[] = "select AVIONID from avion 
+			where TYPE = :TYPE OR  TYPE = :TYPE1";
+	//                            ----             -----
+
+	// parse de l'ordre Sql
+	rq->parse(sel);
+
+	// construction des variables hotes
+	rq->bindHostVar("TYPE",CHAR,20);  // ou rq->bindHostVar(0,CHAR,20)
+	rq->bindHostVar("TYPE1",CHAR,20); // ou rq->bindHostVar(1,CHAR,20)
+	
+	rq->putHostVar("TYPE",rq->coerceToCHAR("TYPE",&t)); 
+	// ou rq->putHostVar(0,rq->coerceToCHAR(0,&t));
+
+	rq->putHostVar("TYPE1",rq->coerceToCHAR("TYPE1",&t1)); 
+	// ou rq->putHostVar(1,rq->coerceToCHAR(1,&t));
+	
+	rq->execute();
+	while (rq->getNextTuple()) {
+    	   cout << "No avion : " << rq->getIntegerValue("AVIONID"); << endl;
+  	}
+
+
+
+	exemple 2 : cas d'un insert (que l'on peut traiter ligne a ligne)
+	-----------
+
+
+	char* insert = "insert into avion (AVIONID,TYPE,COMMENTAIRE) \
+                        values (:AVIONID,:TYPE,:COMMENTAIRE)";
+
+
+  	int num[NB];         //  NUMBER(4) en Oracle
+  	char type[NB][20+1];   //  CHAR(20) en Oracle
+  	char com[NB][20+1];    //  VARCHAR2(20) en Oracle
+
+  	for (int j=0;j<NB;j++) {
+    	   num[j] = 10+j;
+    	   strcpy(type[j],"TYPE TEST");
+    	   strcpy(com[j],"commentaire Test");
+  	}
+
+	rq->parse(insert);
+	rq->bindHostVar("AVIONID",INTEGER);  // ou NUMBER
+  	rq->bindHostVar("TYPE",CHAR,20);
+	rq->bindHostVar("COMMENTAIRE",VARCHAR2,20);
+
+	for (int k=0;k<NB;k++) {
+    	  rq->putHostVar("AVIONID",&num[k]);
+          rq->putHostVar("TYPE",&type[k]);
+          rq->putHostVar("COMMENTAIRE",&com[k]); 
+	  // ou  rq->putHostVar("COMMENTAIRE",&com[k],INDICATOR_NULL)
+	  // si l'on veut mettre un champ a null
+          rq->execute();
+  	}
+
+
+	exemple 3 : cas d'un insert avec tableau de Host Variables
+	-----------
+
+
+	char* insert = "insert into avion (AVIONID,TYPE,COMMENTAIRE) \
+                        values (:AVIONID,:TYPE,:COMMENTAIRE)";
+
+
+  	int num[NB];         //  NUMBER(4) en Oracle
+  	char type[NB][20+1];   //  CHAR(20) en Oracle
+  	char com[NB][20+1];    //  VARCHAR2(20) en Oracle
+
+  	for (int j=0;j<NB;j++) {
+    	   num[j] = 10+j;
+    	   strcpy(type[j],"TYPE TEST");
+    	   strcpy(com[j],"commentaire Test");
+  	}
+
+	rq->parse(insert,NB);  // NB etant la taille du tableau Hote
+	
+	//  ou pour parametrer la taille du tableau	
+	rq->parse(insert);
+	rq->setSizeOfHostArray(NB);
+
+	rq->bindHostVar("AVIONID",INTEGER);
+  	rq->bindHostVar("TYPE",CHAR,20);
+	rq->bindHostVar("COMMENTAIRE",VARCHAR2,20);
+
+  	rq->putHostVar("AVIONID",&num);
+        rq->putHostVar("TYPE",&type);
+        rq->putHostVar("COMMENTAIRE",&com); 
+	
+	// dans ce cas une seule execution --> plus rapide
+        rq->execute();
+  	}
+
+	exemple 4 : cas d'utilisation d'1 tableau d'indicateurs avec Host Variables
+	-----------
+
+
+	char* insert = "insert into avion (AVIONID,TYPE,COMMENTAIRE) \
+                        values (:AVIONID,:TYPE,:COMMENTAIRE)";
+
+
+  	int num[NB];         //  NUMBER(4) en Oracle
+  	char type[NB][20+1];   //  CHAR(20) en Oracle
+  	char com[NB][20+1];    //  VARCHAR2(20) en Oracle
+	
+	Indicator ind (NB);   	// instance de l'objet Indicator permettant 
+				// de traiter NB Rows
+
+  	for (int j=0;j<NB;j++) {
+    	   num[j] = 10+j;
+    	   strcpy(type[j],"TYPE TEST");
+    	   strcpy(com[j],"commentaire Test");
+	   // pour le test
+     	   ind[i] =  i%2 ?  INDICATOR_NOT_NULL : INDICATOR_NULL;
+ 	}
+
+	rq->parse(insert,NB);  // NB etant la taille du tableau Hote
+	
+	//  ou pour parametrer la taille du tableau	
+	rq->parse(insert);
+	rq->setSizeOfHostArray(NB);
+
+	rq->bindHostVar("AVIONID",INTEGER);
+  	rq->bindHostVar("TYPE",CHAR,20);
+	rq->bindHostVar("COMMENTAIRE",VARCHAR2,20);
+
+  	rq->putHostVar("AVIONID",&num);
+        rq->putHostVar("TYPE",&type,&ind);   // avec tableau d'indicateurs
+        rq->putHostVar("COMMENTAIRE",&com); 
+	
+	// dans ce cas une seule execution --> plus rapide
+        rq->execute();
+  	}
+
+
+	exemple 5 : traitement d'une date au format standard Oracle 
+
+    	char* insertdate = "insert into toto  values (:f1 , :f2)";
+
+	char dateheure[10] = "27-jun-97";  // format standard
+  	char dd[10][9+1];  // 9 car utiles + 1 ('\0')
+  	int i[10];
+	for (j=0;j<10;j++) {
+	    i[j] = j;
+	    strcpy(dd[j],dateheure);
+	}
+
+	rqi->parse(insertdate,10);
+  	rqi->bindHostVar("f1",INTEGER);
+  	rqi->bindHostVar("f2",DATE);
+  	rqi->putHostVar("f1",&i);
+  	rqi->putHostVar("f2",&dd);
+	rqi->execute();
+
+
+
+	exemple 6 : traitement d'une date au format non standard Oracle 
+
+    	char* insertdate = "insert into toto  \
+               		    values (:f1,to_date(:f2,'YYYYMMDDHHMISS'))";
+
+	char dateheure[14+1] = "19970610120000";  // format non standard
+  	char dd[10][14+1];  // 14 car utiles + 1 ('\0')
+  	int i[10];
+	for (j=0;j<10;j++) {
+	    i[j] = j;
+	    strcpy(dd[j],dateheure);
+	}
+
+	rqi->parse(insertdate,10);  //  10 lignes a inserer
+  	rqi->bindHostVar("f1",INTEGER);
+  	rqi->bindHostVar("f2",DATE);
+  	rqi->putHostVar("f1",&i);
+  	rqi->putHostVar("f2",&dd);
+	rqi->execute();
+
+
+
+
+
+	exemple 7 : exemple plus complet avec des requetes imbriquees 
+
+ 	Database* db = new Database("arpe","arpe_tst");
+ 	Request* rq = db->newRequest();
+	Request* rq1 = db->newRequest();  
+	Request* rq2 = db->newRequest();  
+  
+  	char* selectNameOfTables = "select table_name from user_tables";
+  	char* selectInfosColumn =
+    		"select COLUMN_NAME,DATA_TYPE,DATA_LENGTH,NULLABLE \
+		from user_tab_columns where TABLE_NAME = :TABLE_NAME";
+   
+  	char name [30];  
+
+  	rq->select(selectNameOfTables);
+  	int nbRelations = rq->getNumberOfRows();
+  	rq1->parse(selectInfosColumn);
+  	rq1->bindHostVar(0,VARCHAR2,30);
+
+  	Relation** relation = new Relation*[nbRelations];
+  	i=0;
+  	while (rq->getNextTuple()) {
+    	  strcpy( name , rq->getStringValue("table_name"));
+    	  rq1->putHostVar(0,&name);
+          rq1->execute();
+          int nbColumns = rq1->getNumberOfRows();
+
+          relation[i] = new Relation(name,nbColumns);
+          while (rq1->getNextTuple()) {
+	      relation[i]->addColumn(rq1->getStringValue(0),
+	                             rq1->getStringValue("DATA_TYPE"),
+			     	     rq1->getIntegerValue(2),
+			             rq1->getBooleenValue(3));
+    	  }						 
+    	i++;
+  	}
+
+  	delete rq,rq1;
+  	db->disconnect();
+  	delete db;
+
+
+
+	exemple 8 : exemple de nommage des savepoints 
+
+	for (int i=0; i<10; i++) {
+	   db->savePoint( Database::Level(i) );
+	ou
+	   db->savePoint( "SAVEPOINT", Database::Level(i) );
+	}
+	
+	...
+	
+	for ( i=0; i<10; i++) {
+	   db->rollbackToSavePoint( Database::Level(i) );
+	ou
+	   db->rollbackToSavePoint( "SAVEPOINT", Database::Level(i) );
+	}
+
+	ou utilisation explicite :
+
+	   db->savePoint( Database::LVL2 );
+
+
+	ou si l'on n'a pas besoin de label :
+
+	   db->savePoint();
+	   ...	  
+	   db->rollbackToSavePoint();

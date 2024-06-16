@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" >
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- !!! DO NOT REMOVE/CHANGE THE <parent>[...]</parent> SECTION !!! Please 
+		contact DI.NB through http://fds.airfrance.fr if needed. -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.7.15</version>
+	</parent>
+
+	<groupId>com.afklm.rigui</groupId>
+	<artifactId>rigui-ss</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	
+	<properties>
+		<jackson.version>2.12.7</jackson.version>
+		<springboot.version>2.7.15</springboot.version>
+		<jdbc.driver.version>11.2.0.3</jdbc.driver.version>
+		<jdk.version>17</jdk.version>
+		<java.version>17</java.version>
+		<spring.security.habile.version>3.1.11</spring.security.habile.version>
+		<spring-security-habile-simul.version>3.1.11</spring-security-habile-simul.version>
+		<!-- JaCoCo Properties -->
+		<jacoco.version>0.8.8</jacoco.version>
+		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+		<sonar.language>java</sonar.language>
+		<lombok.version>1.18.26</lombok.version>
+		<spring-core.version>5.3.34</spring-core.version>
+		<sonar.coverage.exclusions>
+			**/configuration/**/*,
+			**/exception/**/*,
+			**/exceptions/**/*,
+			**/error/**/*,
+			**/advice/**/*,
+			**/handler/**/*,
+			**/mashery/**/*,
+			**/filter/**/*,
+			**/Application.java,
+			**/Exception.java,
+			**/*dto.java,
+			**/sequence/**/*,
+			**/*Constant.java,
+			**/entity/**/*
+		</sonar.coverage.exclusions>
+	</properties>
+	
+		<dependencyManagement>
+		<dependencies>
+	        <dependency>
+	            <groupId>com.afklm.soa.jaxws</groupId>
+	            <artifactId>sdfw-dependencies</artifactId>
+	            <version>3.3.1</version>
+	            <type>pom</type>
+	            <scope>import</scope>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.springframework.cloud</groupId>
+	            <artifactId>spring-cloud-dependencies</artifactId>
+	            <version>2021.0.4</version>
+	            <type>pom</type>
+	            <scope>import</scope>
+			</dependency> 
+			<dependency>
+    			<groupId>org.springframework.cloud</groupId>
+    			<artifactId>spring-cloud-spring-service-connector</artifactId>
+    			<version>2.0.9.RELEASE</version>
+			</dependency>
+			<dependency>
+   				<groupId>org.springframework.cloud</groupId>
+    			<artifactId>spring-cloud-cloudfoundry-connector</artifactId>
+    			<version>2.0.9.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring-core.version}</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+	
+	<dependencies>
+	<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		<exclusions>
+			<exclusion>
+				<groupId>org.yaml</groupId>
+				<artifactId>snakeyaml</artifactId>
+			</exclusion>
+		</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-hateoas</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.hateoas</groupId>
+					<artifactId>spring-hateoas</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.hateoas</groupId>
+			<artifactId>spring-hateoas</artifactId>
+			<version>2.0.5</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.springframework.cloud</groupId>
+		    <artifactId>spring-cloud-starter</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-cloud-connectors</artifactId>
+			<version>2.2.13.RELEASE</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.afklm.soa.jaxws</groupId>
+		    <artifactId>sdfw-starter</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>com.afklm.soa.jaxws</groupId>
+		    <artifactId>sdfw-consumer-deps</artifactId>
+		    <type>pom</type>
+		</dependency>
+		<dependency>
+		    <groupId>com.afklm.soa.jaxws.wss</groupId>
+		    <artifactId>jaxws-sec</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.airfrance.soa.security</groupId>
+			<artifactId>rigui-ws-security</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<!-- JDBC -->
+		<dependency>
+		    <groupId>com.oracle.jdbc</groupId>
+		    <artifactId>ojdbc6</artifactId>
+		    <version>${jdbc.driver.version}</version>
+		    <scope>runtime</scope>
+		</dependency>
+		
+		<!-- Utilities -->
+		<dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>${jdbc.driver.version}</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-test</artifactId>
+		    <scope>test</scope>
+		</dependency>
+		<!-- Jacoco for Sonar -->
+		<dependency>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<version>${jacoco.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.maven.reporting</groupId>
+					<artifactId>maven-reporting-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.maven.shared</groupId>
+					<artifactId>maven-shared-io</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		</dependencies>
+
+	<modules>
+		<module>riguiApi</module>
+		<module>riguiCommons</module>
+	</modules>
+
+	<build>
+		<plugins>
+			<plugin>
+            	<groupId>org.apache.maven.plugins</groupId>
+            	<artifactId>maven-compiler-plugin</artifactId>
+            	<version>${maven-compiler-plugin.version}</version>
+            	<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+          			<debug>true</debug>
+          			<debuglevel>lines,vars,source</debuglevel>
+          			<compilerArgument>-Werror</compilerArgument>
+          			<compilerArgument>-Xlint:deprecation</compilerArgument>
+            	</configuration>
+        	</plugin>
+	
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+					<wtpversion>2.0</wtpversion>
+					<additionalProjectFacets>
+						<jpt.jpa>2.0</jpt.jpa>
+					</additionalProjectFacets>
+					<additionalBuildcommands>
+						<buildCommand>
+							<name>org.eclipse.m2e.core.maven2Builder</name>
+						</buildCommand>
+						<buildCommand>
+							<name>org.springframework.ide.eclipse.core.springbuilder</name>
+						</buildCommand>
+					</additionalBuildcommands>
+					<additionalProjectnatures>
+						<projectnature>org.eclipse.jdt.core.javanature</projectnature>
+						<projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
+						<projectnature>org.eclipse.m2e.core.maven2Nature</projectnature>
+					</additionalProjectnatures>
+				</configuration>
+			</plugin>
+
+			<!-- Plugin use to generate specific AssertJ assertions based on entities -->
+			<plugin>
+				<groupId>org.assertj</groupId>
+				<artifactId>assertj-assertions-generator-maven-plugin</artifactId>
+				<version>1.5.0</version>
+				<configuration>
+					<packages>
+						<param>com.afklm.cati.cati.entity</param>
+					</packages>
+					<targetDir>src/test/java</targetDir>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco.version}</version>
+				<executions>
+					<execution>
+						<id>merge</id>
+						<goals>
+							<goal>merge</goal>
+						</goals>
+						<configuration>
+							<fileSets>
+								<fileSet implementation="org.apache.maven.shared.model.fileset.FileSet">
+									<directory>${project.basedir}</directory>
+									<includes>
+										<include>**/*.exec</include>
+									</includes>
+								</fileSet>
+							</fileSets>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<url>https://nexus.devnet.klm.com/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<url>https://nexus.devnet.klm.com/content/repositories/snapshots</url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
+	</distributionManagement>
+</project>

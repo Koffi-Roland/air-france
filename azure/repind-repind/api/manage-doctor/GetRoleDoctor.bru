@@ -1,0 +1,23 @@
+meta {
+  name: GetRoleDoctor
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{manage-doctor-url}}/role/{{roleIdDoctor}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  MS: manage-doctor
+}
+
+assert {
+  res.status: eq 200
+}
+
+script:pre-request {
+  // 
+}

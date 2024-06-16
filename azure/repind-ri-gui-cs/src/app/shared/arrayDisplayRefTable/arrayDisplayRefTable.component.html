@@ -1,0 +1,120 @@
+<div *ngIf="dataSource">
+  <h1>{{ title | translate }}</h1>
+  <div class="mat-elevation-z8">
+    <mat-table matSort [dataSource]="dataSource">
+      <!-- Column -->
+      <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column.field">
+        <!-- HEADER CELL DISPLAY -->
+        <mat-header-cell
+          *matHeaderCellDef
+          class="table-primary-bg text-white"
+          [ngClass]="option.headerClass"
+          [mat-sort-header]="column.field !== 'action' ? column.field : null"
+          [disabled]="column.field === 'action'">{{column.label | translate}}
+          <span
+            *ngIf="column.field === 'action'"
+            class="display-search input-icon-search"
+            (click)="displaySearch = !displaySearch"
+            matTooltip="{{ 'DISPLAY-SEARCH' | translate }}">
+            <i class="material-icons">search</i>
+          </span>
+        </mat-header-cell>
+        <!-- CELL DISPLAY -->
+        <mat-cell
+          *matCellDef="let element"
+          [matTooltip]="column.enableTooltip(element) ? (column.tooltip | translate): element[column.field]"
+          [ngClass]="column.enableCellClass(element) ? column.cellClass: ''">
+          <span
+            *ngIf="column.field !== 'action'; else actionBar">
+            {{element[column.field]}}
+          </span>
+          <ng-template #actionBar>
+            <app-array-display-ref-table-action
+              [options]="option.actionsOption"
+              [data]="element"
+              [id]="element[option.id]"
+              [warning]="option.warning">
+            </app-array-display-ref-table-action>
+          </ng-template>
+        </mat-cell>
+      </ng-container>
+
+
+      <!-- FILTER CELLS -->
+      <ng-container
+        *ngFor="let column of displayedColumns"
+        [matColumnDef]="'filter-' + column.field">
+        <!-- FILTER HEADER DISPLAY -->
+        <mat-header-cell
+          *matHeaderCellDef
+          class="table-primary-bg text-white"
+          [ngClass]="option.headerClass">
+          <search-by-column
+            *ngIf="column.field !== 'action'"
+            [(columnName)]="search[column.field]"
+            (columnNameChange)="applyFilter({columnName: column.field, filterValue: search[column.field]})">
+          </search-by-column>
+        </mat-header-cell>
+      </ng-container>
+
+      <!-- SHOW HEADER ROW COLUMNS -->
+      <mat-header-row *matHeaderRowDef="displayedColumnsDefinition"></mat-header-row>
+      <!-- SHOW HEADER FILTER ROW COLUMNS -->
+      <mat-header-row
+        *matHeaderRowDef="filterDefinition"
+        class="filter-row"
+        [hidden]="!displaySearch">
+      </mat-header-row>
+      <!-- SHOW ROW -->
+      <mat-row
+        *matRowDef="let row; columns: displayedColumnsDefinition;"
+        [ngClass]="option.enableRowClass(row) ? option.rowClass: ''">
+      </mat-row>
+    </mat-table>
+
+    <!-- PAGINATOR -->
+    <mat-paginator
+      [length]="dataSource.data.length"
+      [pageSize]="10"
+      [pageSizeOptions]="[10, 20, 50]"
+      [showFirstLastButtons]="true">
+    </mat-paginator>
+
+    <!-- MENU TO DISPLAY COLUMNS -->
+    <div class="action-table" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
+      <!-- !TODO! Open modal for add data -->
+      <!--     <button *ngFor="let opt of option.globalActionsOption" mat-mini-fab color="primary" (click)="exec(opt)"
+            class="cursor" matTooltip="{{ opt.label | translate }}" matTooltipPosition="above">
+            <mat-icon>{{opt.icon}}</mat-icon>
+          </button>  -->
+      <!-- Icon for display table menu which allow to hidden/hide columns -->
+      <button
+        mat-mini-fab
+        color="primary"
+        [matMenuTriggerFor]="tableMenu"
+        hide-options-menu="hideOptionsMenu()">
+        <mat-icon
+          matTooltip="{{'DISPLAY_MENU' | translate}}"
+          matTooltipPosition="above">list
+        </mat-icon>
+      </button>
+    </div>
+  </div>
+
+
+  <mat-menu #tableMenu="matMenu">
+    <h3
+      mat-subheader
+      (click)="$event.stopPropagation();">
+      {{ 'SELECT_COLUMN' | translate }}
+    </h3>
+    <mat-selection-list (click)="$event.stopPropagation();">
+      <mat-list-option
+        *ngFor="let column of columns"
+        [selected]="displayedColumns.indexOf(column) > -1"
+        (click)="hideColumn(column.field)"
+        color="primary">
+        {{ column.label | translate }} </mat-list-option>
+    </mat-selection-list>
+  </mat-menu>
+</div>

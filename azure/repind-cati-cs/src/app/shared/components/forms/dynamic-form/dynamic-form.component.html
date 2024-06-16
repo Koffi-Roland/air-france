@@ -1,0 +1,9 @@
+<form class="dynamic-form" [formGroup]="form">
+  <ng-container *ngFor="let field of fields" appDynamicField [field]="field" [group]="form">
+
+  </ng-container>
+  <ng-container *ngFor="let validation of globalValidators;" ngProjectAs="mat-error">
+    <mat-error *ngIf="form.hasError(validation.name)">{{ validation.message | translate }}
+    </mat-error>
+  </ng-container>
+</form>

@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: provide-identification-data
+spec:
+  template:
+    spec:
+      imagePullSecrets:
+        - name: p-repind-registry-prd
+      containers:
+        - name: provide-identification-data
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "512Mi"
+            limits:
+              cpu: "800m"
+              memory: "800Mi"
+          env:
+            - name: SPRING_PROFILES
+              value: "prd"
+            - name: REPIND_TOPIC
+              value: "P.log-APP.REPIND.001"
+            - name: REPIND_BOOTSTRAP_SERVERS
+              value: "qvipclogkb01.france.airfrance.fr:6668,qvipclogkb02.france.airfrance.fr:6668,qvipclogkb03.france.airfrance.fr:6668,qvipclogkb04.france.airfrance.fr:6668"
+            - name: KERBEROS_JVM_OPTS
+              value: "-Djava.security.krb5.kdc=qvipbkrbrs01.france.airfrance.fr -Djava.security.krb5.realm=PRD.FRANCE.AIRFRANCE.FR -Djava.security.auth.login.config=/etc/kafka/client_jaas_repind.conf -Djava.sun.security.krb5.debug=true -Dzookeeper.sasl.client=false"

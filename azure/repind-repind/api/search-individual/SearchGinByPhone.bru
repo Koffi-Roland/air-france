@@ -1,0 +1,24 @@
+meta {
+  name: SearchGinByPhone
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{search-individual-url}}/v2/search-individual?internationalPhoneNumber=%2B33155605945&merge=true
+  body: none
+  auth: none
+}
+
+query {
+  internationalPhoneNumber: %2B33155605945
+  merge: true
+}
+
+vars:pre-request {
+  MS: search-individual
+}
+
+assert {
+  res.status: eq 200
+}

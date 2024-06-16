@@ -1,0 +1,7 @@
+<FileListToCopyInTheHibernateConfigFile>
+    <class>com.afklm.repindpp.paymentpreference.entity.Fields</class>
+    <class>com.afklm.repindpp.paymentpreference.entity.PaymentDetails</class>
+    <class>com.afklm.repindpp.paymentpreference.entity.VariablesPP</class>
+
+</FileListToCopyInTheHibernateConfigFile>
+

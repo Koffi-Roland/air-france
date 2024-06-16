@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- AIR FRANCE -->
+
+
+<!-- Les chaines en MAJUSCULES sont fixees par programme -->
+<!-- Les tags ne peuvent etre utilises comme id -->
+<!DOCTYPE AdhesionConfiguration PUBLIC "-//Air France Software,Inc.//DTD Adhesion Configuration 2.0//EN" "adhesion_config.dtd" >
+		  
+
+<!-- modeSysteme indique  l'environnement des services : "R" pour recette,"R" pour test et "P" pour production --> 
+<!-- modeApplication  "S" pour les stub NT et "S" pour les stub unix -->
+
+<!-- si un service n'est pas dans la section Service, son environnement sera "environnementDefaut" -->
+
+<!-- ENV-SERVICES-DEFAULT -->
+<AdhesionConfiguration id="WebRequisition" desc="Configuration des appels de service Adhesion" version="0.1" date="12/01/2001" callingApplication="WIN" modeSystemeDefaut="R" modeApplicationDefaut="S" domaineDefaut="" freshnessDefaut="9">
+<!-- ENV-SERVICES-S09424 -->
+<Service id="S09424" classImpl="com.airfrance.adhesion.S09424.S09424" domaine="" modeApplication="S" modeSysteme="R" />
+</AdhesionConfiguration>

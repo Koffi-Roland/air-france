@@ -1,0 +1,32 @@
+
+#include ./makefileHeaderOutils
+include ./makefileHeaderOutils
+
+# for dynamic SQL Module
+override SRCDIR=PROC++/proc
+
+# temporary
+override LD=$(CC)
+
+USE_ORA=1
+
+#APPL=PROC++$(ORACLE_VERS)$(VERSION)_S8$(PATCH)$(PAR)
+APPL=PROC++$(ORACLE_VERS)_$(VERSION)$(PATCH)$(PAR)
+$(info APPL is $(APPL))
+APP_PROCFLAGS+= dbms=v7 HOLD_CURSOR=YES RELEASE_CURSOR=NO MAXOPENCURSORS=200
+
+
+LIBOBJS=\
+	$(OBJDIR)/interfaceOracle$(ORACLE_VERS)$(PAR).o \
+	$(OBJDIR)/WrapperData$(ORACLE_VERS)$(PAR).o \
+	$(OBJDIR)/dynamicsql.o \
+
+OBJS=  \
+	$(OBJDIR)/WrapperReadTestData$(PAR).o\
+	$(OBJDIR)/WrapperTestData$(PAR).o\
+	$(OBJDIR)/mainTest$(PAR).o\
+	$(LIBOBJS)
+
+include $(ROOT_MAKEFILE_NOYAU)/Makefile.noyau
+
+include ./outils.rules

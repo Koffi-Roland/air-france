@@ -1,0 +1,121 @@
+<mat-toolbar color='primary'>
+  <app-dialog-toolbar title="IDENTIFICATION"></app-dialog-toolbar>
+</mat-toolbar>
+
+<div *ngIf="individual">
+  <mat-tab-group>
+    <mat-tab label="{{ 'IDENTIFICATION' | translate }}">
+      <!-- Content for identification data -->
+      <div class="tab-content">
+        <span class="mat-body"><b>{{ 'GIN' | translate }}</b>: {{ individual.gin }}</span><br>
+        <span class="mat-body">
+          <b>{{ 'TYPE' | translate }}</b>:
+          <span *ngIf="individual.type">{{individual.type + '-INDIVIDUAL-TYPE' | translate }}</span>
+        </span><br>
+        <span class="mat-body"><b>{{ 'STATUS' | translate }}</b>:
+          <span *ngIf="individual.status">{{ common.getTransformEnumType(common.referenceDataType.INDIVIDUAL_STATUS) +
+            individual.status | translate }}</span>
+        </span><br>
+        <span class="mat-body"><b>{{ 'LAST-NAME' | translate }}</b>: {{ individual.lastname }}</span><br>
+        <span class="mat-body"><b>{{ 'FIRST-NAME' | translate }}</b>: {{ individual.firstname }}</span><br>
+        <span class="mat-body"><b>{{ 'ALIAS-LAST-NAME' | translate }}</b>: {{ individual.lastNameAlias }}</span><br>
+        <span class="mat-body"><b>{{ 'MIDDLE-NAME' | translate }}</b>: {{ individual.secondFirstName }}</span><br>
+        <span class="mat-body">
+          <b>{{ 'GENDER' | translate }}</b>:
+          {{ common.getTransformEnumType(common.referenceDataType.GENDER) + individual.sexe | translate }}
+        </span><br>
+        <span class="mat-body">
+          <b>{{ 'CIVILITY' | translate }}</b>:
+          <span *ngIf="individual.civility"> {{ common.getTransformEnumType(common.referenceDataType.CIVILITY) +
+            individual.civility | translate }}</span>
+        </span><br>
+        <span class="mat-body"><b>{{ 'TITLE' | translate }}</b>:
+          <span *ngIf="individual.title">{{ common.getTransformEnumType(common.referenceDataType.TITLES) +
+            individual.title | translate }}</span>
+        </span><br>
+        <span class="mat-body"><b>{{ 'ALIAS-FIRST-NAME' | translate }}</b>:{{ individual.firstNameAlias }}</span><br>
+        <span class="mat-body"><b>{{ 'BIRTH-DATE' | translate }}</b>: {{ individual.birthdate | localizedDate :
+          'mediumDate' }}</span><br>
+      </div>
+    </mat-tab>
+    <mat-tab label="{{ 'PROFILE' | translate }}">
+      <!-- Content for profile data -->
+      <div class="tab-content">
+        <span class="mat-body">
+          <b>{{ 'MAILING' | translate }}</b>:
+          <span *ngIf="individual.profile.mailing">
+            {{ common.getTransformEnumType(common.referenceDataType.NAT) + individual.profile.mailing | translate }}
+          </span>
+        </span><br>
+        <span class="mat-body">
+          <b>{{ 'BRANCH' | translate }}</b>:
+          <span *ngIf="individual.profile.branch">{{ common.getTransformEnumType(common.referenceDataType.BRANCHES) +
+            individual.profile.branch | translate }}</span>
+        </span><br>
+        <span class="mat-body">
+          <b>{{ 'MOTHER-LANGUAGE' | translate }}</b>:
+          <span *ngIf="individual.profile.communicationLanguage">
+            {{ common.getTransformEnumType(common.referenceDataType.LANGUAGES) +
+            individual.profile.communicationLanguage | translate }}
+          </span>
+        </span><br>
+      </div>
+    </mat-tab>
+    <mat-tab label="{{ 'MANAGEMENT-DATA' | translate }}">
+      <!-- Content for management data -->
+      <div class="tab-content">
+        <span class="mat-h3">{{ 'HISTORY' | translate }}</span><br>
+        <div>
+          <span class="mat-body"><b>{{ 'LAST-NAME-HISTORY' | translate }}</b>: </span><br>
+          <span class="mat-body"><b>{{ 'FIRST-NAME-HISTORY' | translate }}</b>: </span><br>
+          <span class="mat-body"><b>{{ 'GENDER-HISTORY' | translate }}</b>: </span><br>
+        </div>
+        <span class="mat-h3">{{ 'INDIVIDUALS-MERGE' | translate }}</span><br>
+        <div>
+          <span class="mat-body">
+            <b>{{ 'MERGE-GIN' | translate }}</b>:
+            {{ individual.managementData.mergeGIN }}
+          </span><br>
+          <span class="mat-body">
+            <b>{{ 'MERGE-DATE' | translate }}</b>:
+            {{ individual.managementData.mergeDate | localizedDate }}
+          </span><br>
+        </div>
+        <span class="mat-h3">{{ 'SIGNATURE' | translate }}</span><br>
+        <div>
+          <span class="mat-body"><b>{{ 'CREATED-BY' | translate }}:</b> <br>
+            {{ individual.managementData.signatureCreation.site }} <br>
+            {{ individual.managementData.signatureCreation.signature }}<br>
+            <span *ngIf="individual.managementData.signatureCreation.date">{{
+              individual.managementData.signatureCreation.date | localizedDate }}</span> <br>
+          </span>
+          <br>
+          <span class="mat-body"><b>{{ 'MODIFIED-BY' | translate }}:</b> <br>
+            {{ individual.managementData.signatureModification.site }} <br>
+            {{ individual.managementData.signatureModification.signature }} <br>
+            <span *ngIf="individual.managementData.signatureModification.date">{{
+              individual.managementData.signatureModification.date | localizedDate }}</span> <br>
+          </span>
+          <br>
+          <span class="mat-body"><b>{{ 'JOB-APPLICATION-USAGE' | translate }}</b>: </span><br>
+        </div>
+        <!--Last activity-->
+        <span class="mat-h3">{{ 'LAST-ACTIVITY' | translate }}:</span><br>
+        <div>
+          <span class="mat-body">
+            <b>{{ 'SITE-MODIFICATION' | translate }}</b>:
+            {{ individual.managementData.lastActivity?.siteModification }} <br>
+          </span>
+          <span class="mat-body">
+            <b>{{ 'SOURCE-MODIFICATION' | translate }}</b>:
+            {{ individual.managementData.lastActivity?.sourceModification }} <br>
+          </span>
+          <span  class="mat-body">
+            <b>{{ 'DATE-MODIFICATION' | translate }}</b>:
+            {{individual.managementData.lastActivity?.dateModification | localizedDate }} <br>
+          </span><br>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

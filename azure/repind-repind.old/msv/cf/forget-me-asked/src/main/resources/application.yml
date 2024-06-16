@@ -1,0 +1,6 @@
+server:
+  servlet:
+    context-path: '/api-mgr'
+spring:
+  profiles:
+    active: local

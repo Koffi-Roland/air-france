@@ -1,0 +1,47 @@
+<mat-card>
+  <div class="card-header bg-primary-500 text-white">
+    <mat-chip-list class="status-chip-list">
+      <mat-chip class="status-chip daisy-bg-on-warn-lighter" disabled>
+        <span
+          matTooltip="{{ common.getTransformEnumType(common.referenceDataType.INDIVIDUAL_STATUS) + individual.status | translate }}">
+          {{ individual.status }}</span>
+      </mat-chip>
+    </mat-chip-list>
+    <span class="mat-title"
+      matTooltip="{{ individual.civility | translate }} {{ individual.lastname }} {{ individual.firstname }}">
+      {{ individual.civility | translate }}
+      <b>{{ individual.lastname }}</b>
+      {{ individual.firstname }}</span>
+    <span class="mat-subheading-2">{{ individual.gin }}</span>
+  </div>
+  <div class="card-content">
+    <div class="card-content-item" *ngIf="individual.birthdate">
+      <mat-icon>cake</mat-icon>
+      <span matTooltip="{{ individual.birthdate | localizedDate : 'mediumDate' }}">{{ individual.birthdate |
+        localizedDate : 'mediumDate' }}</span>
+    </div>
+
+    <div class="card-content-item" *ngIf="individual['ginMerged']">
+      <mat-icon>call_merge</mat-icon>
+      <span>{{ individual.ginMerged }}</span>
+    </div>
+    <div class="card-content-item" *ngIf="individual['dateModification']">
+      <mat-icon>today</mat-icon>
+      <span>{{ individual.dateModification | localizedDate : 'mediumDate' }}</span>
+    </div>
+    <div class="card-content-item" *ngIf="individual['signatureModification']">
+      <mat-icon>gavel</mat-icon>
+      <span>{{ individual.signatureModification }}</span>
+    </div>
+
+    <div class="card-content-item" *ngIf="individual.postalAddress">
+      <mat-icon>home</mat-icon>
+      <span [matTooltip]="individual.postalAddress">{{ individual.postalAddress }}</span>
+    </div>
+  </div>
+  <div class="card-action">
+    <button mat-stroked-button (click)="search()">
+      <span>{{ 'SEE-PROFILE' | translate | uppercase }}</span>
+    </button>
+  </div>
+</mat-card>

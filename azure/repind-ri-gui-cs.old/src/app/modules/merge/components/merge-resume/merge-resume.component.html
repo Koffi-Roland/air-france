@@ -1,0 +1,31 @@
+<h1 mat-dialog-title fxLayoutAlign="center"><b>{{ 'RESUME-MERGE' | translate}}</b></h1>
+<h2 mat-dialog-title fxLayoutAlign="center">{{ 'SUBTITLE-MERGE-MODAL' | translate}}</h2>
+<h3 mat-dialog-title fxLayoutAlign="center" class="text-warn-500
+">
+  <mat-icon>warning</mat-icon> {{ 'SUBTITLE-MERGE-CANT-BE-UNDONE' | translate}}
+</h3>
+<div mat-dialog-content>
+  <div fxLayout="column" fxLayoutGap="20px" *ngIf="result">
+    <div fxLayout="column" fxFlex="1 1 auto" fxLayoutWrap fxLayoutAlign="start" fxLayoutGap="10px">
+      <span fxShow fxShow.gt-sm="false" class="title-individual-target">{{ 'TARGET' | translate}}</span>
+      <app-individual-merge-details-individual [sourceOrTarget]="'target'"
+        [individual]="individualMerge.identification.individual"></app-individual-merge-details-individual>
+    </div>
+
+    <app-merge-group-data [mergeGroupDataConfig]="params.blocsAccountData" [targetData]="individualMerge.accounts">
+    </app-merge-group-data>
+    <app-merge-group-data [mergeGroupDataConfig]="params.blocsTelecom" [targetData]="individualMerge.telecoms">
+    </app-merge-group-data>
+    <app-merge-group-data [mergeGroupDataConfig]="params.blocsEmail" [targetData]="individualMerge.emails">
+    </app-merge-group-data>
+    <app-merge-group-data [mergeGroupDataConfig]="params.blocsAddress" [targetData]="individualMerge.addresses">
+    </app-merge-group-data>
+    <app-merge-group-data [mergeGroupDataConfig]="params.blocsContract" [targetData]="individualMerge.contracts">
+    </app-merge-group-data>
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>{{ 'CANCEL' | translate }}</button>
+  <button mat-raised-button color="primary" type="submit" (click)="onSubmitMerge()">{{ 'CONFIRM-MERGE' | translate
+    }}</button>
+</div>

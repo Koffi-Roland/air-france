@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="dataset.xsd">
+
+	<POC_USER IDUSER="1" LASTNAME="lastName1" FIRSTNAME="firstName1" />
+	<POC_USER IDUSER="2" LASTNAME="lastName2" FIRSTNAME="firstName2"/>
+	<POC_USER IDUSER="3" LASTNAME="lastName3" FIRSTNAME="firstName3"/>
+
+</dataset>

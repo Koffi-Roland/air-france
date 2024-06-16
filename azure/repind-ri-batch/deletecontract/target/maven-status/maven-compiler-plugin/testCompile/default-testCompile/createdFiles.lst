@@ -1,0 +1,3 @@
+com\afklm\batch\deletecontract\processor\DeleteContractsBatchProcessorTest.class
+com\afklm\batch\deletecontract\config\DeleteContractsBatchConfigTest.class
+com\afklm\batch\deletecontract\processor\DeleteBusinessRoleUCCRProcessorTest.class

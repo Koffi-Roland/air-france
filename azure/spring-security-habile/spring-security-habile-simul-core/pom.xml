@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.afklm.springboot.habile</groupId>
+    <artifactId>spring-security-habile-parent</artifactId>
+    <version>5.0.1-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>spring-security-habile-simul-core</artifactId>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-json</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.afklm.soa.stubs</groupId>
+      <artifactId>w000479-v01-jakarta</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.afklm.soa.stubs</groupId>
+      <artifactId>w000479-v02-jakarta</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.metro</groupId>
+      <artifactId>webservices-rt</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- ############################ -->
+    <!--       Test dependencies      -->
+    <!-- ############################ -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>

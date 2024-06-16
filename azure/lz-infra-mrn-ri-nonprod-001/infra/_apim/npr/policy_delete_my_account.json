@@ -1,0 +1,29 @@
+{
+  "extra_vars": {
+    "operation": "add",
+    "inputs": {
+      "security_id": "w04776476",
+      "env": "NPR",
+      "identifier": "R000249",
+      "api_version": "v02",
+      "content_format": "openapi",
+      "content_value": "r000249/r000249-v02.yaml",
+      "backend_urls":
+      [{
+        "env": "ITE",
+        "instance": "main",
+        "url": "https://delete-my-account-rs-ite.azure.airfranceklm.com/api-mgr/delete-my-account/"
+      }, {
+        "env": "ACP",
+        "instance": "main",
+        "url": "https://delete-my-account-rs-acp.azure.airfranceklm.com/api-mgr/delete-my-account/"
+      }, {
+        "env": "CAE",
+        "instance": "main",
+        "url": "https://delete-my-account-rs-cae.azure.airfranceklm.com/api-mgr/delete-my-account/"
+      }
+      ],
+      "policies": {}
+    }
+  }
+}

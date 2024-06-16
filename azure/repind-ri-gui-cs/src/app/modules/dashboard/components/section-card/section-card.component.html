@@ -1,0 +1,21 @@
+<mat-card *ngIf="config" (click)="openDialog()" class="section-individual">
+  <mat-card-header>
+    <div class="left-part">
+      <mat-icon class="main-icon">{{ config.mainIcon }}</mat-icon>
+    </div>
+
+    <div class="middle-part">
+      <span class="mat-title">{{ config.title | translate }}</span>
+      <div>
+        <mat-icon *ngFor="let info of config.additionalInfo" [matTooltip]="info.tooltipText | translate"
+          [matBadge]="info.badgeValue" [matBadgeHidden]="info.badgeValue === 0" matBadgeColor="warn"
+          matBadgeOverlap="false">
+          {{ info.icon }}
+        </mat-icon>
+      </div>
+    </div>
+
+    <div class="color-indicator" [style.background]="config.color">
+    </div>
+  </mat-card-header>
+</mat-card>

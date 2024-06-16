@@ -1,0 +1,19 @@
+meta {
+  name: Health
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{delete-my-account-url}}/infra/healthcheck
+  body: none
+  auth: none
+}
+
+headers {
+  MS: delete-my-account
+}
+
+assert {
+  res.status: eq 200
+}

@@ -1,0 +1,74 @@
+@import '../../../../../../assets/scss/customized-palettes-and-colors.scss';
+
+.preference-data-create {
+  max-height: 25vh;
+  overflow: auto;
+  margin-bottom: 18px;
+}
+
+.preference-data-update {
+  max-height: 40vh;
+  overflow: auto;
+  margin-bottom: 18px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+mat-form-field,
+app-preference-data-form,
+app-preference-data-list {
+  width: 100%;
+}
+
+mat-form-field {
+  margin-top: 12px;
+}
+
+mat-dialog-actions {
+  padding: 0 18px;
+}
+
+app-pref-data-form {
+  width: 50%;
+}
+
+.preference-type-selector {
+  display: flex;
+  flex-direction: row;
+
+  >button {
+    display: flex;
+    justify-content: center;
+    margin: 16px 0 16px 16px;
+  }
+}
+
+.mat-dialog-content {
+  height: 70%;
+  overflow: hidden;
+  margin: 0;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: $custom-grey-lighter;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $custom-grey-dark;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $custom-grey-darker;
+}

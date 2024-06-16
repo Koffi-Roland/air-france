@@ -1,0 +1,25 @@
+# ------------------------------------------------------------------ #
+# SEPT 2002 Anouilh :
+#      migration Solaris 8 / compilo Forte V6.1 / utilisation des template 
+#      de makefile mis en place par DINB /    Lib RW SourceProCore /
+#      suppression du superflu ...
+#      A LIRE:
+#      doc DINB sur template de makefile site intranet DINB 
+# ------------------------------------------------------------------ #
+
+include $(ROOT_MAKEFILE_APPLI)
+
+USE_IO=1
+
+APPL=MISC
+APP_CFLAGS+= -D__USE_MEMMGR__ -DDEBUG
+APP_INCLUDE +=-I$(MEMDIR)/$(INCDIR) -I$(DBGDIR)/$(INCDIR) 
+
+OBJS= \
+	$(OBJDIR)/ToolsDate.o \
+	$(OBJDIR)/Ressource.o \
+	$(OBJDIR)/Test.o \
+
+
+include $(ROOT_MAKEFILE_NOYAU)/Makefile.noyau
+

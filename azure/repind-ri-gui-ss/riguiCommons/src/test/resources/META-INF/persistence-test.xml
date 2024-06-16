@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+                                 http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+	
+	<persistence-unit name="myPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<class>com.afklm.rigui.entity.reference.RefPreferenceDataKey</class>
+		<class>com.afklm.rigui.entity.reference.RefPreferenceType</class>
+		<class>com.afklm.rigui.entity.reference.RefPreferenceKeyType</class>
+    <class>com.afklm.rigui.entity.individu.AccountData</class>
+    <class>com.afklm.rigui.entity.individu.AccountDataRb</class>
+    <class>com.afklm.rigui.entity.reference.Activite</class>
+    <class>com.afklm.rigui.entity.agence.Agence</class>
+	<class>com.afklm.rigui.entity.individu.Alert</class>
+    <class>com.afklm.rigui.entity.individu.AlertData</class>
+    <class>com.afklm.rigui.entity.role.BusinessRole</class>
+    <class>com.afklm.rigui.entity.firme.Chiffre</class>
+    <class>com.afklm.rigui.entity.reference.CodeIndus</class>
+    <class>com.afklm.rigui.entity.individu.CommunicationPreferences</class>
+    <class>com.afklm.rigui.entity.firme.CompagnieAlliee</class>
+    <class>com.afklm.rigui.entity.role.ContratTcSeq</class>
+    <class>com.afklm.rigui.entity.delegation.DelegationData</class>
+    <class>com.afklm.rigui.entity.delegation.DelegationDataInfo</class>
+    <class>com.afklm.rigui.entity.adresse.Email</class>
+    <class>com.afklm.rigui.entity.firme.Entreprise</class>
+    <class>com.afklm.rigui.entity.reference.Error</class>
+    <class>com.afklm.rigui.entity.firme.Etablissement</class>
+    <class>com.afklm.rigui.entity.external.ExternalIdentifier</class>
+    <class>com.afklm.rigui.entity.external.ExternalIdentifierData</class>
+    <class>com.afklm.rigui.entity.firme.Fonction</class>
+    <class>com.afklm.rigui.entity.adresse.FormalizedAdr</class>
+    <class>com.afklm.rigui.entity.firme.GestionPM</class>
+    <class>com.afklm.rigui.entity.firme.Groupe</class>
+    <class>com.afklm.rigui.entity.individu.Individu</class>
+    <class>com.afklm.rigui.entity.zone.IntervalleCodesPostaux</class>
+    <class>com.afklm.rigui.entity.agence.LettreCompte</class>
+    <class>com.afklm.rigui.entity.zone.LienIntCpZd</class>
+    <class>com.afklm.rigui.entity.zone.LienZvZc</class>
+    <class>com.afklm.rigui.entity.individu.MarketLanguage</class>
+    <class>com.afklm.rigui.entity.firme.Membre</class>
+    <class>com.afklm.rigui.entity.agence.MembreReseau</class>
+    <class>com.afklm.rigui.entity.firme.NumeroIdent</class>
+    <class>com.afklm.rigui.entity.agence.OfficeID</class>
+    <class>com.afklm.rigui.entity.reference.Pays</class>
+    <class>com.afklm.rigui.entity.firme.PersonneMorale</class>
+    <class>com.afklm.rigui.entity.zone.PmZone</class>
+    <class>com.afklm.rigui.entity.adresse.PostalAddress</class>
+    <class>com.afklm.rigui.entity.adresse.PostalAddressToNormalize</class>
+    <class>com.afklm.rigui.entity.individu.PrefilledNumbers</class>
+    <class>com.afklm.rigui.entity.individu.PrefilledNumbersData</class>
+    <class>com.afklm.rigui.entity.individu.IndividuLight</class>
+<!--    <class>com.afklm.rigui.entity.inferred.Inferred</class>-->
+<!--    <class>com.afklm.rigui.entity.inferred.InferredData</class>-->
+    <class>com.afklm.rigui.entity.preference.Preference</class>
+    <class>com.afklm.rigui.entity.preference.PreferenceData</class>
+    <class>com.afklm.rigui.entity.profil.ProfilContentieux</class>
+    <class>com.afklm.rigui.entity.profil.ProfilDemarchage</class>
+    <class>com.afklm.rigui.entity.profil.ProfilFirme</class>
+    <class>com.afklm.rigui.entity.profil.ProfilQualitatif</class>
+    <class>com.afklm.rigui.entity.profil.Profil_af</class>
+    <class>com.afklm.rigui.entity.profil.Profil_mere</class>
+    <class>com.afklm.rigui.entity.profil.Profils</class>
+    <class>com.afklm.rigui.entity.reference.RefAlert</class>
+    <class>com.afklm.rigui.entity.reference.RefCodeInvalPhone</class>
+    <class>com.afklm.rigui.entity.reference.RefLanguage</class>
+    <class>com.afklm.rigui.entity.reference.RefProvince</class>
+    <class>com.afklm.rigui.entity.reference.RefTracking</class>
+    <class>com.afklm.rigui.entity.reference.RefVilleIata</class>
+    <class>com.afklm.rigui.entity.reference.RefVillesAnnexes</class>
+    <class>com.afklm.rigui.entity.reference.RefInfrdType</class>
+    <class>com.afklm.rigui.entity.reference.Reseau</class>
+    <class>com.afklm.rigui.entity.role.RoleAgence</class>
+    <class>com.afklm.rigui.entity.role.RoleContrats</class>
+    <class>com.afklm.rigui.entity.role.RoleTravelers</class>
+    <class>com.afklm.rigui.entity.role.RoleFirme</class>
+    <class>com.afklm.rigui.entity.role.RoleRcs</class>
+    <class>com.afklm.rigui.entity.role.RoleUCCR</class>
+    <class>com.afklm.rigui.entity.role.RoleGP</class>
+    <class>com.afklm.rigui.entity.firme.Segmentation</class>
+    <class>com.afklm.rigui.entity.firme.SelfBookingTool</class>
+    <class>com.afklm.rigui.entity.firme.Service</class>
+    <class>com.afklm.rigui.entity.individu.SocialNetworkData</class>
+    <class>com.afklm.rigui.entity.firme.Synonyme</class>
+    <class>com.afklm.rigui.entity.adresse.Telecoms</class>
+    <class>com.afklm.rigui.entity.tracking.Tracking</class>
+    <class>com.afklm.rigui.entity.tracking.TriggerChange</class>
+    <class>com.afklm.rigui.entity.individu.UsageClients</class>
+    <class>com.afklm.rigui.entity.adresse.Usage_medium</class>
+    <class>com.afklm.rigui.entity.environnement.Variables</class>
+    <class>com.afklm.rigui.entity.zone.ZoneComm</class>
+    <class>com.afklm.rigui.entity.zone.ZoneDecoup</class>
+    <class>com.afklm.rigui.entity.zone.ZoneFinanciere</class>
+    <class>com.afklm.rigui.entity.zone.ZoneVente</class>
+    <class>com.afklm.rigui.entity.agence.BspData</class>
+    <class>com.afklm.rigui.entity.agence.BspOtherData</class>
+<!--    <class>com.afklm.sic2.entities.temporary.adresse.EmailTemp</class>-->
+<!--    <class>com.afklm.sic2.entities.temporary.adresse.TelecomsTemp</class>-->
+<!--    <class>com.afklm.sic2.entities.temporary.adresse.PostalAddressTemp</class>-->
+<!--    <class>com.afklm.sic2.entities.temporary.adresse.Usage_mediumTemp</class>-->
+        <class>com.afklm.rigui.entity.adresse.Email</class>
+        <class>com.afklm.rigui.entity.adresse.Telecoms</class>
+        <class>com.afklm.rigui.entity.adresse.PostalAddress</class>
+        <class>com.afklm.rigui.entity.adresse.Usage_medium</class>
+<!--        <class>com.afklm.rigui.entity.reference.RefFctProOwner</class>-->
+        
+<!--        <properties>-->
+<!--            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect"/>-->
+<!--        </properties>-->
+
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+	</persistence-unit>
+	
+	<persistence-unit name="myPersistenceUnit2" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<!-- class>com.airfrance.sicutf8.entity.prospect.ProspectCommunicationPreferences</class>
+    <class>com.airfrance.sicutf8.entity.prospect.ProspectMarketLanguage</class>
+    <class>com.airfrance.sicutf8.entity.prospect.Prospect</class>
+    <class>com.airfrance.sicutf8.entity.prospect.ProspectLocalization</class>
+    <class>com.airfrance.sicutf8.entity.prospect.ProspectTelecoms</class -->
+<!--    <class>com.airfrance.sicutf8.entity.reference.RefErreur</class>-->
+<!--    <class>com.airfrance.sicutf8.entity.reference.RefComPref</class>-->
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+	</persistence-unit>
+	
+</persistence>

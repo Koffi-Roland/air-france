@@ -1,0 +1,22 @@
+.mat-dialog-content {
+  height: 65%;
+  overflow: auto;
+  margin: 0;
+}
+
+app-addr-details-form,
+app-addr-complementary-form,
+app-resource-general-info-form {
+  width: 75%;
+}
+
+app-stepper-controller {
+  width: 100%;
+}
+
+.step-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 16px 12px;
+}

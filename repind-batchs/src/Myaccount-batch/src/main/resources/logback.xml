@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<configuration>
+
+	<property scope="system" name="appName" value="logback.path.applicationName" />
+	
+	<!-- Defintion d'un appender de sortie de type console -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+           <encoder>
+             <pattern>%date %-5level [%thread] %logger{10} [%file:%line] %msg%n
+             </pattern>
+           </encoder>
+	</appender>
+	
+	<!-- Defintion d'un appender de sortie de type fichier -->
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+       	<!-- ENV-LOGAPPLI-DEFAULT -->
+        <file>prod/logs/traces_batch_java/stdout-MyAccountBatch.log</file>
+          
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+		
+			<!-- ENV-LOGAPPLI-FILE -->
+			<fileNamePattern>prod/logs/traces_batch_java/stdout-MyAccountBatch.log.%i</fileNamePattern>
+			<minIndex>1</minIndex>
+			<!-- ENV-LOG-FILENUMBER -->
+      		<maxIndex>5</maxIndex>
+		</rollingPolicy>
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>10MB</maxFileSize>
+		</triggeringPolicy>
+
+		<encoder>
+			<pattern>%date %-5level [%thread] %logger{10} [%file:%line] %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+
+	<!-- kafkaAppender appender -->
+	<appender name="kafkaAppender" class="com.afklm.tecc.como.logback.KafkaAppender">
+		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+			<providers>
+				<timestamp/>
+				<loggerName/>
+				<logLevel/>
+				<threadName/>
+				<mdc/>
+				<pattern>
+					<pattern>
+						{
+						"message": "#tryJson{%message}",
+						"labels":
+						{
+						"shipping_team": "${project.groupId}",
+						"appVersion": "${project.version}",
+						<!-- ENV-ACRONYME -->
+						"environment": "${ENV-ACRONYME}"
+						}
+						}
+					</pattern>
+				</pattern>
+			</providers>
+		</encoder>
+		<!-- ENV-REPIND-TOPIC -->
+		<topic>${ENV-REPIND-TOPIC}</topic>
+		<!-- ENV-REPIND-BOOTSTRAP-SERVERS -->
+		<producerConfig>bootstrap.servers=${ENV-REPIND-BOOTSTRAP-SERVERS}</producerConfig>
+		<producerConfig>client.id=PurgeIndividualDataProducer</producerConfig>
+
+		<Property name="request.timeout.ms">7206000</Property>
+		<Property name="session.timeout.ms">7200000</Property>
+	</appender>
+
+	<logger name="com.airfrance.repind.dao" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="STDOUT" />
+	</logger>
+
+	<logger name="com.airfrance.jraf.batch" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="STDOUT" />
+	</logger>
+
+	<logger name="com.airfrance.sic" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="STDOUT" />
+	</logger>
+
+	<logger name="org.hibernate.engine" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="STDOUT" />
+	</logger>
+	
+	<logger name="org.hibernate.loader.Loader" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="STDOUT" />
+	</logger>
+
+	<logger name="com.airfrance.repind.util.ProcessingMetricLogger" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="STDOUT" />
+		  		<appender-ref ref="kafkaAppender" />
+          	</logger>
+
+
+   	<!-- ENV-BATCH-LOG-DATA-LEVEL -->
+	<root level="info">
+   	   <appender-ref ref="FILE" />
+   	   <appender-ref ref="STDOUT" />
+	</root>
+	
+</configuration>

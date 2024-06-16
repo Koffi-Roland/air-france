@@ -1,0 +1,3 @@
+Personnal identifier (FB number or connexion email);Account code type ;Account code (CA ID);Label;End of accreditation date;contract type (CC or BB) ;contract Ref (ID);Commentaires
+xin.dai@web.de;AC;568923;La vie en rose3;25/06/2016;BB;3G4E25
+sebastien.dan@francetelecom.com;AC;568923;La vie en rose5;25/06/2016;BB;3G4E25

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Uploaded in SOA repository on 2014-06-27 09:33:34.481--><!--SOA repository reference: W001165-v1.0.0--><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.af-klm.com/services/common/AlteaConversation-v1/xsd" elementFormDefault="qualified" targetNamespace="http://www.af-klm.com/services/common/AlteaConversation-v1/xsd">
+   <xsd:element name="Conversation" type="tns:Conversation"/>
+   <xsd:complexType name="Conversation">
+   		<xsd:annotation>
+<xsd:documentation>
+The behaviour related to the conversation of the service depends on the values of "SessionID" and "Conversation required" in the request:
+"SessionID" 	"Conversation required" 	Behaviour for provider side adapter
+  Empty	        Start							Creates a conversation or reuses a conversation, returns a Conversation ID, calls the service.
+  Empty         Stop							Will return a SOAP Fault: "Conversation stop required but no Conversation ID provided"
+  Empty         None              Default for the service. No conversation is required.
+  Filled        Start             Will return a SOAP Fault: "Conversation must be started with an empty Conversation ID"
+  Filled        Stop              Clears the conversation on provider, the Conversation ID is returned to the 'pool'; errors can be SOAP Fault: "This conversation is not active" or "Trying to stop a conversation not belonging to you".
+  Filled        Continue	        Calls the service; errors can be SOAP Fault: "This conversation is not active" or "Trying to use a conversation not belonging to you"
+  Filled        None              Will return a SOAP Fault: "Action is not compatible with conversation"
+</xsd:documentation>
+   		</xsd:annotation>
+			<xsd:sequence>
+				<xsd:element minOccurs="0" name="Id" type="xsd:string"/>
+				<xsd:element name="ConversationRequired">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:enumeration value="None"/>
+							<xsd:enumeration value="Start"/>
+							<xsd:enumeration value="Continue"/>
+							<xsd:enumeration value="Stop"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+			</xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

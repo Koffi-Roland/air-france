@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<display-name>catiApi</display-name>
+	
+	<context-param>
+		<param-name>contextClass</param-name>
+		<param-value>
+          org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+      </param-value>
+	</context-param>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>com.afklm.cati.common.spring.configuration.BaseConfiguration</param-value>
+	</context-param>
+
+    <!-- Filter to secure Jersey (JAX-RS) services -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<!-- https://confluence.eden.klm.com/display/DINB/How+to+make+a+project+with+separated+Back+end+and+Front+end+work -->
+	<filter>
+		<filter-name>CorsFilter</filter-name>
+		<filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+		<init-param>
+			<param-name>cors.allowed.origins</param-name>
+			<!--ENV-APP-URL-->
+			<param-value>*</param-value>
+		</init-param>
+		<init-param>
+			<param-name>cors.allowed.methods</param-name>
+			<param-value>GET,POST,HEAD,OPTIONS,PUT,DELETE,PATCH</param-value>
+		</init-param>
+		<init-param>
+	        <param-name>cors.allowed.headers</param-name>
+	        <!-- * for all http headers, plus custom headers -->
+	        <param-value>*,Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization</param-value>
+	    </init-param>
+	    <init-param>
+	        <param-name>cors.exposed.headers</param-name>
+	        <param-value>Access-Control-Allow-Origin,Access-Control-Allow-Credentials</param-value>
+	    </init-param>
+	    <init-param>
+	        <param-name>cors.support.credentials</param-name>
+	        <param-value>false</param-value>
+	    </init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CorsFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<!-- Spring Configuration by annotation. -->
+	<servlet>
+	   <servlet-name>mvc-dispatcher</servlet-name>
+	   <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextClass</param-name>
+			<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+		</init-param>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>com.afklm.cati.common.spring.rest.configuration.SpringRestConfiguration</param-value>
+		</init-param>
+	   <load-on-startup>1</load-on-startup>
+	 </servlet>
+ 
+	 <servlet-mapping>
+	   <servlet-name>mvc-dispatcher</servlet-name>
+	   <url-pattern>/api/rest/resources/*</url-pattern>
+	 </servlet-mapping>
+	<!-- URL process is use only for business processes
+	 <servlet-mapping>
+	   <servlet-name>mvc-dispatcher</servlet-name>
+	   <url-pattern>/api/rest/process/*</url-pattern>
+	 </servlet-mapping>
+	 -->
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	<resource-ref id="ResourceRef_1463281604710">
+		<description> </description>
+		<res-ref-name>jdbc/repind</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>	
+</web-app>
+

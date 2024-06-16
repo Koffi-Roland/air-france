@@ -1,0 +1,14 @@
+<mat-list>
+  <mat-list-item *ngFor="let data of preference.preferenceData; last as last">
+    <h4 matLine>{{ (currentLocal === 'fr') ? data.refData.labelFR : data.refData.labelEN }}</h4>
+    <p *ngIf="data.value" matLine>{{ data.value }}</p>
+    <p *ngIf="!data.value" matLine class="deleted-pref-data-msg">{{ 'PREFERENCE-DATA-DELETED' | translate }}</p>
+    <button mat-icon-button (click)="update(data)">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button (click)="delete(data)" [disabled]="!data.value">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+  </mat-list-item>
+</mat-list>

@@ -1,0 +1,19 @@
+meta {
+  name: Retrieve
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{forget-me-asked-url}}/forget-me-asked/
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  MS: forget-me-asked
+}
+
+assert {
+  res.status: eq 200
+}

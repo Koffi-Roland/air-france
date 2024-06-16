@@ -1,0 +1,23 @@
+bases:
+  - ../base
+
+resources:
+  - ingress.yaml
+
+nameSuffix: -cae
+
+namespace: repind-cae
+
+commonLabels:
+  app.kubernetes.io/name: delete-my-account
+  app.kubernetes.io/instance: delete-my-account-cae
+
+images:
+  - name: harbor-vlb.af-klm.com/cdm/delete-my-account
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+patchesStrategicMerge:
+  - replica-extra-options.yaml
+  - deploy-profile.yaml

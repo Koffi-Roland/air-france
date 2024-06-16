@@ -1,0 +1,7 @@
+
+$(OBJDIR)/%$(PAR).o:src/%.C				;$(CC_DINB) -c $< -o $@
+$(OBJDIR)/%$(PAR).o:DEBUG/src/%.C			;$(CC_DINB) -c $< -o $@
+$(OBJDIR)/%$(PAR).o:EXCEPTION/src/%.C			;$(CC_DINB) -c $< -o $@
+$(OBJDIR)/%$(MEM)$(PAR).o:MEMORY/src/%.C		;$(CC_DINB) -c $< -o $@
+$(OBJDIR)/%$(PAR).o:MISC/src/%.C			;$(CC_DINB) -c $< -o $@
+$(OBJDIR)/%$(ORACLE_VERS)$(PAR).o:PROC++/src/%.C	;$(CC_DINB) -c $< -o $@

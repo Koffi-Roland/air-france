@@ -1,0 +1,11 @@
+<div class="snackbar-content">
+  <p>
+    {{ errorMsg | translate }}
+  </p>
+  <span class="fill-remaining-space"></span>
+
+  <div class="copy">
+    <mat-icon ngxClipboard [cbContent]="errorMsg" (cbOnSuccess)="close()"
+      matTooltip="{{ 'COPY-CLIPBOARD' | translate }}" matTooltipPosition="after">filter_none</mat-icon>
+  </div>
+</div>

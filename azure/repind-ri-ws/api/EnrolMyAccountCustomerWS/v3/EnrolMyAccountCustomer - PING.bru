@@ -1,0 +1,46 @@
+meta {
+  name: EnrolMyAccountCustomer - PING
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{enrol-my-account-customer-v3-url}}
+  body: xml
+  auth: none
+}
+
+headers {
+  SOAPAction: "http://www.af-klm.com/services/passenger/EnrollMyAccountCustomerService-v3/enrollMyAccountCustomer"
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.af-klm.com/services/passenger/data-v3/xsd">
+     <soapenv:Body>
+        <xsd:EnrollMyAccountCustomerRequestElement>
+           <civility>MR</civility>             
+           <firstName>TOTOPASLAUN</firstName>             
+           <lastName>TESTLOHA</lastName>             
+           <emailIdentifier>testloha6@fakeemail.com</emailIdentifier>     
+           <password>JesuisAMO123</password>             
+           <languageCode>ZH</languageCode>             
+           <website>BB</website>             
+           <pointOfSale>FR</pointOfSale>             
+           <requestor>                    
+              <channel>B2C</channel>                    
+              <site>QVI</site>                    
+              <signature>REGRESSION</signature>             
+           </requestor>    
+        </xsd:EnrollMyAccountCustomerRequestElement>
+     </soapenv:Body>
+  </soapenv:Envelope>
+}
+
+vars:pre-request {
+  USER: W90000431
+  PASSWORD: pswpsw123
+}
+
+assert {
+  res.body: contains ACCOUNT ALREADY EXIST
+}

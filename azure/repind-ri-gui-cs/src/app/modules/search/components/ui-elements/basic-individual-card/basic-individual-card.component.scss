@@ -1,0 +1,72 @@
+mat-card {
+  padding: 0;
+}
+
+.mat-title {
+  width: 75%;
+}
+
+.mat-title,
+.mat-subheading-2 {
+  margin: 0;
+  text-align: center;
+}
+
+.card-header {
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.status-chip-list {
+  position: absolute;
+  left: 0.25vw;
+  top: 0.5vh;
+}
+
+.status-chip {
+  border: solid;
+  border-width: 1.25px;
+  border-radius: 5px;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 12px;
+  min-height: 76px;
+}
+
+span {
+  margin: 12px 0;
+  text-align: center;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.card-content-item {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  >mat-icon {
+    font-size: 32px;
+  }
+}
+
+.card-action {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+button {
+  width: 75%;
+}
+

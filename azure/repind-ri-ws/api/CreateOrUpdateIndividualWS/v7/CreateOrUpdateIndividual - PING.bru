@@ -1,0 +1,55 @@
+meta {
+  name: CreateOrUpdateIndividual - PING
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{create-or-update-individual-v7-url}}
+  body: xml
+  auth: none
+}
+
+headers {
+  SOAPAction: "http://www.af-klm.com/services/passenger/CreateUpdateIndividualService-v7/createIndividual"
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.af-klm.com/services/passenger/data-v7/xsd">
+  <soapenv:Body>
+      <xsd:CreateUpdateIndividualRequestElement>
+          <requestor>
+              <channel>DS</channel>
+              <site>QVI</site>
+              <signature>REGRESSION</signature>
+          </requestor>
+          <individualRequest>
+                      <individualInformations>
+                      <gender>F</gender>
+                      <birthDate>1971-01-01T00:00:00Z</birthDate>
+                      <nationality>US</nationality>
+                      <status>V</status>
+                      <civility>MS</civility>
+                      <lastNamePseudonym>GAGA{{randomString}}</lastNamePseudonym>
+                      <firstNamePseudonym>LADY{{randomString}}</firstNamePseudonym>
+                      <lastNameSC>Germanotta{{randomString}}</lastNameSC>
+                      <firstNameSC>Stefan{{randomString}}</firstNameSC>
+                      <languageCode>EN</languageCode>
+                  </individualInformations>
+          </individualRequest>
+      </xsd:CreateUpdateIndividualRequestElement>
+  </soapenv:Body>
+  </soapenv:Envelope>
+}
+
+vars:pre-request {
+  USER: w21375138
+  PASSWORD: pswpsw123
+  TRACKER: true
+  USER_TRACKER: w21375138
+  LOCATION: QVI
+}
+
+assert {
+  res.status: eq 200
+}

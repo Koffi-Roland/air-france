@@ -1,0 +1,23 @@
+bases:
+  - ../base
+
+resources:
+  - ingress.yaml
+
+nameSuffix: -acp
+
+namespace: repind-acp
+
+commonLabels:
+  app.kubernetes.io/name: automatic-merge
+  app.kubernetes.io/instance: automatic-merge-acp
+
+images:
+  - name: harbor-vlb.af-klm.com/cdm/automatic-merge
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+patchesStrategicMerge:
+  - replica-rollout.yaml
+  - deploy-profile.yaml

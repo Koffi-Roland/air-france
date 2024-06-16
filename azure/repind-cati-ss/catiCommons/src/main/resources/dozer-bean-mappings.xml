@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+	<mapping map-null="false">
+		<class-a>com.afklm.cati.common.entity.User</class-a>
+		<class-b>com.afklm.cati.common.entity.User</class-b>
+		<field>
+			<a>lastName</a>
+			<b>lastName</b>
+		</field>
+		<field>
+			<a>firstName</a>
+			<b>firstName</b>
+		</field>
+		<field>
+			<a>picture</a>
+			<b>picture</b>
+		</field>
+		<field>
+			<a>mail</a>
+			<b>mail</b>
+		</field>
+	</mapping>
+</mappings> 

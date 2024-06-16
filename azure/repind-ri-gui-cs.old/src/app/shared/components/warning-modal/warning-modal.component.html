@@ -1,0 +1,11 @@
+<h2 mat-dialog-title><mat-icon *ngIf="this.title.icon">{{this.title.icon}}</mat-icon> {{this.title.text | translate}}</h2>
+<mat-dialog-content class="mat-typography">
+  <p>{{this.body.text | translate}}</p>
+  <form [formGroup]="checkboxValidation" *ngIf="this.checkboxValidation">
+    <mat-checkbox formControlName="enableButton">{{this.body.checkboxValidationText | translate}}</mat-checkbox>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button *ngIf="this.body.buttonCancelRoot" mat-button [routerLink]="this.body.buttonCancelRoot" mat-dialog-close>{{'CANCEL' | translate}}</button>
+  <button mat-raised-button color="primary" mat-dialog-close [disabled]="this.checkboxValidation && !checkboxValidation.value.enableButton">{{'OK' | translate}}</button>
+</mat-dialog-actions>

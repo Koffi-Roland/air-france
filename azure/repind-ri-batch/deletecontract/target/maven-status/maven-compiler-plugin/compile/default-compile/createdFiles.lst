@@ -1,0 +1,11 @@
+com\afklm\batch\deletecontract\model\DeleteContractsOutputModel.class
+com\afklm\batch\deletecontract\writer\DeleteBusinessRoleUCCRWriter.class
+com\afklm\batch\deletecontract\config\DeleteContractsBatchConfig.class
+com\afklm\batch\deletecontract\DeleteContractsBatch.class
+com\afklm\batch\deletecontract\processor\DeleteContractsBatchProcessor.class
+com\afklm\batch\deletecontract\processor\DeleteBusinessRoleUCCRProcessor.class
+com\afklm\batch\deletecontract\writer\DeleteContractsBatchWriter.class
+com\afklm\batch\deletecontract\model\DeleteBusinessRoleUCCROutputModel.class
+com\afklm\batch\deletecontract\mapper\RoleUCCRMapper.class
+com\afklm\batch\deletecontract\service\DeleteContractsBatchService.class
+com\afklm\batch\deletecontract\mapper\RoleContratsMapper.class

@@ -1,0 +1,48 @@
+meta {
+  name: IdentifyCustomerCrossReferential
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{identify-customer-cross-referential-url}}
+  body: xml
+  auth: none
+}
+
+headers {
+  SOAPAction: "http://www.af-klm.com/services/passenger/IdentifyCustomerCrossReferentialService-v1/search"
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.af-klm.com/services/passenger/request-v1/xsd">
+     <soapenv:Body>
+        <xsd:IdentifyCustomerCrossReferentialRequestElement>
+           <provideIdentifier>                                    
+              <customerGin>400287181264</customerGin>                           
+           </provideIdentifier>                           
+           <context>                                    
+              <typeOfSearch>I</typeOfSearch>                                    
+              <responseType>U</responseType>                                    
+              <requestor>                                             
+                 <channel>IVS</channel>                                             
+                 <matricule>6353210</matricule>                                             
+                 <managingCompany>AF</managingCompany>                                             
+                 <applicationCode>DRM</applicationCode>                                             
+                 <site>QVI</site>                                             
+                 <signature>REGRESSION</signature>                                    
+              </requestor>                           
+           </context> 
+        </xsd:IdentifyCustomerCrossReferentialRequestElement>
+     </soapenv:Body>
+  </soapenv:Envelope>
+}
+
+vars:pre-request {
+  USER: W90001345
+  PASSWORD: pswpsw123
+}
+
+assert {
+  res.status: eq 200
+}

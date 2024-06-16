@@ -1,0 +1,14 @@
+{
+	"users": [
+		{
+			"userId": "junit-userId",
+			"password": "junit-password",
+			"firstName": "junit-firstName",
+			"lastName": "junit-lastName",
+			"email": "junit-email",
+			"profiles": [
+				"junit-profile"
+			]
+		}
+	]
+}

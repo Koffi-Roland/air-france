@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">    
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="true">
+
+
+	<!-- Defintion d'un appender de sortie de type console -->
+	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+           <layout class="org.apache.log4j.PatternLayout">
+             <param name="ConversionPattern"
+		    value="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+           </layout>	    
+	</appender>
+
+	<!-- Defintion d'un appender de sortie de type fichier -->
+	<appender name="FILE" class="org.apache.log4j.RollingFileAppender">
+           <!-- ENV-LOGAPPLI -->
+           <param name="File" value="stdout-sic-utf8-commons-test.log"/>
+           <param name="MaxFileSize" value="10MB"/>
+           <param name="MaxBackupIndex" value="7"/>
+           <layout class="org.apache.log4j.PatternLayout">
+             <param name="ConversionPattern"
+		    value="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+           </layout>	    
+	</appender>
+
+
+	<!-- Decommenter pour le composant Welcom
+	
+	Logs de demarrage WELCOM
+	<logger name="Welcom" additivity="false">
+	  <level value="info" />
+	   <appender-ref ref="STDOUT" />
+   	   <appender-ref ref="FILE" />
+	</logger>
+	
+	Autres logs WELCOM
+	<logger name="com.airfrance.welcom" additivity="false">
+	  <level value="info" />
+	   <appender-ref ref="STDOUT" />
+   	   <appender-ref ref="FILE" />
+	</logger>
+	-->
+	
+	<!-- Decommenter pour le filtre habile
+	
+	<logger name="com.airfrance.habile.filter" additivity="false">
+	  <level value="info" />
+	   <appender-ref ref="STDOUT" />
+   	   <appender-ref ref="FILE" />
+	</logger>
+	-->
+	
+	<!-- Decommenter pour JRAF
+	<logger name="com.airfrance.jraf" additivity="false">
+	  <level value="info" />
+	   <appender-ref ref="STDOUT" />
+   	   <appender-ref ref="FILE" />
+	</logger>
+	-->
+	
+	<!-- Decommenter pour Hibernate
+	<logger name="org.hibernate" additivity="false">
+	  <level value="info" />
+	  <appender-ref ref="STDOUT" />
+   	  <appender-ref ref="FILE" />
+	</logger> -->
+	
+	
+	<!-- Decommenter pour Spring
+	<logger name="org.springframework" additivity="false">
+	   <level value="info" />
+	   <appender-ref ref="STDOUT" />
+   	   <appender-ref ref="FILE" />
+	</logger>
+	-->
+	
+	<!-- Decommenter pour JBPM
+	<logger name="org.jbpm" additivity="false">
+	   <level value="info" />
+	   <appender-ref ref="STDOUT" />
+   	   <appender-ref ref="FILE" />
+	</logger>
+	-->
+	
+	<!-- Decommenter pour ActiveMQ
+	<logger name="org.apache.activemq" additivity="false">
+		<level value="info" />
+		<appender-ref ref="STDOUT" />
+	   	<appender-ref ref="FILE" />
+	</logger>
+	-->
+	
+	<!-- Decommenter pour jfreechart
+	<logger name="org.jfree additivity="false">
+		<level value="info" />
+		<appender-ref ref="STDOUT" />
+	   	<appender-ref ref="FILE" />
+	</logger>
+	-->
+	
+	<!-- Decommenter pour jasper reports
+	<logger name="net.sf.jasperreports" additivity="false">
+		<level value="info" />
+		<appender-ref ref="STDOUT" />
+	   	<appender-ref ref="FILE" />
+	</logger>
+	-->
+
+	<logger name="com.airfrance.sic" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
+	
+	<root>
+	   <priority value ="ERROR" />
+	   <appender-ref ref="STDOUT" />
+   	   <appender-ref ref="FILE" />
+	</root>
+
+</log4j:configuration>

@@ -1,0 +1,5 @@
+com\afklm\batch\addnewklcompref\reader\NewKlComPrefReader.class
+com\afklm\batch\addnewklcompref\processor\NewKlComPrefProcessor.class
+com\afklm\batch\addnewklcompref\BatchAddNewKlComPref.class
+com\afklm\batch\addnewklcompref\config\AddNewKlComPrefConfig.class
+com\afklm\batch\addnewklcompref\writer\NewKLComPrefOutputWriter.class

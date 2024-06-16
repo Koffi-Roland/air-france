@@ -1,0 +1,6 @@
+<div class="content">
+  <mat-list>
+    <app-search-results-item *ngFor="let individual of individuals; last as last" [individual]="individual"
+      [last]="last"></app-search-results-item>
+  </mat-list>
+</div>

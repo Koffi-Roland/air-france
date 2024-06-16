@@ -1,0 +1,23 @@
+bases:
+  - ../base
+
+resources:
+  - ingress.yaml
+
+nameSuffix: -prd
+
+namespace: repind-prd
+
+commonLabels:
+  app.kubernetes.io/name: forget-me-asked
+  app.kubernetes.io/instance: forget-me-asked-prd
+
+images:
+  - name: harbor-vlb.af-klm.com/cdm/forget-me-asked
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+patchesStrategicMerge:
+  - replica-rollout.yaml
+  - deploy-profile.yaml

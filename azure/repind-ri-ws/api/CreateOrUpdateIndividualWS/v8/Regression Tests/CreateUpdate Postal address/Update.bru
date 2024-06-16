@@ -1,0 +1,71 @@
+meta {
+  name: Update
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{create-or-update-individual-v8-url}}
+  body: xml
+  auth: none
+}
+
+headers {
+  SOAPAction: "http://www.af-klm.com/services/passenger/CreateUpdateIndividualService-v8/createIndividual"
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+      <soapenv:Body>
+          <ns2:CreateUpdateIndividualRequestElement xmlns:ns6="http://www.af-klm.com/services/passenger/SicCommonType-v1/xsd"
+              xmlns:ns5="http://www.af-klm.com/services/passenger/request-v8/xsd"
+              xmlns:ns8="http://www.af-klm.com/services/passenger/SicOsirisType-v1/xsd"
+              xmlns:ns7="http://www.af-klm.com/services/passenger/SoftComputingType-v1/xsd"
+              xmlns:ns2="http://www.af-klm.com/services/passenger/data-v8/xsd"
+              xmlns:ns4="http://www.af-klm.com/services/passenger/response-v8/xsd"
+              xmlns:ns3="http://www.af-klm.com/services/passenger/SicIndividuType-v3/xsd">
+              <requestor>
+                  <channel>B2C</channel>
+                  <applicationCode>ISI</applicationCode>
+                  <site>QVI</site>
+                  <signature>REGRESSION</signature>
+              </requestor>
+              <postalAddressRequest>
+                  <postalAddressProperties>
+                      <mediumCode>D</mediumCode>
+                      <mediumStatus>V</mediumStatus>
+                  </postalAddressProperties>
+                  <postalAddressContent>
+                      <numberAndStreet>22 RUE ANDRE PONTIER</numberAndStreet>
+                      <city>NOGENT</city>
+                      <zipCode>94130</zipCode>
+                      <countryCode>FR</countryCode>
+                  </postalAddressContent>
+                  <usageAddress>
+                      <applicationCode>ISI</applicationCode>
+                      <usageNumber>01</usageNumber>
+                      <addressRoleCode>M</addressRoleCode>
+                  </usageAddress>
+              </postalAddressRequest>
+              <individualRequest>
+                  <individualInformations>
+                      <identifier>{{gin_create}}</identifier>
+                  </individualInformations>
+              </individualRequest>
+          </ns2:CreateUpdateIndividualRequestElement>
+      </soapenv:Body>
+  </soapenv:Envelope>
+}
+
+vars:pre-request {
+  USER: W90000442
+  PASSWORD: pswpsw123
+}
+
+vars:post-response {
+  gin_create: null
+}
+
+assert {
+  res.status: eq 200
+}

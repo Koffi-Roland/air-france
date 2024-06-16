@@ -1,0 +1,25 @@
+meta {
+  name: SearchGinByFnLn
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{search-individual-url}}/v2/search-individual?firstname=John&lastname=Smith&merge=true
+  body: none
+  auth: none
+}
+
+query {
+  firstname: John
+  lastname: Smith
+  merge: true
+}
+
+vars:pre-request {
+  MS: search-individual
+}
+
+assert {
+  res.status: eq 200
+}

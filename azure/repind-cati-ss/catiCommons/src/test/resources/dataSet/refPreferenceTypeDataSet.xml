@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="dataset.xsd">
+
+	<REF_PREFERENCE_TYPE SCODE="GPC"
+		SLIBELLE_FR="Les Preferences cadeaux" SLIBELLE_EN="Gifts preferences" />
+	<REF_PREFERENCE_TYPE SCODE="ECC"
+		SLIBELLE_FR="Contact d urgence" SLIBELLE_EN="Emergency contact" />
+	<REF_PREFERENCE_TYPE SCODE="TDC"
+		SLIBELLE_FR="Document de voyage" SLIBELLE_EN="Travel document" />
+	<REF_PREFERENCE_TYPE SCODE="TPC"
+		SLIBELLE_FR="Preference de voyage" SLIBELLE_EN="Travel preference" />
+
+</dataset>

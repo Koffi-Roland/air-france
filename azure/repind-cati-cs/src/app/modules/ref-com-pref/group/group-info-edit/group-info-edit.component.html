@@ -1,0 +1,33 @@
+<h1 mat-dialog-title translate>EDIT-GROUP-PRODUCT</h1>
+<mat-dialog-content class="mat-typography">
+ <form fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px" [formGroup]="groupForm">
+   <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
+  <mat-form-field>
+    <input matInput placeholder="{{'CODE' | translate}}" formControlName="code" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="{{'LIBELLE_EN' | translate}}" formControlName="libelleEN" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="{{'LIBELLE_FR' | translate}}" formControlName="libelleFR">
+  </mat-form-field>
+  </div>
+  <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="25px">
+    <div>
+      <h4 class="mat-h4" translate>MANDATORY-OPTIN</h4>
+      <mat-slide-toggle [checked]="group.mandatoryOption === 'Y'" (change)="setValue($event, 'mandatoryOption')"></mat-slide-toggle>
+    </div>
+    <div>
+        <h4 class="mat-h4" translate>DEFAULT-OPTIN</h4>
+        <mat-slide-toggle [disabled]="group.mandatoryOption === 'Y'" [checked]="group.defaultOption === 'Y'" (change)="setValue($event, 'defaultOption')"></mat-slide-toggle>
+        <h4 class="mat-h4 color-accent" *ngIf="group.mandatoryOption" translate>DEFAULT-FORCED-OPTIN</h4>
+      </div>
+  </div>
+ </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+  <button mat-button mat-dialog-close translate>CANCEL</button>
+  <button mat-button [mat-dialog-close]="true" (click)="submit()" [disabled]="groupForm.invalid" translate>SAVE</button>
+</mat-dialog-actions>
+

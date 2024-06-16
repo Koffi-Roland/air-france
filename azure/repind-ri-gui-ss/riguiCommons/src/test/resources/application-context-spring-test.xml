@@ -1,0 +1,70 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+	http://www.springframework.org/schema/tx  
+ 	http://www.springframework.org/schema/tx/spring-tx-2.5.xsd  
+ 	http://www.springframework.org/schema/context  
+	http://www.springframework.org/schema/context/spring-context-2.5.xsd  
+	http://www.springframework.org/schema/jee  
+ 	http://www.springframework.org/schema/jee/spring-jee-2.5.xsd"> 
+
+	<!-- Enterprise layer's dependencies -->
+<!--	<import resource="classpath:ioc/0-ref-commons-enterpriselayer-dependencies.xml" />-->
+<!--	<import resource="classpath:ioc/0-sic-commons-enterpriselayer-dependencies.xml" />-->
+	<import resource="classpath:ioc/0-sicutf8-commons-enterpriselayer-dependencies.xml" />
+<!-- 	<import resource="classpath:ioc/0-sic-commons-enterpriselayer-dependencies-ss-utf8.xml" /> -->
+
+	<!-- To precise the persistence configuration name file -->
+ 	<bean id="persistenceUnitManager"
+ 		class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
+ 		<property name="persistenceXmlLocations">
+ 			<list>
+ 				<value>META-INF/persistence-test.xml</value>
+ 			</list>
+ 		</property>
+ 	</bean>
+
+	<!-- EntityManagerFactory definition : JPA one -->
+ 	<bean id="myEmf"
+ 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+ 		<property name="persistenceUnitManager"
+ 			ref="persistenceUnitManager" />
+ 		<property name="persistenceUnitName" value="myPersistenceUnit" />
+ 	</bean>
+	
+	<!-- TransactionManager JPA one -->
+ 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+ 		<property name="entityManagerFactory" ref="myEmf" />
+ 	</bean>
+
+	<!-- Jraf adhesion provider -->
+<!--	<bean id="adhesion"-->
+<!-- 		class="com.afklm.jraf.provider.adhesion.AdhesionProviderSpringImpl" init-method="initialize">-->
+<!--	 	<property name="configFile">-->
+<!--		 <value>WEB-INF/adhesion.cfg.xml</value>-->
+<!--	 	</property>	-->
+<!--	</bean>-->
+	
+	<!-- Properties -->
+    <bean id="ppConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreUnresolvablePlaceholders" value="true"/>
+		<property name="locations">
+			<list>
+				<value>WEB-INF/ws.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Enable annotation usage for transaction -->
+<!-- 	<tx:annotation-driven transaction-manager="transactionManager" />-->
+	
+	<!-- Enable the annotation usage (bean injection for instance) -->
+	<context:annotation-config />
+
+	<context:component-scan base-package="com.afklm.rigui.services" />
+</beans>

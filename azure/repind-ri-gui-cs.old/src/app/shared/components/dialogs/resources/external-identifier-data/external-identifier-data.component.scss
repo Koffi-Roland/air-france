@@ -1,0 +1,38 @@
+.empty-space {
+  flex: 1 1 auto;
+}
+
+.mat-headline {
+  margin: 0;
+}
+
+.mat-dialog-content {
+  margin: 12px;
+}
+
+div.ng-star-inserted {
+  margin: 12px;
+  margin-top: 35px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+}
+
+div.left-side,
+div.right-side {
+  margin-right: 3vw;
+  margin-left: 2vw;
+}
+
+div.creation,
+div.modification {
+  margin-left: 12px;
+}
+
+div.modification {
+  margin-top: 10px;
+}
+
+h3 {
+  margin-bottom: 0;
+}

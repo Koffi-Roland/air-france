@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="dataset.xsd">
+
+	<TRACKING_REF_PERMISSIONS TRACKING_ID="100" TABLE_NAME="REF_PERMISSIONS" PERMISSION_ID="103" BEFORE_VALUE="1;2" AFTER_VALUE="1;2;3" ACTION_TYPE="U" SSITE_MODIFICATION="test" SSIGNATURE_MODIFICATION="test" DDATE_MODIFICATION="2017-01-17" />
+
+</dataset>

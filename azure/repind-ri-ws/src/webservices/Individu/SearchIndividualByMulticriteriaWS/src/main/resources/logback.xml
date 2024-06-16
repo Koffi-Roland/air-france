@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	<appender name="kafkaAppender" class="com.afklm.tecc.como.logback.KafkaAppender">
+		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+			<providers>
+				<timestamp/>
+				<loggerName/>
+				<logLevel/>
+				<threadName/>
+				<mdc/>
+				<pattern>
+					<pattern>
+						{
+						"message": "#tryJson{%message}",
+						"labels":
+						{
+						"shipping_team": "${project.groupId}",
+						"appVersion": "${project.version}",
+						"shipping_component": "${project.artifactId}",
+						"stack_trace": "{%ex}",
+						<!-- ENV-ACRONYME -->
+						"environment": "${ENV-ACRONYME}"
+						}
+						}
+					</pattern>
+				</pattern>
+			</providers>
+		</encoder>
+		<!-- ENV-REPIND-TOPIC -->
+		<topic>${ENV-REPIND-TOPIC}</topic>
+		<!-- ENV-REPIND-BOOTSTRAP-SERVERS -->
+		<producerConfig>bootstrap.servers=${ENV-REPIND-BOOTSTRAP-SERVERS}</producerConfig>
+		<producerConfig>request.timeout.ms=5001</producerConfig>
+		<producerConfig>client.id=SearchIndividualByMulticriteriaProducer</producerConfig>
+	</appender>
+
+	<root level="info">
+		<appender-ref ref="STDOUT"/>
+		<appender-ref ref="kafkaAppender"/>
+	</root>
+
+</configuration>

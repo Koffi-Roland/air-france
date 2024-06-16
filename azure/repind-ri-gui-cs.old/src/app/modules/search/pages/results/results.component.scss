@@ -1,0 +1,55 @@
+@import '../../../../../assets/scss/customized-palettes-and-colors.scss';
+
+
+.content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.side-content {
+  width: 25%;
+}
+
+.main-content {
+  width: 70%;
+}
+
+.router-outlet-content {
+  height: 78vh;
+  overflow-y: auto;
+  margin-top: 12px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: $custom-grey-lighter;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $custom-grey-dark;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $custom-grey-darker;
+}
+
+.new-search-btn {
+  width: 100%;
+  margin-bottom: 2vh;
+}
+
+.btn-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+}

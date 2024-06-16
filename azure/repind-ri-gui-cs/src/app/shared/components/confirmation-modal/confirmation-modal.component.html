@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>{{data.title | translate}}</h2>
+<mat-dialog-content>
+    <p>{{data.message | translate}}</p>
+</mat-dialog-content>
+<mat-dialog-actions  align="end">
+  <button mat-button mat-dialog-close >{{ 'N-FORCED' | translate }}</button>
+  <button mat-button mat-dialog-close (click)="confirm()" >{{ 'O-FORCED' | translate }}</button>
+</mat-dialog-actions>

@@ -1,0 +1,23 @@
+<div class="confirmation-content" *ngIf="!normalizationProcessHasFailed">
+  <button class="confirmation-button" mat-raised-button color="primary" (click)="onConfirm()">
+    <span class="mat-title">{{ btnLabel | translate }}</span>
+  </button>
+  <mat-slide-toggle #slideToggle [checked]="isForced">
+    <span class="mat-subheading-2">{{ 'NORMALIZE-ADDRESS' | translate }}</span>
+  </mat-slide-toggle>
+</div>
+
+<div class="normalize-process-failed-section" *ngIf="normalizationProcessHasFailed">
+  <div class="error-message">
+    <mat-icon>warning</mat-icon>
+    <span>{{ 'NORMALIZATION-FAILED-MSG' | translate }}</span>
+  </div>
+  <div class="error-action-buttons">
+    <button mat-button color="warn" (click)="onCheckBtnClicked()">
+      {{ 'CHECK-ADDRESS-DATA' | translate }}
+    </button>
+    <button mat-raised-button color="warn" (click)="onForceBtnClicked()">
+      {{ 'FORCE-UPDATE' | translate }}
+    </button>
+  </div>
+</div>

@@ -1,0 +1,234 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project name="jrafTestBatch" default="hbm2ddl" basedir=".">
+
+
+	<!-- lecture du fichier de properties -->
+	<property file="${basedir}/build.properties" />
+
+	<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+	<!-- Definition des proprietes et des taches ANT utilisees dans ce script -->
+	<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+	<!-- standard -->
+	<property name="generated.dir" value="${basedir}/../generated" />
+	<property name="generated.src.dir" value="${generated.dir}/src" />
+	<property name="generated.mapping.dir" value="${generated.src.dir}/mapping" />
+	<property name="generated.ddl.dir" value="${generated.dir}/ddl" />
+	<property name="generated.doc.dir" value="${generated.dir}/hibernate-html" />
+	<property name="generated.classes.dir" value="${generated.dir}/classes" />
+	<property name="classes.dir" value="${basedir}/../classes" />
+	<property name="bin.dir" value="${basedir}/../bin" />
+	<property name="mapping.full.path" value="${basedir}/mapping/${type.ext}" />
+	<property name="config.full.path" value="${basedir}/config/${type.ext}" />
+	<property name="mapping.short.path" value="/mapping/${type.ext}" />
+	<property name="config.short.path" value="/config/${type.ext}" />
+	<property name="hibernate.config.file" value="hibernate.cfg.xml" />
+	<property name="schema.export.file" value="schema-export-${type.ext}.sql" />
+	<property name="dest.dir" value="${basedir}/../destination" />
+
+
+	<!-- Librairies de l'environnement de test -->
+	<path id="class.path">
+		<fileset dir="${basedir}/../../jraf-test-batch">
+			<include name="**/*.jar" />
+			<include name="*.zip" />
+		</fileset>
+		<pathelement path="${classes.dir}" />
+		<pathelement path="${bin.dir}" />
+		<pathelement path="${generated.classes.dir}" />
+	</path>
+
+
+	<!-- Parametres de compilation -->
+	<property name="javac.debug" value="on" />
+	<property name="javac.optimize" value="off" />
+	<property name="javac.nowarn" value="false" />
+	<property name="javac.verbose" value="false" />
+	<property name="javac.listfiles" value="true" />
+
+
+	<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+	<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+
+	<!-- 
+		construit les binaires des classes metiers si celle-ci n'existe pas
+		on utilise la tache map2java
+	-->
+	<target name="java2class" description="tache de compilation des classes metiers" depends="hbm2java">
+		<available classname="org.eclipse.core.launcher.Main" property="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" classpath="${java.class.path}" />
+
+		<javac srcdir="${generated.src.dir}" destdir="${generated.classes.dir}" debug="${javac.debug}" optimize="${javac.optimize}" nowarn="${javac.nowarn}" verbose="${javac.verbose}" listfiles="${javac.listfiles}">
+			<classpath refid="class.path" />
+		</javac>
+
+	</target>
+
+
+
+	<!-- Reinitialise les repertoires de generation -->
+	<target name="clean" description="suppression du mapping genere" if="" unless="" depends="" id="">
+		<delete dir="${generated.ddl.dir}" />
+		<delete dir="${generated.src.dir}" />
+		<delete dir="${generated.classes.dir}" />
+<!--		<eclipse.refreshLocal resource="${ant.project.name}/generated" depth="infinite" />-->
+	</target>
+
+	<!-- recopie dans le repertoire classes des fichiers de configuration et mapping -->
+	<target name="init" description="Initialisation de l'environnement" depends="clean">
+		<mkdir dir="${generated.classes.dir}" />
+		<mkdir dir="${generated.src.dir}" />
+		<mkdir dir="${generated.ddl.dir}" />
+	</target>
+
+
+
+	<!-- affiche toutes les proprietes -->
+	<target name="echoAll">
+		<echoproperties />
+	</target>
+
+
+	<!-- 
+		Taches de generation hibernate 3 utilisant hibernate-tools
+	-->
+	<taskdef name="hibernatetool" description="Generation des classes java depuis les fichiers hbm" classname="org.hibernate.tool.ant.HibernateToolTask" classpathref="class.path" />
+
+	<!--
+		Construit la ou les classes. Les fichiers sont appliques successivement et non
+		pas comme une liste. 
+	-->
+
+	<target name="hbm2java" description="Generate .java from .hbm files." depends="init">
+		<hibernatetool destdir="${generated.src.dir}">
+			<annotationconfiguration configurationfile="${config.full.path}/${hibernate.config.file}" />
+			<hbm2java />
+		</hibernatetool>
+	</target>
+
+	<!-- construit le mapping dont les fichiers sont precises dans le
+		fichier META-INF/persistence.xml
+	-->
+	<target name="jpa2ddl" depends="init"  description="construire le ddl depuis les fichiers JPA">
+		<hibernatetool destdir="${generated.ddl.dir}">
+			<jpaconfiguration/>
+			<hbm2ddl drop="true" create="true" export="false" update="false" delimiter=";" format="true" outputfilename="${schema.export.file}" />
+		</hibernatetool>
+	</target>
+
+	<!-- construit le mapping dont les fichiers sont precises dans le
+		fichier META-INF/persistence.xml
+	-->
+	<target name="jpa2hbm " depends="init"  description="construire le hbm depuis les fichiers JPA">
+		<hibernatetool  destdir="${generated.src.dir}" >
+			<jpaconfiguration />
+			<hbm2hbmxml   />
+		</hibernatetool>
+	</target>
+
+	<!-- construit le mapping dont les fichiers sont precises dans le
+		fichier hibernate.cfg.xml
+	-->
+	<target name="hbm2ddl" depends="java2class"  description="construire le ddl">
+		<hibernatetool destdir="${generated.ddl.dir}">
+			<configuration configurationfile="${config.full.path}/${hibernate.config.file}" />
+			<hbm2ddl drop="true" create="true" export="false" update="false" delimiter=";" format="true" outputfilename="${schema.export.file}" />
+		</hibernatetool>
+	</target>
+
+	<!-- Supprime la base sur le serveur de donnees -->
+	<target name="schema-drop" depends="" description="Suppression de la base de donnees">
+		<hibernatetool destdir="">
+			<jpaconfiguration />
+			<hbm2ddl drop="true" create="false" export="true" update="false" delimiter=";" format="true" outputfilename="${schema.export.file}" />
+		</hibernatetool>
+	</target>
+
+	<!-- Supprime et Cree la base sur le serveur de donnees -->
+	<target name="schema-recreate" description="Suppression et Creation de la base de donnees" depends="">
+		<hibernatetool destdir="${generated.ddl.dir}">
+			<jpaconfiguration  />
+			<hbm2ddl drop="true" create="true" export="true" update="false" delimiter=";" format="true" outputfilename="${schema.export.file}" />
+		</hibernatetool>
+	</target>
+
+	<!-- Supprime et Cree la base sur le serveur de donnees -->
+	<target name="schema-create" description="Creation de la base de donnees" depends="">
+		<hibernatetool destdir="${generated.ddl.dir}">
+			<annotationconfiguration configurationfile="${config.full.path}/${hibernate.config.file}" />
+			<hbm2ddl drop="false" create="true" export="true" update="false" delimiter=";" format="true" outputfilename="${schema.export.file}" />
+		</hibernatetool>
+	</target>
+
+	<!-- Genere une documentation -->
+	<target name="schema-docu" depends="" description="Genere une description html du mapping">
+		<hibernatetool destdir="${generated.doc.dir}">
+			<annotationconfiguration configurationfile="${config.full.path}/${hibernate.config.file}" />
+			<hbm2doc />
+		</hibernatetool>
+	</target>
+
+
+	<!-- MIDDLEGEN -->
+	<!-- Permet de générer les fichiers hbm à partir de la bd -->
+	<property name="database.url" value="jdbc:oracle:thin:@qvidbdd2:1522:DBFORM" />
+	<property name="database.userid" value="jraf" />
+	<property name="database.password" value="jraf" />
+	<property name="database.schema" value="JRAF" />
+	<property name="database.catalog" value="" />
+	<property name="jdbc.jar" value="" />
+	<property name="database.driver" value="oracle.jdbc.driver.OracleDriver" />
+
+	<property name="package" value="com.airfrance.monpackage" />
+
+	<target name="fail-if-no-hibernate" unless="hibernate">
+		<fail>
+	      Hibernate is not found. Please install Hibernate.
+	      </fail>
+	</target>
+
+	<taskdef name="middlegen" classname="middlegen.MiddlegenTask" classpathref="class.path" />
+	<target name="gen-hbm" depends="init">
+		<middlegen appname="org.ultimania.model" prefsdir="." gui="${gui}" databaseurl="${database.url}" driver="${database.driver}" username="${database.userid}" password="${database.password}" schema="${database.schema}" catalog="${database.catalog}">
+			<hibernate destination="${dest.dir}" package="${package}" genXDocletTags="${gen.xdoclet-tag}" standardCascade="${hibernate.cascade}" javaTypeMapper="middlegen.plugins.hibernate.HibernateJavaTypeMapper" />
+			<table name="MIDDLEGEN_ESCALE" />
+			<table name="MIDDLEGEN_VOL" />
+		</middlegen>
+	</target>
+
+	<!-- Instrumentation du byte code pour la gestion des attributs en lazy -->
+	<target name="instrument">
+		<taskdef name="instrument" classname="org.hibernate.tool.instrument.javassist.InstrumentTask">
+			<classpath path="${java.class.path}" />
+			<classpath path="${classes.dir}" />
+			<classpath refid="class.path" />
+		</taskdef>
+
+		<instrument verbose="true">
+			<fileset dir="${classes.dir}/com/airfrance/monpackage/enterpriselayer/businessobject">
+				<include name="MaClasse.class" />
+			</fileset>
+		</instrument>
+	</target>
+
+	<target name="bd2hbmxml" depends="" description="">
+		<hibernatetool>
+			<jdbcconfiguration configurationfile="${config.full.path}/${hibernate.config.file}" revengfile="hibernate.reveng.xml" />
+
+			<hbm2hbmxml destdir="${dest.dir}" />
+		</hibernatetool>
+	</target>
+
+	<target name="bd2javajpa" description="Generate .java from database." depends="">
+		<hibernatetool destdir="${dest.dir}" > 
+			<jdbcconfiguration
+			configurationfile="${config.full.path}/${hibernate.config.file}"
+			  packagename="${package}"
+			  revengfile="hibernate.reveng.xml"
+			  detectmanytomany="true"
+			/>
+			<hbm2java jdk5="true" ejb3="true" />
+		</hibernatetool>
+	</target>
+
+</project>

@@ -1,0 +1,51 @@
+.mat-title {
+  margin: 0;
+}
+
+.mat-subheading-2 {
+  margin: 0;
+}
+
+.material-icons {
+  vertical-align: middle;
+  /* used to align icon with text */
+}
+
+div {
+  margin: 25px;
+}
+
+.empty-space {
+  flex: 1 1 auto;
+}
+
+.right-icons {
+  cursor: pointer;
+  margin-right: 18px;
+  margin-left: 18px;
+}
+
+.mat-headline {
+  margin: 0;
+}
+
+.selected {
+  font-weight: bold;
+}
+
+.section-selector {
+  cursor: pointer;
+}
+
+.section-selector:hover {
+  text-decoration: underline;
+}
+
+app-dialog-toolbar {
+  width: 100%;
+}
+
+.tab-content {
+  height: 60vh;
+  overflow: scroll;
+}

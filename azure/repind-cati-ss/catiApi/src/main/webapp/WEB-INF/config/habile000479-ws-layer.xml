@@ -1,0 +1,27 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- 	<bean class="com.afklm.soa.spring.consumer.DefaultConsumerTimeout">
+    	<property name="connectionTimeoutMilliseconds" value="15000" />
+    	<property name="requestTimeoutMilliseconds" value="30000" />
+	</bean> -->
+
+	<!-- You have to setup your wsConsumerIdentification configuration see the SOA repository for that !! -->
+	<bean name="wsConsumerIdentification"
+		class="com.afklm.soa.jaxws.customheader.configuration.ConsumerConfigurationBean">
+		<property name="userID" value="CATI" />
+		<property name="partyID" value="AF" />
+		<property name="consumerID" value="w02335208" />
+		<property name="consumerLocation" value="QVI" />
+		<property name="consumerType" value="A" />
+	</bean>
+
+	<bean id="consumerW000479V01" class="com.afklm.soa.spring.consumer.WebServiceConsumer"
+		depends-on="wsConsumerIdentification">
+		<property name="service" value="com.afklm.soa.stubs.w000479.v1.ProvideUserRightsAccessV10_Service" />
+		<property name="wsdlLocation" value="classpath:/META-INF/wsdl/w000479-v01/w000479-v01-policy.wsdl" />
+		<!--ENV-WS-W000479-LOCATION-->
+		<property name="endpointAddress" value="https://ws-qvi-rct.airfrance.fr/it/IT_IC/000479v01" />
+	</bean>	 
+</beans>

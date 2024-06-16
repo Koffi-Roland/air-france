@@ -1,0 +1,23 @@
+<form [formGroup]="formGroup">
+
+  <mat-form-field appearance="outline" class="key-field">
+    <mat-label>{{ 'KEY' | translate }}</mat-label>
+    <mat-select [formControl]="keyCtrl" (selectionChange)="updateValue()">
+      <mat-option>{{ 'NONE' | translate }}</mat-option>
+      <mat-option *ngFor="let ref of keys" [value]="ref">
+        <span [ngClass]="{'required': ref.isRequired}">{{ (currentLocal === 'fr') ? ref.labelFR : ref.labelEN }}</span>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <app-preference-type-form-field *ngIf="preferenceValueConfiguration"
+    [preferenceValueConfig]="preferenceValueConfiguration" [valueCtrl]="valueCtrl"
+    [keyCtrlLabel]="selectedPreferenceKey" class="value-field">
+  </app-preference-type-form-field>
+
+  <button mat-icon-button *ngIf="preferenceValueConfiguration" matTooltip="{{ 'ADD-PREFERENCE-DATA' | translate }}"
+    (click)="addPreferenceData()" [disabled]="valueCtrl.value === '' || valueCtrl.invalid">
+    <mat-icon>add</mat-icon>
+  </button>
+
+</form>

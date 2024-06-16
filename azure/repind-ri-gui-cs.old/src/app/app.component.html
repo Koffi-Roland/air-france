@@ -1,0 +1,94 @@
+<!-- Sidenav -->
+<mat-sidenav-container class="all-wrap" fullscreen>
+  <!-- Page container mx-auto sm:px-4 mx-auto sm:px-4 -->
+  <div class="page-wrap">
+    <header role="banner">
+      <mat-toolbar class="mat-elevation-z5">
+
+        <div class="logo-and-app-name">
+          <button mat-icon-button [matMenuTriggerFor]="menu" class="shortcut-menu">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item [routerLink]="['/home']">
+              <mat-icon>home</mat-icon>
+              <span>{{ 'HEADER-TOOLBAR-HOME-LABEL' | translate }}</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/individuals/search/gin']">
+              <mat-icon>search</mat-icon>
+              <span>{{ 'HEADER-TOOLBAR-SEARCH-LABEL' | translate }}</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/individuals/merge']">
+              <mat-icon>call_merge</mat-icon>
+              <span>{{ 'HEADER-TOOLBAR-MERGE-LABEL' | translate }}</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/individuals/merge/statistiques']">
+              <mat-icon>assessment</mat-icon>
+              <span>{{ 'HEADER-TOOLBAR-MERGE-STATISTIQUES-LABEL' | translate }}</span>
+            </button>
+            <button mat-menu-item (click)="logout()">
+              <mat-icon>power_settings_new</mat-icon>
+              <span>{{ 'DISCONNECT' | translate }}</span>
+            </button>
+          </mat-menu>
+          <img class="logo cursor" routerLink="/home" src="./assets/img/logo-AFKL.png">
+          <span>{{ 'APP-NAME' | translate }}</span>
+        </div>
+
+        <div class="navigation-buttons">
+          <button mat-button [routerLink]="['/home']">
+            <div class="navigation-button-content">
+              <mat-icon>home</mat-icon>
+              <span>{{ 'HEADER-TOOLBAR-HOME-LABEL' | translate }}</span>
+            </div>
+          </button>
+          <button mat-button [routerLink]="['/individuals/search/gin']">
+            <div class="navigation-button-content">
+              <mat-icon>search</mat-icon>
+              <span>{{ 'HEADER-TOOLBAR-SEARCH-LABEL' | translate }}</span>
+            </div>
+          </button>
+          <button mat-button [routerLink]="['/individuals/merge']">
+            <div class="navigation-button-content">
+              <mat-icon>call_merge</mat-icon>
+              <span>{{ 'HEADER-TOOLBAR-MERGE-LABEL' | translate }}</span>
+            </div>
+          </button>
+          <button mat-button [routerLink]="['/individuals/merge/statistiques/grid']">
+            <div class="navigation-button-content">
+              <mat-icon>assessment</mat-icon>
+              <span>{{ 'HEADER-TOOLBAR-MERGE-STATISTIQUES-LABEL' | translate }}</span>
+            </div>
+          </button>
+          <button mat-button (click)="logout()">
+            <div class="navigation-button-content">
+              <mat-icon>power_settings_new</mat-icon>
+              <span>{{ 'DISCONNECT' | translate }}</span>
+            </div>
+          </button>
+        </div>
+
+
+
+        <div class="version-and-flags">
+          <!-- Change language -->
+          <span class="flag-icon flag-icon-fr cursor no-mobile" (click)="setLanguage('fr')"></span>
+          <span class="flag-icon flag-icon-gb gb-flag cursor no-mobile" (click)="setLanguage('en')"></span>
+          
+        </div>
+        
+
+      </mat-toolbar>
+    </header>
+    <main class="main-container">
+      <!-- Component insertion -->
+      <div>
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+
+
+</mat-sidenav-container>
+
+<app-loader></app-loader>

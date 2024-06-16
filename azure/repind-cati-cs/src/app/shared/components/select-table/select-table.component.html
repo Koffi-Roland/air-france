@@ -1,0 +1,48 @@
+<div *ngIf="dataSource">
+    <mat-table matSort [dataSource]="dataSource" matSortActive="select" matSortDirection="desc">
+        <ng-container *ngFor="let column of dataColumnNames" matColumnDef="{{column.field}}">
+            <!-- selectbox column -->
+            <ng-container *ngIf="column.field === 'select'; else dataColumn">
+                <mat-header-cell *matHeaderCellDef>
+                    <div class="mat-table-header-custom">
+                        <span mat-sort-header="{{column.field}}">
+                            {{ column.label | translate}}
+                        </span>
+                    </div>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(element) : null" [checked]="selection.isSelected(element)">
+                    </mat-checkbox>
+                </mat-cell>
+                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+            </ng-container>
+
+            <!-- data columns -->
+            <ng-template #dataColumn>
+                <mat-header-cell *matHeaderCellDef>
+                    <div class="mat-table-header-custom">
+                        <span mat-sort-header="{{column.field}}">
+                            {{ column.label | translate}}
+                        </span>
+                    </div>
+                </mat-header-cell>
+                <mat-footer-cell *matFooterCellDef>
+                    <search-by-column [(columnName)]="search[column.field]"
+                        (columnNameChange)="applyFilter({columnName: column.field, filterValue: search[column.field]})">
+                    </search-by-column>
+                </mat-footer-cell>
+                <mat-cell *matCellDef="let element"> {{ element[column.field] }} </mat-cell>
+            </ng-template>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columnNameDefinition"></mat-header-row>
+        <mat-footer-row *matFooterRowDef="columnNameDefinition"></mat-footer-row>
+        <mat-row *matRowDef="let row; columns: columnNameDefinition;"></mat-row>
+    </mat-table>
+
+    <mat-paginator [length]="dataSource.data.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"
+        [showFirstLastButtons]="true">
+    </mat-paginator>
+
+</div>

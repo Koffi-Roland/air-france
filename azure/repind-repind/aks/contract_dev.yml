@@ -1,0 +1,25 @@
+additional_user_np_flag: 'No'
+app_name: ri
+az_region: France Central (FCE)
+enable_node_pool_spread_across_az: 'No'
+env: nonprod
+kubernetes_version: 1.25.5
+node_pool_node_count: '3'
+node_pool_vm_size: large
+product_team: PRODUCTTEAM_ri
+ritm: RITM9999808
+service_category: aks
+subscription_id: 58b2378a-340e-44be-90d1-85768fdcdf02
+sub_name: mrn-ri-nonprod-001
+cluster_number: 1
+action_group_list: [
+  "ag_advisor-ri-nonprod-frc",
+  "ag_finops-ri-nonprod-frc",
+  "ag_security-ri-nonprod-frc",
+  "ag_sha-ri-nonprod-frc",
+  "ag_srv-ri-nonprod-frc"
+]
+action_group_present: true
+private_cluster_enabled: true
+# Subnet is Aks01IngressSubnet (10.206.183.16/28) first 3 ips reserved by az
+ingress_loadbalancer_ip: 10.206.183.20 #required

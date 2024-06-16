@@ -1,0 +1,109 @@
+{
+  "users": [
+    {
+      "userId": "user",
+      "password": "",
+      "firstName": "user first",
+      "lastName": "user last",
+      "email": "mail@example.com",
+      "profiles": [
+        "P_USER"
+      ]
+    },
+    {
+      "userId": "admin",
+      "password": "",
+      "firstName": "admin first",
+      "lastName": "admin last",
+      "email": "mail@example.com",
+      "profiles": [
+        "P_RIGUI_SUPERADMIN"
+      ]
+    },
+    {
+      "userId": "test",
+      "password": "",
+      "firstName": "test first",
+      "lastName": "test last",
+      "email": "mail@example.com",
+      "profiles": [
+        "P_RIGUI_READ_ONLY",
+        "P_USER"
+      ]
+    },
+    {
+      "userId": "read",
+      "password": "",
+      "firstName": "read",
+      "lastName": "book",
+      "email": "book@example.com",
+      "profiles": [
+        "P_RIGUI_READ_ONLY"
+      ]
+    },
+    {
+      "userId": "m406368",
+      "password": "sic2sic",
+      "firstName": "user first",
+      "lastName": "user last",
+      "email": "mail@example.com",
+      "profiles": [
+        "P_RIGUI_ACCES"
+      ]
+    },
+    {
+      "userId": "baduser",
+      "password": "sic2sic",
+      "firstName": "baduser first",
+      "lastName": "baduser last",
+      "email": "mail@example.com",
+      "profiles": [
+        "P_UNKNOWN"
+      ]
+    },
+    {
+      "userId": "fbmerge",
+      "password": "",
+      "firstName": "user first",
+      "lastName": "user last",
+      "email": "mail@example.com",
+      "profiles": [
+        "P_RIGUI_UPDATE-LEVEL1_FB"
+      ]
+    },
+    {
+      "userId": "fbmerge2",
+      "password": "",
+      "firstName": "user first",
+      "lastName": "user last",
+      "email": "mail@example.com",
+      "profiles": [
+        "P_RIGUI_UPDATE-LEVEL2_FB"
+      ]
+    },
+    {
+      "userId": "gpmerge",
+      "password": "",
+      "firstName": "user first",
+      "lastName": "user last",
+      "email": "mail@example.com",
+      "profiles": [
+        "P_RIGUI_UPDATE_GP"
+      ]
+    },
+    {
+      "userId": "adhoc",
+      "password": "",
+      "firstName": "captain",
+      "lastName": "adhoc",
+      "email": "captainadhoc@tintin.com",
+      "profiles": [
+        "P_RIGUI_ADHOCUPLOAD"
+      ]
+    }
+  ],
+  "publicPaths": [
+    "(?i).*css.*",
+    "(?i).*cloudfoundryapplication.*"
+  ]
+}

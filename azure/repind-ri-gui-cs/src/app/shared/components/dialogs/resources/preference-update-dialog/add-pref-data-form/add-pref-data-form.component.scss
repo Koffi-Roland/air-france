@@ -1,0 +1,22 @@
+form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.key-field {
+  width: 35%;
+}
+
+.value-field {
+  width: 50%;
+}
+
+button {
+  margin: 8px 0;
+}
+
+.required {
+  color: red;
+  font-weight: bold;
+}

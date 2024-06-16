@@ -1,0 +1,17 @@
+mat-dialog-content {
+  height: 67%;
+  overflow: hidden;
+}
+
+mat-dialog-actions {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+app-market-language-update-form {
+  width: 75%;
+}

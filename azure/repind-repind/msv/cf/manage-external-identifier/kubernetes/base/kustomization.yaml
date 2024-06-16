@@ -1,0 +1,9 @@
+resources:
+  - deployment.yaml
+  - service.yaml
+
+commonLabels:
+  app.kubernetes.io/name: manage-external-identifier
+  app.kubernetes.io/instance: manage-external-identifier
+
+namespace: default

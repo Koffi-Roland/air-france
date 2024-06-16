@@ -1,0 +1,23 @@
+meta {
+  name: All
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{provide-identification-data-url}}/{{gin}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  MS: provide-identification-data
+}
+
+assert {
+  res.status: eq 200
+}
+
+script:pre-request {
+  // 
+}

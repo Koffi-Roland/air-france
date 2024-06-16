@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Uploaded in SOA repository on 2014-06-27 09:44:36.538--><!--SOA repository reference: W001166-v1.0.0--><!--
+Template for "AS IS" WSDL generation based on amadeus 1A interface definition
+
+Replaced shall be done case sensitive:
+ 
+PAYDetokenizeToken : 1A service name ( ex: DCSLST_GetPassengerList)
+passenger : afklm domain (ex: passenger )
+--><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.af-klm.com/services/passenger/PAYDetokenizeToken-v1/wsdl" xmlns:rsp="http://www.af-klm.com/services/passenger/PAYDetokenizeToken-v1/PAYDetokenizeTokenResponse/xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sft="http://www.af-klm.com/services/common/SystemFault-v1/xsd" xmlns:req="http://www.af-klm.com/services/passenger/PAYDetokenizeToken-v1/PAYDetokenizeTokenRequest/xsd" name="PAYDetokenizeToken-v1" targetNamespace="http://www.af-klm.com/services/passenger/PAYDetokenizeToken-v1/wsdl">
+   <wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="UNTWSPortBindingPolicy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+            <!-- If not omitted then the client side expects a timestamp in the answer <sp:IncludeTimestamp /> -->
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+              <wsp:Policy>
+                <sp:WssUsernameToken10 />
+              </wsp:Policy>
+            </sp:UsernameToken>
+          </wsp:Policy>
+        </sp:SignedSupportingTokens>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <types>
+    <xsd:schema>
+      <!--previous value passenger_PAYDetokenizeToken-v1_Request.xsd updated--><xsd:import namespace="http://www.af-klm.com/services/passenger/PAYDetokenizeToken-v1/PAYDetokenizeTokenRequest/xsd" schemaLocation="http://soarepo.airfrance.fr/repository/jcr/view/schema/ServiceSchemaContent-1136367"/>
+      <!--previous value passenger_PAYDetokenizeToken-v1_Response.xsd updated--><xsd:import namespace="http://www.af-klm.com/services/passenger/PAYDetokenizeToken-v1/PAYDetokenizeTokenResponse/xsd" schemaLocation="http://soarepo.airfrance.fr/repository/jcr/view/schema/ServiceSchemaContent-1136364"/>
+      <!--previous value SystemFault-v1.xsd updated--><xsd:import namespace="http://www.af-klm.com/services/common/SystemFault-v1/xsd" schemaLocation="http://soarepo.airfrance.fr/repository/jcr/view/schema/ServiceSchemaContent-1136370"/>
+    </xsd:schema>
+  </types>
+  <message name="msgPAYDetokenizeTokenRequest">
+    <part element="req:PAYDetokenizeTokenRequest" name="body"/>
+  </message>
+  <message name="msgPAYDetokenizeTokenResponse">
+    <part element="rsp:PAYDetokenizeTokenResponse" name="body"/>
+  </message>
+  <message name="msgPAYDetokenizeTokenSystemFault">
+    <part element="sft:SystemFault" name="body"/>
+  </message>
+  <portType name="PAYDetokenizeToken-v1_0">
+    <operation name="PAYDetokenizeToken">
+      <input message="tns:msgPAYDetokenizeTokenRequest" name="PAYDetokenizeTokenRequest"/>
+      <output message="tns:msgPAYDetokenizeTokenResponse" name="PAYDetokenizeTokenResponse"/>
+      <fault message="tns:msgPAYDetokenizeTokenSystemFault" name="PAYDetokenizeTokenSystemFault"/>
+    </operation>
+  </portType>
+  <binding name="PAYDetokenizeToken-v1_0-soap11http" type="tns:PAYDetokenizeToken-v1_0">
+  <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#UNTWSPortBindingPolicy" />
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" required="true"/>
+    <operation name="PAYDetokenizeToken">
+      <wsdlsoap:operation soapAction="http://www.af-klm.com/services/passenger/PAYDetokenizeToken-v1_0/PAYDetokenizeToken" style="document"/>
+      <input name="PAYDetokenizeTokenRequest">
+        <wsdlsoap:body use="literal"/>
+      </input>
+      <output name="PAYDetokenizeTokenResponse">
+        <wsdlsoap:body use="literal"/>
+      </output>
+      <fault name="PAYDetokenizeTokenSystemFault">
+        <wsdlsoap:fault name="PAYDetokenizeTokenSystemFault" use="literal"/>
+      </fault>
+    </operation>
+  </binding>
+  <service name="PAYDetokenizeToken-v1_0">
+    <port binding="tns:PAYDetokenizeToken-v1_0-soap11http" name="PAYDetokenizeToken-v1_0-soap11http">
+      <documentation>
+        <wsi:Claim xmlns:wsi="http://ws-i.org/schemas/conformanceClaim/" conformsTo="http://ws-i.org/profiles/basic/1.1"/>
+      </documentation>
+      <!-- ENV-WS-W001166-LOCATION -->
+      <wsdlsoap:address location="${ENV-WS-W001166-LOCATION}"/>
+    </port>
+  </service>
+</definitions>

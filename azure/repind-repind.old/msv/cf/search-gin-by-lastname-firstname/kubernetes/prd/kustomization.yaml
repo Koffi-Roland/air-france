@@ -1,0 +1,23 @@
+bases:
+  - ../base
+
+resources:
+  - ingress.yaml
+
+nameSuffix: -prd
+
+namespace: repind-prd
+
+commonLabels:
+  app.kubernetes.io/name: search-gin-by-lastname-firstname
+  app.kubernetes.io/instance: search-gin-by-lastname-firstname-prd
+
+images:
+  - name: harbor-vlb.af-klm.com/cdm/search-gin-by-lastname-firstname
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+patchesStrategicMerge:
+  - replica-rollout.yaml
+  - deploy-profile.yaml

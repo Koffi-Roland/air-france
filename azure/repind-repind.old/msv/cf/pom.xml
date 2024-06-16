@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <!-- !!! DO NOT REMOVE/CHANGE THE <parent>[...]</parent> SECTION !!! Please
+        contact DI.NB through http://fds.airfrance.fr if needed. -->
+    <parent>
+        <groupId>com.afklm.maven.pom</groupId>
+        <artifactId>af-projects-pom</artifactId>
+        <version>5.2.1</version>
+    </parent>
+
+    <groupId>com.afklm.repind</groupId>
+    <artifactId>repind-root-cf</artifactId>
+    <version>1.0.24-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <repind.version>1.0.24-SNAPSHOT</repind.version>
+        <junit.version>5.9.1</junit.version>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <springboot.version>3.0.6</springboot.version>
+        <apim-security-filters.version>1.0.7</apim-security-filters.version>
+        <spring.vault.version>3.0.0</spring.vault.version>
+        <yaml.version>2.0</yaml.version>
+        <springfox.version>3.0.0</springfox.version>
+        <!-- JaCoCo Properties -->
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <springboot.version>3.0.6</springboot.version>
+        <springfox.version>3.0.0</springfox.version>
+        <afws.version>4.0.0</afws.version>
+        <!-- JaCoCo Properties -->
+        <junit.version>5.9.2</junit.version>
+        <jacoco.version>0.8.8</jacoco.version>
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+        <sonar.language>java</sonar.language>
+        <sonar.coverage.exclusions>
+            **/config/**/*,
+            **/exception/**/*,
+            **/exceptions/**/*,
+            **/error/**/*,
+            **/advice/**/*,
+            **/handler/**/*,
+            **/mashery/**/*,
+            **/filter/**/*,
+            **/Application.java,
+            **/Exception.java,
+            **/*dto.java,
+            **/sequence/**/*,
+            **/*Constant.java,
+            **/entity/**/*
+        </sonar.coverage.exclusions>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <executions>
+                    <execution>
+                        <id>merge</id>
+                        <goals>
+                            <goal>merge</goal>
+                        </goals>
+                        <configuration>
+                            <fileSets>
+                                <fileSet implementation="org.apache.maven.shared.model.fileset.FileSet">
+                                    <directory>${project.basedir}</directory>
+                                    <includes>
+                                        <include>**/*.exec</include>
+                                    </includes>
+                                </fileSet>
+                            </fileSets>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <modules>
+        <module>common</module>
+        <module>forget-me-asked</module>
+         <module>manage-consent</module>
+        <module>mapping</module>
+        <module>handicap</module>
+        <module>search-gin-by-contract</module>
+        <module>search-gin-by-email</module>
+        <module>search-gin-by-phone</module>
+        <module>search-gin-by-social-media</module>
+        <module>search-gin-by-lastname-firstname</module>
+        <module>search-individual</module>
+         <module>ultimate-preferences</module>
+        <module>graphql-bff-example</module>
+    </modules>
+
+    <dependencies>
+             <!-- Jacoco for Sonar -->
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>${jacoco.version}</version>
+        </dependency>
+    </dependencies>
+</project>

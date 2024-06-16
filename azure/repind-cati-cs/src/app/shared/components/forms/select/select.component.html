@@ -1,0 +1,15 @@
+<mat-form-field appearance="outline" [formGroup]="group" [hidden]="field.isHidden">
+  <mat-label>{{ field.label | translate }}</mat-label>
+  <mat-select [placeholder]="field.label" [formControlName]="field.name" appAutoFocus [autoFocus]="field.autofocus">
+    <mat-option *ngFor="let item of field.options" [value]="item.value">
+      <div class="opt-content">
+        <span>{{ item.mainText }} <ng-container *ngIf="item.secondaryText">( {{ item.secondaryText }} )</ng-container>
+        </span>
+      </div>
+    </mat-option>
+  </mat-select>
+  <ng-container *ngFor="let validation of field.validations;" ngProjectAs="mat-error">
+    <mat-error *ngIf="group.get(field.name).hasError(validation.name)">{{ validation.message | translate }}
+    </mat-error>
+  </ng-container>
+</mat-form-field>

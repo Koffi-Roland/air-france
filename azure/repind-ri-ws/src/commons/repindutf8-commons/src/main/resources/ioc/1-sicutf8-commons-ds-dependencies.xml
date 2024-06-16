@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- AccountDS Component -->
+    <!-- bean id="accountDS" class="com.airfrance.sicutf8.service.individu.internal.AccountDS" scope="prototype">
+    </bean -->
+    
+    <!-- AlertDS Component -->
+    <!-- bean id="alertProspectDS" class="com.airfrance.sicutf8.service.individu.internal.AlertProspectDS" scope="prototype">
+    </bean -->
+    
+    <!-- AlertDataDS Component -->
+    <!-- bean id="alertDataProspectDS" class="com.airfrance.sicutf8.service.individu.internal.AlertDataProspectDS" scope="prototype">
+    </bean -->
+    
+    <!-- ProspectCommunicationPreferencesDS Component -->
+    <!-- bean id="prospectCommunicationPreferencesDS" class="com.airfrance.sicutf8.service.prospect.internal.ProspectCommunicationPreferencesDS" scope="prototype">
+    </bean -->
+
+    <!-- ProspectDS Component -->
+    <!-- bean id="prospectDS" class="com.airfrance.sicutf8.service.prospect.internal.ProspectDS" scope="prototype">
+    </bean -->
+
+    <!-- ProspectTelecomsDS Component -->
+    <!-- bean id="prospectTelecomsDS" class="com.airfrance.sicutf8.service.prospect.internal.ProspectTelecomsDS" scope="prototype">
+    </bean -->
+    
+  	<!-- utfDS -->
+    <bean id="utfDS" class="com.airfrance.repindutf8.service.utf.internal.UtfDS" scope="prototype" ></bean>
+   
+    <!-- ReferencesDS Component -->
+    <bean id="referencesDS" class="com.airfrance.repindutf8.service.reference.internal.ReferencesDS" scope="prototype">
+    </bean>
+
+    <!--PROTECTED REGION ID(sicutf8-commonsUuid_ioc_ds) ENABLED START-->
+        <!-- add non-generated beans here -->
+    <!--PROTECTED REGION END-->
+
+
+</beans>

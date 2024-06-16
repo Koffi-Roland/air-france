@@ -1,0 +1,7 @@
+app_name: ri
+az_region: France Central (FCE)
+env: nonprod
+ritm: RITM9999808
+subscription_id: 58b2378a-340e-44be-90d1-85768fdcdf02
+sub_name: mrn-ri-nonprod-001
+acr_number: 1

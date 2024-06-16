@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.afklm.repind</groupId>
+		<artifactId>repind-root</artifactId>
+		<version>0.1.0-SNAPSHOT</version>
+		<relativePath>../../../../pom.xml</relativePath>
+	</parent>
+
+	<!-- Description -->
+	<groupId>com.afklm.repind.payment</groupId>
+	<artifactId>PaymentPreferencesWS</artifactId>
+	<packaging>war</packaging>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.apache.kafka</groupId>
+				<artifactId>kafka-clients</artifactId>
+				<version>1.0.0</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.afklm.repind.commons</groupId>
+			<artifactId>repind-commons</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>com.afklm.mq</groupId>
+					<artifactId>mq-runtime</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+			
+		<dependency>
+			<groupId>com.afklm.repind.commons</groupId>
+			<artifactId>repind-payment-preferences-commons</artifactId>
+			<version>${project.version}</version>			
+		</dependency>
+		<dependency>
+			<groupId>com.afklm.soa.stubs</groupId>
+			<artifactId>w000469-v020001</artifactId>
+			<version>3</version>
+		</dependency>
+		<dependency>
+  			<groupId>com.afklm.soa.stubs</groupId>
+  			<artifactId>w000469-v01</artifactId>
+  			<version>0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.afklm.soa.stubs</groupId>
+			<artifactId>w000470-v020001</artifactId>
+			<version>3</version> 
+		</dependency>
+		<dependency>
+  			<groupId>com.afklm.soa.stubs</groupId>
+  			<artifactId>w000470-v01</artifactId>
+  			<version>0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.afklm.soa.stubs</groupId>
+			<artifactId>w000471-v02</artifactId>
+			<version>5</version>
+		</dependency>
+		<dependency>
+  			<groupId>com.afklm.soa.stubs</groupId>
+  			<artifactId>w000471-v01</artifactId>
+  			<version>0</version>
+		</dependency>	
+		
+		<dependency>
+			<groupId>com.afklm.repind.commons</groupId>
+			<artifactId>repind-commons</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>		
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.afklm.repind.commons</groupId>
+			<artifactId>repindutf8-commons</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>		
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.afklm.repind.commons</groupId>
+			<artifactId>repind-payment-preferences-commons</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>		
+			<scope>test</scope>
+		</dependency>
+
+		<!-- slf4j -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.26</version>
+		</dependency>
+
+		<!-- Log -->
+		<dependency>
+			<groupId>com.afklm.tecc</groupId>
+			<artifactId>como-logback-appender</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+
+	</dependencies>
+	<build>
+		<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version><!--$NO-MVN-MAN-VER$-->
+				<configuration>
+					<source>${jdk.version}</source> <!-- depending on your project -->
+					<target>${jdk.version}</target> <!-- depending on your project -->
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>1.4.2.Final</version>
+						</path>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>1.18.22</version>
+						</path>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok-mapstruct-binding</artifactId>
+							<version>0.2.0</version>
+						</path>
+						<!-- other annotation processors -->
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

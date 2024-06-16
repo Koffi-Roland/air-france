@@ -1,0 +1,23 @@
+bases:
+  - ../base
+
+resources:
+  - ingress.yaml
+
+nameSuffix: -prd
+
+namespace: repind-prd
+
+commonLabels:
+  app.kubernetes.io/name: provide-contact-data
+  app.kubernetes.io/instance: provide-contact-data-prd
+
+images:
+  - name: harbor-vlb.af-klm.com/cdm/provide-contact-data
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+patchesStrategicMerge:
+  - replica-extra-options.yaml
+  - deploy-profile.yaml

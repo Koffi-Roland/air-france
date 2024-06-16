@@ -1,0 +1,112 @@
+meta {
+  name: Update
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{create-or-update-individual-v8-url}}
+  body: xml
+  auth: none
+}
+
+headers {
+  SOAPAction: "http://www.af-klm.com/services/passenger/CreateUpdateIndividualService-v8/createIndividual"
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+      <soapenv:Body>
+          <ns2:CreateUpdateIndividualRequestElement xmlns:ns6="http://www.af-klm.com/services/passenger/SicCommonType-v1/xsd"
+              xmlns:ns5="http://www.af-klm.com/services/passenger/request-v8/xsd"
+              xmlns:ns8="http://www.af-klm.com/services/passenger/SicOsirisType-v1/xsd"
+              xmlns:ns7="http://www.af-klm.com/services/passenger/SoftComputingType-v1/xsd"
+              xmlns:ns2="http://www.af-klm.com/services/passenger/data-v8/xsd"
+              xmlns:ns4="http://www.af-klm.com/services/passenger/response-v8/xsd"
+              xmlns:ns3="http://www.af-klm.com/services/passenger/SicIndividuType-v3/xsd">
+              <requestor>
+                  <channel>B2C</channel>
+                  <site>QVI</site>
+                  <signature>REGRESSION</signature>
+              </requestor>
+              <individualRequest>
+                  <individualInformations>
+                      <identifier>{{gin_create}}</identifier>
+                  </individualInformations>
+              </individualRequest>
+              <preferenceRequest>
+                  <preference>
+                      <type>TDC</type>
+                      <preferenceDatas>
+                          <preferenceData>
+                              <key>type</key>
+                              <value>PA</value>
+                          </preferenceData>
+                          <preferenceData>
+                              <key>number</key>
+                              <value>123654FR</value>
+                          </preferenceData>
+                          <preferenceData>
+                              <key>expiryDate</key>
+                              <value>02/12/2030</value>
+                          </preferenceData>
+                          <preferenceData>
+                              <key>nationality</key>
+                              <value>FR</value>
+                          </preferenceData>
+                          <preferenceData>
+                              <key>countryOfIssue</key>
+                              <value>FR</value>
+                          </preferenceData>
+                          <preferenceData>
+                              <key>familyName</key>
+                              <value>MARPLE</value>
+                          </preferenceData>
+                          <preferenceData>
+                              <key>givenNames</key>
+                              <value>JANE</value>
+                          </preferenceData>
+                          <preferenceData>
+                              <key>dateOfBirth</key>
+                              <value>01/01/1971</value>
+                          </preferenceData>
+                          <preferenceData>
+                              <key>gender</key>
+                              <value>F</value>
+                          </preferenceData>
+                          <preferenceData>
+                              <key>swipeIndicator</key>
+                              <value>Y</value>
+                          </preferenceData>
+                          <preferenceData>
+                              <key>issueDate</key>
+                              <value>01/01/2010</value>
+                          </preferenceData>
+                          <preferenceData>
+                              <key>touchPoint</key>
+                              <value>CAPI</value>
+                          </preferenceData>
+                          <preferenceData>
+                              <key>authorizationDate</key>
+                              <value>01/01/2023</value>
+                          </preferenceData>
+                      </preferenceDatas>
+                  </preference>
+              </preferenceRequest>
+          </ns2:CreateUpdateIndividualRequestElement>
+      </soapenv:Body>
+  </soapenv:Envelope>
+}
+
+vars:pre-request {
+  USER: W90000442
+  PASSWORD: pswpsw123
+}
+
+vars:post-response {
+  gin_create: null
+}
+
+assert {
+  res.status: eq 200
+}

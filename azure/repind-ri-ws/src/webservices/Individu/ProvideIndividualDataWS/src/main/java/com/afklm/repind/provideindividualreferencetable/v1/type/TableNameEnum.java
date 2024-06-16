@@ -1,0 +1,92 @@
+package com.afklm.repind.provideindividualreferencetable.v1.type;
+
+import com.airfrance.ref.exception.MissingParameterException;
+import org.apache.commons.lang.StringUtils;
+
+public enum TableNameEnum {
+
+	// REPIND-1743 : Add Ultimate preference BDM and PickList
+	REF_BDM_COUNTRIES("REF_BDM_COUNTRIES"),
+	REF_BDM_LANGUAGES("REF_BDM_LANGUAGES"),
+	REF_BDM_MEALS("REF_BDM_MEALS"),
+	REF_BDM_SEATS("REF_BDM_SEATS"),
+	REF_CHANNEL_CHECKIN("REF_CHANNEL_CHECKIN"),
+	REF_CHANNEL_COMMUNICATION("REF_CHANNEL_COMMUNICATION"),
+	REF_COMFORT("REF_COMFORT"),
+	REF_COMFORT_PAID("REF_COMFORT_PAID"),
+	REF_CULTURAL("REF_CULTURAL"),
+	REF_DRINK_BEVERAGES("REF_DRINK_BEVERAGES"),
+	REF_DRINK_WELCOME("REF_DRINK_WELCOME"),
+	REF_MEALS("REF_MEALS"),
+	REF_MEALS_PAID("REF_MEALS_PAID"),
+	REF_READING("REF_READING"),
+	REF_SEATS("REF_SEATS"),
+	
+	// REPIND-1653 : For CSM/WW2RI/SFMC Comm Pref
+	PAYS("PAYS"),
+	LANGUES("LANGUES"),
+
+	// REPIND-1018 : For IHM SIC V2
+	REF_SEXE("REF_SEXE"),
+	REF_CIVILITE("REF_CIVILITE"),
+	REF_CODE_TITRE("REF_CODE_TITRE"),
+	REF_STATUT_INDIVIDU("REF_STATUT_INDIVIDU"),
+	
+	// REPIND-1018 : For PERMISSION
+	REF_PERMISSIONS_QUESTION("REF_PERMISSIONS_QUESTION"),
+	
+	REF_COMPREF("REF_COMPREF"),
+	REF_COMPREF_DOMAIN("REF_COMPREF_DOMAIN"),
+	REF_COMPREF_TYPE("REF_COMPREF_TYPE"),
+	REF_COMPREF_GTYPE("REF_COMPREF_GTYPE"),
+	REF_COMPREF_MEDIA("REF_COMPREF_MEDIA"),
+	REF_COMPREF_COUNTRY_MARKET("REF_COMPREF_COUNTRY_MARKET"),
+
+	// REPIND-1776 : Add PREFERENCE
+	REF_PREFERENCE_TYPE("REF_PREFERENCE_TYPE"),
+	REF_PREFERENCE_DATA_KEY("REF_PREFERENCE_DATA_KEY"),
+	
+	//REPIND-1768 : For HANDICAP
+	REF_HANDICAP_TYPE("REF_HANDICAP_TYPE"),
+	REF_HANDICAP_CODE("REF_HANDICAP_CODE"),
+	REF_HANDICAP_DATA_KEY("REF_HANDICAP_DATA_KEY"),
+	
+	//REPIND-1768 : For RIGUI
+	DOM_PRO("DOM_PRO"),
+	REF_NIV_TIER_FB("REF_NIV_TIER_FB"),
+	REF_AUTORIS_MAIL("REF_AUTORIS_MAIL"),
+	REF_ETAT_ROLE_CTR("REF_ETAT_ROLE_CTR"),
+	
+	// REPIND-1811 : Add CONSENT data Ref table for DWH and CAPI
+	REF_CONSENT_TYPE("REF_CONSENT_TYPE"),
+	REF_CONSENT_DATA_TYPE("REF_CONSENT_DATA_TYPE"),
+	REF_CONSENT_TYPE_DATA_TYPE("REF_CONSENT_TYPE_DATA_TYPE"),
+
+	// REPIND-2926 : Add LA-PREMIERE ref tables for CAST
+	REF_LP_DRINK_BEVERAGES("REF_LP_DRINK_BEVERAGES"),
+	REF_LP_MEALS("REF_LP_MEALS");
+
+	private String tableName;
+	
+	TableNameEnum(String tableName) {
+		this.tableName = tableName;
+	}
+	
+	public String toString() {
+		return tableName;
+	}
+	
+	public static boolean exist(String name) throws MissingParameterException {
+		
+		if(StringUtils.isEmpty(name)) {
+			throw new MissingParameterException("Missing domain");
+		}
+		
+		for (TableNameEnum e : values()) {
+	        if (e.tableName.equals(name)) {
+	            return true;
+	        }
+	    }
+		return false;
+	}
+}

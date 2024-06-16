@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="dataset.xsd">
+	
+	<REF_PERMISSIONS_QUESTION REF_PERMISSIONS_QUESTION_ID="101" SNAME="AIRLINES" SQUESTION="Voulez-vous vous abonner aux communications Airlines ?" SQUESTION_EN="Would you like to receive the Airlines communications ?" SSITE_CREATION="test" SSITE_MODIFICATION="test" SSIGNATURE_CREATION="test" SSIGNATURE_MODIFICATION="test" DDATE_CREATION="2017-01-17" DDATE_MODIFICATION="2017-01-17"/>
+	<REF_PERMISSIONS_QUESTION REF_PERMISSIONS_QUESTION_ID="102" SNAME="FLYING_BLUE" SQUESTION="Voulez-vous vous abonner aux communications Flying Blue ?" SQUESTION_EN="Would you like to receive the Flying Blue communications ?" SSITE_CREATION="test" SSITE_MODIFICATION="test" SSIGNATURE_CREATION="test" SSIGNATURE_MODIFICATION="test" DDATE_CREATION="2017-01-17" DDATE_MODIFICATION="2017-01-17"/>
+	<REF_PERMISSIONS_QUESTION REF_PERMISSIONS_QUESTION_ID="103" SNAME="ALL" SQUESTION="Voulez-vous vous abonner a toutes les communications ?" SQUESTION_EN="Would you like to receive all communications ?" SSITE_CREATION="test" SSITE_MODIFICATION="test" SSIGNATURE_CREATION="test" SSIGNATURE_MODIFICATION="test" DDATE_CREATION="2017-01-17" DDATE_MODIFICATION="2017-01-17"/>
+	
+</dataset>

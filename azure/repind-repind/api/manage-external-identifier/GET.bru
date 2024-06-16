@@ -1,0 +1,19 @@
+meta {
+  name: GET
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{manage-external-identifier-url}}/{{gin}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  MS: manage-external-identifier
+}
+
+assert {
+  res.status: eq 200
+}

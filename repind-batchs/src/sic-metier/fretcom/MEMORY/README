@@ -1,0 +1,271 @@
+//f
+//----------------------------------------------------------------------
+//     MODULE      : MemoryMgr (C++)
+//
+//     DESCRIPTION : Tools to debug C++ memory management.
+//		     Detection and removal of memory leaks.
+//
+//     AUTHOR      : dor
+//     DATE        : 05/12/1997
+//----------------------------------------------------------------------
+//f
+
+This tool tracks memory allocations/deallocations by an overwrite of the global
+opetarors new and delete.
+By this way it can put additionnal informations around memory blocks to check
+their consistency at any time, and automatically when they are deleted.
+
+When a new block is created it is added into a stack.
+When it is deleted, it is checked then removed from the stack.
+So the stack contains *every* allocated C++ blocks. Because the tool only
+overwrite the new operator, malloc() blocks are not tracked.
+
+
+----------------------------------------------------------------------
+              Installation - Enabling - Disabling
+----------------------------------------------------------------------
+
+The tool API is a set of MT-Safe C macros. By this way, it is easy to
+enable/disable it.
+To enable the macro actions, the source code using the tool must be
+compiled with this option : -D__USE_MEMMGR__
+If your project has a main header file you can also put this line inside :
+#define __USE_MEMMGR__ 1
+To install the manager simply include the proper .o file in your project.
+There are three versions :
+MemoryMgr.o      -> Fast and without debugging code.
+MemoryMgr_dbg.o  -> Debug version (debugging code, traces, -g).
+MemoryMgr_fast.o -> Fast with debugging code and traces, but not debugger infos (-g).
+To be able to disable the tool quickly, without recompiling all source files, there
+are special versions of the .o called Stub. These binaries does absolutely nothing.
+Simply link with those versions and the tool calls will be completly disabled.
+To really remove tool calls you must recompile all source files without
+__USE_MEMMGR__ defined.
+There is also an itermediate version (called Soft) which tracks only
+MEM_OBJ allocations (that mean, only objects of MEM_OBJ classes).
+See the next section to know more about MEM_OBJ.
+This version is to be used if some interactions with other libraries are detected.
+
+
+----------------------------------------------------------------------
+               Distinction between objects and data
+----------------------------------------------------------------------
+
+The tool is able to known if a memory block holds a C++ object or a
+simple dynamic data like an array. To enable this feature all
+your *root* classes should have the MEM_OBJ qualifier (subclasses
+inherit the qualifier).
+Ex : class CToto MEM_OBJ
+
+
+----------------------------------------------------------------------
+        Viewing the heap stack and blocks (debug mode only)
+----------------------------------------------------------------------
+
+There are some macros to dump the containt of the heap stack.
+The main one is MEM_SHOW_STACK. It shows up entire stack.
+Output sample :
+*** MEM STACK DUMP ***
+1 : [0x2f398] Data Purge   Size=512 (main.C #104)
+2 : [0x2f360] Data NoPurge Size=17 (main.C #103)
+3 : [0x2e960] LSP  NoPurge Size=0
+4 : [0x2e918] Data NoPurge Size=24
+5 : [0x2e8e0] Obj  Purge   Size=12 (main.C #98)
+6 : [0x2e8a0] Data NoPurge Size=24
+7 : [0x2e260] Obj  NoPurge Size=16 (main.C #97)
+Stack -> NbObj=2 NbData=5 TotalSize=605
+
+Column's meaning :
+1 : Allocation order, from the more recent to the older.
+    A new block is always pushed on the top of the stack.
+2 : Block's address.
+3 : Block's type. Obj for object, Data for other
+    and LSP for "Leak Starting Point" (see later).
+4 : Block's purgeable flag.
+5 : Block's size.
+6 : If available, source file name and line number where
+    the block has been allocated.
+At the end of the list the total number of blocks and the
+total allocated size is displayed.
+
+Derived macros are :
+MEM_SHOW_TOTAL  -> Displays only the total line.
+MEM_SHOW(p)     -> Displays infos only for given block.
+
+It is possible to dump entire content of blocks using the
+MEM_SHOW_CONTENT(p) macro. Giving a block address it
+displays the block content both in hex and ascii format.
+Output sample :
+aArrObj : [0x2ef00] Data NoPurge Size=32 (main.C #97)
+0002EF00  0002BBC4 0002CB58 0000029A 00000000 .......X........
+0002EF10  0002BBC4 0002CB58 0000029A 00000000 .......X........
+
+The first column is the address count.
+The next four columns are the hex representation of the 16 nextbytes.
+The last column is the ascii representation of the same bytes.
+
+
+----------------------------------------------------------------------
+        Checking and debugging memory use (debug mode only)
+----------------------------------------------------------------------
+
+In its debug version the tool adds debugging informations around
+each heap block to track memory faults. The most common mistake
+is to write past the end of a block. The tool cannot detect
+the mistake when it is done : it's up to you to ask it if everything
+is ok. The main macro is MEM_CHECK_STACK. It checks every allocated
+blocks and detect both blocks or stack corruptions.
+There's also the MEM_CHECK(p) macro to check individual block.
+A check tells you if :
+- you have written past the end of the block.
+- you have written before the start of the block.
+- the block has been freed.
+- the block is invalid or too much corrupted.
+- the block is NULL.
+Such checks are automatically performed at these times :
+- when a block is deleted (so you can detect multiple deletions,
+  NULL pointer deletion, etc.).
+- when using these macros :
+  MEM_SHOW
+  MEM_SHOW_STACK
+  MEM_SET_NO_PURGE
+  MEM_SET_PURGE
+  MEM_IS_PURGE
+  MEM_PURGE_STACK
+  MEM_LEAK_STOP
+If you want to track a memory writting fault, put after each suspicious
+call a MEM_CHECK_STACK macro. When the heap becomes corrupted you know
+which is the guilty call.
+
+Another usefull macro is MEM_CHECK_ADDR(p). It tries to find if the
+given address is in an allocated block, and if yes, displays it.
+With it you can find easily if an address is valid of not.
+
+Ridiculous allocation sizes are also detected.
+By default all sizes over 1Mo generates a warning.
+This value can be adjusted by using the MEM_MAX_SIZE(s) macro.
+
+All memory fault warnings begin with the prompt #MEMFAIL#.
+
+
+----------------------------------------------------------------------
+                   Memory leaks (debug mode only)
+----------------------------------------------------------------------
+
+You can simply detect if a function call generates memory leaks by
+using two macros. For example :
+  MEM_LEAK_START;
+  MyFuntion();
+  MEM_LEAK_STOP;
+When MEM_LEAK_STOP is invoked it checks if each block allocated since
+the last MEM_LEAK_START has been freed. If not, a list of forgotten
+blocks is displayed. The mechanism is not based on free memory size
+comparision. By this, a big block allocated *before* the starting
+point can be deleted inside the check without disturbing it.
+
+Leak start/stop can be nested for any number of levels.
+For example :
+  MEM_LEAK_START;
+
+  MyFunction1();
+
+  MEM_LEAK_START;
+  MyFunction2();
+  MEM_LEAK_STOP;
+
+  MyFunction3();
+
+  MEM_LEAK_STOP;
+
+Important : Don't forget to put stop points because each start point 
+pushs a "Leak Starting Point" on the top of the stack. If you
+forget stop points, you will generate memory leaks ! Such blocks
+can be easily identified in the stack : their type is "LSP".
+
+
+----------------------------------------------------------------------
+                           Purging memory
+----------------------------------------------------------------------
+
+All blocks have a flag telling if it is purgeable or not.
+You can control it by these MACROS :
+MEM_SET_NO_PURGE(p) -> Set given block not purgeable.
+MEM_SET_PURGE(p)    -> Set given block purgeable.
+MEM_IS_PURGE(p)     -> Return TRUE if purgeable.
+By default all created blocks are *not* purgeable.
+You can change the default state by calling this macro :
+MEM_DFLT_PURGE(b)   -> Pass TRUE to make all next created
+                       blocks purgeable.
+You can delete *all* purgeable blocks at any time by calling
+this macro :
+MEM_PURGE_STACK     -> Free all purgeable blocks.
+Use this feature very carefully. Destructor of C++ objects
+will *not* be called by the purge process. This is just
+an "hard" way to avoid memory leaks.
+
+
+----------------------------------------------------------------------
+                Calling the tool from the debugger
+----------------------------------------------------------------------
+
+Put the following lines in your .dbxrc file to be able to
+call tool functions from the debugger :
+
+kalias CheckMem='print MemoryMgr::CheckStack()'
+button ignore CheckMem
+
+kalias CheckBlock='print MemoryMgr::CheckUserBlock((caddr_t) (!1))'
+button expand CheckBlock
+
+kalias CheckAddr='print MemoryMgr::CheckAddress((caddr_t) (!1))'
+button expand CheckAddr
+
+kalias ShowMem='print MemoryMgr::DumpStack()'
+button ignore ShowMem
+
+kalias ShowMemTot='print MemoryMgr::DumpStack(0)'
+button ignore ShowMemTot
+
+kalias ShowBlock='print MemoryMgr::DumpUserBlock((caddr_t) (!1), "!1", 1)'
+button expand ShowBlock
+
+
+----------------------------------------------------------------------
+                             Know bugs
+----------------------------------------------------------------------
+
+Due to a bug from CC (known by SUN) there's a problem when deleting
+a dynamic object array. For example, this code will fail using
+the full debug version of the MemoryMgr :
+
+class A;
+A *objArray = new A[16];
+delete [] objArray;
+
+This is because the new keyword is redefined so it not use
+the standard new operator. The CC bug is here : object
+array *must* be allocated via the simple, standard
+new operator. Otherwise the delete [] operator will not
+reconize it as an array and generates a runtime failure :
+   'delete[]' does not correspond to any 'new[]'
+
+There's three workarounds for that :
+1) Use the intermediate "Soft" version of the MemoryMgr.
+2) Remove the redefinition of the new keyword from the
+   MemoryMgr.h file. But if you do so you will lose
+   allocation informations (file name and line number).
+3) Undefine the macro before the allocation then
+   redefine it after :
+
+#undef new
+A *objArray = new A[16];
+#define new NEW
+delete [] objArray;
+
+You can use the MEM_SET_INFO(p) macro on the objArray
+pointer to set the file name and line number.
+
+Please note that object *pointer* arrays works well :
+
+A **objArray = new A*[16];
+delete [] objArray;

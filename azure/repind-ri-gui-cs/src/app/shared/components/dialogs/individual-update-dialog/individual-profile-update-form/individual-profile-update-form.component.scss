@@ -1,0 +1,10 @@
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: calc(1.2em + 12px);
+}
+
+mat-form-field {
+  width: 75%;
+}

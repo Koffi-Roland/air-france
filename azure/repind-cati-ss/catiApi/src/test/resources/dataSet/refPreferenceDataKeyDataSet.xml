@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="dataset.xsd">
+
+	<REF_PREFERENCE_DATA_KEY SCODE="KLMHOUSEWISH1"
+		SLIBELLE_FR="Maisons miniature de KLM"
+		SLIBELLE_EN="KLM miniature houses" NORMALIZED_KEY="KLMHouseWish1" />
+	<REF_PREFERENCE_DATA_KEY SCODE="KLMHOUSEWISH2"
+		SLIBELLE_FR="Maisons miniature de KLM"
+		SLIBELLE_EN="KLM miniature houses" NORMALIZED_KEY="KLMHouseWish2" />
+	<REF_PREFERENCE_DATA_KEY SCODE="KLMHOUSEWISH3"
+		SLIBELLE_FR="Maisons miniature de KLM"
+		SLIBELLE_EN="KLM miniature houses" NORMALIZED_KEY="KLMHouseWish3" />
+	<REF_PREFERENCE_DATA_KEY
+		SCODE="KNOWNTRAVELERNUMBER" SLIBELLE_FR="Numero de voyageur"
+		SLIBELLE_EN="Traveler number" NORMALIZED_KEY="knownTravelerNumber" />
+
+</dataset>

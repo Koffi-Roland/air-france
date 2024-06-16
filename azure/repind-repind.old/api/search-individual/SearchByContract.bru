@@ -1,0 +1,23 @@
+meta {
+  name: SearchByContract
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{search-individual-url}}/v2/search-individual?cin=1234
+  body: none
+  auth: none
+}
+
+query {
+  cin: 1234
+}
+
+vars:pre-request {
+  MS: search-individual
+}
+
+assert {
+  res.status: eq 200
+}

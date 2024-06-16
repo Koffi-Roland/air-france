@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    tns_admin_env: TEST_ACCEPTANCE
+    url: jdbc:oracle:thin:@REPIND_ITE.WORLD
+    username: ${ri_repind_oracle_username}
+    password: ${ri_repind_oracle_password}

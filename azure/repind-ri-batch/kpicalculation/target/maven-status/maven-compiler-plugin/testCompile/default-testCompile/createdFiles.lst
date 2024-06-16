@@ -1,0 +1,4 @@
+com\afklm\batch\kpicalculation\processor\KPICalculationProcessorTest.class
+com\afklm\batch\kpicalculation\writer\OldDataWriterTest.class
+com\afklm\batch\kpicalculation\writer\KPICalculationWriterTest.class
+com\afklm\batch\kpicalculation\processor\OldDataProcessorTest.class

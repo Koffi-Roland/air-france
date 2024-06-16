@@ -1,0 +1,414 @@
+// ---------------------------------------------------------------------- C++ -
+// Author : Christophe Boban
+// ----------------------------------------------------------------------------
+//
+// Wrapper Objet Metier / interface C++ Oracle
+//
+//
+// CB07042004 - Ajout de l'attribut "active" permettant de prendre en compte 
+// ----------  (ou pas) un attribut --> Voir point no  4
+//
+// ----------------------------------------------------------------------------
+
+Ce Wrapper a ete cree afin de simplifier les operations d'acces (I/O) a la BD.
+
+Ce Wrapper a pour but d'isoler les composants metiers des acces a la BD
+
+Les Wrappers de Lecture et Suppression se basent sur une DbKey pour construire la clause Where. 
+Le Wrapper utilise l'interface "interfaceOracle" basee sur le module SQL Dynamique Methode 4
+(voir README de l'interface)
+
+
+Pour utiliser les wrappers, il suffit de deriver une classe des classes :
+	
+	- WrapperInData pour faire une lecture
+	- WrapperOutData pour faire un insert ou update
+
+La classe WrapperDeleteData est utilisable telle que. En cas d'utilisation non standard du delete,
+il suffit de deriver de WrapperDeleteData et de surcharger la ou les methodes mises en cause.
+
+Vous pouvez soit regrouper toutes les methodes d'acces (readInDataBase etc ...) dans
+le WrapperXXXXXData, ou creer un objet WrapperXXXXX contenant uniquement les acces 
+a la BD
+Dans le 2eme cas, WrapperXXXXX contiendra les methodes :
+
+	- readInDataBase
+	- updateInDataBase
+	- deleteInDataBase ...
+
+et ces methodes utiliseront les WrapperXXXXXData .
+
+
+Description des classes de base des Wrappers
+--------------------------------------------
+
+
+Classe de base : WrapperData
+
+Elle contient un objet de type Request (voir README) ainsi que la string a executer.
+La methode execute est virtuelle pure (a definir dans chaque classe derivee).
+
+
+Wrapper de Lecture : WrapperInData --> classe fille de WrapperData
+----------------------------------
+
+Parametres : une requete, une DbKey et un pointeur sur fct de MAJ des objets Metiers
+		(par defaut la methode virtuelle updateDataMembers de la classe fille)
+
+Methodes :
+		setContext() : permet de modifier la requete et la methode de type FctUpdateMembers	
+		setUpdateFct() : permet de modifier la methode de type FctUpdateMembers
+
+		execute() : Execution de la requete de lecture
+
+		updateDataMembers est virtuelle pure --> il faut la coder dans la classe fille
+
+
+Wrapper de Modification : WrapperOutData --> classe fille de WrapperData
+----------------------------------------
+
+	L'idee etait de gerer dynamiquement les tableaux de valeurs lors des MAJ Multiples sans 
+	passer par des tableaux statiques, et cacher toute la gestion d'allocation et de destruction
+	de ces donnees.
+	L'objet WrapperOutData s'occupe de cela en utilisant une Liste d'objets a allouer et 
+	a desallouer.
+
+	Ces objets sont de type Empty et generes par les macros STR_DATA et NUM_DATA.
+	!!!!!!!!!! Ceci est a faire dans la classe derivee de  WrapperOutData. !!!!!!!!!!!
+
+	STR_DATA sert a generer un objet de type String en precisant sa longueur.
+	NUM_DATA sert a generer un objet de type Numerique en precisant son type (int,long,float etc).
+
+	Les objets generes encapsulent les donnees proprement dites et on y accede via un pointeur
+	sous la forme WrapperXXXXX.pNomType->
+		->data() pour recuperer le tableau de valeurs
+		->set(i, valeur) pour ajouter un element dans la tableau
+		->add(valeur) pour ajouter un element dans la tableau
+		->reset() pour revenir en debut de tableau
+
+	Pour l'utilisation du Wrapper, seules ces methodes sont a connaitre.
+
+	Pour + de details, voir la Macro STR_DATA et NUM_DATA.
+	
+
+Wrapper de Suppression : WrapperDeleteData --> classe fille de WrapperData
+------------------------------------------
+
+Parametres du Constructeur : Requete a executer et Dbkey
+
+Methodes : execute() --> execution du delete
+
+
+
+
+
+
+
+Cas d'utilisation
+=================
+
+1 - Wrapper de Lecture
+----------------------
+
+Seule la methode "updateDataMembers()" est specifique a chaque requete de lecture.
+Il suffit donc de l'implementer dans la classe derivee
+
+Declaration du Wrapper de lecture
+---------------------------------
+
+class WrapperClientData : public WrapperInData {
+public :
+  WrapperClientData(const RWCString& pStatment, const DbKeyClient& pDbKey);
+ 
+  // Read in DB methods
+  static RTACustomer *readInDataBase(const DbKeyClient& pDbKey); 
+  // Update BO methods for RTACustomer
+  virtual void *updateDataMembers(Request* pRequest);
+
+};
+
+
+Implementation des methodes 
+---------------------------
+
+RTACustomer* WrapperClientData::readInDataBase(const DbKeyClient& pDbKey)
+{
+  WrapperClientData aWrapper(SQL::Client::Detail, pDbKey);
+  RTACustomer* aCustomer = (RTACustomer*) aWrapper.execute();
+  return aCustomer;
+}
+
+
+void* WrapperClientData::updateDataMembers(Request* pRequest)
+{
+  RTACustomer*  aCustomer = 0;  
+  if (pRequest->getNumberOfRows() == 0) return aCustomer;
+
+  aCustomer = new RTACustomer;
+  aCustomer->set_CustomerID(pRequest->getIntegerValue("RefUniqueClient"));
+  aCustomer->set_Name(pRequest->getStringValue("Nom"));
+  aCustomer->set_Station(pRequest->getStringValue("EscaleClient"));
+  aCustomer->set_Adress(pRequest->getStringValue("Adresse"));
+  aCustomer->set_Town(pRequest->getStringValue("Ville"));
+  aCustomer->set_ZipCode(pRequest->getStringValue("CodePostal"));
+  aCustomer->set_Country(pRequest->getStringValue("Pays"));
+  aCustomer->set_State(pRequest->getStringValue("Etat"));
+  return aCustomer;
+}
+
+
+
+
+Dans le cas ou il faut +s requetes pour lire un objet, il suffit de mettre a jour le
+contexte du Wrapper comme suit :
+
+NB : Dans ce cas, il y a autant de methodes de type FctUpdateMembers, que de requetes
+
+
+RTASpot* WrapperSpot::readInDataBase(const DbKeySpot& pDbKey)
+{
+  WrapperSpotData aWrapper(SQL::Spot::Detail, pDbKey);
+
+  RTASpot* aSpot = (RTASpot*) aWrapper.execute();
+  if (!aSpot) return aSpot;
+
+  // changement de contexte pour executer une autre requete 
+  aWrapper.setContext(SQL::Spot::ListCie, (FctUpdateMembers) WrapperSpotData::updateListCieDataMembers);
+  
+  AirLines* aListCie = (AirLines*) aWrapper.execute();
+  aSpot->set_AllowedAirLines(aListCie);
+
+  // idem ...
+  aWrapper.setContext(SQL::Spot::ListLine, (FctUpdateMembers) WrapperSpotData::updateSpotLineDataMembers);
+
+  SpotLines* aListLine = (SpotLines*) aWrapper.execute();
+  aSpot->set_SpotLines(aListLine);
+
+  return aSpot;
+}
+
+
+
+void* WrapperSpotData::updateDataMembers(Request* pRequest)
+{
+  RTASpot* aSpot = 0;
+  
+  if ( pRequest->getNumberOfRows() != 1 ) { return aSpot; }
+  if ( ! pRequest->getNextTuple() )      { return aSpot; }
+
+  aSpot = new RTASpot();
+  updateSpot(pRequest, aSpot);
+
+  return aSpot;
+}
+
+
+void* WrapperSpotData::updateListCieDataMembers(Request* pRequest)
+{
+  AirLines* aList = new AirLines();
+  while (pRequest->getNextTuple())
+    {
+      RTCAirLine* aCie = new RTCAirLine();
+      aCie->set_Code(pRequest->getStringValue("CodeCie"));
+      aList->insert(aCie);
+    }  
+  return aList;
+}
+
+
+void* WrapperSpotData::updateSpotLineDataMembers(Request* pRequest)
+{
+  SpotLines* aList = new SpotLines();
+  while (pRequest->getNextTuple())
+    {
+      RTASpotLine* aLine = new RTASpotLine();
+      updateRateAgreementLine(pRequest, aLine);
+      aList->insert(aLine);      
+    }  
+
+  return aList;
+}
+
+
+2 - Wrapper de suppression
+--------------------------
+
+
+void WrapperContract::deleteInDataBase( const DbKeyContract& pDbKey )
+{
+  WrapperDeleteData aWrapper(SQL::Contract::DeleteDetail, &pDbKey);
+  aWrapper.execute();
+}
+
+
+
+
+3 - Wrapper de MAJ
+------------------
+
+
+L'interet du Wrapper de MAJ est qu'il gere les insert et update multilignes sans passer par des tableaux statiques (comme en PROC).
+
+Il suffit de declarer un type avec sa taille et de faire le lien avec le nom de la colonne Oracle.
+
+
+Dans le WrapperTestData.h :
+---------------------------
+
+Creation d'une nouvelle classe Wrapper de type Update
+
+NEW_WRAPPER_UPDATE(WrapperTestData)  // creation de la classe WrapperTestData et de ses methodes
+
+  // creation des attributs de la classe
+  NUM_DATA( Key, long);        // Type NUM --> Nom Objet "Key" de type long (type C)
+  STR_DATA( DateFin, __LDate); // Type STR --> Nom Objet "DateFin" de longueur __LDate car.
+
+END_WRAPPER  
+
+
+Dans le WrapperTestData.C
+-------------------------
+
+INIT_WRAPPER(WrapperTestData)  // fct d'init des attributs de WrapperTestData
+  INIT(Key, "iseq");       // l'objet "Key" correspond a la colonne "iseq"
+  INIT(DateFin, "dfin");   // l'objet "DateFin" correspond a la colonne "dfin"
+END_WRAPPER
+
+
+Dans le main :
+--------------
+
+   RWCString updateStmt("UPDATE COFFEES SET DFIN = to_date(:dfin,'DDMMYYYY')  WHERE ISEQ = :ISEQ");
+
+    WrapperTestData data(updateStmt);
+    data.init( 3 );
+    RWDate date[] = { RWDate(), RWDate(), RWDate(0UL) };
+    long   id[] = { 1 , 2 , 3 };
+
+    for (int i=0;i<data.getSize();i++)
+      {
+	// pKey est le pointeur d'acces a l'objet de type "Key"
+	data.pKey->set( i,  id[i] ); 
+	// pDateFin est le pointeur d'acces a l'objet de type "DateFin"
+	data.pDateFin->set( i, ToolsDate::OracleDate(date[i]) );  
+      }
+
+    data.execute();
+
+
+Autre Exemple concret utilisant des objets metiers :
+----------------------------------------------------
+
+int WrapperTariff::updateTariff(WrapperUpdateTariffData* wp, 
+				const RWTPtrSlist<TRLBaseTariff>& aList)
+{
+  int size = aList.entries();
+  if (size == 0)
+    return size;
+
+  RWCString aStmt(SQL::Tariff::CloseLine);
+  // init de la requete SQL dans le Wrapper
+  wp->setSqlStatment(aStmt);
+  TRLBaseTariff* aTariff(0);
+  // init du nombre d'element dans le Wrapper (nb de lignes a MAJ simultanement)
+  wp->init(aList.entries());
+
+  RWTPtrSlistIterator<TRLBaseTariff> iter((RWTPtrSlist<TRLBaseTariff>&) aList);
+  while (aTariff = iter())
+    {
+      // affectation des donnees a mettre a jour dans le Wrapper
+      wp->pKey->add( aTariff->getNumber() );
+      wp->pDateFin->add( ToolsDate::OracleDate( aTariff->get_ExpDate()) );
+    } 
+
+  // execution de la requete
+  wp->execute();
+  return wp->getNumberOfRows();
+}
+
+
+4 - Ajout de l'attribut "active" permettant de prendre en compte (ou pas) l'instance 
+------------------------------------------------------------------------------------
+
+Cette modif permet d'utiliser le meme Wrapper pour executer plusieurs requetes <> (a priori sur la meme table).
+ * Par defaut l'instance n'est pas prise en compte.
+ * La prise en compte se fait lors de l'appel aux methodes "set".
+
+Exemple:
+
+Dans le WrapperTestData.h :
+---------------------------
+
+Creation d'une nouvelle classe Wrapper de type Update
+
+NEW_WRAPPER_UPDATE(WrapperTestData)  // creation de la classe WrapperTestData et de ses methodes
+
+  // creation des attributs de la classe
+  STR_DATA( Comm, 32);
+  STR_DATA( Name, 15);
+  NUM_DATA( Key, long);        // Type NUM --> Nom Objet "Key" de type long (type C)
+  STR_DATA( DateFin, __LDate); // Type STR --> Nom Objet "DateFin" de longueur __LDate car.
+
+END_WRAPPER  
+
+
+Dans le WrapperTestData.C
+-------------------------
+
+INIT_WRAPPER(WrapperTestData)  // fct d'init des attributs de WrapperTestData
+  INIT(Comm, "comm");      // l'objet "Comm" correspond a la colonne "comm"
+  INIT(Name, "cof_name");  // l'objet "Name" correspond a la colonne "cof_name"
+  INIT(Key, "iseq");       // l'objet "Key" correspond a la colonne "iseq"
+  INIT(DateFin, "dfin");   // l'objet "DateFin" correspond a la colonne "dfin"
+END_WRAPPER
+
+
+Dans le main :
+--------------
+
+    RWCString updateStmt("UPDATE COFFEES SET COMM = :COMM ,ISEQ = :ISEQ, DFIN = to_date(:dfin,'DDMMYYYY')  WHERE COF_NAME = :COF_NAME");
+
+    WrapperTestData data(updateStmt);
+    data.init( 3 );
+    RWCString names[] = { "C", "CC", "CCC" };
+    RWCString comm[] = { "c8", "cc8" , "ccc8" };
+    RWDate date[] = { RWDate(), RWDate(), RWDate(0UL) };
+    long   id[] = { 15 , 25 , 35 };
+
+    for (int i=0;i<data.getSize();i++)
+      {
+	// pComm est le pointeur d'acces a l'objet de type "Comm"
+	data.pComm->set( i, comm[i] );
+	// pName est le pointeur d'acces a l'objet de type "Name"
+	data.pName->set( i, names[i] );
+	// pKey est le pointeur d'acces a l'objet de type "Key"
+	data.pKey->set( i,  id[i] ); 
+	// pDateFin est le pointeur d'acces a l'objet de type "DateFin"
+	data.pDateFin->set( i, ToolsDate::OracleDate(date[i]) );  
+      }
+
+    data.execute();
+
+    //
+    //  Execution d'une autre requete a partir du meme Objet Wrapper
+    //
+
+    RWCString updateStmtBis("UPDATE COFFEES SET DFIN = to_date(:dfin,'DDMMYYYY')  WHERE COF_NAME = :COF_NAME");
+    WrapperTestData dataBis(updateStmtBis);
+
+    //
+    // On met a jour uniquement les variables hotes referencees dans la requete 
+    // --> les objets pComm et pKey sont inactifs car la methodes "set" n'a pas ete appelee pour eux 
+    //
+
+    for (int i=0;i<dataBis.getSize();i++)
+      {
+	// pName est le pointeur d'acces a l'objet de type "Name"
+	dataBis.pName->set( i, names[i] );
+	// pDateFin est le pointeur d'acces a l'objet de type "DateFin"
+	dataBis.pDateFin->set( i, ToolsDate::OracleDate(date[i]) );  
+      }
+
+    dataBis.execute();
+
+

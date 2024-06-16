@@ -1,0 +1,19 @@
+meta {
+  name: Context
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{mapping-url}}/language/ALLCONTEXTS
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  MS: mapping
+}
+
+assert {
+  res.status: eq 200
+}

@@ -1,0 +1,19 @@
+meta {
+  name: SearchGinByPhone
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{search-by-phone-url}}/%2B{{phone}}?merge=true
+  body: none
+  auth: none
+}
+
+query {
+  merge: true
+}
+
+vars:pre-request {
+  ~phone: 5415435299
+}

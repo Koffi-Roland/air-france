@@ -1,0 +1,9 @@
+resources:
+- deployment.yaml
+- service.yaml
+
+commonLabels:
+  app.kubernetes.io/name: search-individual
+  app.kubernetes.io/instance: search-individual
+
+namespace: default

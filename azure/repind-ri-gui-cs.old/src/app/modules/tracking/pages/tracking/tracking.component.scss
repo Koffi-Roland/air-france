@@ -1,0 +1,396 @@
+@use '@angular/material' as mat;
+@import '../../../../../assets/scss/customized-palettes-and-colors.scss';
+
+
+/* The actual timeline (the vertical ruler) */
+
+/** IE Polyfill for Flex */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  mat-card-content, mat-card-header {
+    flex: 1 0 auto !important;
+  }
+}
+
+.timeline {
+  position: relative;
+}
+
+.button-next {
+  left: 50%;
+  margin-left: -42px;
+  margin-top: 10px;
+}
+
+.button-next i {
+  margin-left:-20%;
+}
+
+/* The actual timeline (the vertical ruler) */
+
+.timeline::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  background-color: $custom-grey-medium;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -3px;
+  margin-bottom: -15px;
+}
+
+/* Container around content */
+
+.tracking-container {
+  padding: 12px 4px 0px 0px;
+  position: relative;
+  width: 50%;
+  margin-bottom: 9px;
+}
+
+/* To let the place for icons on right side */
+
+div.tracking-container.right .mat-expansion-panel-header-title {
+  margin-left: 35px;
+}
+
+.mat-expansion-panel-header-description {
+  flex-grow: 1;
+}
+
+/* Common declaration for white icon*/
+
+.timeline-icon {
+  color: white;
+  font-size: 2em;
+  top: 11px;
+  position: absolute;
+  z-index: 2;
+}
+
+div.tracking-container.left .timeline-icon {
+  right: -16px;
+}
+
+div.tracking-container.right .timeline-icon {
+  left: -13px;
+}
+
+/* The circles on the timeline */
+
+mat-panel-title::after {
+  content: '';
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  background-color: mat.get-color-from-palette($af-rigui-primary-palette,default);
+  border: 4px solid mat.get-color-from-palette($af-rigui-primary-palette,default);
+  top: 0px;
+  border-radius: 50%;
+  z-index: 1;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+}
+
+/*---- Date of the day ----*/
+
+/*Div Container of the date*/
+
+.date.left {
+  text-align: right;
+}
+
+.date.right {
+  text-align: left;
+}
+
+.date span {
+  font-size: 1.5em;
+}
+
+/* Espace from the timeline the text */
+
+.date.left span {
+  padding-right: 15px;
+}
+
+.date.right span {
+  padding-left: 20px;
+}
+
+/* The square on the timeline */
+
+.date::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 9px;
+  background-color: mat.get-color-from-palette($af-rigui-accent-palette);
+  border: 2px solid mat.get-color-from-palette($af-rigui-primary-palette,default);
+  z-index: 1;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+}
+
+.date.left::after {
+  right: -10px;
+}
+
+.date.right::after {
+  left: -10px;
+}
+
+/* ----- END : Date of the day ----- */
+
+/*---- Animation when panel expanded ----*/
+
+.mat-expanded mat-expansion-panel-header {
+  margin-bottom: 20px;
+  background-color: mat.get-color-from-palette($af-rigui-primary-palette,default);
+}
+
+.mat-expanded mat-panel-description {
+  color: $custom-grey-light;
+  z-index: 2;
+}
+
+.mat-expanded mat-panel-title {
+  color: white;
+}
+
+.mat-expanded mat-expansion-panel-header,
+mat-expansion-panel-header,
+.mat-expanded mat-panel-title,
+.mat-expanded mat-panel-description {
+  -webkit-transition: background-color 0.2s ease, color 0.2s ease;
+  -o-transition: background-color 0.2s ease, color 0.2s ease;
+  -ms-transition: background-color 0.2s ease, color 0.2s ease;
+  -moz-transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.mat-expanded mat-panel-title::after,
+.mat-expanded mat-icon,
+mat-panel-title::after,
+mat-icon {
+  -webkit-transition: 0.3s ease;
+  -o-transition: 0.3s ease;
+  -ms-transition: 0.3s ease;
+  -moz-transition: 0.3s ease;
+  /* Safari */
+  transition: 0.3s ease;
+}
+
+.mat-expanded mat-expansion-panel-header,
+.mat-expanded mat-panel-title,
+.mat-expanded mat-panel-descriptio {
+  -webkit-transition-delay: 0.1s;
+  -o-transition-delay: 0.1s;
+  -ms-transition-delay: 0.1s;
+  -moz-transition-delay: 0.1s;
+  transition-delay: 0.1s;
+}
+
+div.tracking-container.left .mat-expanded mat-panel-title::after {
+  -webkit-transform: translate(-25vw);
+  -o-transform: translate(-25vw);
+  -ms-transform: translate(-25vw);
+  -moz-transform: translate(-25vw);
+  transform: translate(-25vw);
+}
+
+div.tracking-container.left .mat-expanded mat-icon {
+  -webkit-transform: translate(-35px, 6px);
+  -o-transform: translate(-35px, 6px);
+  -ms-transform: translate(-35px, 6px);
+  -moz-transform: translate(-35px, 6px);
+  transform: translate(-35px, 6px);
+}
+
+div.tracking-container.right .mat-expanded mat-panel-title::after {
+  -webkit-transform: translate(25vw);
+  -o-transform: translate(25vw);
+  -ms-transform: translate(25vw);
+  -moz-transform: translate(25vw);
+  transform: translate(25vw);
+}
+
+div.tracking-container.right .mat-expanded mat-icon {
+  -webkit-transform: translate(35px, 6px);
+  -o-transform: translate(35px, 6px);
+  -ms-transform: translate(35px, 6px);
+  -moz-transform: translate(35px, 6px);
+  transform: translate(35px, 6px);
+}
+
+/*---- END : Animation when panel expanded ----*/
+
+/* The circles on the timeline */
+
+div.tracking-container.right mat-panel-title::after {
+  left: -23px;
+}
+
+/* The circles on the timeline */
+
+div.tracking-container.left mat-panel-title::after {
+  right: -26px;
+}
+
+/* Place the container to the left */
+
+.left {
+  left: 0;
+}
+
+/* Place the container to the right */
+
+.right {
+  left: 50%;
+}
+
+/* Fix the circle for containers on the right side */
+
+.right::after {
+  left: -16px;
+}
+
+
+.back-button {
+  position: fixed;
+  z-index: 2;
+  bottom: 5vh;
+  right: 2vw;
+}
+
+.export-data {
+  position: absolute;
+    top: 6px;
+    right: 6px;
+    color: mat.get-color-from-palette($af-rigui-primary-palette,default);
+}
+
+/* ---- NOT FOUND DATA ---- */
+.not-found {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 15vh;
+}
+
+.big-text {
+  text-align: center;
+  font-size: 2em;
+}
+
+.error {
+  font-size: 5em;
+}
+
+.not-found-message {
+  font-size: 1.5em;
+}
+/*--------------------*/
+
+.search-param {
+  margin-bottom: 20px;
+}
+mat-card.search-param mat-card-content {
+  margin-left: 10px;
+}
+mat-card.search-param mat-card-actions {
+  margin-right: -4px;
+}
+
+/* Media queries - Responsive timeline on screens less than 769px wide */
+
+@media screen and (max-width: 769px) {
+  /* Place the timelime to the left */
+  .timeline::after {
+    left: 31px;
+  }
+  /* Full-width containers */
+  .tracking-container {
+    width: calc(100vw - 60px);
+    padding-left: 36px;
+  }
+  /* Make sure that all arrows are pointing leftwards */
+  .tracking-container::before {
+    left: 60px;
+    border: medium solid white;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent white transparent transparent;
+  }
+  /* Make sure all circles are at the same spot */
+  .left::after,
+  .right::after {
+    left: 15px;
+  }
+  /* Make all right containers behave like the left ones */
+  .right {
+    left: 0%;
+  }
+  div.tracking-container mat-panel-title::after,
+  div.tracking-container.right mat-panel-title::after {
+    left: -30px;
+  }
+  div.tracking-container .mat-expansion-panel-header-title {
+    margin-left: 35px;
+  }
+  div.tracking-container.left .timeline-icon,
+  div.tracking-container.right .timeline-icon {
+    left: -20px;
+  }
+  div.tracking-container.right .mat-expanded mat-panel-title::after,
+  div.tracking-container.left .mat-expanded mat-panel-title::after {
+    -webkit-transform: translate(50vw);
+    -o-transform: translate(50vw);
+    -ms-transform: translate(50vw);
+    -moz-transform: translate(50vw);
+    transform: translate(50vw);
+  }
+  div.tracking-container.right .mat-expanded mat-icon,
+  div.tracking-container.left .mat-expanded mat-icon {
+    -webkit-transform: translate(35px, 6px);
+    -o-transform: translate(35px, 6px);
+    -ms-transform: translate(35px, 6px);
+    -moz-transform: translate(35px, 6px);
+    transform: translate(35px, 6px);
+  }
+  .date.left::after,
+  .date.right::after {
+    left: 21px;
+  }
+  .date.left {
+    text-align: left;
+  }
+  .date.left span {
+    padding-left: 20px;
+  }
+  .button-next {
+    left: 34px;
+  }
+
+  .button-next i {
+    margin-left:-28%;
+  }
+}
+
+button.mat-icon-button {
+  position: absolute;
+}
+
+h1.mat-display-1 {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+
+// Daisy fix
+*,*::before, *::after {
+  box-sizing: unset;
+}
+
+mat-expansion-panel {
+  overflow: visible;
+}

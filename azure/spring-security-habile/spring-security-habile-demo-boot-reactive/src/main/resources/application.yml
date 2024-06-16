@@ -1,0 +1,48 @@
+logging:
+  level:
+    root: INFO
+    '[com.afklm.spring.security.habile]': DEBUG
+    '[org.springframework.security]': DEBUG
+
+server:
+  reactive:
+    session:
+      cookie:
+        name: JSESSIONID
+
+#spring:
+#  webflux:
+#    base-path: /api
+
+afklm:
+  security:
+    public-endpoints: /public/**
+    urls-http-verbs-authorities:
+      - urls: /api/user-only/hello/**
+        http-verbs-authorities:
+          - verbs: GET
+            roles: P_XXXXX_USER
+          - verbs: POST, PUT
+            roles: P_XXXXX_ADMIN
+      - urls: /api/user-only/byebye/**
+        http-verbs-authorities:
+          - verbs: GET
+            roles: P_XXXXX_ADMIN
+    actuators-role: P_XXXXX_ADMIN
+    roles:
+      P_ADSL_ADMIN:
+        - ADMIN
+        - USER
+      P_USER_EMPTY:
+      P_AEM_USER:
+        - USER
+      P_DEV_USER:
+        - USER
+        - ADMIN
+        - GOD_TIER
+      P_XXXXX_ADMIN:
+        - UPDATE
+        - VIEW
+      P_XXXXX_USER:
+        - VIEW
+

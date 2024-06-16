@@ -1,0 +1,51 @@
+.headline {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.mat-title {
+  margin: 0;
+}
+
+.mat-subheading-1 {
+  margin: 0 12px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+mat-list-item:hover, .selected.daisy-bg-on-primary {
+  cursor: pointer;
+
+  button {
+    color: white;
+    border-color: white;
+  }
+
+  .important-information {
+    font-weight: bold;
+  }
+
+  .selector {
+    display: block;
+  }
+
+  .headline,
+  .subtitle {
+    margin-left: 12px;
+  }
+}
+
+.selector {
+  position: absolute;
+  background: red;
+  width: 10px;
+  height: 100%;
+  left: 0;
+  top: 0;
+  display: none;
+}

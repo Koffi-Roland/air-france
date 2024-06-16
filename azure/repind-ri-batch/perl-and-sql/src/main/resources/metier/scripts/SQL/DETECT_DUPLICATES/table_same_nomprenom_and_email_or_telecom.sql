@@ -1,0 +1,13 @@
+BEGIN
+    EXECUTE IMMEDIATE 'CREATE TABLE DQ_NOMPRENOM_EMAIL_OR_TEL_TMP AS select NOMPRENOM, ELEMENT_DUPLICATE, SGINS, nb_contract, nb_gins from
+        (select NOMPRENOM, EMAIL as ELEMENT_DUPLICATE, SGINS, nb_contract, nb_gins from DQ_MGE_SAME_NOMPRE_EMAIL_GIN npe
+         where NOMPRENOM not in (select distinct NOMPRENOM from DQ_NOMPRENOM_TELECOM_EMAIL npte where npe.NOMPRENOM = npte.NOMPRENOM)
+         UNION ALL
+         select NOMPRENOM, SNORM_INTER_PHONE_NUMBER as ELEMENT_DUPLICATE, SGINS, nb_contract, nb_gins from DQ_MGE_SAME_NOMPRE_TELECOM_GIN npt
+         where NOMPRENOM not in (select distinct NOMPRENOM from DQ_NOMPRENOM_TELECOM_EMAIL npte where npt.NOMPRENOM = npte.NOMPRENOM))
+        order by NOMPRENOM';
+
+    EXECUTE IMMEDIATE 'CREATE TABLE DQ_NOMPRENOM_EMAIL_OR_TEL AS
+        select NOMPRENOM, ELEMENT_DUPLICATE, SGINS, nb_contract, nb_gins, COALESCE((select distinct 1 from DQ_NOMPRENOM_EMAIL_OR_TEL_TMP tmp2 where tmp1.ELEMENT_DUPLICATE != tmp2.ELEMENT_DUPLICATE and tmp1.NOMPRENOM = tmp2.NOMPRENOM), 0) as is_duplicate
+        from DQ_NOMPRENOM_EMAIL_OR_TEL_TMP tmp1';
+END;

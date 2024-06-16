@@ -1,0 +1,5 @@
+Personnal identifier (FB number or connexion email);Account code type ;Account code (CA ID);Label;End of accreditation date;contract type (CC or BB) ;contract Ref (ID);Commentaires
+1037139794121231;AC;123456;Roubaud INC7;21/08/2016;CC;1ZE234
+XMDMASGSMV;AC;123456;Roubaud INC8;21/08/2016;CC;1ZE234
+001Lil54424@fr;AC;568923;La vie en rose;25/06/2016;CC;3G4E25
+hayleysoto@.fr;AC;568923;La vie en rose;25/06/2016;BB;3G4E25

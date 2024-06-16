@@ -1,0 +1,3 @@
+com\afklm\batch\invalidation\email\config\BatchInvalidationConfig.class
+com\afklm\batch\invalidation\email\BatchInvalidationEmail.class
+com\afklm\batch\invalidation\email\type\GenerateLogInvalidationEmail.class

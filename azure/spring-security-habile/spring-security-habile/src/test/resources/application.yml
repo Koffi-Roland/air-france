@@ -1,0 +1,42 @@
+logging:
+  level: 
+    root: INFO
+
+afklm:
+  security:
+    actuators-role: P_ADMIN
+    anonymous-roles:
+    - P_TEST_EMPTY
+    - P_TEST2
+    roles:
+      P_TEST:
+        - AK_TEST
+        - AK_MODIF
+      P_TEST_EMPTY:
+      P_TEST2:
+        - AK_TEST
+      P_ADMIN:
+    urls-http-verbs-authorities:
+      - urls: /test/**
+        http-verbs-authorities:
+          - verbs: GET
+            roles: P_TEST
+    websocket:
+      heartbeat-period: 10000
+      broker: /topic
+      destination-prefix: /app
+      endpoints: /api/websocket
+    allow-iframe: true
+    content-security-policy: upgrade-insecure-requests; frame-ancestors 'self'; font-src 'self' https://fonts.googleapis.com; script-src 'self'; object-src 'self';
+---
+
+spring:
+  config:
+    activate:
+      on-profile: customSecurityConfig
+
+afklm:
+  security:
+    public-endpoints: >
+      /foo/*,
+      /faa/*

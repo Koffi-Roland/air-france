@@ -1,0 +1,23 @@
+meta {
+  name: Delete
+  type: http
+  seq: 2
+}
+
+delete {
+  url: {{delete-my-account-url}}/delete-my-account/?gin={{gin}}
+  body: none
+  auth: none
+}
+
+query {
+  gin: {{gin}}
+}
+
+vars:pre-request {
+  MS: delete-my-account
+}
+
+assert {
+  res.status: eq 404
+}

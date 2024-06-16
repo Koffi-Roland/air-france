@@ -1,0 +1,21 @@
+<mat-expansion-panel class="mat-elevation-z0" expanded>
+  <mat-expansion-panel-header>
+    <span class="mat-subheading-2">{{ filterGroup.label | translate }}</span>
+  </mat-expansion-panel-header>
+
+  <ng-template matExpansionPanelContent>
+    <div class="expansion-panel-content">
+      <mat-radio-group [(ngModel)]="selectedValue" (change)="filter()">
+        <div class="radio-btn-and-counter" *ngFor="let conf of filterGroup.configurations">
+          <mat-radio-button [value]="conf.key" [disabled]="conf.count === 0">
+            <div class="radio-button-content">
+              <span class="mat-h4">{{ conf.label | translate }}</span>
+            </div>
+          </mat-radio-button>
+          <span class="mat-small counter">({{ conf.count }})</span>
+        </div>
+      </mat-radio-group>
+    </div>
+  </ng-template>
+
+</mat-expansion-panel>

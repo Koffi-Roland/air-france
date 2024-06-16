@@ -1,0 +1,7 @@
+com\afklm\batch\lastactivity\processor\LastActivityProcessor.class
+com\afklm\batch\lastactivity\model\LastActivityModel.class
+com\afklm\batch\lastactivity\service\LastActivityService.class
+com\afklm\batch\lastactivity\model\LastActivityModel$LastActivityModelBuilder.class
+com\afklm\batch\lastactivity\writer\LastActivityWriter.class
+com\afklm\batch\lastactivity\BatchLastActivity.class
+com\afklm\batch\lastactivity\config\LastActivityConfig.class

@@ -1,0 +1,84 @@
+script:pre-request {
+  const cryptoJS = require("crypto-js");
+  const axios = require("axios");
+  const currentEnv = bru.getEnvVar("env");
+  const returnError = bru.getVar('ERROR');
+  
+  if(!!returnError) {
+    bru.setVar('ERROR',null);
+    req.setUrl('');
+    return;
+  }
+  
+  console.log('currentEnv', currentEnv);
+  
+  // Handle SIG MASHERY in DEV/RCT/QAL/PRD
+  if (currentEnv === 'DEV' || currentEnv === 'RCT' || currentEnv == 'PRD' || currentEnv == 'QAL') {
+      const vaultRoleId = bru.getEnvVar("vault-role-id");
+      const vaultSecretId = bru.getEnvVar("vault-secret-id");
+      if (!vaultRoleId || !vaultSecretId) {
+          throw new Error("No vault-role-id or vault-secret-id found. Please make sure to have the .env with the vault-role-id and vault-role-secret-id found.");
+      }
+      var utcTime = Math.round(new Date().getTime() / 1000);
+      // use the override header to force a MicroService key
+      // if override is search we stop here cause we don't need to calculate the sig
+      const currentMS = bru.getVar('MS');
+      if (currentMS !== 'skip') {
+          console.log(currentMS);
+          if (!currentMS) {
+              throw new Error("You are in environment " + currentEnv + ". Please put the header 'MS' in your Header tab in order to use your request correctly");
+          }
+          const headers = req.getHeaders();
+          if (!headers['Content-Type']) {
+              headers['Content-Type'] = 'application/json'
+          }
+          req.setHeaders(headers);
+          const apiKeyVar = currentMS + '-key';
+          const apiSecretVar = currentMS + '-secret';
+          const currentVault = (bru.getVar('vault') || {})[currentEnv];
+          if (!currentVault) {
+              throw new Error("Could not find data for vault in " + currentEnv + ". Please make sure to launch the .init Get secret request before");
+          }
+          const apiKey = currentVault[apiKeyVar + '-' + currentEnv.toLowerCase()];
+          const apiSecret = currentVault[apiSecretVar + '-' + currentEnv.toLowerCase()];
+          console.log(apiKeyVar + '-' + currentEnv.toLowerCase(), apiKey);
+          if (!apiKey || !apiSecret) {
+              throw new Error("Could not find a value setted for " + apiKeyVar + " or " + apiSecretVar + ". Please set those 2 values. Please make sure thoses values are correctly setted on vault");
+          }
+          console.log('key', apiKey);
+          console.log('secret', apiSecret);
+          const sig = cryptoJS.SHA256(apiKey + apiSecret + utcTime).toString();
+          const newHeaders = req.getHeaders();
+          headers['api_key'] = apiKey;
+          headers['X-signature'] = sig;
+          req.setHeaders(newHeaders);
+      }
+  } else {
+      console.log('We are in local nothing else to do');
+  }
+  
+  const setVar = (envVar, runningVar, finalVar) => {
+      const currentVar = bru.getVar(runningVar + '_' + currentEnv);
+      const defaultVar = bru.getEnvVar(envVar);
+      bru.setVar(finalVar, !!currentVar ? currentVar : defaultVar);
+  }
+  
+  // don't forget to clean in post response
+  setVar('gin-default', 'GIN', 'gin');
+  setVar('email-default', 'EMAIL', 'email');
+  setVar('contract-default', 'CONTRACT', 'contract');
+  
+  
+}
+
+script:post-response {
+  ['GIN', 'EMAIL', 'CONTRACT'].forEach((item) => {
+    ['LOCAL', 'DEV', 'RCT', 'QAL', 'PRD'].forEach((env) => {
+        bru.setVar(item + '_' + env, null);
+    })
+  });
+  ['gin', 'email', 'contract'].forEach((test) => {
+    bru.setVar(test, null);
+  });
+  
+}

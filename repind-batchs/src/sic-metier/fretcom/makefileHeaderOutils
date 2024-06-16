@@ -1,0 +1,103 @@
+TOOLS_REF=.
+
+MEM=	Soft
+
+# default option
+#PAR=	_dbg 
+#PAR=	_fast
+
+#TMP=$(shell habilitation -l | grep Forte | cut -d_ -s -f2)
+#ifneq ($(TMP),)
+#PATCH=_$(TMP)
+#endif
+
+
+#VERSION=$(shell cleartool catcs | grep FRETCOM_OUTILS| perl -e 'while (<>) {m/(_V[\d_]+[\d])/;print "$$1\n"}')
+#pel VERSION=$(shell cleartool catcs | grep FRETCOM_OUTILS| perl -e 'while (<>) {m/(_V[\d_]+[\d_]+[\w]+[\d])/;print "$$1\n"}')
+VERSION=V2_5_S10
+#VERSION=
+VERS_PATH=$(shell echo $(CLEARCASE_ROOT) | perl -e 'while (<>) {m/(v[\d_]+[\d])/;print "$$1\n"}')
+
+# this is the compilo version used
+#WORKSHOP_VERS=8.0
+#Migration Solaris 10
+WORKSHOP_VERS=11
+
+# this is the adhesion  version used
+#ADHVERS=7.3
+#Migration Solaris 10
+#pel ADHVERS=9.4
+ADHVERS=11
+# this is the oracle version used for Applicative lib Oracle
+#pel ORACLE_VERS=$(shell basename $(ORACLE_HOME))
+ORACLE_VERS=12102
+$(info PAR is $(PAR))
+ifeq ($(PAR),_dbg)
+DEBUG_APP=1
+USE_FAST=0
+endif
+
+$(info DEBUG_APP is $(DEBUG_APP))
+ifeq ($(PAR),_fast)
+DEBUG_APP=0
+USE_FAST=1
+endif
+
+$(info DEBUG_APP is $(DEBUG_APP))
+# lib RW
+#Migration Solaris 10
+#pel RWLIBVERS=9.5.0
+#RWLIBVERS=13.2
+#USE_SPC=1
+#RWVERS=12d
+
+ROOT0=	$(APPLICATION_RACINE)
+
+# ------------------------------------------------------------------ #
+#	Conditionnal compilations :
+
+LV_OPTIONS= -D__WORKSPACE_$(MAKE_ENV)__
+
+# ------------------------------------------------------------------ #
+# TAGS 
+#
+DBG=	-DDEBUG -D__EXCEPTION_DEBUG__
+
+# ------------------------------------------------------------------ #
+#	Common Library names :
+
+#TOOLS_LIB=	TOOLS$(PAR)
+#TOOLS_LIB=	TOOLS$(VERSION)_S8$(PATCH)$(PAR)
+TOOLS_LIB=	TOOLS$(VERSION)$(PATCH)$(PAR)
+#PROC++_LIB=	PROC++$(ORACLE_VERS)$(PAR)
+#PROC++_LIB=	PROC++$(ORACLE_VERS)$(VERSION)_S8$(PATCH)$(PAR)
+PROC++_LIB=	PROC++$(ORACLE_VERS)$(VERSION)$(PATCH)$(PAR)
+
+
+DBGDIR=		$(TOOLS_REF)/DEBUG
+EXCDIR=		$(TOOLS_REF)/EXCEPTION
+MEMDIR=		$(TOOLS_REF)/MEMORY
+MISCDIR=	$(TOOLS_REF)/MISC
+DYNDIR=		$(TOOLS_REF)/PROC++
+
+SRC=src
+INC=include
+
+# for TOOLS dir : multiple Include Directory
+
+TOOLS_INC= 	-I$(MEMDIR)/$(INC) -I$(EXCDIR)/$(INC) -I$(DBGDIR)/$(INC) \
+		-I$(MISCDIR)/$(INC) -I$(DYNDIR)/$(INC) -I/exploit/oracle/client/12102/precomp/public
+		#-I$(MISCDIR)/$(INC) -I$(DYNDIR)/$(INC) -I$(ORACLE_HOME)/precomp/public
+
+
+#APP_CFLAGS+= -std=c++11 -g $(DBG)
+APP_CFLAGS+= -g $(DBG)
+
+APP_INCLUDE +=	$(TOOLS_INC)
+
+APP_LDFLAGS+= \
+	-L$(TOOLS_REF)/$(LIBDIR)  \
+	#pel -L$(TOOLS_REF)/$(LIBDIR)  -R$(TOOLS_REF)/$(LIBDIR) \
+
+APP_LIBS+= -lTOOLS$(VERSION)$(PATCH)$(PAR) -lPROC++$(ORACLE_VERS)$(VERSION)$(PATCH)$(PAR)
+#APP_LIBS+= -lTOOLS$(VERSION)_S8$(PATCH)$(PAR) -lPROC++$(ORACLE_VERS)$(VERSION)_S8$(PATCH)$(PAR)

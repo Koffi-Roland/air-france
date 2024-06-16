@@ -1,0 +1,86 @@
+.content {
+  margin: 5vh 4vw;
+  display: flex;
+  flex-direction: row;
+  flex: 0;
+}
+
+.column {
+  width:100%;
+}
+
+div.column:first-of-type {
+  margin-right:12px;
+}
+
+.gdpr-image {
+  background-image: url('./img/gdpr.png');
+  background-size: cover;
+}
+
+p {
+  text-align:justify;
+}
+
+@media screen and (max-width: 1350px) {
+  .content {
+    display: flex;
+    flex-direction: column;
+    flex: 0;
+  }
+  .column {
+    margin-bottom: 12px;
+  }
+  div.column:first-of-type {
+    margin-right:0px;
+    text-align: center;
+  }
+  button {
+    width: 100%
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .content {
+    margin: 0vh 4vw;
+  }
+}
+
+.mat-display-2 {
+  margin: 12px 0;
+}
+
+.btn-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+button:last-child {
+  margin: 0 0 0 12px;
+}
+
+.btn-label {
+  margin-right: 5vw;
+}
+
+.btn-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 600px) {
+  .btn-group {
+    flex-direction: column;
+  }
+
+  button:last-child {
+    margin: 12px 0 0 0;
+  }
+
+  button {
+    width: 100%;
+  }
+}

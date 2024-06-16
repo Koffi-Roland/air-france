@@ -1,0 +1,25 @@
+additional_user_np_flag: 'No'
+app_name: ri
+az_region: France Central (FCE)
+enable_node_pool_spread_across_az: 'No'
+env: PRD
+kubernetes_version: 1.25.5
+node_pool_node_count: '3'
+node_pool_vm_size: large
+product_team: PRODUCTTEAM_ri
+ritm: RITM9999808
+service_category: aks
+subscription_id: 9451007c-eb98-4383-a8e9-3a86406810ee
+sub_name: mrn-ri-prod-001
+cluster_number: 1
+action_group_list: [
+  "ag_advisor-ri-prod-frc",
+  "ag_finops-ri-prod-frc",
+  "ag_security-ri-prod-frc",
+  "ag_sha-ri-prod-frc",
+  "ag_srv-ri-prod-frc"
+]
+action_group_present: true
+private_cluster_enabled: true
+# Subnet is Aks01IngressSubnet (10.206.181.16/28) first 3 ips reserved by az
+ingress_loadbalancer_ip: 10.206.181.20 #required

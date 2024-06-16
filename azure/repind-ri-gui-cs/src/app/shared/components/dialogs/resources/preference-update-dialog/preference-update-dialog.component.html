@@ -1,0 +1,51 @@
+<mat-toolbar mat-dialog-title color="primary">
+  <app-dialog-toolbar [title]="data.title"></app-dialog-toolbar>
+</mat-toolbar>
+
+<mat-dialog-content mat-dialog-content>
+
+  <!-- Part for the update of a preference -->
+  <div *ngIf="preference">
+    <app-add-pref-data-form [type]="preference.type" [preference]="preference"></app-add-pref-data-form>
+    <div [class.preference-data-update]="data.isUpdate" [class.preference-data-create]="!data.isUpdate"
+      *ngIf="preference.preferenceDataCount > 0">
+      <app-pref-data-form *ngFor="let data of preference.preferenceData" [type]="preference.type"
+        [preferenceData]="data" (valueHasChanged)="onValueChanged()" (noPreferenceDataValue)="deletePrefData($event)"
+        (valueHasBeenSaved)="onValueSaved()">
+      </app-pref-data-form>
+    </div>
+  </div>
+
+  <!-- Part for the creation of a preference -->
+  <div *ngIf="!preference">
+    <div class="preference-type-selector">
+      <mat-form-field appearance="outline" class="key-field">
+        <mat-label>{{ 'TYPE' | translate }}</mat-label>
+        <mat-select [formControl]="preferenceTypeCtrl">
+          <mat-option>{{ 'NONE' | translate }}</mat-option>
+          <mat-option *ngFor="let ref of allPreferenceTypes" [value]="ref">
+            <span>{{ (currentLocal === 'fr') ? ref.labelFR : ref.labelEN }}</span>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-icon-button (click)="lockPreferenceType()">
+        <mat-icon>{{ (!isPreferenceTypeLocked) ? 'lock' : 'lock_open' }}</mat-icon>
+      </button>
+    </div>
+    <app-add-pref-data-form *ngIf="createdPreference" [type]="createdPreference.type" [preference]="createdPreference">
+    </app-add-pref-data-form>
+    <div [class.preference-data-update]="data.isUpdate" [class.preference-data-create]="!data.isUpdate"
+      *ngIf="createdPreference && createdPreference.preferenceDataCount > 0">
+      <app-pref-data-form *ngFor="let data of createdPreference.preferenceData" [type]="createdPreference.type"
+        [preferenceData]="data" (valueHasChanged)="onValueChanged()" (noPreferenceDataValue)="deletePrefData($event)"
+        (valueHasBeenSaved)="onValueSaved()">
+      </app-pref-data-form>
+    </div>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="confirmAndSave()" [disabled]="unsavedPreferenceDataCount !== 0">{{
+    data.validationBtnLabel | translate }}</button>
+</mat-dialog-actions>

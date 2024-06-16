@@ -1,0 +1,13 @@
+/target/
+/stdout-traces_batch_java.log
+/stdout-traces_batch_java.log.1
+/stdout-traces_batch_java.log.4
+/stdout-traces_batch_java.log.5
+/stdout-traces_batch_java.log.6
+/stdout-traces_batch_java.log.7
+/stdout-traces_batch_java.log.2
+/stdout-traces_batch_java.log.3
+/stdout-traces_batch_java.log.*
+/BatchAlimPrefilledNumber_reject_*
+/BatchAlimPrefilledNumber_report_*
+/testFile.out.txt

@@ -1,0 +1,255 @@
+#!/bin/bash
+
+start_instance(){
+
+	instance=$1
+	kubectl exec $instance -- bash -c "neo4j start"
+	
+}
+
+restore_on_instance(){
+
+	instance=$1
+	RESTORE_ROOT=$2
+	RESTORE_FROM=$3
+	FORCE_FLAG=$4
+	FORCE_OVERWRITE=$5
+	PURGE_ON_COMPLETE=$6
+	
+	kubectl exec $instance -- bash -c "
+	echo \"RESTORE_FROM=$RESTORE_FROM\"
+
+	echo \"Set to restore from $RESTORE_FROM\"
+	echo \"Post uncompress backup size:\"
+	ls -al \"$RESTORE_ROOT\"
+	du -hs \"$RESTORE_FROM\"
+
+	cd /data && \
+	echo \"Dry-run command\"
+	echo neo4j-admin restore \
+		--from=\"$RESTORE_FROM\" \
+		--database=graph.db $FORCE_FLAG
+
+	echo \"Volume mounts and sizing\"
+	df -h
+	
+	echo \"Now restoring\"
+	neo4j-admin restore \
+		--from=\"$RESTORE_FROM\" \
+		--database=graph.db $FORCE_FLAG
+	
+	echo \"Rehoming database\"
+	echo \"Restored to:\"
+	ls -l /var/lib/neo4j/data/databases
+
+	mkdir /data/databases
+
+	if [ -d \"/data/databases/graph.db\" ] ; then
+	   if [ \"$FORCE_OVERWRITE" = "true\" ] ; then
+		  echo \"Removing previous database because FORCE_OVERWRITE=true\"
+		  rm -rf /data/databases/graph.db
+	   fi
+	fi
+
+	mv /var/lib/neo4j/data/databases/graph.db /data/databases/
+	
+	chown -R neo4j /data/databases
+	chgrp -R neo4j /data/databases
+
+	echo \"Final permissions\"
+	ls -al /data/databases/graph.db
+
+	echo \"Final size\"
+	du -hs /data/databases/graph.db
+
+	if [ \"$PURGE_ON_COMPLETE\" = true ] ; then
+		echo \"Purging backupset from disk\"
+		rm -rf \"$RESTORE_ROOT\"
+	fi" --FORCE_OVERWRITE=$FORCE_OVERWRITE --BACKUP_FILENAME=$BACKUP_FILENAME --RESTORE_ROOT=$RESTORE_ROOT --RESTORE_FROM=$RESTORE_FROM --PURGE_ON_COMPLETE=$PURGE_ON_COMPLETE --FORCE_FLAG=$FORCE_FLAG
+	
+}
+
+stop_and_unbind(){
+
+	instance=$1
+	kubectl exec $instance -- bash -c "neo4j stop && neo4j-admin unbind --database=graph.db"
+	
+}
+
+prepare_file_on_instance(){
+
+	instance=$1
+	FORCE_OVERWRITE=$2
+	RESTORE_ROOT=$3
+	
+	kubectl exec $instance -- bash -c "if [ -d \"/data/databases/graph.db\" ]; then 
+		echo \"You have an existing graph database at /data/databases/graph.db\" 
+		if [ \"$FORCE_OVERWRITE\" != \"true\" ]; then 
+			echo \"And you have not specified FORCE_OVERWRITE=true, so we will not restore because\" 
+			echo \"that would overwrite your existing data.   Exiting.\". 
+			exit 0; 
+		fi 
+	else 
+		echo \"No existing graph database found at /data/databases/graph.db\" 
+	fi
+
+	echo $RESTORE_ROOT
+	echo \"mkdir -p \"$RESTORE_ROOT\"\"
+	echo \"Making restore directory\"
+	mkdir -p \"$RESTORE_ROOT\"
+
+	echo \"Backup size pre-uncompress:\"
+	du -hs \"$RESTORE_ROOT\"
+	ls -l \"$RESTORE_ROOT\" " --FORCE_OVERWRITE=$FORCE_OVERWRITE --RESTORE_ROOT=$RESTORE_ROOT
+	
+	kubectl cp /backupdir/$file $instance:/$RESTORE_ROOT
+	
+}
+
+unzip_file(){
+
+	instance=$1
+	BACKUP_FILENAME=$2
+	RESTORE_ROOT=$3
+	
+	kubectl exec $instance -- bash -c "
+	if [[ $BACKUP_FILENAME =~ \.tar\.gz$ ]]; then
+		echo \"Untarring backup file\"
+		cd \"$RESTORE_ROOT\" && tar --force-local --overwrite -zxvf \"$BACKUP_FILENAME\"
+
+		if [ $? -ne 0 ] ; then
+			echo \"Failed to unarchive target backup set\"
+			exit 1
+		fi
+	elif [[ $BACKUP_FILENAME =~ \.zip$ ]] ; then
+		echo \"Unzipping backupset\"
+		cd \"$RESTORE_ROOT\" && unzip -o \"$BACKUP_FILENAME\"
+		
+		if [ $? -ne 0 ]; then 
+			echo \"Failed to unzip target backup set\"
+			exit 1
+		fi
+	fi" --BACKUP_FILENAME=$BACKUP_FILENAME --RESTORE_ROOT=$RESTORE_ROOT
+	
+}
+
+prepare_restore_on_instance(){
+
+	file=$1
+	FORCE_OVERWRITE=$2
+	PURGE_ON_COMPLETE=$3
+	
+	RESTORE_ROOT=/data/backupset
+	
+	echo $file
+	echo $FORCE_OVERWRITE
+	
+	if [ "$FORCE_OVERWRITE" = true ]; then
+		echo "We will be force-overwriting any data present"
+		FORCE_FLAG="--force"
+		echo "Force flag : " $FORCE_FLAG
+	else
+		# Pass no flag in any other setup.
+		echo "We will not force-overwrite data if present"
+		FORCE_FLAG=""
+	fi
+	
+	BACKUP_FILENAME=$(basename "$file")
+	RESTORE_FROM=uninitialized
+	
+	
+	if [[ $BACKUP_FILENAME =~ \.tar\.gz$ ]]; then
+		UNTARRED_BACKUP_DIR=${BACKUP_FILENAME%.tar.gz}
+		RESTORE_FROM="$RESTORE_ROOT/data/$UNTARRED_BACKUP_DIR"
+	elif [[ $BACKUP_FILENAME =~ \.zip$ ]] ; then
+		UNZIPPED_BACKUP_DIR=${BACKUP_FILENAME%.zip}
+		RESTORE_FROM="$RESTORE_ROOT/data/$UNZIPPED_BACKUP_DIR"
+	else
+		RESTORE_FROM="$RESTORE_ROOT/$BACKUP_FILENAME"
+	fi
+	
+	
+	for i in {0..2}
+	do
+		prepare_file_on_instance "neo4j-core-$i" $FORCE_OVERWRITE $RESTORE_ROOT &
+	done
+	wait
+	
+	for i in {0..2}
+	do
+		unzip_file "neo4j-core-$i" $BACKUP_FILENAME $RESTORE_ROOT &
+	done
+	wait
+	
+	# for i in {0..2}
+	# do
+		# stop_and_unbind "neo4j-core-$i" &
+	# done
+	# wait
+
+	for i in {0..2}
+	do
+		restore_on_instance "neo4j-core-$i" $RESTORE_ROOT $RESTORE_FROM $FORCE_FLAG $FORCE_OVERWRITE $PURGE_ON_COMPLETE &
+	done
+	wait
+	
+	# for i in {0..2}
+	# do
+		# start_instance "neo4j-core-$i" &
+	# done
+	# wait
+	
+	
+}
+
+while getopts 'f:opb:' flag; do
+  case "${flag}" in
+    f) file="${OPTARG}" ;;
+    p) FORCE_OVERWRITE='true' ;;
+    k) PURGE_ON_COMPLETE='false' ;;
+    b) BACKUP_SET_DIR="${OPTARG}" ;;
+    *) print_usage
+       exit 1 ;;
+  esac
+done
+
+print_usage() {
+  printf "Usage: ..."
+}
+
+# Validation of inputs upfront
+if [ -z $file ]; then
+    echo "You must specify file"
+    exit 1
+fi
+
+if [ -z $BACKUP_SET_DIR ] ; then
+    echo "*********************************************************************************************"
+    echo "* You have not specified BACKUP_SET_DIR -- this means that if your archive set uncompresses *"
+    echo "* to a different directory than the file is named, this restore may fail                    *"
+    echo "* See logs below to ensure the right path was selected.                                     *"
+    echo "*********************************************************************************************"
+fi
+
+if [ -z $PURGE_ON_COMPLETE ]; then
+    PURGE_ON_COMPLETE=true
+fi
+
+if [ -z $FORCE_OVERWRITE ]; then
+    FORCE_OVERWRITE=false
+fi
+
+echo "=============== Neo4j Restore ==============================="
+echo "Beginning restore process"
+echo "GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS"
+echo "REMOTE_BACKUPSET=$REMOTE_BACKUPSET"
+echo "BACKUP_SET_DIR=$BACKUP_SET_DIR"
+echo "FORCE_OVERWRITE=$FORCE_OVERWRITE"
+ls /data/databases
+echo "============================================================"
+ls /backupdir/
+echo "============================================================"
+
+prepare_restore_on_instance $file $FORCE_OVERWRITE $PURGE_ON_COMPLETE
+	
+exit 0

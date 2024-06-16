@@ -1,0 +1,28 @@
+
+query emails_last_activity {
+  getEmailsByGin(gin: "000000000054") {
+
+   email {
+       email
+       version
+       mediumStatus
+       mediumCode
+       emailOptin
+   }
+   signature{
+       signatureType
+       signatureSite
+       signature
+       date
+   }
+
+  }
+   getLastActivityByGin(gin: "000000000054") {
+     gin
+     dateModification
+     sourceModification
+     signatureModification
+     siteModification
+ }
+
+}

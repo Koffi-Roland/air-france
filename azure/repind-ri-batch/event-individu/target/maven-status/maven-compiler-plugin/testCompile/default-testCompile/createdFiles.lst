@@ -1,0 +1,4 @@
+com\afklm\batch\event\individu\SendNotifySecurityEventTaskTest.class
+com\afklm\batch\event\individu\ut\NotifyIndividualTransformTest.class
+com\afklm\batch\event\individu\ut\NotifyAdhocIndividualTransformTest.class
+com\afklm\batch\event\individu\SendNotifyEventIndividualTaskTest.class

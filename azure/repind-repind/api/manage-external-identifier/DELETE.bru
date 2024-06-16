@@ -1,0 +1,25 @@
+meta {
+  name: DELETE
+  type: http
+  seq: 2
+}
+
+delete {
+  url: {{manage-external-identifier-url}}/?type=type&identifier=identifier&gin={{gin}}
+  body: none
+  auth: none
+}
+
+query {
+  type: type
+  identifier: identifier
+  gin: {{gin}}
+}
+
+vars:pre-request {
+  MS: manage-external-identifier
+}
+
+assert {
+  res.status: eq 400
+}

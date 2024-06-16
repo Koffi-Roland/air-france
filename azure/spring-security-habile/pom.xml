@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.afklm.maven.pom</groupId>
+    <artifactId>af-projects-pom</artifactId>
+    <version>5.4.0</version>
+    <relativePath /> <!-- lookup parent from repository -->
+  </parent>
+
+  <groupId>com.afklm.springboot.habile</groupId>
+  <artifactId>spring-security-habile-parent</artifactId>
+  <version>5.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>spring-security-habile-parent</name>
+  <description>Project for spring security with habile</description>
+
+  <properties>
+    <java.version>17</java.version>
+    <sdfw.version>4.0.0</sdfw.version>
+    <spring-boot.version>3.0.2</spring-boot.version>
+    <spring-security.version>6.0.1</spring-security.version>
+    <spring-cloud-dependencies.version>2022.0.1</spring-cloud-dependencies.version>
+    <w000479-v01.version>303</w000479-v01.version>
+    <w000479-v02.version>301</w000479-v02.version>
+    <metro.webservices.version>4.0.1</metro.webservices.version>
+    <io.jsonwebtoken.version>0.11.5</io.jsonwebtoken.version>
+    <okhttp.version>5.0.0-alpha.3</okhttp.version>
+    <commons-io.version>2.4</commons-io.version>
+    <cucumber.version>6.10.1</cucumber.version>
+    <secmobilFilter.version>2.0.0</secmobilFilter.version>
+    <duplicate-finder-maven-plugin.version>1.5.1</duplicate-finder-maven-plugin.version>
+    <jsonassert.version>1.5.1</jsonassert.version>
+    <json.version>20220924</json.version>
+  </properties>
+
+  <scm>
+    <connection>scm:git:${afkl.git.url}/scm/teccse/spring-security-habile.git</connection>
+    <developerConnection>scm:git:${afkl.git.url}/scm/teccse/spring-security-habile.git</developerConnection>
+    <url>${afkl.git.url}/projects/TECCSE/repos/spring-security-habile/browsee</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <modules>
+    <module>spring-security-habile-core</module>
+    <module>spring-security-habile</module>
+    <module>spring-security-habile-reactive</module>
+    <module>spring-security-habile-simul-core</module>
+    <module>spring-security-habile-simul</module>
+    <module>spring-security-habile-demo-boot</module>
+    <module>spring-security-habile-demo-boot-reactive</module>
+    <module>spring-security-habile-demo-microservices-gateway</module>
+    <module>spring-security-habile-demo-microservices-registry</module>
+    <module>spring-security-habile-demo-microservices-serviceA</module>
+    <module>spring-security-habile-demo-microservices-serviceB</module>
+    <module>spring-security-habile-demo-microservices-serviceC</module>
+    <module>spring-security-habile-demo-webapp</module>
+    <module>spring-security-habile-test</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-bom</artifactId>
+        <version>${spring-security.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud-dependencies.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <version>${spring-boot.version}</version>
+      </dependency>
+
+      <!-- ============= START EXCLUDING CONFLICTING DEPENDENCIES ============= -->
+      <!-- The purpose of the following exclusions is to discard several        -->
+      <!-- transitive dependencies upon first, the following artifacts:         -->
+      <!--   * org.glassfish.metro:webservices-api                              -->
+      <!--   * org.glassfish.metro:webservices-extra-xmlsec                     -->
+      <!-- The issue with both artifacts, pulled from the                       -->
+      <!-- org.glassfish.metro:webservices-rt, is that, beyond defining         -->
+      <!-- legitimate dependencies on various Jakarta APIs, Apache and SLF4J    -->
+      <!-- artifacts, they are built with direct inclusion of the classes of    -->
+      <!-- these dependencies. Then, these classes appear to be duplicates of   -->
+      <!-- the classes from the official related artifacts pulled from other    -->
+      <!-- dependencies. This leads to mess in the classpath and potential      -->
+      <!-- conflicting issues.                                                  -->
+      <!-- Another issue comes from com.afklm.soa.jaxws:sdfw-starter artifact   -->
+      <!-- which pulls the following dependencies:                              -->
+      <!--   * com.ibm.mq:fscontext                                             -->
+      <!--   * com.ibm.jndi:fscontext                                           -->
+      <!-- Both artifacts bring same or similar classes from the Java           -->
+      <!-- com.sun.jndi.fscontext and com.sun.jndi.url.file packages.           -->
+      <!-- The artifact com.afklm.soa.jaxws:sdfw-starter also depends on        -->
+      <!-- com.ibm.mq:com.ibm.mq.jakarta.client, org.skyscreamer:jsonassert     -->
+      <!-- (pulled indirectly from the artifact                                 -->
+      <!-- org.springframework.boot:spring-boot-starter-test), both bringing    -->
+      <!-- different versions of classes in org.json package and leading to     -->
+      <!-- additional conflicts.                                                -->
+      <!-- Finally, spring-boot-starter-web artifact indirectly depends on      -->
+      <!-- org.apache.tomcat.embed:tomcat-embed-core (when using Tomcat as the  -->
+      <!-- internal web server) which itself embeds Jakarta Servlet API enters  -->
+      <!-- in conflict with the same API pulled from the dependency             -->
+      <!-- com.afklm.soa.jaxws:jaxws-custom-headers.                            -->
+      <!-- Some of our dependencies are declared with the Maven scope           -->
+      <!-- "provided" which is fine when the whole application is deployed in a -->
+      <!-- container providing such artifacts, avoiding duplicate classes in    -->
+      <!-- the classpath. However, with SpringBoot, which builds self contained -->
+      <!-- applications, everything, including "provided" dependencies, is      -->
+      <!-- packaged in the final fat JAR. This may also bring duplicate classes -->
+      <!-- if no proper exclusion is performed at build time.                   -->
+      <!-- FYI: https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/htmlsingle/#packaging.examples.exclude-dependency -->
+      <dependency>
+        <groupId>com.afklm.soa.jaxws</groupId>
+        <artifactId>sdfw-starter</artifactId>
+        <version>${sdfw.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>com.ibm.mq</groupId>
+            <artifactId>fscontext</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>com.ibm.mq</groupId>
+        <artifactId>com.ibm.mq.jakarta.client</artifactId>
+        <exclusions>
+          <exclusion>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.json</groupId>
+        <artifactId>json</artifactId>
+        <version>${json.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.afklm.soa.jaxws</groupId>
+        <artifactId>jaxws-consumer</artifactId>
+        <version>${sdfw.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>com.afklm.soa.jaxws</groupId>
+            <artifactId>jaxws-consumer-deps</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>com.afklm.soa.jaxws</groupId>
+        <artifactId>jaxws-custom-headers</artifactId>
+        <version>${sdfw.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.skyscreamer</groupId>
+        <artifactId>jsonassert</artifactId>
+        <version>${jsonassert.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>com.vaadin.external.google</groupId>
+            <artifactId>android-json</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.metro</groupId>
+        <artifactId>webservices-rt</artifactId>
+        <version>${metro.webservices.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>org.glassfish.metro</groupId>
+            <artifactId>webservices-api</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.glassfish.metro</groupId>
+            <artifactId>webservices-extra-xmlsec</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <!-- ============== END EXCLUDING CONFLICTING DEPENDENCIES ============== -->
+
+      <dependency>
+        <groupId>com.afklm.soa.jaxws</groupId>
+        <artifactId>sdfw-dependencies</artifactId>
+        <version>${sdfw.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.afklm.soa.stubs</groupId>
+        <artifactId>w000479-v01-jakarta</artifactId>
+        <version>${w000479-v01.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.afklm.soa.stubs</groupId>
+        <artifactId>w000479-v02-jakarta</artifactId>
+        <version>${w000479-v02.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-impl</artifactId>
+        <version>${io.jsonwebtoken.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-jackson</artifactId> <!-- or jjwt-gson if Gson is preferred -->
+        <version>${io.jsonwebtoken.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+</project>

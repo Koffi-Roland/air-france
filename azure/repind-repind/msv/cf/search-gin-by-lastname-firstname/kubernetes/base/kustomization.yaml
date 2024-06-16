@@ -1,0 +1,9 @@
+resources:
+  - deployment.yaml
+  - service.yaml
+
+commonLabels:
+  app.kubernetes.io/name: search-gin-by-lastname-firstname
+  app.kubernetes.io/instance: search-gin-by-lastname-firstname
+
+namespace: default

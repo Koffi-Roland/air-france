@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: local
+
+sdfw:
+  consumer-header:
+    id: w04776476
+    location: QVI
+    party-id: AF

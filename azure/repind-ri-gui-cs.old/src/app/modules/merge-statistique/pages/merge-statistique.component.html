@@ -1,0 +1,18 @@
+<div class="content">
+  <div class="side-content">
+    <button class="new-search-btn" mat-raised-button color="primary" (click)="backToSearch()">
+      <div class="btn-content">
+        <mat-icon>chevron_left</mat-icon>
+        <span>{{ 'NEW-SEARCH' | translate | uppercase }}</span>
+      </div>
+    </button>
+    <app-search-filters-card></app-search-filters-card>
+    <a class="export-data-btn" mat-raised-button color="primary" (click)="getExport()">{{ 'EXPORT-DATA' | translate | uppercase }}</a>
+  </div>
+  <div class="main-content">
+    <app-results-header></app-results-header>
+    <div class="router-outlet-content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+meta {
+  name: CreateOrReplacePaymentPreferences - PING
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{create-or-replace-payment-preferences-url}}
+  body: xml
+  auth: none
+}
+
+headers {
+  SOAPAction: "http://www.af-klm.com/services/passenger/CreateOrReplacePaymentPreferences-v2/createOrReplacePaymentPreferences"
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.af-klm.com/services/passenger/CreateOrReplacePaymentPreferencesSchema-v2/xsd">
+     <soapenv:Body>
+        <xsd:CreatePaymentPreferencesRequestElement>
+           <gin>{{gin}}</gin>
+              <pointOfSale>US</pointOfSale>
+              <airlinePaymentPref>KL</airlinePaymentPref>
+              <paymentGroupType>CC</paymentGroupType>
+              <paymentMethod>AMEX</paymentMethod>
+              <preferred>N</preferred>
+              <corporate>N</corporate>
+              <signature>REGRESSION</signature>
+              <signatureSite>KLM</signatureSite>
+              <ipAdress>127.0.0.1</ipAdress>
+              <createListfields>
+                  <paymentFieldCode>BILL_ADDRESS</paymentFieldCode>
+                  <paymentFieldPreferences>124h Eerste Jan Van Der Heijdenstraat</paymentFieldPreferences>
+              </createListfields>
+              <createListfields>
+                  <paymentFieldCode>BILL_CITY</paymentFieldCode>
+                  <paymentFieldPreferences>Amsterdam</paymentFieldPreferences>
+              </createListfields>
+              <createListfields>
+                  <paymentFieldCode>BILL_COUNTRY</paymentFieldCode>
+                  <paymentFieldPreferences>NL</paymentFieldPreferences>
+              </createListfields>
+              <createListfields>
+                  <paymentFieldCode>BILL_COUNTY</paymentFieldCode>
+                  <paymentFieldPreferences/>
+              </createListfields>
+              <createListfields>
+                  <paymentFieldCode>PCI_TOKEN</paymentFieldCode>
+                  <paymentFieldPreferences>375388TCN0V3005</paymentFieldPreferences>
+              </createListfields>
+              <createListfields>
+                  <paymentFieldCode>BILL_NAME</paymentFieldCode>
+                  <paymentFieldPreferences>Studener</paymentFieldPreferences>
+              </createListfields>
+              <createListfields>
+                  <paymentFieldCode>BILL_ZIP</paymentFieldCode>
+                  <paymentFieldPreferences>1072VC</paymentFieldPreferences>
+              </createListfields>
+              <createListfields>
+                  <paymentFieldCode>BILL_FIRST_NAME</paymentFieldCode>
+                  <paymentFieldPreferences>P</paymentFieldPreferences>
+              </createListfields>
+              <createListfields>
+                  <paymentFieldCode>CC_EXP_DATE</paymentFieldCode>
+                  <paymentFieldPreferences>0626</paymentFieldPreferences>
+              </createListfields>
+        </xsd:CreatePaymentPreferencesRequestElement>
+     </soapenv:Body>
+  </soapenv:Envelope>
+}
+
+vars:pre-request {
+  USER: W90000470
+  PASSWORD: pswpsw123
+  GIN_RCT: 400368475923
+  GIN_DEV: 900047984904
+}
+
+assert {
+  res.body: contains PP ALREADY EXIST
+}

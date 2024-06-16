@@ -1,0 +1,38 @@
+server:
+  port: 8001
+  reactive:
+    session:
+      cookie:
+        name: MOCKSESSIONID
+  error:
+    include-stacktrace: ALWAYS
+    include-exception: true
+
+spring:
+  cloud:
+    config:
+      enabled: false
+
+resilience4j:
+  timelimiter:
+    configs:
+      default:
+        timeout-duration: 20s
+
+afklm:
+  security:
+    habile:
+      simul:
+        session:
+          timeout: 3600 # Timeout value after which a reauthentication is required
+
+logging.level:
+  ROOT: INFO
+  
+      
+management:
+  endpoints:
+    web:
+      base-path: /mock/actuator
+      exposure:
+        include: "*"

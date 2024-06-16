@@ -1,0 +1,25 @@
+<div *ngIf="genericDataFormatted.length > 0">
+  <div fxLayout.lt-md="column" fxLayoutAlign="center" class="title-in-merge">
+    <span>{{ mergeGroupDataConfig.blocTitle | translate }}</span>
+  </div>
+  <mat-divider></mat-divider>
+
+  <div *ngIf="isMonobloc;else doubleBloc">
+  <mat-radio-group [(ngModel)]="group[index]" fxLayout.lt-md="column" fxLayoutGap="20px" *ngFor="let dataBloc of genericDataFormatted;let index = index">
+    <div fxLayout="column" fxFlex="1 0 100%" fxFlex.lt-md="1 0 auto" fxLayoutWrap fxLayoutAlign="start" fxLayoutGap="10px">
+        <app-merge-accordion-data [accordionDatas]="dataBloc"></app-merge-accordion-data>
+    </div>
+  </mat-radio-group>
+  </div>
+
+  <ng-template #doubleBloc>
+  <mat-radio-group [(ngModel)]="group[index]" fxLayout.lt-md="column" fxLayoutGap="20px" *ngFor="let dataBloc of genericDataFormatted;let index = index">
+    <div fxLayout="column" fxFlex="1 1 50%" fxFlex.lt-md="1 1 auto" fxLayoutWrap fxLayoutAlign="start" fxLayoutGap="10px">
+        <app-merge-accordion-data class="individual-source" [accordionDatas]="dataBloc.blocSource"></app-merge-accordion-data>
+    </div>
+    <div fxLayout="column" fxFlex="1 1 50%" fxFlex.lt-md="1 1 auto" fxLayoutWrap fxLayoutAlign="start" fxLayoutGap="10px">
+      <app-merge-accordion-data [accordionDatas]="dataBloc.blocTarget"></app-merge-accordion-data>
+    </div>
+  </mat-radio-group>
+  </ng-template>
+</div>

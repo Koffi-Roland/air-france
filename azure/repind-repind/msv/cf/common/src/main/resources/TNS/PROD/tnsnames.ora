@@ -1,0 +1,26 @@
+# -------------    Bases de donnees SIC Prod   ---------------------------------------------------------
+##-- BDD Prod Oracle 19 pas encore prête--
+
+##-- BDD Oracle 11
+REPIND_PRD.WORLD=(description=(address=(protocol=tcp)(host=lh-psic01-db.france.airfrance.fr)(port=1521))(connect_data=(service_name=REPIND_PRD.WORLD)(instance_name=SIC)(UR=A)))
+REPIND_PP_PRD.WORLD=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(Host=lh-prepind01-db.france.airfrance.fr)(Port=1521))(CONNECT_DATA=(SID=REPIND)))
+
+##-- BDD Oracle 19
+SIC_PLE.WORLD=(description=(address_list=(address=(protocol=tcp)(host=qvipcbdor017.france.airfrance.fr)(port=1521))
+                               (address=(protocol=tcp)(host=qvipcbdor018.france.airfrance.fr)(port=1521))
+                               (address=(protocol=tcp)(host=qvipcbdor019.france.airfrance.fr)(port=1521))
+                  )
+                  (failover=on)
+                  (load_balance=off)
+                  (connect_data=(global_name=OPMN305.WORLD)
+                  (service_name=SIC_PLE.WORLD)
+                  (failover_mode=(type=select)(method=preconnect)(retries=1)(delay=1)(backup=qvipcbdor019.france.airfrance.fr))))
+REPIND_PP_PRD.WORLD=(description=(address_list=(address=(protocol=tcp)(host=qvipcbdor021.france.airfrance.fr)(port=1521))
+                                                   (address=(protocol=tcp)(host=qvipcbdor022.france.airfrance.fr)(port=1521))
+                                                   (address=(protocol=tcp)(host=qvipcbdor023.france.airfrance.fr)(port=1521))
+                                      )
+                                      (failover=on)
+                                      (load_balance=off)
+                                      (connect_data=(global_name=OPMN306.WORLD)
+                                      (service_name=REPIND_PLE.WORLD)
+                                      (failover_mode=(type=select)(method=preconnect)(retries=1)(delay=1)(backup=qvipcbdor023.france.airfrance.fr))))

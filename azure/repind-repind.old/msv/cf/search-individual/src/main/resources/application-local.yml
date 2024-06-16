@@ -1,0 +1,13 @@
+ri-search-gin-by-email:
+  url: https://search-gin-by-email-ite-cdm-00035-pks.qvi-cae.af-klm.com/
+ri-search-gin-by-phone:
+  url: https://search-gin-by-phone-ite-cdm-00035-pks.qvi-cae.af-klm.com/
+ri-search-gin-by-contract:
+  url: https://search-gin-by-contract-ite-cdm-00035-pks.qvi-cae.af-klm.com/
+ri-search-gin-by-social-media:
+  url: https://search-gin-by-social-media-ite-cdm-00035-pks.qvi-cae.af-klm.com/
+ri-search-gin-by-lastname-firstname:
+  url: https://search-gin-by-lastname-firstname-ite-cdm-00035-pks.qvi-cae.af-klm.com/
+
+springdoc:
+  enable-hateoas: false

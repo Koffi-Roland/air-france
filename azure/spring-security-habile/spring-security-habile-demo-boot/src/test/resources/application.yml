@@ -1,0 +1,16 @@
+logging:
+  level: 
+    root: INFO
+    org.springframework.messaging: DEBUG
+    org.springframework.security: DEBUG
+    
+afklm:
+  websocket:
+    heartbeat-period: 10000
+    broker: /topic
+    destination-prefix: /app
+    endpoints: /api/websocket
+  security:
+    roles:
+      P_XXXXX_USER:
+       - VIEW

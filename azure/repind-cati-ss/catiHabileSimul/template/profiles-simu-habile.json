@@ -1,0 +1,38 @@
+{
+  "users": [
+    {
+      "userId": "admin",
+      "password": "",
+      "firstName": "admin first",
+      "lastName": "admin last",
+      "email": "mail@example.com",
+      "profiles": [
+        "P_CATI_SUPERADMIN"
+      ]
+    },
+    {
+      "userId": "nopref",
+      "password": "",
+      "firstName": "admin first",
+      "lastName": "admin last",
+      "email": "mail@example.com",
+      "profiles": [
+        "P_CATI_ADMIN"
+      ]
+    },
+    {
+      "userId": "onlypref",
+      "password": "",
+      "firstName": "admin first",
+      "lastName": "admin last",
+      "email": "mail@example.com",
+      "profiles": [
+        "P_CATI_ADMIN_COMMPREF"
+      ]
+    }
+  ],
+  "publicPaths": [
+    "(?i).*css.*",
+    "(?i).*cloudfoundryapplication.*"
+  ]
+}

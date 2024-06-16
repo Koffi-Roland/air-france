@@ -1,0 +1,21 @@
+meta {
+  name: ProvideContractData
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{provide-contract-data-url}}/GIN/{{gin}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  MS: provide-contract-data
+  GIN_RCT: 400007351843
+  GIN_DEV: 400219522090
+}
+
+assert {
+  res.status: eq 200
+}

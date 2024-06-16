@@ -1,0 +1,6 @@
+export enum SearchType {
+    SEARCH_BY_GIN_CIN,
+    SEARCH_BY_IDENTIFICATION_DATA,
+    SEARCH_BY_EMAIL,
+    SEARCH_BY_TELECOM
+}

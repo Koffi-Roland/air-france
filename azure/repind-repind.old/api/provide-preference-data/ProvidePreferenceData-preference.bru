@@ -1,0 +1,25 @@
+meta {
+  name: ProvidePreferenceData-preference
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{provide-preference-data-url}}/{{gin}}/preference
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  MS: provide-preference-data
+  GIN_RCT: 400310078360
+  GIN_DEV: 400219522090
+}
+
+assert {
+  res.status: eq 200
+}
+
+script:pre-request {
+  // 
+}

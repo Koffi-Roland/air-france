@@ -1,0 +1,11 @@
+<mat-button-toggle-group #group="matButtonToggleGroup">
+  <mat-button-toggle [routerLink]="['grid']" [checked]="view === 'grid'" matTooltip="{{ 'GRID-VIEW' | translate }}">
+    <mat-icon>view_module</mat-icon>
+  </mat-button-toggle>
+  <mat-button-toggle [routerLink]="['list']" [checked]="view === 'list'" matTooltip="{{ 'LIST-VIEW' | translate }}">
+    <mat-icon>view_list</mat-icon>
+  </mat-button-toggle>
+  <mat-button-toggle [routerLink]="['array']" [checked]="view === 'array'" matTooltip="{{ 'ARRAY-VIEW' | translate }}">
+    <mat-icon>view_array</mat-icon>
+  </mat-button-toggle>
+</mat-button-toggle-group>

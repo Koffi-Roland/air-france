@@ -1,0 +1,19 @@
+meta {
+  name: GetMerge
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{automatic-merge-url}}/merge/{{gin}}/{{gin}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  MS: automatic-merge
+}
+
+assert {
+  res.status: eq 412
+}

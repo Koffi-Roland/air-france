@@ -1,0 +1,13 @@
+.classpath
+.project
+.settings/
+target/
+.idea
+.iml
+*.iml
+node_modules/
+.factorypath
+/msv/watson-detectfaces/
+/msv/watson-explicit/
+
+/api/.env

@@ -1,0 +1,3 @@
+<mat-icon *ngFor="let option of options" class="cursor" (click)="exec(option)" matTooltip="{{ option.label | translate }}"
+matTooltipPosition="above">{{option.icon}}</mat-icon>
+<app-warning-icon *ngFor="let warn of warning" [data]="data" [warning]="warn"></app-warning-icon>

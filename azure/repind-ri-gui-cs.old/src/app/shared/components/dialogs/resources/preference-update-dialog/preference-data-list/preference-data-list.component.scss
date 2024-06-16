@@ -1,0 +1,12 @@
+mat-list {
+  margin: 12px;
+}
+
+mat-list-item:hover {
+  transition: background 300ms ease;
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.deleted-pref-data-msg {
+  color: red;
+}

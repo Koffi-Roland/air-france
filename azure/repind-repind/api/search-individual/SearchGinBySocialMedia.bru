@@ -1,0 +1,25 @@
+meta {
+  name: SearchGinBySocialMedia
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{search-individual-url}}/v2/search-individual?externalIdentifierId=gtyilktuy&externalIdentifierType=FB&merge=true
+  body: none
+  auth: none
+}
+
+query {
+  externalIdentifierId: gtyilktuy
+  externalIdentifierType: FB
+  merge: true
+}
+
+vars:pre-request {
+  MS: search-individual
+}
+
+assert {
+  res.status: eq 200
+}

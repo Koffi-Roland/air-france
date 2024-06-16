@@ -1,0 +1,201 @@
+@use '@angular/material' as mat;
+@use '@airfranceklm/daisy' as daisy;
+@import '@angular/material/_theming';
+
+:root {
+  @include daisy.joint-theme();
+}
+
+@tailwind base;
+
+@include daisy.material-icons-font();
+@include daisy.montserrat-font();
+
+@include mat.core(daisy.$montserrat-typography-config);
+
+@include mat.core(daisy.$montserrat-typography-config);
+@include mat.all-component-themes(daisy.$material-light-theme);
+
+@tailwind components;
+@tailwind utilities;
+
+
+//iPad, smartphone
+$break-small: 768px;
+
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  -ms-overflow-style: none;
+  overflow: auto;
+}
+
+mat-chip-list:focus {
+  outline: none;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed !important;
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+.logo {
+  margin: 12px 20px 0 20px;
+  width: 220px;
+
+  @media screen and (max-width: $break-small) {
+    width: 120px;
+  }
+}
+
+.subtitle-header {
+  margin-left: 10px;
+
+  @media screen and (max-width: $break-small) {
+    margin-top: 5px;
+    font-size: 0.7em;
+  }
+}
+
+.gb-flag {
+  margin-left: 10px;
+  margin-right: 20px;
+}
+
+//Smartphone and tablet only
+@media screen and (max-width: $break-small) {
+  .no-mobile {
+    display: none !important;
+  }
+
+  .flag-icon {
+    font-size: 1.3em;
+  }
+}
+
+//Desktop and TV
+@media screen and (min-width: $break-small) {
+  .no-desktop {
+    display: none !important;
+  }
+}
+
+.language-mobile {
+  padding-top: 10px;
+  padding-bottom: 15px;
+}
+
+/*************** INDIVIDUAL ***************/
+
+.mat-list-item {
+  font-size: 14px;
+}
+
+.list-informations-individual {
+  width: 75%;
+}
+
+.vertical-separator {
+  height: 100px;
+  width: 1px;
+  border-left: solid 1px rgba(0, 0, 0, 0.22);
+}
+
+.dialog-title {
+  margin-top: 20px;
+}
+
+simple-snack-bar.mat-simple-snackbar {
+  justify-content: center;
+}
+
+
+mat-sidenav-content.mat-drawer-content {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+div.page-wrap {
+  width: 100vw;
+  height: 100vh;
+  overflow-y: scroll;
+  box-sizing: content-box;
+}
+
+.individual-source {
+  background-color: rgb(246, 244, 244) !important;
+}
+
+.individual-source>mat-accordion>mat-expansion-panel {
+  background-color: rgb(246, 244, 244) !important;
+}
+
+.button-add-remove-merge {
+  margin-right: 20px;
+}
+
+.merge-selection {
+  border-style: solid;
+  border-width: 2px;
+}
+
+.custom-dialog-container .mat-dialog-container {
+
+  padding: 0;
+  overflow: hidden;
+
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+  /* make scrollbar transparent */
+}
+
+.error-message-search {
+  padding: 0;
+  margin: 0;
+  color: red;
+}
+
+.error-snackbar {
+  padding: 0px !important;
+  @media screen and (min-width: 957px) {
+    border-radius: 15px !important;
+    background-color: red !important;
+  }
+}
+
+mat-chip.mat-chip.mat-standard-chip.mat-chip-disabled{
+  opacity: 1;
+}
+
+.mat-chip-disabled{
+  background-color: #fbb510 !important;
+}
+.resource-not-found-dialog .mat-dialog-container {
+  padding: 0;
+}
+
+.snackbar-without-background {
+  color: unset!important;
+  background: unset!important;
+  box-shadow: unset!important;
+}
+
+.daisy-bg-on-warn-lighter, .daisy-bg-on-warn-lighter--hover:hover, .daisy-bg-warn-lighter, .daisy-bg-warn-lighter--hover:hover {
+  background-color: #fbb510!important;
+}
+
+.bg-primary-500 {
+  background-color: #001d47 !important;
+}

@@ -1,0 +1,33 @@
+.card-background-af-color {
+  background-color: #001d47;
+  color: white
+}
+
+.card-background-kl-color {
+  background-color: #0085c3;
+  color: white
+}
+
+.card-background-user-guide-color {
+  background-color: #ffffff;
+  color: #001d47
+}
+
+
+.mat-card-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-margin-bottom {
+  margin-bottom: 0px;
+}
+
+div[fxLayout] {
+  margin-top: 20px;
+}
+
+mat-card-title > mat-icon {
+  font-size: 6em;
+}

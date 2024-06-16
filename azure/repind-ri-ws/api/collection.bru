@@ -1,0 +1,106 @@
+headers {
+  Content-Type: text/xml;charset=UTF-8
+  Accept-Encoding: gzip,deflate
+}
+
+script:pre-request {
+  const copy = (item) => JSON.parse(JSON.stringify(item));
+  const { nanoid, customAlphabet } = require("nanoid");
+  const _ = require("lodash");
+  
+  // GET XML PACKAGE
+  let xmlFormatter = null;
+  try {
+    xmlFormatter = require('xml-formatter');
+  } catch(e) {
+    throw new Error('xml-formatter need to be installed. Please do a npm-install in the api folder')
+  }
+  
+  // Templates XML
+  let headerXml = `<soapenv:Header><wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" soapenv:mustUnderstand="1"><wsse:UsernameToken xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="UsernameToken-##TOKEN"><wsse:Username>##USER</wsse:Username><wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">##PASSWORD</wsse:Password></wsse:UsernameToken></wsse:Security></soapenv:Header>`
+  
+  let trackingMessageHeader = `<trackingMessageHeader xmlns="http://www.af-klm.com/soa/xsd/MessageHeader-V1_0"><consumerRef><userID>##USER_TRACKER</userID><partyID>AFKL</partyID><consumerID>##USER</consumerID><consumerLocation>##LOCATION</consumerLocation><consumerType>A</consumerType><consumerTime>##DATE</consumerTime></consumerRef></trackingMessageHeader>` 
+  
+  // GET CURRENT ENV
+  const currentEnv = bru.getEnvVar('app');
+  const envs = ['DEV', 'RCT', 'QAL', 'PRD'];
+  
+  // DEBUG UTILS
+  const useDebug = bru.getEnvVar('DEBUG') === 'true'
+  const debug = (debugBool, ...values) => {
+    if(debugBool) {
+      console.log(...values);
+    }
+  }
+  
+  // GENERATE RANDOM VALUE
+  const randomNanoAlphaNumeric = customAlphabet('1234567890abcdefgijklopqrstuvwxyz', 10);
+  bru.setVar("randomString", randomNanoAlphaNumeric());
+  bru.setVar("randomNumberPostal", _.random(1,99));
+  
+  // FUNCTION TO CHECK VAR FOR ENV
+  const replaceVar = (item, env, replace) => {
+     const path = item + '_' + env;
+     const value = bru.getVar(path);
+      if(!!value) {
+        debug(useDebug, 'Replacing ', path, ' with value :', value);
+        bru.setVar(replace, value);
+      }
+  }
+  
+  // START CODE
+  if(envs.includes(currentEnv)) {
+    replaceVar('GIN', currentEnv, 'gin');
+    
+    const skip = !!bru.getVar('SKIP');
+    const hasTracking = !!bru.getVar('TRACKER');
+    if(!skip) {
+      const body = req.body;
+      const indexStartHeader = body.indexOf('>') + 1;
+      const hasAlreadyHeader = body.indexOf('<soapenv:Header') >= 0;
+      if(hasAlreadyHeader) {
+        throw new Error('An header already exist. Please remove the header.')
+      }
+      headerXml = headerXml.replace('##USER', bru.getVar('USER'));
+      headerXml = headerXml.replace('##PASSWORD', bru.getVar('PASSWORD'));
+      headerXml = headerXml.replace('##TOKEN', nanoid(8));
+      let newBody = body.slice(0, indexStartHeader) + headerXml + body.slice(indexStartHeader);
+      if(hasTracking) {
+        trackingMessageHeader = trackingMessageHeader.replace('##USER_TRACKER', bru.getVar('USER_TRACKER'));
+        trackingMessageHeader = trackingMessageHeader.replace('##USER', bru.getVar('USER'));
+              trackingMessageHeader = trackingMessageHeader.replace('##LOCATION', bru.getVar('LOCATION'));
+                    trackingMessageHeader = trackingMessageHeader.replace('##DATE', new Date().toISOString());
+        newBody = newBody.replace('</soapenv:Header>', trackingMessageHeader + '</soapenv:Header>');
+      }
+      let bodyFormatted = xmlFormatter(newBody, {collapseContent: true});
+      debug(useDebug, bodyFormatted);
+      req.setBody(bodyFormatted);
+    }
+  } else {
+    console.log('We are in local. Nothing to do')
+  }
+  
+  
+}
+
+script:post-response {
+  const envs = ['DEV', 'RCT', 'QAL', 'PRD'];
+  
+  const clean = (list, envs) => {
+      list.forEach((item) => {
+          if (!!envs) {
+              envs.forEach((env) => {
+                  const path = item + '_' + env;
+                  !!bru.getVar(path) ? bru.setVar(path, null) : null;
+              })
+          } else {
+              !!bru.getVar(item) ? bru.setVar(item, null) : null;
+          }
+      })
+  }
+  
+  clean(['USER', 'PASSWORD', 'SKIP', 'TRACKER', 'USER_TRACKER', 'LOCATION', 'gin'], null);
+  clean(['GIN'], envs);
+  
+  
+}

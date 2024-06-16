@@ -1,0 +1,17 @@
+<div class="div-input-search w-full" appClickOutside (clickOutside)="onClickedOutside($event)">
+  <div [hidden]="searchVisible" >
+    <span class="input-icon-search" (click)="displaySearch()">
+        <i class="material-icons">
+          search
+        </i>
+      </span>
+  </div>
+  <div [hidden]="!searchVisible">
+      <mat-form-field class="input-search w-full">
+        <input matInput class="search-input-type" #input [(ngModel)]="columnName" (keydown)="checkIfEnterKeyWasPressed($event)" (ngModelChange)="sendToParentComponent()">
+        <button [ngClass]="!columnName ? 'hide' : ''" matSuffix mat-button (click)="columnName='';sendToParentComponent()">
+            <mat-icon>close</mat-icon>
+          </button>
+      </mat-form-field>
+    </div>
+  </div>

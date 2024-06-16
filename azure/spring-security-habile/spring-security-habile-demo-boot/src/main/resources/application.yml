@@ -1,0 +1,65 @@
+#spring:
+#  mvc:
+#    log-request-details: true
+    
+logging:
+  level:
+    root: INFO
+
+afklm:
+  websocket:
+    heartbeat-period: 10000
+    broker: /topic
+    destination-prefix: /app
+    endpoints: /api/websocket
+  security:
+    public-endpoints: /public/**
+    urls-http-verbs-authorities:
+      - urls: /api/user-only/hello/**
+        http-verbs-authorities:
+          - verbs: GET
+            roles: P_XXXXX_USER
+          - verbs: POST, PUT
+            roles: P_XXXXX_ADMIN
+      - urls: /api/user-only/byebye/**
+        http-verbs-authorities:
+          - verbs: GET
+            roles: P_XXXXX_ADMIN
+      - urls: /api/user-only/howareyou/**
+        http-verbs-authorities:
+          - verbs: HEAD
+            roles: P_XXXXX_ADMIN
+            permissions: ASK_LESS
+          - verbs: OPTIONS
+            permissions: ASK_LESS, ASK_MORE
+          - verbs: GET
+            permissions: ASK
+          - verbs: POST
+            permissions: ASK_MORE
+    actuators-role: P_XXXXX_ADMIN
+    roles:
+      P_XXXXX_ADMIN:
+        - UPDATE
+        - VIEW
+        - ASK
+        - ASK_MORE
+      P_XXXXX_USER:
+        - VIEW
+        - ASK_LESS
+        - ASK
+
+sdfw:
+  consumer-header:
+    location: QVI
+    party-id: AF
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+sdfw:
+  ws:
+    - id: w000479.v1
+      url: http://localhost:${server.http.port.simul:8001}/mock/ws/w000479v01

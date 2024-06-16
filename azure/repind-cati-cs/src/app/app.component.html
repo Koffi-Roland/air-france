@@ -1,0 +1,87 @@
+<mat-sidenav-container class="all-wrap" fullscreen>
+  <mat-sidenav #sidenav>
+    <mat-list>
+      <mat-list-item class="pointer" (click)="sidenav.toggle()" [routerLink]="['/home']">{{ 'HOME' | translate }}
+      </mat-list-item>
+      <mat-list-item class="pointer" (click)="sidenav.toggle()"
+        [routerLink]="['/ref-com-pref/communication-preferences']">{{ 'COMMUNICATION_PREFERENCES' | translate }}
+      </mat-list-item>
+      <mat-list-item class="pointer" (click)="sidenav.toggle()" [routerLink]="['/ref-com-pref/permission']">{{
+        'PERMISSION' | translate }}</mat-list-item>
+      <mat-list-item class="pointer" (click)="sidenav.toggle()" [routerLink]="['/ref-com-pref/group']">{{ 'GROUP' |
+        translate }}</mat-list-item>
+
+      <mat-divider></mat-divider>
+
+      <mat-list-item class="pointer" (click)="sidenav.toggle()"
+        [routerLink]="['/ref-com-pref/communication-preferences-dgt']">{{ 'COMMUNICATION_PREFERENCES_DGT' | translate }}
+      </mat-list-item>
+      <mat-list-item class="pointer" (click)="sidenav.toggle()" [routerLink]="['/ref-com-pref/domain']">{{ 'DOMAIN' |
+        translate }}</mat-list-item>
+      <mat-list-item class="pointer" (click)="sidenav.toggle()" [routerLink]="['/ref-com-pref/group-type']">{{
+        'GROUP_TYPE' | translate }}</mat-list-item>
+      <mat-list-item class="pointer" (click)="sidenav.toggle()" [routerLink]="['/ref-com-pref/communication-type']">{{
+        'COMMUNICATION_TYPE' | translate }}</mat-list-item>
+      <mat-list-item class="pointer" (click)="sidenav.toggle()" [routerLink]="['/ref-com-pref/country-market']">{{
+        'COUNTRY_MARKET' | translate }}</mat-list-item>
+      <mat-list-item class="pointer" (click)="sidenav.toggle()" [routerLink]="['/ref-com-pref/media']">{{ 'MEDIA' |
+        translate }}</mat-list-item>
+
+      <mat-divider></mat-divider>
+      <mat-list-item *hasRole="['ROLE_ADMIN']" class="pointer" (click)="sidenav.toggle()"
+        [routerLink]="['/administration/preference-key-type']">{{ 'PREFERENCE_KEY_TYPE' | translate }}</mat-list-item>
+      <mat-list-item *hasRole="['ROLE_ADMIN']" class="pointer" (click)="sidenav.toggle()"
+        [routerLink]="['/administration/preference']">{{ 'PREFERENCE' | translate }}</mat-list-item>
+      <mat-list-item *hasRole="['ROLE_ADMIN']" class="pointer" (click)="sidenav.toggle()"
+        [routerLink]="['/administration/preference-data']">{{ 'PREFERENCE-DATA' | translate }}</mat-list-item>
+      <mat-list-item *hasRole="['ROLE_ADMIN']" class="pointer" (click)="sidenav.toggle()"
+        [routerLink]="['/administration/variables']">{{ 'VARIABLES' | translate }}</mat-list-item>
+      <mat-list-item *hasRole="['ROLE_ADMIN']" class="pointer" (click)="sidenav.toggle()"
+        [routerLink]="['/administration/pays']">{{ 'PAYS' | translate }}</mat-list-item>
+
+      <mat-divider></mat-divider>
+      <mat-list-item *hasRole="['ROLE_ADMIN']" class="pointer" (click)="sidenav.toggle()"
+                     [routerLink]="['/administration/PcsFactor']">{{ 'PCS-FACTOR' | translate }}</mat-list-item>
+      <mat-list-item *hasRole="['ROLE_ADMIN']" class="pointer" (click)="sidenav.toggle()"
+                     [routerLink]="['/administration/PcsContractScore']">{{ 'PCS-CONTRACT-SCORE' | translate }}</mat-list-item>
+      <mat-list-item *hasRole="['ROLE_ADMIN']" class="pointer" (click)="sidenav.toggle()"
+                     [routerLink]="['/administration/PcsNonContractScore']">{{ 'PCS-NON-CONTRACT-SCORE' | translate }}</mat-list-item>
+    </mat-list>
+  </mat-sidenav>
+  <div class="page-wrap">
+    <header role="banner">
+      <mat-toolbar class="mat-elevation-z5">
+        <mat-icon class="pointer" (click)="sidenav.toggle()">menu</mat-icon>
+        <img class="logo pointer" routerLink="/home" src="./assets/img/CATI_banner_small.png">
+        <button class="first-link" routerLink="/home" mat-button> {{ 'HOME' | translate }} </button>
+        <button routerLink="/ref-com-pref/communication-preferences" mat-button> {{ 'MANAGE-CATALOG' | translate }}
+        </button>
+        <a mat-button href="assets/docs/CATI_User_Guide_EN.pdf" download="CATI_User_Guide_EN.pdf"> {{ 'USER-GUIDE' |
+          translate }} </a>
+
+        <!-- This fills the remaining space of the current row -->
+        <span class="fill-remaining-space"></span>
+
+        <display-connected-user></display-connected-user>
+        <!-- <span class="flag-icon flag-icon-fr pointer no-mobile no-desktop" (click)="setLanguage('fr')"></span>
+        <span class="flag-icon flag-icon-gb gb-flag pointer no-mobile no-desktop" (click)="setLanguage('en')"></span> -->
+
+        <mat-icon class="pointer" [matMenuTriggerFor]="profil">person</mat-icon>
+        <mat-menu #profil="matMenu" x-position="before" y-position="below">
+          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px"
+            class="language-mobile no-desktop no-mobile">
+            <span class="flag-icon flag-icon-fr pointer" (click)="setLanguage('fr')"></span>
+            <span class="flag-icon flag-icon-gb pointer" (click)="setLanguage('en')"></span>
+          </div>
+          <mat-divider class="no-desktop"></mat-divider>
+          <button routerLink="http://habile-dcnx.airfrance.fr:90/siteminderagent/logout.fcc" mat-menu-item>{{
+            'DISCONNECT' | translate }}</button>
+        </mat-menu>
+      </mat-toolbar>
+    </header>
+    <main class="main-container">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</mat-sidenav-container>
+<app-loader></app-loader>

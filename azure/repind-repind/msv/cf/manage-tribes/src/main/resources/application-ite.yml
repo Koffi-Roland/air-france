@@ -1,0 +1,6 @@
+spring:
+  neo4j:
+    uri: bolt://10.66.9.54/:7687
+    authentication:
+      username: ${ri_repind_neo4j_username}
+      password: ${ri_repind_neo4j_password}

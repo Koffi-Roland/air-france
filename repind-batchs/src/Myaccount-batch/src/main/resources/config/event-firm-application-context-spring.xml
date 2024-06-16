@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
+>
+
+  
+ 	<!-- MQ CONFIG -->
+	<bean id="jndiTemplateEvent" class="org.springframework.jndi.JndiTemplate">
+		<property name="environment">
+			<props>
+	       		<prop key="java.naming.factory.initial">com.sun.jndi.fscontext.RefFSContextFactory</prop>
+				<prop key="java.naming.provider.url">
+					<!-- ENV-MQ-REPFIRM -->
+					${ENV-MQ-REPFIRM}
+				</prop>
+	     	</props>
+	   	</property>
+	</bean>
+
+
+	<!--  notifyAgencyCompany Web Service Consumer(EVENT) v1 -->				  
+ 	<bean id="notifyAgencyCompany-v1" 
+ 		class="com.afklm.soa.spring.consumer.WebServiceConsumer"> 		
+		<property name="service"
+			value="com.afklm.soa.stubs.w001391.v1.NotifyAgencyCompanyServiceV1" />
+ 		<!-- ENV-WSDL-HANDLECOM-W001391-V01 -->	 
+ 		<!-- property name="endpointAddress" value="xjms:jndi:D.REPFIRM.SOAEDA.NAC_QVI.001.QA?jndiConnectionFactoryName=DQTDYVAREPFIRMQCF" /--> 
+		<property name="endpointAddress" value="${ENV-WSDL-HANDLECOM-W001391-V01}" />
+		
+		<property name="wsdlLocation">
+			<value>classpath:META-INF/wsdl/w001391-v01/w001391-v01.wsdl</value>
+		</property>
+  		<property name="features">
+			<list>
+				<!--	Web Service Consumer configuration through Web Service Features-->	
+				<bean class="com.afklm.soa.jms.spring.ConsumerJmsFeature">
+					<property name="jndiTemplate" ref="jndiTemplateEvent" />
+				</bean>
+				<!-- Enable validation for event -->
+	            <bean class="com.sun.xml.ws.developer.SchemaValidationFeature" />
+	            <!-- Disable EventHeader -->
+	            <bean class="com.afklm.soa.eventheader.EventHeaderFeature">
+	                <property name="publisher">
+	                    <null />
+	                </property>
+	            </bean>
+			</list>
+		</property>
+	</bean>
+	
+	<!--  NotifyMember Web Service Consumer(EVENT) v1 -->				  
+	<bean id="notifyMember-v1"
+		class="com.afklm.soa.spring.consumer.WebServiceConsumer"> 		
+		<property name="service"
+			value="com.afklm.soa.stubs.w001392.v1.NotifyMemberServiceV1" />
+		<!-- ENV-WSDL-HANDLECOM-W001392-V01 -->	
+		<!-- property name="endpointAddress" value="xjms:jndi:D.REPFIRM.SOAEDA.NME_QVI.001.QA?jndiConnectionFactoryName=DQTDYVAREPFIRMQCF" /-->
+		<property name="endpointAddress" value="${ENV-WSDL-HANDLECOM-W001392-V01}" />
+		<property name="wsdlLocation">
+			<value>classpath:META-INF/wsdl/w001392-v01/w001392-v01.wsdl</value>
+			<!-- value>classpath:META-INF/wsdl/notifymember/V1/passenger_NotifyMember-v1.wsdl</value -->
+		</property>
+  		<property name="features">
+			<list>
+				<!--	Web Service Consumer configuration through Web Service Features-->	
+				<bean class="com.afklm.soa.jms.spring.ConsumerJmsFeature">
+					<property name="jndiTemplate" ref="jndiTemplateEvent" />
+				</bean>
+				<!-- Enable validation for event -->
+	            <bean class="com.sun.xml.ws.developer.SchemaValidationFeature" />
+	            <!-- Disable EventHeader -->
+	            <bean class="com.afklm.soa.eventheader.EventHeaderFeature">
+	                <property name="publisher">
+	                    <null />
+	                </property>
+	            </bean>
+			</list>
+		</property>
+	</bean>
+</beans>

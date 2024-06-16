@@ -1,0 +1,23 @@
+meta {
+  name: SearchGinByEmail
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{search-individual-url}}/v2/search-individual?email=toto@gmail.com
+  body: none
+  auth: none
+}
+
+query {
+  email: toto@gmail.com
+}
+
+vars:pre-request {
+  MS: search-individual
+}
+
+assert {
+  res.status: eq 200
+}

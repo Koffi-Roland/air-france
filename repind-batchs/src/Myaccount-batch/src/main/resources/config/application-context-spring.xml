@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+>
+
+	<!-- Cool object to find a bean from Anywhere -->
+	<bean id="springLocator"
+		class="com.afklm.jraf.bootstrap.locator.SpringLocator">
+	</bean>
+	
+	<bean id="persistenceUnitManager"
+		class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
+		<property name="persistenceXmlLocations">
+			<list>
+				<!--  value>classpath*:META-INF/j2se-persistence.xml</value-->
+				<value>/META-INF/j2se-persistence.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Context de persistence -->
+	<bean id="myEmf"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitManager"
+			ref="persistenceUnitManager" />
+		<property name="persistenceUnitName" value="myPersistenceUnit" />
+	</bean>
+	
+	 <bean id="myEmf2"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitManager"
+			ref="persistenceUnitManager" />
+		<property name="persistenceUnitName" value="myPersistenceUnit2" />
+	</bean>
+	
+	<bean id="myEmf3"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitManager"
+			ref="persistenceUnitManager" />
+		<property name="persistenceUnitName" value="myPersistenceUnit3" />
+	</bean>
+
+	<!-- Properties -->
+    <bean id="ppConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreUnresolvablePlaceholders" value="true"/>
+	</bean>
+
+	<!-- Enterprise layer's dependencies -->
+	<import resource="classpath:ioc/0-ref-commons-enterpriselayer-dependencies.xml" />
+	<import resource="classpath:ioc/0-repind-commons-enterpriselayer-dependencies.xml" />
+	<import resource="classpath:ioc/0-sicutf8-commons-enterpriselayer-dependencies.xml" />
+	
+	<!-- Transaction Manager definition : JPA one-->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="myEmf" />
+	</bean>
+	
+	<!-- Enable annotation usage for transaction -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	
+
+   <!-- *********************** BEGIN:  WEBSERVICE CONSUMER DECLARATION ************************ -->	
+
+  
+  	<bean id="createOrUpdateAnIndividualServiceV8" class="com.afklm.soa.spring.consumer.WebServiceConsumer">
+		<property name="service" value="com.afklm.soa.stubs.w000442.v8.CreateUpdateIndividualServiceServiceV8" />
+		<property name="endpointAddress" value="${ENV-WS-W000442-LOCATION}" />
+		<property name="wsdlLocation" value="classpath:/META-INF/wsdl/w000442-v08/w000442-v08.wsdl" />
+		<property name="features">
+		  <list>
+				<bean class="com.afklm.soa.wss.jaxws.ConsumerSecurityFeature">
+					<!-- ENV-WSCREATEAPROSPECT-SECURITY-FEATURE -->	
+					<property name="env" value="${ENV-WS}"/>
+				</bean>
+		  </list>
+		</property>
+	</bean>
+  
+  <!--  Delete payment config -->
+<bean id="consumerpassenger_DeletePaymentPreferences-v1" class="com.afklm.soa.spring.consumer.WebServiceConsumer"> 
+    <property name="service" value="com.afklm.repindpp.paymentpreference.delete.DeletePaymentPreferencesServiceV1" />
+    <property name="wsdlLocation" value="META-INF/wsdl/deletepaymentdata/passenger_DeletePaymentPreferences-v1.wsdl" />
+    <property name="features">
+      <list>
+			<bean class="com.afklm.soa.wss.jaxws.ConsumerSecurityFeature">
+				<!-- ENV-WSDELETEPAYMENT-SECURITY-FEATURE -->	
+				<property name="env" value="${ENV-WS}"/>
+			</bean>
+      </list>
+    </property>
+  </bean>
+  
+<!-- MQ CONFIG -->
+ <bean id="jndiTemplate" class="org.springframework.jndi.JndiTemplate">
+    <property name="environment">
+      <props>
+        <prop key="java.naming.factory.initial">com.sun.jndi.fscontext.RefFSContextFactory</prop>
+		<prop key="java.naming.provider.url">
+			<!-- ENV-MQ-UNICA -->
+			${ENV-MQ-UNICA}
+		</prop>
+      </props>
+    </property>
+  </bean> 
+ 
+<!-- WSDL HANDLE COM --> 
+<bean id="consumerMarketing_HandleCommunication-v1" class="com.afklm.soa.spring.consumer.WebServiceConsumer"> 
+    <property name="service" value="com.airfrance.crmpushws.myaccount.handlecommunicationrequest.service.HandleCommunicationServiceV1" />
+    <property name="wsdlLocation" value="META-INF/wsdl/crmpush/Marketing_HandleCommunication-v1.wsdl" />
+    <!-- ENV-WSDL-HANDLECOM -->
+	<property name="endpointAddress">
+		<value>${ENV-WSDL-HANDLECOM}</value>		
+	</property>
+    <property name="features">
+      <list>
+        <bean class="com.afklm.soa.jms.spring.ConsumerJmsFeature">
+          <property name="jndiTemplate" ref="jndiTemplate" />
+        </bean>
+      </list>
+    </property>
+  </bean>
+ 
+  	<bean id="context"  class="com.airfrance.repind.util.SingletonSpringApplicationContext" />
+  
+  <!-- *********************** END:  WEBSERVICE CONSUMER DECLARATION ************************ -->	
+
+	<!-- Context transactionnel -->
+	<bean id="myTxManager"
+		class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="myEmf" />
+	</bean>
+	 
+	<bean id="myTxManager2"
+		class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="myEmf2" />
+	</bean>
+
+ 	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" >
+		<property name="defaultPersistenceUnitName" value="myEmf"/>
+	</bean>
+
+	<tx:annotation-driven transaction-manager="myTxManager" proxy-target-class="false"/>
+	<context:annotation-config />
+
+	<bean id="reportLabels" class="org.springframework.context.support.ResourceBundleMessageSource">
+  	<property name="basenames">
+     	<list>
+        	<value>
+        		com/airfrance/jraf/batch/agence/resources/gdsReport
+        	</value>
+     	</list>
+  	</property>
+	</bean>
+
+	<bean id="alimGDSBatch"
+		class="com.airfrance.jraf.batch.agence.BatchAlimentationGDS" init-method="">
+		<property name="agenceDS" ref="agenceDS" />
+		<property name="postalAddressDS" ref="postalAddressDS" />
+		<property name="officeIdDS" ref="officeIdDS" />
+		<property name="errorDs" ref="errorDS" />
+		<property name="refCityDs" ref="refCityDS" />
+		<property name="refCountryDS" ref="refCountryDS" />
+		<property name="addressDS" ref="adresseDS" />
+		<property name="reportFileFormat" ref="reportLabels" />
+	</bean>
+
+	
+	<bean id="alimIATABatch"
+		class="com.airfrance.jraf.batch.agence.BatchAlimentationIATA" init-method="">
+		<property name="errorDs" ref="errorDS" />
+		<property name="refCityDs" ref="refCityDS" />
+		<property name="addressDS" ref="adresseDS" />
+		<property name="refCountryDS" ref="refCountryDS" />
+	</bean>
+	
+	<bean id="batchAlimentationBSP"
+		class="com.airfrance.jraf.batch.agence.BatchAlimentationBSP" init-method="">
+		
+	</bean>
+	<bean id="batchAlimentationMembreReseau"
+		class="com.airfrance.jraf.batch.agence.BatchAlimentationMR"
+		init-method="">
+			<property name="agenceDS" ref="agenceDS" />
+	</bean>
+	<bean id="externalIdentifierBatch"
+		class="com.airfrance.jraf.batch.individu.BatchExternalIdentifier" init-method="">
+	</bean>
+	
+	<!-- Appel du web service ProvideCustomer360View v3 -->
+	<bean id="consumer_ProvideCustomer360View-v03" class="com.afklm.soa.spring.consumer.WebServiceConsumer">
+		<property name="wsdlLocation" value="classpath:/META-INF/wsdl/w001580-v03/w001580-v03-policy.wsdl" />
+		<property name="service" value="com.afklm.soa.stubs.w001580.v3.ProvideCustomer360ViewServiceV3" />
+		<property name="endpointAddress" value="${ENV-WS-W001580v3-ADDRESS}" />
+		<property name="features">
+			<list>
+				<bean class="com.afklm.soa.wss.jaxws.ConsumerSecurityFeature">
+					<property name="env" value="${ENV-WS}"/>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<context:component-scan base-package="com.airfrance,com.afklm" /> 
+	<context:annotation-config />
+
+</beans>

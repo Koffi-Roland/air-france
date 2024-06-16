@@ -1,0 +1,72 @@
+server:
+  port: 8001
+  servlet:
+    session:
+      cookie:
+        name: MOCKSESSIONID
+  error:
+    include-stacktrace: ALWAYS
+    include-exception: true
+
+spring:
+  cloud:
+    config:
+      enabled: false
+      
+afklm:
+  security:
+    habile:
+      simul:
+        public:
+          pattern: /public/**, /ws/**, /**/*.jpg
+        session:
+          timeout: 601 # Timeout value after which a reauthentication is required
+#habile:
+#  proxy:
+#    backend:
+#      endpoints:
+#        - 
+#        - /api/demows
+
+logging.level:
+  ROOT: INFO
+  
+      
+management:
+  endpoints:
+    web:
+      base-path: /mock/actuator
+      exposure:
+        include: "*"
+        
+---
+spring:
+  config:
+    activate:
+      on-profile: withAngular
+
+habile:
+  proxy:
+    backend:
+      endpoints: /business/foo
+
+---
+spring:
+  config:
+    activate:
+      on-profile: modeSmCompatibility
+afklm:
+  security:
+    sm: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: authForm
+
+afklm:
+  security:
+    habile:
+      simul:
+        form: true

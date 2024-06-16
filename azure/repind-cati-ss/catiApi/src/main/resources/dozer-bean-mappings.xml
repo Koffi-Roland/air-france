@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" 
+		  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		  xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+  <mapping> 
+    <class-a>com.afklm.cati.common.spring.rest.exceptions.ValidationErrorResource</class-a>
+    <class-b>org.springframework.validation.FieldError</class-b>   
+    <field>
+      <a>message</a>
+      <b>defaultMessage</b>
+    </field>
+  </mapping>            
+          
+  <mapping> 
+    <class-a>com.afklm.cati.common.spring.rest.exceptions.ValidationErrorResource</class-a>
+    <class-b>org.hibernate.validator.internal.engine.ConstraintViolationImpl</class-b>   
+    <field>
+      <a>field</a>
+      <b>propertyPath</b>
+    </field>
+  </mapping>            
+          
+          
+  <!-- Métier 
+  <mapping> 
+    <class-a>com.afklm.cati.common.spring.rest.resources.UserResource</class-a>
+    <class-b>com.afklm.cati.common.entity.User</class-b>
+    <field>
+      <a>techId</a>
+      <b>idUser</b>
+    </field>
+  </mapping>  -->
+ 
+  <!-- Unused mapping since UserResourceAssembler is used -->
+  <!-- May be used if you do not want HATEOAS or do not use Assembler  
+  <mapping map-id="person_level1"> 
+    <class-a>com.afklm.cati.common.spring.rest.resources.UserResource</class-a>
+    <class-b>com.afklm.cati.common.entity.User</class-b>
+    <field>
+      <a>techId</a>
+      <b>idUser</b>
+    </field>
+  </mapping> -->
+  
+  <!-- mapping BO - DTO   -->
+	<mapping map-null="true">
+		<class-a>com.afklm.cati.common.spring.rest.resources.RefComPrefDgtResource</class-a>
+		<class-b>com.afklm.cati.common.entity.RefComPrefDgt</class-b>
+	    <field>
+	      <a>domain</a>
+	      <b>domain.codeDomain</b>
+	    </field>
+	    <field>
+	      <a>type</a>
+	      <b>type.codeType</b>
+	    </field>
+	    <field>
+	      <a>groupType</a>
+	      <b>groupType.codeGType</b>
+	    </field>
+		<field-exclude>
+			<a>refComPrefMls</a>
+			<b>refComPrefMls</b>
+		</field-exclude>
+	</mapping>
+	
+	<mapping map-null="true">
+		<class-a>com.afklm.cati.common.spring.rest.resources.RefComPrefResource</class-a>
+		<class-b>com.afklm.cati.common.entity.RefComPref</class-b>
+	    <field>
+	      <a>domain</a>
+	      <b>domain.codeDomain</b>
+	    </field>
+	    <field>
+	      <a>comType</a>
+	      <b>comType.codeType</b>
+	    </field>
+	    <field>
+	      <a>comGroupeType</a>
+	      <b>comGroupeType.codeGType</b>
+	    </field>
+	    <field>
+	      <a>media</a>
+	      <b>media.codeMedia</b>
+	    </field>
+	</mapping>
+</mappings> 

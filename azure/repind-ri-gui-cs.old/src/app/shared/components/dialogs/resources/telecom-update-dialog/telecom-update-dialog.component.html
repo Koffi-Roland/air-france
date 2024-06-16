@@ -1,0 +1,29 @@
+<mat-toolbar mat-dialog-title color="primary">
+  <app-dialog-toolbar [title]="data.title"></app-dialog-toolbar>
+</mat-toolbar>
+<mat-dialog-content mat-dialog-content>
+  <mat-horizontal-stepper #stepper>
+    <mat-step>
+      <div class="step-content">
+        <ng-template matStepLabel>{{ 'TELECOM-INFORMATION' | translate }}</ng-template>
+        <app-telecom-details-form #telecomDetailsForm [telecom]="telecom"></app-telecom-details-form>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>{{ 'GENERAL-INFORMATION' | translate }}</ng-template>
+      <div class="step-content">
+        <app-resource-general-info-form #genInfoForm [resource]="telecom"></app-resource-general-info-form>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>{{ 'CONFIRMATION' | translate }}</ng-template>
+      <div class="step-content">
+        <app-confirmation-step [isUpdate]="data.isUpdate" label="{{ data.validationBtnLabel | translate }}"
+          (update)="updateTelecom()" (create)="createTelecom()"></app-confirmation-step>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</mat-dialog-content>
+<mat-dialog-actions mat-dialog-actions>
+  <app-stepper-controller [stepper]="stepper" [steps]="numberOfSteps"></app-stepper-controller>
+</mat-dialog-actions>

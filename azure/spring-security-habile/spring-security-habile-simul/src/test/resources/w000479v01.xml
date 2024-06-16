@@ -1,0 +1,27 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.af-klm.com/services/it/ProvideUserRightsAccess-v1_0/xsd">
+   <soapenv:Header xmlns:wsa="http://www.w3.org/2005/08/addressing">
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-827DFB65718EC8B3D614991794469503">
+            <wsse:Username>w07507558</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">abc123</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+      <trackingMessageHeader xmlns="http://www.af-klm.com/soa/xsd/MessageHeader-V1_0" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+         <consumerRef>
+            <userID>none</userID>
+            <partyID>AF</partyID>
+            <consumerID>w58188475</consumerID>
+            <consumerLocation>QVI</consumerLocation>
+            <consumerType>A</consumerType>
+            <consumerTime>2011-12-01T16:26:52.103Z</consumerTime>
+         </consumerRef>
+      </trackingMessageHeader>
+      <wsa:MessageID>uuid:5315c533-1a5e-4465-9cf5-873e034a69bb</wsa:MessageID>
+      <wsa:To>https://ws-qvi-dev.airfrance.fr/it/businesssupport/000039v01</wsa:To>
+   </soapenv:Header>
+   <soapenv:Body>
+      <xsd:provideUserRightsAccessRQ>
+         <userId>m405991</userId>
+      </xsd:provideUserRightsAccessRQ>
+   </soapenv:Body>
+</soapenv:Envelope>

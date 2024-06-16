@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- DTD pour la configuration du filtre ldap -->
+<!-- AIR FRANCE -->
+
+
+
+<!ELEMENT HabileFilterConfiguration (SimulationSection?,EngineSection?,ProfileSection,TemplateSection?,PathSection?)>
+
+
+<!-- L'element "SimulationSection" indique comment fonctionne l'espace de simulation
+     LDAP, lorsque l'on se trouve sous windows en dev
+	 Les attributs suivants sont definis :
+	 
+	 enabled			Active l'espace de simulation
+	 				Attention doit etre mis a false lors du deploiement sous UNIX
+	 				
+	 loginInfoScreen
+	 				Active/desactive l'affichage d'une page d'information sur le user
+	 				connect� (dont ses profils) lors d'une connexion !!! 
+	 				Mettre � TRUE pour permettre � des users absent du fichier de config 
+	 				l'acc�s aux r�pertoires priv�s (sinon le bean est tjrs Anonymous !).
+	 loginInfoScreenDelay
+	 				Sp�cifie le delais avant que le redirection ne se produise				
+	 				
+	 allowAnonymousUsers
+	 				Active/desactive la possiblit� de se connecter avec des users
+	 				non definit dans le fichier xml ou dans l'annuaire, une page de connexion 
+	 				est alors propos�e � l'utilisateur pour selectionner ses profils.
+	 				
+	 searchProfilesInLdapDictionnary
+	 				Cherche les profils via l'appel de service en fonction du fichier 
+	 				de config adhesion ou dans le fichier de configuration.
+	 
+	 defaultLogin			Effectue une connection automatique avec le login sp�cifi�
+	 				Le login doit etre present dans la liste des users
+	 				Le password est ignor�.
+	 					 				
+	 enabledSMUser	
+	 				Permet la r�cupa�ration du SMUser.
+	 					 				
+	 enabledRemoteUser	
+	 				
+	 					 				
+	 enabledSSO		
+	 				Permet une simulation du SSO.
+	 				Attention ne fonctionne qu'en mode simulation
+	 					 				
+-->
+
+<!ELEMENT SimulationSection (User+)>
+<!ATTLIST SimulationSection 
+	enabled 			(true|false) 	"true"
+	loginInfoScreen			(true|false) 	"true"
+	loginInfoScreenDelay		CDATA 		"3"
+	allowAnonymousUsers 		(true|false) 	"true"
+	searchProfilesInLdapDictionnary	(true|false) 	"false"
+	defaultLogin	 		CDATA		#IMPLIED
+	enabledSMUser			(true|false) 	"true"
+	enabledRemoteUser		(true|false) 	"true"
+	enabledSSO			(true|false) 	"false"
+>
+
+<!ELEMENT User (Profile*) >
+<!ATTLIST User 
+	login	 	CDATA		#REQUIRED
+	password	CDATA		#IMPLIED
+	pae		(true|false)	"false"
+>
+
+
+<!-- L'element "ProfileSection" donne la liste des tous les profils
+	 connus par l'application.
+-->
+<!ELEMENT ProfileSection (Profile*|Profiles)>
+<!ATTLIST ProfileSection
+	checkUserHasOneProfile	(true|false) 	"true"
+	recupProfile		(true|false) 	"true">
+
+<!-- L'element "Profile" donne le nom d'un des profils
+	 connus par l'application. L'ordre n'est pas important.
+-->
+<!ELEMENT Profile EMPTY>
+<!ATTLIST Profile 
+	name	 	CDATA		#REQUIRED>
+
+<!-- L'element "Profiles" recupere une liste de profils dynamiquement.
+	 Pour cela, elle utilise comme support une base de donn�es.
+	 
+	 Les attributs suivants sont d�finis :
+
+	 checkUserHasOneProfile	Doit on tester si l'utilisateur a au moins un profil ?
+
+	 
+	 jndi 			Nom jndi sous lequel est d�clar� la datasource 
+	 				(dans le serveur applicatifs).
+	 				
+	 table			Nom de la table dans laquelle se trouve la liste des profils
+	 
+	 column			Colonne contenant tous les libell�s des profils.
+	 
+	 refresh		d�finit le niveau de rafra�chissement 
+	 				de la liste des profils de r�f�rence.
+	 				-1  : la lecture des profils n'est effectu� qu'au d�marrage 
+	 				      pour la relire il faut red�marrer le serveur
+	 				      (valeur par d�faut)
+	 				0   : la lecture est effectu�e pour chaque action qui se connecte
+	 					  (non recommand�)
+	 				>300: la lecture est effectu�e apr�s un certain d�lai
+	 					  de fra�cheur des donn�es. il ne peut �tre inf�rieur � 300 secondes
+	 					  � cause des probl�mes de performances.
+-->
+<!ELEMENT Profiles EMPTY>
+<!ATTLIST Profiles
+	jndi	 		CDATA		#REQUIRED
+	table	 		CDATA		#REQUIRED
+	column	 		CDATA		#REQUIRED
+	refresh 		CDATA		"-1">
+
+
+
+<!-- L'element EngineSection permet une intervention sur le moteur.
+	 
+	 Les attributs suivants sont d�finis :
+	 
+	 afterAuthentificationMethode : Chemin de la classe qui contient la methode � lancer lors 
+	 des phases d'authentification.
+-->
+<!ELEMENT EngineSection  (Headers?,MetaRefresh?)>
+<!ATTLIST EngineSection
+	notifierClass 	CDATA		""
+	connectorClass 	CDATA		"com.airfrance.habile.filter.adhesion.AdhesionManager"
+>
+
+<!ELEMENT Headers (staticHeader*,dynamicHeader*)>
+<!ELEMENT staticHeader EMPTY>
+<!ATTLIST staticHeader
+	name	CDATA			#REQUIRED
+	value	CDATA			""
+>
+<!ELEMENT dynamicHeader (paramHeader*)>
+<!ATTLIST dynamicHeader
+	headerClass	CDATA 		""
+	frequence	CDATA		"-1"
+>
+
+
+
+<!ELEMENT paramHeader EMPTY>
+<!ATTLIST paramHeader
+	paramName	CDATA 		""
+	paramValue	CDATA		""
+>
+
+
+
+<!ELEMENT MetaRefresh (AuthorizedURI*)>
+<!ATTLIST MetaRefresh
+	headerName		CDATA	"stopRefresh"
+	timeoutValue	CDATA	"30">
+
+<!ELEMENT AuthorizedURI (Filter?)>
+<!ATTLIST AuthorizedURI
+	uri			CDATA	""
+>
+
+<!ELEMENT Filter (ParamFilter*)>
+<!ATTLIST Filter>
+
+<!ELEMENT ParamFilter EMPTY>
+<!ATTLIST ParamFilter
+	parameter	CDATA	#REQUIRED
+>
+
+
+<!-- 
+	 L'element "TemplateSection" indique quelles sont les pages JSP /TEMPLATE
+	 de l'application et la configuration globale relative a ces derniers.
+	 Les attributs suivants sont d�finis :
+	 
+	 srcTetiere		Url pour la titi�re applicative, si aucune tetiere
+	                n'est definit alors la titiere generique est utilis�
+	 				
+	 srcLogoutURL	Url qui lance la procedure de deconnexion habile et applicative.
+	 
+	 charteVersion	Version de la charte a utiliser pour les templates 
+	 				(actuellement il n'existe que la V2)
+	 
+	 Les templates peuvent �tres des .tmpl ou des .jsp
+	 Si ce sont des jsp alors les fichiers sont recherch�s dans le repertoire WebContent
+	 Si ce sont des tmpl alors les fichiers sont rechercch�s dans le classpath
+	 Les attritbus sont sock� dans la request, pour y acceder : reques.getAttribut("?")
+	 
+	 tmplChooseProfil
+	 				Affiche la liste des profils et permet la selection.
+	 				Liste des attributs :
+	       				selectProfiles.url.post : Path pourla validation du formulaire
+    	   				selectProfiles.matricule : Login de l'utilisateur connect�
+				        selectProfiles.profiles.choice : Liste des profils sous forme d'options
+
+	 tmplError
+	 				Page d'erreur (erreur adhesion, erreur IO).
+	 				Liste des attributs :
+          				error.message : libell� du message d'erreur
+          				error.stacktrace : stacke trace de l'erreur
+          				
+	 tmplInfo
+	 				Page d'information sur la personne connect�
+	 				Liste des attributs :
+		 				splashscreen.redirect : Url de redirection apes affichage
+		 				splashscreen.redirect.delay : Delay avant redirection
+		 				splashscreen.matricule : Matricule de la personne connect�
+		 				splashscreen.profiles : Liste des profils sous forme de <UL><LI>
+	
+	 tmplLogout
+	 				Page de deconnexion
+	 				Liste des attributs :
+            			logout.matricule : Matricule de la personne connect�
+             			logout.url : Url de deconnexion fournis par habile
+
+	 tmplLogoutSimule
+	 				Page de deconnexion quand on est en simulation
+	 				Liste des attributs :
+            			logout.matricule : Matricule de la personne connect�
+             			logout.url : Url de deconnexion fournis par habile
+             			
+     tmplMonitoring
+     				Page pour les superviseurs de l'application
+	 				Liste des attributs :
+	 				    supervison.matricule : Matricule de la personne connect�
+				        supervison.date : Date courante
+				        supervison.server : Machine physique sur laquelle on est connect�
+				     
+ 	 tmplUnautorized
+ 	 				Page pour tout acc�s frauduleux
+	 				Liste des attributs :
+	 					noprofile.matricule : Matricule de la personne connect�
+ 	 				
+	 tmplLoginForm
+	 				Formulaire de deconnexion
+	 				Liste des attributs :
+	       				Login.url       : url qui a d�clench� la connexion pour redirection suite au formulaire de login
+    	   				Login.matricule : Login de l'utilisateur connect�
+				        Login.password  : mot de passe
+
+-->
+<!ELEMENT TemplateSection EMPTY>
+<!ATTLIST TemplateSection
+	  srcTetiere 			CDATA 	"http://cmsintranet.airfrance.fr/charte_v03_001/img/tetiere/tetiere_simulation_LDAP.jpg"
+	  srcLogoutURL			CDATA	"ldap/logout.do"
+	  charteVersion			(v2|v3|betty)	"v3"
+	  tmplChooseProfil		CDATA 	"com/airfrance/habile/filter/engine/template/{0}/chooseprofile.tmpl"
+	  tmplError				CDATA 	"com/airfrance/habile/filter/engine/template/{0}/error.tmpl"
+	  tmplInfo				CDATA 	"com/airfrance/habile/filter/engine/template/{0}/info.tmpl"
+	  tmplLogout			CDATA 	"com/airfrance/habile/filter/engine/template/{0}/logout.tmpl"
+	  tmplLogoutSimule		CDATA 	"com/airfrance/habile/filter/engine/template/{0}/logoutsimule.tmpl"
+	  tmplMonitoring		CDATA 	"com/airfrance/habile/filter/engine/template/{0}/monitoring.tmpl"
+	  tmplUnautorized		CDATA 	"com/airfrance/habile/filter/engine/template/{0}/unautorized.tmpl"
+	  tmplLoginForm			CDATA 	"com/airfrance/habile/filter/engine/template/{0}/loginform.tmpl"
+>
+
+<!-- L'element "PathSection" indique quel sont les path public et priv�s
+     de l'application, aucune verification d'autentification n'est effectu� sur ces paths
+	 Les attributs suivants sont d�finis :
+	 
+	 defaultType				les chemins sont d�finits par d�faut public ou prive
+	 defaultAuthenticationType	methode d'authentification par defaut.
+     invalidCaracters  			pattern des mauvais caract�res 'HABILE' dans URL (//|/\.|/\*|\./|>|<|\\|~|\*\.|'|%[0-1][0-f]|%7f|%[8-f][0-f]|%25)
+	 
+     
+-->     
+<!ELEMENT PathSection (PathPublic*,PathPrive*)>
+<!ATTLIST PathSection
+	defaultType						(public|prive) 	"prive"
+	defaultAuthenticationType		(BASIC|FORM) 	"BASIC"
+	invalidCaracters				CDATA		 	"(\\|\/\/|\/\.|\/\*|\.\/|&lt;|&gt;|\~|\*\.|\&apos;|%[0-1][0-f]|%7F|%7f|%[8-f][0-f]|%25)"
+>
+
+<!-- 
+	 L'element "PathPublic" indique un chemin public pour l'application
+     Les attributs suivants sont d�finis :
+	 
+	 path		reg exp du chemin public.
+
+-->     
+<!ELEMENT PathPublic EMPTY>
+<!ATTLIST PathPublic
+	  path 			CDATA 	#REQUIRED
+>
+
+<!-- 
+	 L'element "PathPrive" indique un chemin prive pour l'application
+     Les attributs suivants sont d�finis :
+	 
+	 path				reg exp du chemin prive.
+	 authenticationType	type d'authentification voulue sur ce chemnin :
+	 						default : celle de la PathSection
+	 						BASIC	: une authentification BASIC
+	 						FORM	: une authentification FORMULAIRE
+-->     
+<!ELEMENT PathPrive EMPTY>
+<!ATTLIST PathPrive
+	  path 					CDATA 					#REQUIRED
+	  authenticationType	(default|BASIC|FORM) 	"default"
+>

@@ -1,0 +1,11 @@
+<div class="mat-form-field-wrapper details" [formGroup]="group">
+    <app-toggle-slider-details class="flex-item" *ngIf="field.details" [details]="field.details">
+    </app-toggle-slider-details>
+
+    <div class="flex-toggle">
+        <label class="label">{{field.label | translate}}</label>
+        <mat-slide-toggle class="with-margin" [checked]="formControl.value === field.options[0].trueValue"
+            (change)="setValue($event)">
+        </mat-slide-toggle>
+    </div>
+</div>

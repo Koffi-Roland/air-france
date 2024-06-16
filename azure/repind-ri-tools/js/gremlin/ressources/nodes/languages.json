@@ -1,0 +1,17 @@
+[
+    {
+        "id": "20",
+        "acronyme": "OT",
+        "type": "LANGUAGE"
+    },
+    {
+        "id": "21",
+        "acronyme": "EN",
+        "type": "LANGUAGE"
+    },
+    {
+        "id": "22",
+        "acronyme": "FR",
+        "type": "LANGUAGE"
+    }
+]

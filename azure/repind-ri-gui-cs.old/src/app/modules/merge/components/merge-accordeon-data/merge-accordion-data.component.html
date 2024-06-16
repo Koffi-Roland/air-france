@@ -1,0 +1,17 @@
+<mat-accordion *ngIf="accordionDatas">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-radio-button (click)="stopPropagation($event)" *ngIf="accordionDatas.options.type == 'radio' && accordionDatas.id" [checked]="accordionDatas.options.selected"
+          [value]="accordionDatas.id"></mat-radio-button>
+        <mat-checkbox (click)="stopPropagation($event)" *ngIf="accordionDatas.options.type == 'checkbox' && accordionDatas.id" [(ngModel)]="accordionDatas.options.selected"></mat-checkbox>
+        <mat-icon>{{accordionDatas.icon}}</mat-icon>
+        {{ accordionDatas.title | translate}}
+      </mat-panel-title>
+      <mat-panel-description>
+          <app-merge-accordion-data-subtitles [subtitles]="accordionDatas.subtitles" fxFlex="1 1 auto" fxLayoutAlign="start center" fxLayoutGap="5px"></app-merge-accordion-data-subtitles>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-merge-accordion-data-content [content]="accordionDatas.content"></app-merge-accordion-data-content>
+  </mat-expansion-panel>
+</mat-accordion>

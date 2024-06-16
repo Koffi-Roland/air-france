@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: search-gin-by-phone
+  labels:
+    app.kubernetes.io/name: search-gin-by-phone
+    app.kubernetes.io/instance: search-gin-by-phone
+spec:
+  selector:
+    app.kubernetes.io/name: search-gin-by-phone
+    app.kubernetes.io/instance: search-gin-by-phone
+  ports:
+    - port: 8080               # Port for the service
+      targetPort: 8080         # Port of the container (should be the same as in your deployment)

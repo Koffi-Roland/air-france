@@ -1,0 +1,34 @@
+meta {
+  name: DeletePaymentPreferences - PING
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{delete-payment-preferences-url}}
+  body: xml
+  auth: none
+}
+
+headers {
+  SOAPAction: "http://www.af-klm.com/services/passenger/DeletePaymentPreferences-v2/deletePaymentPreferences"
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.af-klm.com/services/passenger/DeletePaymentPreferencesSchema-v2/xsd">
+     <soapenv:Body>
+        <xsd:DeletePaymentPreferencesRequestElement>    
+           <paymentId>110000014201</paymentId>
+        </xsd:DeletePaymentPreferencesRequestElement>
+     </soapenv:Body>
+  </soapenv:Envelope>
+}
+
+vars:pre-request {
+  USER: w04776476
+  PASSWORD: pswpsw123
+}
+
+assert {
+  res.body: contains No payment found with this paymentId
+}

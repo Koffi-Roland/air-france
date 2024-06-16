@@ -1,0 +1,23 @@
+bases:
+  - ../base
+
+resources:
+  - ingress.yaml
+
+nameSuffix: -ite
+
+namespace: repind-ite
+
+commonLabels:
+  app.kubernetes.io/name: search-gin-by-social-media
+  app.kubernetes.io/instance: search-gin-by-social-media-ite
+
+images:
+  - name: harbor-vlb.af-klm.com/cdm/search-gin-by-social-media
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+patchesStrategicMerge:
+  - replica-extra-options.yaml
+  - deploy-profile.yaml

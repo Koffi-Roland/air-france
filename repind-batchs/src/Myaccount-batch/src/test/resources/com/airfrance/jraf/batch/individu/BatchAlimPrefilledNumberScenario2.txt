@@ -1,0 +1,4 @@
+Personnal identifier (FB number or connexion email);Account code type ;Account code (CA ID);Label;End of accreditation date;contract type (CC or BB) ;contract Ref (ID);Commentaires
+ABCD@ABCD.FR;AC;008787;;31/12/2016;CC;BEL
+ABCD@ABCD.FR;AC;008787;BON LABEL;;CC;BEL
+ABCD@ABCD.FR;;;;;CC;BEL

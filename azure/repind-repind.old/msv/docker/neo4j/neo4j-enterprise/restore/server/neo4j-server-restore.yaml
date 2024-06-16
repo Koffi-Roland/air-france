@@ -1,0 +1,36 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: neo4j-server-pvc
+  labels:
+    app: neo4j-server-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: neo4j-server-restore
+  labels:
+    app: neo4j-server-restore
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: neo4j-server-restore
+    spec:
+      containers:
+        - name: neo4j-server-restore
+          image: nexusoss-docker.airfrance.fr/repind/neo4j-server-restore:latest
+          volumeMounts:
+          - name: neo4j-server-pvc
+            mountPath: /data
+      volumes:
+        - name: neo4j-server-pvc
+          persistentVolumeClaim:
+           claimName: neo4j-server-pvc

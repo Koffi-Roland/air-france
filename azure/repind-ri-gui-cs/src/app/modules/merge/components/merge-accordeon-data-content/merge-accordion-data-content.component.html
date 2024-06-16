@@ -1,0 +1,35 @@
+<span *ngFor="let data of content.values">
+  <span *ngIf="isArray(data); else contentView">
+      <mat-chip-list *ngIf="data.template != null && data.template.indexOf('listChips') > -1;else withoutListChips">
+        <b *ngIf="data.template.indexOf('withoutKey') < 0 && data.key">{{ data.key | uppercase | translate}}: </b>
+        <mat-chip *ngFor="let chips of data.values" disabled>
+            <span *ngFor="let chip of chips.values">{{ chip.isTranslable ? (chip.value | translate) : chip.value }}<span *ngIf="chips.values.indexOf(chip) < chips.values.length-1">&nbsp;</span></span>
+          </mat-chip>
+      </mat-chip-list>
+      <ng-template #withoutListChips>
+          <!--<div *ngIf="data.template != null && data.template.indexOf('collapse') > -1;else default">
+          <b *ngIf="(data.template == null || data.template.indexOf('withoutKey') < 0) && data.key">{{ data.key | uppercase |
+              translate}}: </b>
+              <span *ngFor="let chips of data.values">
+                <span *ngFor="let chip of chips.values">{{ chip.isTranslable ? (chip.value | translate) :  isDate(chip.value) ? (chip.value | localizedDate) : chip.value }}
+                  <span *ngIf="chips.values.indexOf(chip) < chips.values.length-1">&nbsp;</span>
+                </span>
+              </span>
+            </div>-->
+          <!--<ng-template #default>-->
+          <b *ngIf="(data.template == null || data.template.indexOf('withoutKey') < 0) && data.key">{{ data.key | uppercase |
+              translate}}: </b>
+          <app-merge-accordion-data-content [content]="data"></app-merge-accordion-data-content>
+        <!--</ng-template>-->
+      </ng-template>
+  </span>
+  <ng-template #contentView>
+    <span *ngIf="data.value != null">
+        <b *ngIf="(data.template == null || data.template.indexOf('withoutKey') < 0) && data.key">{{ data.key | uppercase |
+          translate}}: </b>
+        <span>{{ data.isTranslable ? (data.value | translate) :  isDate(data.value) ? (data.value | localizedDate) : data.value }}</span>
+        <span *ngIf="data.template != null && data.template.indexOf('withoutBreakLine') > -1">&nbsp;</span>
+        <br *ngIf="data.template == null || data.template.indexOf('withoutBreakLine') < 0" />
+    </span>
+  </ng-template>
+</span>

@@ -1,0 +1,19 @@
+meta {
+  name: SearchGinByEmail
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{search-by-email-url}}/{{email}}?merge=true
+  body: none
+  auth: none
+}
+
+query {
+  merge: true
+}
+
+vars:pre-request {
+  EMAIL_LOCAL: angele.taormina@ge.fr
+}

@@ -1,0 +1,22 @@
+applications:
+  - name: mapping
+    instances: 2
+    memory: 768M
+    disk_quota: 300M
+    stack: cflinuxfs3
+    buildpack: java_buildpack_offline
+    routes:
+    # Following sample route like 'myapp-dev.ta-tls.af-klm.com/blabla' is for NON-B2C (HABILE (isoseg01)) project.
+      - route: repind-api.airfrance.fr/api-mgr/mapping
+    services:
+      - vault
+      - como-appender
+    env:
+    # Following JBP_CONFIG_TOMCAT env var to define context_path is only relevant for war. NOT for SpringBoot JAR.
+    # JBP_CONFIG_TOMCAT: '{tomcat: { context_path: /api }}'
+      SPRING_PROFILES_ACTIVE: prd
+      ENV-ACRONYME: prd
+      ENV-REPIND-TOPIC: P.log-APP.REPIND.001
+      ENV-REPIND-BOOTSTRAP-SERVERS: bootstrap.servers=qvipclogkb01.france.airfrance.fr:6668,qvipclogkb02.france.airfrance.fr:6668,qvipclogkb03.france.airfrance.fr:6668,qvipclogkb04.france.airfrance.fr:6668
+      JAVA_OPTS: -Xms70M -Xmx258M -Djava.security.krb5.kdc=qvipbkrbrs01.france.airfrance.fr -Djava.security.krb5.realm=PRD.FRANCE.AIRFRANCE.FR -Djava.sun.security.krb5.debug=false -Djava.security.auth.login.config=/home/vcap/tmp/jaas.config --add-opens java.base/java.lang=ALL-UNNAMED
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 17.+ } }'

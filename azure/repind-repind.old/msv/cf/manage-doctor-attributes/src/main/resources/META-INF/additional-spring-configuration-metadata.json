@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "services.MANAGE_DOCTOR_ATTRIBUTES.url",
+      "type": "java.lang.String",
+      "description": "Description for services.MANAGE_DOCTOR_ATTRIBUTES.url."
+  }
+] }

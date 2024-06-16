@@ -1,0 +1,27 @@
+spring:
+  config:
+    activate:
+      on-profile: LE,prd
+  datasource:
+    tns_admin_env: PROD
+    url: jdbc:oracle:thin:@SIC_PLE.WORLD
+    maxPoolSize: 10
+
+vault:
+  uri: https://vault-tls.airfranceklm.com
+  namespace: repind
+  env: prod
+  credentials:
+    role_id: ${vault_role_id}
+    secret_id: ${vault_secret_id}
+
+server:
+  servlet:
+    context-path: /api-mgr/provide-identification-data/
+
+apim.jwt.validation:
+  environment: PRD
+  securityId: w04776476
+  serviceIds:
+    - R000378
+  whitelist: /actuator/health

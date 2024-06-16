@@ -1,0 +1,19 @@
+meta {
+  name: All
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{provide-individual-score-url}}/pcs-score/{{gin}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  MS: provide-individual-score
+}
+
+assert {
+  res.status: eq 200
+}

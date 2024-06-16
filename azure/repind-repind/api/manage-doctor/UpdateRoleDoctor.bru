@@ -1,0 +1,60 @@
+meta {
+  name: UpdateRoleDoctor
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{manage-doctor-url}}/role/{{roleIdDoctor}}?doctorStatus=V&doctorId={{randomDoctorIdUpdated}}&airLineCode=AF&speciality=DOFA&siteModification=CAPI&signatureSource=CAPI&endDateRole=2029-05-08T00:00:00Z
+  body: json
+  auth: none
+}
+
+query {
+  doctorStatus: V
+  doctorId: {{randomDoctorIdUpdated}}
+  airLineCode: AF
+  speciality: DOFA
+  siteModification: CAPI
+  signatureSource: CAPI
+  endDateRole: 2029-05-08T00:00:00Z
+}
+
+body:json {
+  {
+      "relationsList":[
+          {
+              "type":"SPEAK",
+              "values":[
+                  "NL",
+          "FR"]
+          }
+      ]
+  }
+}
+
+vars:pre-request {
+  MS: manage-doctor
+}
+
+vars:post-response {
+  randomDoctorIdUpdated: null
+}
+
+assert {
+  res.status: eq 200
+}
+
+script:pre-request {
+  const _ = require("lodash");
+  
+  const randomId = Array(9).fill(0).map((item) => {
+    return _.random(0,9)
+  }).join('');
+  
+  bru.setVar('randomDoctorIdUpdated', randomId);
+}
+
+script:post-response {
+  bru.setVar('randomDoctorIdUpdated', null);
+}

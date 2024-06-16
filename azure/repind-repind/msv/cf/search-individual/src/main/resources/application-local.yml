@@ -1,0 +1,13 @@
+ri-search-gin-by-email:
+  url: http://localhost:8081/
+ri-search-gin-by-phone:
+  url: http://localhost:8081/
+ri-search-gin-by-contract:
+  url: http://localhost:8081/
+ri-search-gin-by-social-media:
+  url: http://localhost:8081/
+ri-search-gin-by-lastname-firstname:
+  url: http://localhost:8081/
+
+springdoc:
+  enable-hateoas: false

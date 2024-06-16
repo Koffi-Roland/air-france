@@ -1,0 +1,53 @@
+<h1 mat-dialog-title translate [translateParams]="{type: type | translate}">{{title}}</h1>
+<mat-dialog-content class="mat-typography">
+
+  <!-- unique form -->
+  <ng-container *ngIf="!stepperFormConfig ; else stepperForm">
+    <app-dynamic-form #form [fields]="config" [globalValidators]="globalValidators" [action]="action">
+    </app-dynamic-form>
+  </ng-container>
+
+  <!-- stepper with multiple form -->
+  <ng-template #stepperForm>
+    <mat-horizontal-stepper (selectionChange)="selectionChange($event)">
+
+      <!-- form steps -->
+      <mat-step [stepControl]="step.stepControl" errorMessage="{{step.errorMessage}}"
+        *ngFor="let step of stepperFormConfig.steps">
+        <ng-template matStepLabel>{{ step.label | translate }}</ng-template>
+        <app-dynamic-form #form [fields]="step.fieldConfig" [globalValidators]="step.globalValidators"
+          [action]="action">
+        </app-dynamic-form>
+      </mat-step>
+
+      <!-- summary step -->
+      <mat-step *ngIf="stepperFormConfig.isWithSummary">
+        <ng-template matStepLabel>{{ 'SUMMARY-PAGE' | translate }}</ng-template>
+        <ng-container *ngIf="isNoError; else errorMessage">
+          <mat-card>
+            <p *ngFor="let key of getKeys(objectToSubmit)">
+              <b>{{ key }}</b> : {{ objectToSubmit[key] }}
+            </p>
+          </mat-card>
+        </ng-container>
+        <ng-template #errorMessage>
+          <p>{{ "FORM-INVALID" | translate }}</p>
+          <ul *ngFor="let missing of missingFields">
+            <li>{{ missing }}</li>
+          </ul>
+        </ng-template>
+      </mat-step>
+
+    </mat-horizontal-stepper>
+  </ng-template>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+  <button mat-button mat-dialog-close translate>CANCEL</button>
+  <ng-container *ngIf="stepperFormConfig">
+    <button *ngIf="!isFirstIndex" mat-button translate (click)="goPrevious()">PREVIOUS</button>
+    <button *ngIf="!isLastIndex" mat-button translate (click)="goNext()">NEXT</button>
+  </ng-container>
+  <button mat-button [mat-dialog-close]="true" [disabled]="!isNoError" (click)="submit()" translate>{{label}}</button>
+</mat-dialog-actions>

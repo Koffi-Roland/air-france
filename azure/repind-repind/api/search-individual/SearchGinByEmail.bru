@@ -1,0 +1,24 @@
+meta {
+  name: SearchGinByEmail
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{search-individual-url}}/v2/search-individual?email=oko-ext@airfrance.fr&merge=true
+  body: none
+  auth: none
+}
+
+query {
+  email: oko-ext@airfrance.fr
+  merge: true
+}
+
+vars:pre-request {
+  MS: search-individual
+}
+
+assert {
+  res.status: eq 200
+}

@@ -1,0 +1,16 @@
+<div *ngIf="data">
+  <h1  mat-dialog-title translate [translateParams]="{type: type | translate}">HEADER-ERROR-TITLE</h1>
+  <mat-dialog-content class="mat-typography" >
+    <p translate [translateParams]="{type: type | translate}">HEADER-NEEDED-CHANGE</p>
+    <mat-card>
+      <span *ngFor="let column of data.element"><b>{{column}}</b> <span *ngIf="data.element.indexOf(column) < data.element.length -1">,</span> </span>
+    </mat-card>
+    <p>
+      <span style="font-style: italic; font-size:10px;"  *ngFor="let column of data.headers"><b >{{column}}</b> <span *ngIf="data.headers.indexOf(column) < data.headers.length -1">,</span> </span>
+    </p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close translate>CLOSE</button>
+  </mat-dialog-actions>
+  
+</div>

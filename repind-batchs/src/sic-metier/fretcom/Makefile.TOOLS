@@ -1,0 +1,37 @@
+
+include ./makefileHeaderOutils
+
+# for dynamic SQL Module
+override SRCDIR=PROC++/proc
+
+# temporary
+override LD=$(CC)
+
+USE_ORA=1
+
+#APPL=TOOLS$(VERSION)_S8$(PATCH)$(PAR)
+APPL=TOOLS_$(VERSION)$(PATCH)$(PAR)
+
+LIBOBJS=\
+	$(OBJDIR)/MemoryMgr$(MEM)$(PAR).o \
+	$(OBJDIR)/DebugTools$(PAR).o \
+	$(OBJDIR)/FreightTraces$(PAR).o \
+        $(OBJDIR)/EdifactTraces$(PAR).o \
+        $(OBJDIR)/TelegramTraces$(PAR).o \
+	$(OBJDIR)/CoreHandler$(PAR).o \
+	$(OBJDIR)/BasicException$(PAR).o \
+	$(OBJDIR)/ToolsDate$(PAR).o \
+	$(OBJDIR)/Ressource$(PAR).o \
+        $(OBJDIR)/Timer$(MEM)$(PAR).o \
+	$(OBJDIR)/AdhFreightTraces$(PAR).o \
+
+
+OBJS=  \
+	$(OBJDIR)/WrapperReadTestData$(PAR).o\
+	$(OBJDIR)/WrapperTestData$(PAR).o\
+	$(OBJDIR)/mainTest$(PAR).o\
+	$(LIBOBJS)
+
+include $(ROOT_MAKEFILE_NOYAU)/Makefile.noyau
+
+include ./outils.rules

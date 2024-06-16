@@ -1,0 +1,91 @@
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.security.web: DEBUG
+    org.springframework.http.server.reactive: DEBUG
+    com.afklm.spring.security.habile: DEBUG
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    registerWithEureka: false
+
+management:
+  endpoint:
+    gateway:
+      enabled: true # default value
+  endpoints:
+    web:
+      exposure:
+        include: "gateway"
+
+spring:
+  application:
+    name: "ss4h-gateway"
+
+  cloud:
+    gateway:
+      default-filters:
+      - RewriteLocationResponseHeader
+      discovery:
+        locator:
+          enabled: true
+#          predicates:
+#          - name: Path
+#            args:
+#              pattern: "'/' + serviceId + '/**'"
+#          filters:
+#          - name: RewritePath
+#            args:
+#              regexp: "'/' + serviceId + '/?(?<remaining>.*)'"
+#              replacement: "'/${remaining}'"
+#          - name: CircuitBreaker
+#            args:
+#              name: serviceId
+#      routes:
+#      - id: httpbin
+#        # docker run -p 8888:80 kennethreitz/httpbin
+#        uri: http://localhost:8888
+#        predicates:
+#        - Path=/httpbin/**
+#        filters:
+#        - RewritePath=/httpbin/?(?<segment>.*), /$\{segment}
+
+afklm:
+  security:
+    allowIframe: true
+    roles:
+      P_XXXXX_ADMIN:
+        - UPDATE
+        - VIEW
+      P_XXXXX_USER:
+        - VIEW
+        - INSPECT
+    actuators-role: P_XXXXX_ADMIN
+    public-endpoints: /public/**
+    urls-http-verbs-authorities:
+      - urls: /SERVICE-A/**
+        http-verbs-authorities:
+          - verbs: GET
+            roles: P_XXXXX_USER
+          - verbs: POST, PUT
+            roles: P_XXXXX_ADMIN
+      - urls: /SERVICE-B/**
+        http-verbs-authorities:
+          - verbs: GET
+            permissions: VIEW
+          - verbs: POST, PUT
+            permissions: UPDATE
+      - urls: /SERVICE-C/**
+        http-verbs-authorities:
+          - verbs: GET
+            roles: P_XXXXX_ADMIN
+            permissions: INSPECT
+          - verbs: POST, PUT
+            permissions: UPDATE
+#      - urls: /httpbin/**
+#        http-verbs-authorities:
+#          - verbs: GET,PUT,POST,OPTIONS
+#            roles: P_XXXXX_ADMIN

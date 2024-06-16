@@ -1,0 +1,48 @@
+# -------------    Bases de donnees SIC Non Prod   ---------------------------------------------------------
+##--SIC Qal--
+SIC_SAE.WORLD=(description=(address_list=(address=(protocol=tcp)(host=tlsqnbdor027.france.airfrance.fr)(port=1521))
+                               (address=(protocol=tcp)(host=tlsqnbdor028.france.airfrance.fr)(port=1521))
+                               (address=(protocol=tcp)(host=tlsqnbdor029.france.airfrance.fr)(port=1521))
+                  )
+                  (failover=on)
+                  (load_balance=off)
+                  (connect_data=(global_name=OSMN305.WORLD)
+                  (service_name=SIC_SAE.WORLD)
+                  (failover_mode=(type=select)(method=preconnect)(retries=1)(delay=1)(backup=tlsqnbdor029.france.airfrance.fr))))
+##--SIC Dev--
+REPIND_ITE.WORLD=(description=(address=(protocol=tcp)(host=lh-dsic02-db.france.airfrance.fr)(port=1523))(connect_data=(service_name=REPIND_ITE.WORLD)(instance_name=ODMN305)(UR=A)))
+##--SIC RCT--
+REPIND_CAE.WORLD=(description=(address=(protocol=tcp)(host=lh-csic02-db.france.airfrance.fr)(port=1523))(connect_data=(service_name=REPIND_CAE.WORLD)(instance_name=OCMN309)(UR=A)))
+
+# -------------    Bases de donnees SIC UTF8 Non Prod   ---------------------------------------------------------
+##--SIC UTF8 Qal--
+SICUTF8_SAE.WORLD=(description=(address_list=(address=(protocol=tcp)(host=tlsqnbdor027.france.airfrance.fr)(port=1521))
+                               (address=(protocol=tcp)(host=tlsqnbdor028.france.airfrance.fr)(port=1521))
+                               (address=(protocol=tcp)(host=tlsqnbdor029.france.airfrance.fr)(port=1521))
+                  )
+                  (failover=on)
+                  (load_balance=off)
+                  (connect_data=(global_name=OSMN303.WORLD)
+                  (service_name=SICUTF8_SAE.WORLD)
+                  (failover_mode=(type=select)(method=preconnect)(retries=1)(delay=1)(backup=tlsqnbdor029.france.airfrance.fr))))
+##--SIC UTF8 Dev--
+REPIND_UTF8_ITE.WORLD=(description=(address=(protocol=tcp)(host=lh-dsicutf802-db.france.airfrance.fr)(port=1521))(connect_data=(service_name=REPIND_UTF8_ITE.WORLD)(instance_name=ODMN303)(UR=A)))
+##--SIC UTF8 RCT--
+REPIND_UTF8_CAE.WORLD=(description=(address=(protocol=tcp)(host=lh-csicutf801-db.france.airfrance.fr)(port=1521))(connect_data=(service_name=REPIND_UTF8_CAE.WORLD)(instance_name=OCMN304)(UR=A)))
+
+
+# -------------    Bases de donnees REPIND_PP Non Prod   ---------------------------------------------------------
+##--REPIND_PP Qal--
+REPIND_SAE.WORLD=(description=(address_list=(address=(protocol=tcp)(host=tlsqnbdor027.france.airfrance.fr)(port=1521))
+                               (address=(protocol=tcp)(host=tlsqnbdor028.france.airfrance.fr)(port=1521))
+                               (address=(protocol=tcp)(host=tlsqnbdor029.france.airfrance.fr)(port=1521))
+                  )
+                  (failover=on)
+                  (load_balance=off)
+                  (connect_data=(global_name=OSMN306.WORLD)
+                  (service_name=REPIND_SAE.WORLD)
+                  (failover_mode=(type=select)(method=preconnect)(retries=1)(delay=1)(backup=tlsqnbdor029.france.airfrance.fr))))
+##--REPIND_PP Dev--
+REPIND_PP_ITE.WORLD=(description=(address=(protocol=tcp)(host=lh-drepind02-db.france.airfrance.fr)(port=1522))(connect_data=(service_name=REPIND_PP_ITE.WORLD)(instance_name=ODMN306)(UR=A)))
+##--REPIND_PP RCT--
+REPIND_PP_CAE.WORLD=(description=(address=(protocol=tcp)(host=lh-crepind02-db.france.airfrance.fr)(port=1522))(connect_data=(service_name=REPIND_PP_CAE.WORLD)(instance_name=OCMN308)(UR=A)))

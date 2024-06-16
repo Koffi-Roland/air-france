@@ -1,0 +1,63 @@
+.list-default-languages {
+  min-height: 35px;
+  display: block;
+  background: white;
+  overflow: hidden;
+}
+.edit-default-languages-list {
+  padding: 8px 10px;
+  border-bottom: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  background: white;
+  font-size: 14px;
+}
+.flag-market-name {
+  margin-left: 5px;
+}
+.default-languages-edit-bloc {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #e9e5e6;
+  display: block !important;
+}
+.border-error {
+  border-color: red;
+}
+.default-languages-edit-text {
+  line-height: 2;
+  color: rgba(0, 0, 0, 0.54);
+}
+.nat-optin {
+  padding: 10px;
+}
+
+/* fix for IE10 and above */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  /* IE10+ CSS styles go here */
+  .nat-optin {
+    margin: 20px;
+  }
+}
+
+.remove-default-languages {
+  margin-left: 50px;
+}
+.languages-custom-placeholder {
+  background: #ccc;
+  border: dotted 3px #999;
+  min-height: 35px;
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+.error-languages-message {
+  max-width: 200px;
+}
+.input-add-language {
+  max-width: 130px;
+  margin-left: 20px;
+}

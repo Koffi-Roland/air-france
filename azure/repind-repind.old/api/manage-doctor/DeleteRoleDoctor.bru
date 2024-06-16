@@ -1,0 +1,23 @@
+meta {
+  name: DeleteRoleDoctor
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{manage-doctor-url}}/role/{{roleIdDoctor}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  MS: manage-doctor
+}
+
+vars:post-response {
+  roleIdDoctor: null
+}
+
+assert {
+  res.status: eq 200
+}

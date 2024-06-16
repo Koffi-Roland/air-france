@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.afklm.springboot.habile</groupId>
+    <artifactId>spring-security-habile-parent</artifactId>
+    <version>5.0.1-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>spring-security-habile</artifactId>
+  <packaging>jar</packaging>
+
+  <name>spring-security-habile</name>
+  <description>Demo project for spring security with habile</description>
+
+  <scm>
+    <connection>scm:git:${afkl.git.url}/scm/teccse/spring-security-habile.git</connection>
+    <developerConnection>scm:git:${afkl.git.url}/scm/teccse/spring-security-habile.git</developerConnection>
+    <url>${afkl.git.url}/projects/TECCSE/repos/spring-security-habile/browsee</url>
+    <tag>plugins-parent-1.0.0</tag>
+  </scm>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.afklm.springboot.habile</groupId>
+      <artifactId>spring-security-habile-core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+    <!-- ############################ -->
+    <!-- AF/KL SOA required libraries -->
+    <!-- ############################ -->
+    <dependency>
+      <groupId>com.afklm.soa.jaxws</groupId>
+      <artifactId>jaxws-consumer</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.afklm.soa.jaxws</groupId>
+      <artifactId>jaxws-custom-headers</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <!-- Application will choose either V1 or V2 for SOA stub -->
+    <dependency>
+      <groupId>com.afklm.soa.stubs</groupId>
+      <artifactId>w000479-v01-jakarta</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <!-- Application will choose either V1 or V2 for SOA stub -->
+    <dependency>
+      <groupId>com.afklm.soa.stubs</groupId>
+      <artifactId>w000479-v02-jakarta</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <!-- I'm a consumer -->
+    <dependency>
+      <groupId>com.afklm.soa.jaxws</groupId>
+      <artifactId>sdfw-starter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.afklm.soa.jaxws</groupId>
+      <artifactId>sdfw-consumer-deps</artifactId>
+      <type>pom</type>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- ############################ -->
+    <!-- SECMOBIL required libraries -->
+    <!-- ############################ -->
+    <dependency>
+      <groupId>com.afklm.secmobil</groupId>
+      <artifactId>secmobilFilter-jakarta</artifactId>
+      <version>${secmobilFilter.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- ############################ -->
+    <!-- Generic SPRING dependencies -->
+    <!-- ############################ -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <!-- websocket -->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-messaging</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-websocket</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+
+    <!-- ############################ -->
+    <!--       Test dependencies      -->
+    <!-- ############################ -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt-impl</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt-jackson</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>

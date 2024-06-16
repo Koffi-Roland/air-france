@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: provide-identification-data
+  labels:
+    app.kubernetes.io/name: provide-identification-data
+    app.kubernetes.io/instance: provide-identification-data
+spec:
+  selector:
+    app.kubernetes.io/name: provide-identification-data
+    app.kubernetes.io/instance: provide-identification-data
+  ports:
+    - port: 8080               # Port for the service
+      targetPort: 8080         # Port of the container (should be the same as in your deployment)

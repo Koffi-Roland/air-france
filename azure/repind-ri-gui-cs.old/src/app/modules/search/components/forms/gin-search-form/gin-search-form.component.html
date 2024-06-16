@@ -1,0 +1,12 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ 'NUMERIC-SEARCH' | translate }}</mat-card-title>
+    <mat-card-subtitle>{{ 'NUMERIC-SEARCH-DESCRIPTION' | translate }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <app-dynamic-form #form [fields]="config"></app-dynamic-form>
+  </mat-card-content>
+  <mat-card-actions>
+    <app-search-button (click)="search()" [disabled]="!form.valid"></app-search-button>
+  </mat-card-actions>
+</mat-card>

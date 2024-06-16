@@ -1,0 +1,12 @@
+applications:
+  - name: rigui-cs
+    instances: 1
+    memory: 64M
+    disk_quota: 100M
+    stack: cflinuxfs3
+    buildpacks:
+    - staticfile_buildpack
+    routes:
+# Following sample route like 'myapp-dev.ta-tls.af-klm.com' is for NON-B2C (HABILE (isoseg01)) project.
+# For B2C (NON-HABILE (isoseg02)), route domain will be like 'myapp-dev.ta-b2c-tls.af-klm.com'
+      - route: ri-rct.airfrance.fr/

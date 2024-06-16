@@ -1,0 +1,39 @@
+<ng-container [ngSwitch]="preferenceValueConfig.type">
+
+    <mat-form-field *ngSwitchCase="'Date'" appearance="outline">
+        <mat-label>{{ keyCtrlLabel }}</mat-label>
+        <input matInput [matDatepicker]="picker" placeholder="{{ 'DATE-PLACEHOLDER' | translate }}"
+            [formControl]="valueCtrl" [required]="preferenceValueConfig.isRequired">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="valueCtrl.invalid">{{ 'INVALID-DATE-ERROR' | translate }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field *ngSwitchCase="'String'" appearance="outline">
+        <mat-label>{{ keyCtrlLabel }}</mat-label>
+        <input matInput #valueInput [formControl]="valueCtrl" [required]="preferenceValueConfig.isRequired"
+            [maxlength]="preferenceValueConfig.maxLength">
+        <mat-icon *ngIf="isValueSaved && valueCtrl.value === ''" matTooltip="{{ 'WARN-PREF-DATA-DELETE' | translate }}"
+            matSuffix>warning
+        </mat-icon>
+        <mat-hint align="end"> {{ valueInput.value.length }} / {{ preferenceValueConfig.maxLength }} </mat-hint>
+        <mat-error *ngIf="valueCtrl.hasError('minlength')">
+            {{ 'MIN-LENGTH-MSG' | translate }} ({{ preferenceValueConfig.minLength }})
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Any other type will use a picklist (including common type)-->
+    <mat-form-field *ngSwitchDefault appearance="outline">
+        <mat-label>{{ keyCtrlLabel }}</mat-label>
+        <mat-select [formControl]="valueCtrl">
+            <mat-option>---</mat-option>
+            <mat-option *ngFor="let option of options" value="{{ option.value }}">
+                {{ option.value }}: {{ option.translateLabel | translate }}
+            </mat-option>
+        </mat-select>
+        <mat-icon *ngIf="isValueSaved && valueCtrl.value === ''" matTooltip="{{ 'WARN-PREF-DATA-DELETE' | translate }}"
+            matSuffix>warning
+        </mat-icon>
+    </mat-form-field>
+
+</ng-container>

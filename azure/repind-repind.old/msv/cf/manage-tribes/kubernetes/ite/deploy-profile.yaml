@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: manage-tribes
+spec:
+  template:
+    spec:
+      imagePullSecrets:
+        - name: p-repind-registry-ite
+      containers:
+        - name: manage-tribes
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "512Mi"
+            limits:
+              cpu: "200m"
+              memory: "800Mi"
+          env:
+            - name: SPRING_PROFILES
+              value: "ite"
+            - name: REPIND_TOPIC
+              value: "I1.log-APP.REPIND.001"
+            - name: REPIND_BOOTSTRAP_SERVERS
+              value: "qvirclogkb01.france.airfrance.fr:6668,qvirclogkb02.france.airfrance.fr:6668,qvirclogkb03.france.airfrance.fr:6668,qvirclogkb04.france.airfrance.fr:6668"
+            - name: KERBEROS_JVM_OPTS
+              value: "-Djava.security.krb5.kdc=qviqbkrbrs01.france.airfrance.fr -Djava.security.krb5.realm=DTA.FRANCE.AIRFRANCE.FR -Djava.security.auth.login.config=/etc/kafka/client_jaas_repind.conf -Djava.sun.security.krb5.debug=true -Dzookeeper.sasl.client=false"

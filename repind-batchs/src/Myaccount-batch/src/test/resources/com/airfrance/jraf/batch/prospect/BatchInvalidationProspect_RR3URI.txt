@@ -1,0 +1,16 @@
+CRMPUSH;2015-12-31
+I;006;E;;;;;;;;;;006 - Hard Bounce
+I;006;E;01@HOTMAIL.COM;;;;;;;;;006 - Hard Bounce
+I;006;E;0683074997@ORANGE.FR;;;;;;;;;006 - Hard Bounce
+I;006;E;100000854392000@FACEBOOK.COM;;;;;;;;;006 - Hard Bounce
+I;006;E;10000141@ATWD.COM;;;;;;;;;006 - Hard Bounce
+I;006;E;10000300@ATWD.COM;;;;;;;;;006 - Hard Bounce
+I;006;E;10000301@ATWD.COM;;;;;;;;;006 - Hard Bounce
+I;006;E;10004472@ATWD.COM;;;;;;;;;006 - Hard Bounce
+I;006;E;123@WANADOO.FR;;;;;;;;;006 - Hard Bounce
+I;006;E;140821-NOEMAIL@NOBLECORP-NOEMAIL.COM;;;;;;;;;006 - Hard Bounce
+I;006;E;140822-NOEMAIL@NOBLECORP-NOEMAIL.COM;;;;;;;;;006 - Hard Bounce
+I;006;E;19684@NORWEGIAN.NO;;;;;;;;;006 - Hard Bounce
+I;006;E;20151226NRT01@GMAIL.COM;;;;;;;;;006 - Hard Bounce
+I;006;E;20151230nrt01@gmail.com;;;;;;;;;006 - Hard Bounce
+I;006;E;20151230nrt02@gmail.com;;;;;;;;;006 - Hard Bounce

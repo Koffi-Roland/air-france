@@ -1,0 +1,132 @@
+meta {
+  name: Update
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{create-or-update-individual-v8-url}}
+  body: xml
+  auth: none
+}
+
+headers {
+  SOAPAction: "http://www.af-klm.com/services/passenger/CreateUpdateIndividualService-v8/createIndividual"
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+      <soapenv:Body>
+          <ns2:CreateUpdateIndividualRequestElement xmlns:ns6="http://www.af-klm.com/services/passenger/SicCommonType-v1/xsd"
+              xmlns:ns5="http://www.af-klm.com/services/passenger/request-v8/xsd"
+              xmlns:ns8="http://www.af-klm.com/services/passenger/SicOsirisType-v1/xsd"
+              xmlns:ns7="http://www.af-klm.com/services/passenger/SoftComputingType-v1/xsd"
+              xmlns:ns2="http://www.af-klm.com/services/passenger/data-v8/xsd"
+              xmlns:ns4="http://www.af-klm.com/services/passenger/response-v8/xsd"
+              xmlns:ns3="http://www.af-klm.com/services/passenger/SicIndividuType-v3/xsd">
+              <process>E</process>
+              <requestor>
+                  <channel>B2C</channel>
+                  <site>QVI</site>
+                  <signature>REGRESSION</signature>
+              </requestor>
+              <individualRequest>
+                  <individualInformations>
+                      <identifier>{{gin_create}}</identifier>
+                  </individualInformations>
+              </individualRequest>
+              <externalIdentifierRequest>
+                  <externalIdentifier>
+                      <identifier>FVLYGL</identifier>
+                      <type>GIGYA_ID</type>
+                  </externalIdentifier>
+              </externalIdentifierRequest>
+              <externalIdentifierRequest>
+                  <externalIdentifier>
+                      <identifier>FYGJHHIOMH</identifier>
+                      <type>FACEBOOK_ID</type>
+                  </externalIdentifier>
+              </externalIdentifierRequest>
+              <externalIdentifierRequest>
+                  <externalIdentifier>
+                      <identifier>NKJ%KJLO%</identifier>
+                      <type>TWITTER_ID</type>
+                  </externalIdentifier>
+              </externalIdentifierRequest>
+              <externalIdentifierRequest>
+                  <externalIdentifier>
+                      <identifier>GVJHMIHJ</identifier>
+                      <type>LINKEDIN_ID</type>
+                  </externalIdentifier>
+              </externalIdentifierRequest>
+              <externalIdentifierRequest>
+                  <externalIdentifier>
+                      <identifier>FGLYHGMIUH%I</identifier>
+                      <type>SINAWEIBO_ID</type>
+                  </externalIdentifier>
+              </externalIdentifierRequest>
+              <externalIdentifierRequest>
+                  <externalIdentifier>
+                      <identifier>XCGJ.L</identifier>
+                      <type>WECHAT_ID</type>
+                  </externalIdentifier>
+              </externalIdentifierRequest>
+              <externalIdentifierRequest>
+                  <externalIdentifier>
+                      <identifier>GJK/MJM</identifier>
+                      <type>WHATSAPP_ID</type>
+                  </externalIdentifier>
+              </externalIdentifierRequest>
+              <externalIdentifierRequest>
+                  <externalIdentifier>
+                      <identifier>XF??GF</identifier>
+                      <type>INSTAGRAM_ID</type>
+                  </externalIdentifier>
+              </externalIdentifierRequest>
+              <externalIdentifierRequest>
+                  <externalIdentifier>
+                      <identifier>JUIOP%O</identifier>
+                      <type>KAKAO_ID</type>
+                  </externalIdentifier>
+              </externalIdentifierRequest>
+              <externalIdentifierRequest>
+                  <externalIdentifier>
+                      <identifier>GHJM/JM%</identifier>
+                      <type>KLOOT_ID</type>
+                  </externalIdentifier>
+              </externalIdentifierRequest>
+              <externalIdentifierRequest>
+                  <externalIdentifier>
+                      <identifier>WFH?JKT</identifier>
+                      <type>HYVES_ID</type>
+                  </externalIdentifier>
+              </externalIdentifierRequest>
+              <externalIdentifierRequest>
+                  <externalIdentifier>
+                      <identifier>GHILUO</identifier>
+                      <type>APP_ID</type>
+                  </externalIdentifier>
+              </externalIdentifierRequest>
+              <externalIdentifierRequest>
+                  <externalIdentifier>
+                      <identifier>GHI/LMU</identifier>
+                      <type>LIN_ID</type>
+                  </externalIdentifier>
+              </externalIdentifierRequest>
+          </ns2:CreateUpdateIndividualRequestElement>
+      </soapenv:Body>
+  </soapenv:Envelope>
+}
+
+vars:pre-request {
+  USER: W90000442
+  PASSWORD: pswpsw123
+}
+
+vars:post-response {
+  gin_create: null
+}
+
+assert {
+  res.status: eq 200
+}

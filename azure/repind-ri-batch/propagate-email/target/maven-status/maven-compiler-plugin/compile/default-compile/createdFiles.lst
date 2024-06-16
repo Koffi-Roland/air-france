@@ -1,0 +1,5 @@
+com\afklm\batch\propagate\email\processor\AccountEmailProcessor.class
+com\afklm\batch\propagate\email\BatchPropagateEmail.class
+com\afklm\batch\propagate\email\config\PropagateEmailConfig.class
+com\afklm\batch\propagate\email\validation\ProcessorValidation.class
+com\afklm\batch\propagate\email\writer\PropagateEmailOutputTasklet.class

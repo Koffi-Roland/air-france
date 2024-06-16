@@ -1,0 +1,40 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: backupdir-neo4j
+  labels:
+    app: neo4j-backup
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: neo4j-backup
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: neo4j-restore-sa
+          volumes:
+            - name: backupdir-neo4j
+              persistentVolumeClaim:
+                claimName: backupdir-neo4j
+          containers:
+            - name: neo4j-backup
+              image: nexusoss-docker.airfrance.fr/repind/neo4j-backup:latest
+              env:
+              - name: NEO4J_ADDR
+                value: "neo4j-db-readreplica-svc"
+              - name: BACKUP_NAME
+                value: neo4j.db-backup
+              volumeMounts:
+              - name: backupdir-neo4j
+                mountPath: /data
+          restartPolicy: OnFailure

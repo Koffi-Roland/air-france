@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+    <!-- domain service for all drefs -->
+    <import resource="1-sicutf8-commons-ds-dependencies.xml"/>
+    
+    <!-- business service for all drefs -->
+    <import resource="2-sicutf8-commons-us-dependencies.xml"/>
+    
+    <!-- daos for all drefs -->
+    <import resource="3-sicutf8-commons-daos-dependencies.xml"/>
+        
+    <!--PROTECTED REGION ID(sicutf8-commonsUuid_ioc_etr) ENABLED START-->
+        <!-- add non-generated imports here -->
+    <!--PROTECTED REGION END-->
+    
+
+
+</beans>
+

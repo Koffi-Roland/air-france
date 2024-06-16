@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+	<!-- Used for local execution -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder 
+			by default -->
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- Used in other environments -->
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- ENV-LOGBACK-DEFAULT -->
+		<file>logs/appli/stdout-catiwsweb.log</file>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+		
+			<!-- ENV-LOGBACK-FILE -->
+			<fileNamePattern>logs/appli/stdout-catiwsweb.log.%i</fileNamePattern>
+			<minIndex>1</minIndex>
+      		<maxIndex>7</maxIndex>
+		</rollingPolicy>
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>10MB</maxFileSize>
+		</triggeringPolicy>
+
+		<encoder>
+			<pattern>%date %-5level [%thread] %logger{10} [%file:%line] %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- ENV-LOGBACK-HIBERN-LEVEL -->
+	<logger name="org.hibernate" level="warn">
+	</logger>
+
+	<!-- ENV-LOGBACK-HIBERNSQL-LEVEL -->
+	<logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="warn">
+	</logger>
+
+	<!-- ENV-LOGBACK-SPRING-LEVEL -->
+	<logger name="org.springframework" level="info">
+	</logger>
+
+	<!-- ENV-LOGBACK-SPRINGSECURITY-LEVEL -->
+	<logger name="org.springframework.security" level="info">
+	</logger>
+
+	<!-- ENV-LOGBACK-ROOT-LEVEL -->
+	<root level="info">
+		<!-- ENV-LOGBACK-APPENDER-REF -->
+		<appender-ref ref="STDOUT"/>
+	</root>
+</configuration>

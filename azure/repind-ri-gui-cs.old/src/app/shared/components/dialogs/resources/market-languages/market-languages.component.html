@@ -1,0 +1,44 @@
+<mat-toolbar mat-dialog-title color="primary" cdkDrag cdkDragBoundary=".cdk-overlay-container" cdkDragRootElement=".cdk-overlay-pane">
+  <mat-toolbar-row>
+    <mat-icon matTooltip="{{ 'DRAG-WINDOW' | translate }}" cdkDragHandle class="draggable-icon">open_with</mat-icon>
+    <span class="mat-headline">{{ 'MARKET-LANGUAGES' | translate }}</span>
+    <span class="empty-space"></span>
+    <button mat-icon-button mat-dialog-close>
+      <mat-icon matTooltip="{{ 'CLOSE' | translate }}">close</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-dialog-content>
+  <div *ngIf="marketLanguages.length > 0">
+    <mat-tab-group>
+      <mat-tab *ngFor="let market of marketLanguages" label="{{ common.getTransformEnumType(common.referenceDataType.COUNTRY_CODES) + market.market  | translate}}">
+        <div>
+          <div class="left-side">
+            <h1 class="mat-headline">{{ common.getTransformEnumType(common.referenceDataType.LANGUAGES) + market.language | translate }}</h1>
+            <div>
+              <span>{{ 'OPT-IN' | translate }}: {{ market.optin + '-OPTIN' | translate }}</span><br>
+              <span>{{ 'CHANNEL' | translate }}: {{ market.channel }}</span><br>
+              <span>{{ 'DATE-OF-CONSENT' | translate }}: {{ market.dateOfConsent | date }}</span>
+            </div>
+          </div>
+          <mat-divider [vertical]="true"></mat-divider>
+          <div class="right-side">
+            <h2 class="mat-title">{{ 'SIGNATURE' | translate }}</h2>
+            <div class="creation">
+                <h3 class="mat-subheading-2">{{ 'CREATION' | translate }}</h3>
+                <span>{{ market.creationSignature.site }}</span><br />
+                <span>{{ market.creationSignature.signature }}</span><br />
+                <span>{{ market.creationSignature.date }}</span>
+            </div>
+            <div class="modification">
+                <h3 class="mat-subheading-2">{{ 'MODIFICATION' | translate }}</h3>
+                <span>{{ market.modificationSignature.site }}</span><br />
+                <span>{{ market.modificationSignature.signature }}</span><br />
+                <span>{{ market.modificationSignature.date }}</span>
+              </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</mat-dialog-content>

@@ -1,0 +1,72 @@
+{
+	"info": {
+		"_postman_id": "6207f1e1-1b76-44f7-9648-2ba8974fa613",
+		"name": "ProvideLastActivity",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3594919",
+		"_collection_link": "https://universal-zodiac-437497.postman.co/workspace/be57cd6c-efd8-4dd8-a15f-783ee7a080f6/collection/3594919-6207f1e1-1b76-44f7-9648-2ba8974fa613?action=share&source=collection_link&creator=3594919"
+	},
+	"item": [
+		{
+			"name": "ProvideLastActivityByGin",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var utcTime = Math.round(new Date().getTime()/1000);\r",
+							"postman.setGlobalVariable(\"utcTime\", utcTime);\r",
+							"var sig = CryptoJS.SHA256(\"uxw2tmjda8es55rsceavy5mt\" + \"v94xzKpoBc\" + utcTime).toString();\r",
+							"postman.setGlobalVariable(\"sig\", sig);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"strictSSL": false
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "api_key",
+						"value": "uxw2tmjda8es55rsceavy5mt",
+						"type": "text"
+					},
+					{
+						"key": "x-signature",
+						"value": "{{sig}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apiams-ute1.airfranceklm.com/passenger/R000563/V01/960000005155",
+					"protocol": "https",
+					"host": [
+						"apiams-ute1",
+						"airfranceklm",
+						"com"
+					],
+					"path": [
+						"passenger",
+						"R000563",
+						"V01",
+						"960000005155"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

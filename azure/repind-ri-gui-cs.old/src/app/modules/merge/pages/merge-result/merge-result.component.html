@@ -1,0 +1,22 @@
+<div class="not-found">
+  <mat-card>
+    <div class="result-title">
+      <div class="result-title-text">
+        <h1>{{'MERGE-SUCCESS' | translate}}</h1>
+      </div>
+      <div>
+        <mat-icon class="mat-icon-title" role="img">check_circle</mat-icon>
+      </div>
+    </div> 
+      <br>
+      <p>{{'MERGE-RESULT-A' | translate}} <b>{{params.sourceGin}}</b> ({{params.sourceIdentity}}) {{'MERGE-RESULT-B' | translate}} <b>{{params.targetGin}}</b> ({{params.targetIdentity}}).</p>
+  </mat-card>
+</div>
+  <div class="back-button">
+      <button mat-raised-button color="primary" routerLink="/individuals/search" [matTooltip]="'BACK-TO-SEARCH' | translate" matTooltipPosition='left'>
+        {{ 'NEW-SEARCH' | translate }}
+      </button>
+    <button mat-raised-button color="primary" routerLink="/individuals/merge" [matTooltip]="'BACK-TO-MERGE' | translate" matTooltipPosition='right'>
+      {{ 'NEW-MERGE' | translate }}
+    </button>
+  </div>

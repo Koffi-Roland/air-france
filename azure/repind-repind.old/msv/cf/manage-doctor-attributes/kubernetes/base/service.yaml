@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: manage-doctor-attributes
+  labels:
+    app.kubernetes.io/name: manage-doctor-attributes
+    app.kubernetes.io/instance: manage-doctor-attributes
+spec:
+  selector:
+    app.kubernetes.io/name: manage-doctor-attributes
+    app.kubernetes.io/instance: manage-doctor-attributes
+  ports:
+    - port: 8080               # Port for the service
+      targetPort: 8080         # Port of the container (should be the same as in your deployment)

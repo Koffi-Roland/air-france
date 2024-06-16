@@ -1,0 +1,41 @@
+## 2.0.8
+- REPIND-3260: Add merge boolean parameter - update springcore version
+
+## 2.0.7
+- REPIND-3197: Change datasource to Hikari datasource
+
+## 2.0.6
+- REPIND-3020: Add JWT config
+
+## 2.0.5
+- REPIND-2642: Java Migration to v 17
+
+## 2.0.4
+- REPIND-2425: Migration from Oracle 11 to Oracle 19
+
+## 2.0.3
+- REPIND-2603: Fix rancher deployment issue
+
+## 2.0.2
+- REPIND-2590: Fix Argos Critical/High dependencies
+
+## 2.0.1
+- REPIND-2587: Clean dependencies and update Spring Boot dependency
+
+## 2.0.0
+- REPIND-2486 - Added 404 error JSON body for ProvideContactData MS
+
+## 1.2.2
+- REPIND-2551: Stack trace from service not diplayed in como
+
+## 1.2.1
+- REPIND-2550: SECURITY: Fix Critical CVE
+
+## 1.2.0
+- REPIND-2486 - Added functionality + tests for ProvideContactData MS
+
+## 1.1.0
+- REPIND-2446 - Add Vault to this MS
+
+## 1.0.0
+- REPIND-2390 - ProvideContactData

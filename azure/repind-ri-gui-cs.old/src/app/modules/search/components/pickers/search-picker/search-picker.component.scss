@@ -1,0 +1,12 @@
+@use '@angular/material' as mat;
+@import '../../../../../../assets/scss/customized-palettes-and-colors.scss';
+
+
+.mat-button-toggle-checked {
+  background-color: mat.get-color-from-palette($af-rigui-primary-palette,default);
+  color: white;
+}
+
+.mat-button-toggle-group-appearance-standard {
+  border-radius: 12px;
+}

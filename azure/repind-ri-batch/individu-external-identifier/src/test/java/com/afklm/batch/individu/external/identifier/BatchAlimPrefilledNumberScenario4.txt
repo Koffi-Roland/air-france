@@ -1,0 +1,8 @@
+Personnal identifier (FB number or connexion email);Account code type ;Account code (CA ID);Label;End of accreditation date;contract type (CC or BB) ;contract Ref (ID)
+001036796886;AC;123456;Roubaud INC1;21/08/2016;CC;1ZE234
+1036868883;AC;123456;Roubaud INC2;21/08/2016;CC;1ZE234
+001038021186;AC;568923;La vie en rose7;25/06/2016;BB;3G4E25
+1037139794121231;AC;123456;Roubaud INC7;21/08/2016;CC;1ZE234
+XMDMASGSMV;AC;123456;Roubaud INC8;21/08/2016;CC;1ZE234
+ABCD@ABCD.FR;AC;008787;BON LABEL;;CC;BEL
+xin.dai@web.de;AC;568923;La vie en rose3;25/06/2016;BB;3G4E25

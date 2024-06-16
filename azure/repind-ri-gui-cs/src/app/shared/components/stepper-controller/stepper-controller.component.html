@@ -1,0 +1,10 @@
+<div class="content">
+  <button mat-icon-button [disabled]="stepper.selectedIndex === 0" (click)="stepper.previous()"
+    matTooltip="{{ 'PREVIOUS_PAGE' | translate }}" matTooltipPosition="right">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+  <button mat-icon-button [disabled]="stepper.selectedIndex === steps - 1" (click)="stepper.next()"
+    matTooltip="{{ 'NEXT_PAGE' | translate }}" matTooltipPosition="left">
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+</div>

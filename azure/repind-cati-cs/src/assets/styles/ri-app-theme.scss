@@ -1,0 +1,33 @@
+@use '@angular/material' as mat;
+@import '@angular/material/theming';
+@import '@airfranceklm/daisy-common/palettes';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://www.google.com/design/spec/style/color.html
+$af-space-blue-darker: #2876ea;
+$af-space-blue-lighter: #cce0f4;
+$af-space-blue-default: #001d47;
+$af-space-blue-darker-contrast: $af-white-default;
+$af-space-blue-lighter-contrast: $af-black-default;
+$af-space-blue-default-contrast: $af-white-default;
+
+$af-space-blue-palette: (
+  lighter: $af-space-blue-lighter,
+  default: $af-space-blue-default,
+  darker: $af-space-blue-darker,
+  text: $af-space-blue-default,
+  lighter-contrast: $af-space-blue-lighter-contrast,
+  default-contrast: $af-space-blue-default-contrast,
+  darker-contrast: $af-space-blue-darker-contrast
+);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$daisy-mat-paris-theme: mat.define-light-theme($af-space-blue-palette, $af-candy-red-palette, $af-fire-orange-palette);
+

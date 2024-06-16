@@ -1,0 +1,127 @@
+replicaCount: 1
+
+image: 
+  repository: acr01rinonprodfrc001.azurecr.io/delete-my-account
+  pullPolicy: "Always"
+  tag: latest
+
+
+serviceAccount:
+  # Specifies whether a service account should be created or not 
+  create: true
+
+rbac:
+  enabled: true
+  roles:
+    - apiGroups: [""]
+      resources: ["pods", "nodes", "configmaps", "endpoints", "namespaces", "services", "events"]
+      verbs: ["get", "list", "watch" ]
+    - apiGroups: ["networking.k8s.io"]
+      resources: ["ingresses"]
+      verbs: ["get", "list", "watch"]
+    - apiGroups: [""]
+      resources: ["endpoints"]
+      verbs: [ "create", "update"]
+    - apiGroups: [""]
+      resources: ["events"]
+      verbs: ["create", "patch"]
+
+isTmpVolumeRequired: true
+
+#key vault related configuration
+secretProvider:
+  keyVaultName: 'kv-ri-np-73c0'
+  keyVaultRG: 'rg-ri-spoke-nonprod-frc-001'
+  subscriptionId: '58b2378a-340e-44be-90d1-85768fdcdf02'
+  keyVaultTenantId: '9b802d8b-33fa-40fb-acb7-9ffdbd1919eb'
+  objects:
+    - objectName: vaultRoleId # Key Vault secret name
+      objectType: "secret"
+    - objectName: vaultSecretId # Key Vault secret name
+      objectType: "secret"
+  secretObjects: # Sync as Kubernetes Secret
+    - secretName: app-secret-ri-delete-my-account # Kubernetes Secret
+      type: Opaque
+      data:
+      - objectName: vaultRoleId # Key Vault Secret name
+        key: VAULT_CREDENTIALS_ROLE_ID # Secret Key
+      - objectName: vaultSecretId # Key Vault Secret name
+        key: VAULT_CREDENTIALS_SECRET_ID # Secret Key
+
+
+# Describes the Azure Managed AAD Pod Identity
+azureIdentity: 
+  name: "delete-my-account-cae-azureidentity"
+  type: 0
+  configmap:
+    name: aks-kv-sp-identity
+    namespace: cae
+    clientid: aks-kv-sp-client-id
+    resourceid: aks-kv-sp-resource-id
+
+# Describes the identity binding relationship between an AzureIdentity and a pod with a specific selector as part of its label
+azureIdentityBinding:
+  name: "delete-my-account-cae-azureidentitybinding"
+  selector: "delete-my-account-cae-selector"
+
+# Specifies whether autoscaling should be enabled or not
+autoscaling:
+  enabled: false
+  minReplicas: 
+  maxReplicas: 
+  targetAverageUtilization: 
+  targetAverageValue: 
+
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: haproxy
+  private: 
+    enabled: 'true'
+    annotations:
+      kubernetes.io/ingress.class: haproxy
+    hosts:
+      - host: delete-my-account-rs-cae.azure.airfranceklm.com
+        paths:
+          - /api-mgr/delete-my-account/
+  tls:
+    - hosts:
+      - delete-my-account-rs-cae.azure.airfranceklm.com
+      secretName: defaultcert
+
+# resource management for pods
+resources:
+  limits:
+    cpu: 900m
+    memory: 732Mi
+  requests:
+    cpu: 300m
+    memory: 336Mi
+
+#liveness and readiness probe for container
+#probes:
+#  livenessProbe:
+#    path: /api-mgr/delete-my-account/infra/healthcheck
+#  readinessProbe:
+#    path: /api-mgr/delete-my-account/infra/healthcheck
+
+deployment:
+  containerPort: 8080
+
+service:
+  type: ClusterIP
+  port: 8080
+
+# config Map individual key/value pairs
+configMap: 
+  SPRING_CONFIG_ACTIVATE_ONPROFILE: "UTE,cae"
+  SPRING_DATASOURCE_TNS_ADMIN_ENV: "TEST_ACCEPTANCE"
+  SPRING_DATASOURCE_URL: "jdbc:oracle:thin:@REPIND_CAE.WORLD"
+  VAULT_NAMESPACE: "repind"
+  VAULT_ENV: "dev"
+  REPIND-BOOTSTRAP-SERVERS: "qvirclogkb01.france.airfrance.fr:6668,qvirclogkb02.france.airfrance.fr:6668,qvirclogkb03.france.airfrance.fr:6668,qvirclogkb04.france.airfrance.fr:6668"
+  JAVA_TOOL_OPTIONS: "-Dspring.profiles.active=azure,kube,UTE,cae -Djava.security.krb5.kdc=qviqbkrbrs01.france.airfrance.fr -Djava.security.krb5.realm=DTA.FRANCE.AIRFRANCE.FR -Djava.security.auth.login.config=/etc/kafka/client_jaas_repind.conf -Djava.sun.security.krb5.debug=true -Dzookeeper.sasl.client=false --add-opens=java.base/java.lang=ALL-UNNAMED"
+
+# env variables from secretProviderClass
+envFrom:
+  - secretRef:
+      name: app-secret-ri-delete-my-account

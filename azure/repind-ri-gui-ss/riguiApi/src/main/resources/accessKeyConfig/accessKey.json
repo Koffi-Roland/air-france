@@ -1,0 +1,326 @@
+{"accessKeyConfiguration" : [
+	{
+		"profile" : "P_USER",
+		"accessKeyLst": [
+			{
+				"accessKey":"ROLE_AK_USER",
+				"idProfil":"P_USER",
+				"type": "NONE/READ/WRITE",
+				"value":"READWRITE"
+			},
+			{
+				"accessKey":"ROLE_AK_MODIF",
+				"idProfil":"P_USER",
+				"type": "NONE/READ/WRITE",
+				"value":"READWRITE"
+			}
+		]
+	},
+	{
+		"profile": "P_RIGUI_READ_ONLY",
+		"accessKeyLst" : [
+			{
+				"accessKey":"ROLE_READ",
+				"idProfil":"P_RIGUI_READ_ONLY",
+				"type": "NONE/READ",
+				"value":"READ"
+			}
+		]
+	},
+	{
+		"profile": "P_RIGUI_SUPERADMIN",
+		"accessKeyLst" : [
+			{
+				"accessKey":"ROLE_ADMIN",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/READ/WRITE",
+				"value":"READWRITE"
+			},
+			{
+				"accessKey":"ROLE_READ",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/READ",
+				"value":"READ"
+			},
+			{
+				"accessKey":"ROLE_READ_ADDR",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/READ",
+				"value":"READ"
+			},
+			{
+				"accessKey":"ROLE_READ_EMAILS",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/READ",
+				"value":"READ"
+			},
+			{
+				"accessKey":"ROLE_READ_TELECOMS",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/READ",
+				"value":"READ"
+			},
+			{
+				"accessKey":"ROLE_READ_CONTRACTS",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/READ",
+				"value":"READ"
+			},
+			{
+				"accessKey":"ROLE_READ_COMMPREF",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/READ",
+				"value":"READ"
+			},
+			{
+				"accessKey":"ROLE_READ_EXTID",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/READ",
+				"value":"READ"
+			},
+			{
+				"accessKey":"ROLE_READ_PREF",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/READ",
+				"value":"READ"
+			},
+			{
+				"accessKey":"ROLE_READ_DELEG",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/READ",
+				"value":"READ"
+			},
+			{
+				"accessKey":"ROLE_READ_ALERTS",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/READ",
+				"value":"READ"
+			},
+			{
+				"accessKey":"ROLE_READ_GPROLES",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/READ",
+				"value":"READ"
+			},
+			{
+				"accessKey":"ROLE_READ_UCCROLES",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/READ",
+				"value":"READ"
+			},
+			{
+				"accessKey":"ROLE_READ_INDIVIDUAL",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/READ",
+				"value":"READ"
+			},
+			{
+				"accessKey":"ROLE_READ_TRACKING",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/READ",
+				"value":"READ"
+			},
+			{
+				"accessKey":"ROLE_READ_INFERED",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/READ",
+				"value":"READ"
+			},
+			{
+				"accessKey":"ROLE_READ_HANDICAP",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/READ",
+				"value":"READ"
+			},
+			{
+				"accessKey":"ROLE_READ_CONSENT",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/READ",
+				"value":"READ"
+			},
+			{
+				"accessKey":"ROLE_READ_ACCOUNT",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/READ",
+				"value":"READ"
+			},
+			{
+				"accessKey":"ROLE_UPDATE_CONSENT",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/UPDATE",
+				"value":"UPDATE"
+			},
+			{
+				"accessKey":"ROLE_UPDATE",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/UPDATE",
+				"value":"UPDATE"
+			},
+			{
+				"accessKey":"ROLE_UPDATE_ADDR",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/UPDATE/WRITE",
+				"value":"UPDATE"
+			},
+			{
+				"accessKey":"ROLE_UPDATE_EMAILS",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/UPDATE/WRITE",
+				"value":"UPDATE"
+			},
+			{
+				"accessKey":"ROLE_UPDATE_TELECOMS",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/UPDATE/WRITE",
+				"value":"UPDATE"
+			},
+			{
+				"accessKey":"ROLE_UPDATE_COMMPREF",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/UPDATE/WRITE",
+				"value":"UPDATE"
+			},
+			{
+				"accessKey":"ROLE_UPDATE_PREF",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/UPDATE/WRITE",
+				"value":"UPDATE"
+			},
+			{
+				"accessKey":"ROLE_UPDATE_INDIVIDUAL",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/UPDATE/WRITE",
+				"value":"UPDATE"
+			},
+			{
+				"accessKey":"ROLE_UPDATE_ALERTS",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/UPDATE/WRITE",
+				"value":"UPDATE"
+			},
+			{
+				"accessKey":"ROLE_UPDATE_DELEG",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/UPDATE/WRITE",
+				"value":"UPDATE"
+			},
+			{
+				"accessKey":"ROLE_CREATE",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/CREATE",
+				"value":"CREATE"
+			},
+			{
+				"accessKey":"ROLE_CREATE_EMAILS",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/CREATE/WRITE",
+				"value":"CREATE"
+			},
+			{
+				"accessKey":"ROLE_CREATE_TELECOMS",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/CREATE/WRITE",
+				"value":"CREATE"
+			},
+			{
+				"accessKey":"ROLE_CREATE_PREF",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/CREATE/WRITE",
+				"value":"CREATE"
+			},
+			{
+				"accessKey":"ROLE_DELETE",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/DELETE",
+				"value":"DELETE"
+			},
+			{
+				"accessKey":"ROLE_DELETE_ADDR",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/DELETE/WRITE",
+				"value":"DELETE"
+			},
+			{
+				"accessKey":"ROLE_DELETE_EMAILS",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/DELETE/WRITE",
+				"value":"DELETE"
+			},
+			{
+				"accessKey":"ROLE_DELETE_TELECOMS",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/DELETE/WRITE",
+				"value":"DELETE"
+			},
+			{
+				"accessKey":"ROLE_DELETE_PREF",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/DELETE/WRITE",
+				"value":"DELETE"
+			},
+			{
+				"accessKey":"ROLE_DELETE_CONTRACTS",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/DELETE/WRITE",
+				"value":"DELETE"
+			},
+			{
+				"accessKey":"ROLE_DELETE_DELEG",
+				"idProfil":"P_REPIND_SUPERADMIN",
+				"type": "NONE/DELETE/WRITE",
+				"value":"DELETE"
+			}
+		]
+	},
+	{
+		"profile": "P_RIGUI_UPDATE-LEVEL2_FB",
+		"accessKeyLst" : [
+			{
+				"accessKey":"ROLE_READ",
+				"idProfil":"P_RIGUI_UPDATE-LEVEL2_FB",
+				"type": "NONE/READ",
+				"value":"READ"
+			},
+			{
+				"accessKey":"ROLE_MERGE_FB",
+				"idProfil":"P_RIGUI_UPDATE-LEVEL2_FB",
+				"type": "NONE/READ",
+				"value":"READ"
+			}
+		]
+	},
+	{
+		"profile": "P_RIGUI_UPDATE-LEVEL1_FB",
+		"accessKeyLst" : [
+			{
+				"accessKey":"ROLE_READ",
+				"idProfil":"P_RIGUI_UPDATE-LEVEL1_FB",
+				"type": "NONE/READ",
+				"value":"READ"
+			},
+			{
+				"accessKey":"ROLE_MERGE_FB_MINOR",
+				"idProfil":"P_RIGUI_UPDATE-LEVEL1_FB",
+				"type": "NONE/READ",
+				"value":"READ"
+			}
+		]
+	},
+	{
+		"profile": "P_RIGUI_UPDATE_GP",
+		"accessKeyLst" : [
+			{
+				"accessKey":"ROLE_READ",
+				"idProfil":"P_RIGUI_UPDATE_GP",
+				"type": "NONE/READ",
+				"value":"READ"
+			},
+			{
+				"accessKey":"ROLE_MERGE_GP",
+				"idProfil":"P_RIGUI_UPDATE_GP",
+				"type": "NONE/READ",
+				"value":"READ"
+			}
+		]
+	}
+]}

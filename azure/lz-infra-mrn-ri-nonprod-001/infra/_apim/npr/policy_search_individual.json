@@ -1,0 +1,29 @@
+{
+  "extra_vars": {
+    "operation": "add",
+    "inputs": {
+      "security_id": "w04776476",
+      "env": "NPR",
+      "identifier": "R000472",
+      "api_version": "v01",
+      "content_format": "openapi",
+      "content_value": "r000472/r000472-v01.yaml",
+      "backend_urls":
+      [{
+        "env": "ITE",
+        "instance": "main",
+        "url": "https://search-individual-rs-ite.azure.airfranceklm.com/api-mgr/v2/search-individual"
+      }, {
+        "env": "ACP",
+        "instance": "main",
+        "url": "https://search-individual-rs-acp.azure.airfranceklm.com/api-mgr/v2/search-individual"
+      }, {
+        "env": "CAE",
+        "instance": "main",
+        "url": "https://search-individual-rs-cae.azure.airfranceklm.com/api-mgr/v2/search-individual"
+      }
+      ],
+      "policies": {}
+    }
+  }
+}

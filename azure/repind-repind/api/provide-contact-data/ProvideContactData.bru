@@ -1,0 +1,23 @@
+meta {
+  name: ProvideContactData
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{provide-contact-data-url}}/{{gin}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  MS: provide-contact-data
+}
+
+assert {
+  res.status: eq 200
+}
+
+script:pre-request {
+  // 
+}

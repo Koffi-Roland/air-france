@@ -1,0 +1,18 @@
+form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 1.2em;
+}
+
+.left-side,
+.right-side {
+  width: 37.5%;
+  margin: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-form-field {
+  margin: 2.5px 0px;
+}

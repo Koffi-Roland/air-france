@@ -1,0 +1,42 @@
+.mat-headline {
+  margin: 0;
+  width: 95%;
+}
+
+.mat-body {
+  font-size: 18px;
+}
+
+mat-icon {
+  margin-right: 12px;
+}
+
+mat-toolbar-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+mat-dialog-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  margin-left: 35px;
+  margin-right: 35px;
+}
+
+div.mat-dialog-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0;
+  margin-right: 25px;
+}
+
+button {
+  margin-left: 8px;
+  margin-right: 8px;
+}

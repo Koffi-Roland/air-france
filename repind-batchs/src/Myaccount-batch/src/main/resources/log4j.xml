@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">    
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="true">
+
+
+	<!-- Defintion d'un appender de sortie de type console -->
+	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+           <layout class="org.apache.log4j.PatternLayout">
+             <param name="ConversionPattern"
+		    value="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+           </layout>	    
+	</appender>
+
+	<!-- Defintion d'un appender de sortie de type fichier -->
+	<appender name="FILE" class="org.apache.log4j.RollingFileAppender">
+           <!-- ENV-BATCH-LOG-DATA-METIER -->
+           <param name="File" value="${ENV-BATCH-LOG-DATA-METIER}"/>
+           <param name="MaxFileSize" value="10MB"/>
+           <!-- ENV-BATCH-LOG-DATA-METIER-MAX-BACKUP -->
+           <param name="MaxBackupIndex" value="${ENV-BATCH-LOG-DATA-METIER-MAX-BACKUP}"/>
+           <layout class="org.apache.log4j.PatternLayout">
+             <param name="ConversionPattern"
+		    value="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+           </layout>	    
+	</appender>
+
+	<logger name="com.airfrance.repind.dao" additivity="false">
+		<level value="info" />
+		<appender-ref ref="STDOUT" />
+	</logger>
+
+	<logger name="com.airfrance.jraf.batch" additivity="false">
+		<level value="info" />
+		<appender-ref ref="STDOUT" />
+	</logger>
+
+	<logger name="com.airfrance.sic" additivity="false">
+		<level value="info" />
+		<appender-ref ref="STDOUT" />
+	</logger>
+
+	<logger name="org.hibernate.engine" additivity="false">
+		<level value="info" />
+		<appender-ref ref="STDOUT" />
+	</logger>
+	
+	<logger name="org.hibernate.loader.Loader" additivity="false">
+		<level value="info" />
+		<appender-ref ref="STDOUT" />
+	</logger>
+
+	<root>
+	   <!-- ENV-BATCH-LOG-DATA-LEVEL -->
+	   <priority value ="${ENV-BATCH-LOG-DATA-LEVEL}" />
+   	   <appender-ref ref="STDOUT" />
+   	   <appender-ref ref="FILE" />
+	</root>
+</log4j:configuration>
